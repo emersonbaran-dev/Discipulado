@@ -97,6 +97,20 @@
   </div>
 
   <script>
+    const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso.json';
+
+    async function loadCursoFromCloud() {
+      try {
+        const res = await fetch(FIREBASE_URL);
+        const data = await res.json();
+        if (!data) return;
+        if (data.title) localStorage.setItem('course_title', data.title);
+        if (data.subtitle) localStorage.setItem('course_subtitle', data.subtitle);
+        if (data.lessons) localStorage.setItem('course_lessons', JSON.stringify(data.lessons));
+      } catch (e) {
+        console.error(e);
+      }
+    }
     function toggleSidebar() {
       document.getElementById('sidebar').classList.toggle('collapsed');
     }
@@ -387,8 +401,10 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+          loadCursoFromCloud().then(() => {
       loadCourseHeaderInfo();
       renderLessons();
+    });
     });
   </script>
 </body>
