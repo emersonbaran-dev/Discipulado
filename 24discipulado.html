@@ -98,22 +98,36 @@
 
   <script>
     const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso.json';
+    let lastCourseSnapshot = '';
 
     async function loadCursoFromCloud() {
       try {
         const res = await fetch(FIREBASE_URL + '?t=' + Date.now());
         const data = await res.json();
-        if (!data) return;
+        if (!data) return false;
+
+        const snapshot = JSON.stringify({
+          title: data.title || '',
+          subtitle: data.subtitle || '',
+          lessons: data.lessons || []
+        });
+
+        if (snapshot === lastCourseSnapshot) return false;
+        lastCourseSnapshot = snapshot;
+
         if (data.title) localStorage.setItem('course_title', data.title);
         if (data.subtitle) localStorage.setItem('course_subtitle', data.subtitle);
         if (data.lessons) localStorage.setItem('course_lessons', JSON.stringify(data.lessons));
+        return true;
       } catch (e) {
         console.error(e);
+        return false;
       }
     }
 
     async function refreshStudentView() {
-      await loadCursoFromCloud();
+      const changed = await loadCursoFromCloud();
+      if (!changed && document.getElementById('course-modules').innerHTML.trim()) return;
       loadCourseHeaderInfo();
       renderLessons();
     }
@@ -403,7 +417,9 @@
         docItem.classList.add('active');
         const contentHeight = docBody.scrollHeight;
         docBody.style.maxHeight = contentHeight + "px";
-        mainBody.style.maxHeight = (mainBody.scrollHeight + contentHeight + 50) + "px";
+        if (mainBody) {
+          mainBody.style.maxHeight = (mainBody.scrollHeight + contentHeight + 50) + "px";
+        }
       }
     }
 
