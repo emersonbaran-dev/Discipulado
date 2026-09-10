@@ -162,6 +162,38 @@
 
   <script>
     let lessons = [];
+    const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso.json';
+
+    async function syncCursoToCloud() {
+      const payload = {
+        title: localStorage.getItem('course_title') || 'Curso de Capacitação',
+        subtitle: localStorage.getItem('course_subtitle') || 'Acesse os módulos e aulas abaixo',
+        lessons: JSON.parse(localStorage.getItem('course_lessons') || '[]')
+      };
+      try {
+        await fetch(FIREBASE_URL, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } catch (e) {
+        alert('Não foi possível salvar na nuvem. Verifique a internet.');
+        console.error(e);
+      }
+    }
+
+    async function loadCursoFromCloud() {
+      try {
+        const res = await fetch(FIREBASE_URL);
+        const data = await res.json();
+        if (!data) return;
+        if (data.title) localStorage.setItem('course_title', data.title);
+        if (data.subtitle) localStorage.setItem('course_subtitle', data.subtitle);
+        if (data.lessons) localStorage.setItem('course_lessons', JSON.stringify(data.lessons));
+      } catch (e) {
+        console.error(e);
+      }
+    }
 
     function toggleSidebar() {
       document.getElementById('sidebar').classList.toggle('collapsed');
@@ -182,7 +214,8 @@
       document.getElementById('course-subtitle-input').value = localStorage.getItem('course_subtitle') || 'Acesse os módulos e aulas abaixo';
     }
 
-    function saveCourseHeaderInfo() {
+    function saveCourseHeaderInfo()       {
+      syncCursoToCloud(); 
       localStorage.setItem('course_title', document.getElementById('course-title-input').value.trim() || 'Curso de Capacitação');
       localStorage.setItem('course_subtitle', document.getElementById('course-subtitle-input').value.trim() || 'Acesse os módulos e aulas abaixo');
       const alertBox = document.getElementById('header-save-alert');
@@ -197,6 +230,7 @@
     }
 
     function saveLessonsToStorage() {
+      syncCursoToCloud();
       localStorage.setItem('course_lessons', JSON.stringify(lessons));
       renderModulesList();
       renderSidebarMenu();
@@ -373,8 +407,10 @@
     });
 
     document.addEventListener('DOMContentLoaded', () => {
+          loadCursoFromCloud().then(() => {
       loadCourseHeaderInfo();
       loadLessons();
+    });
       resetForm();
     });
   </script>
