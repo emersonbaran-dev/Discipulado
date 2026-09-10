@@ -101,7 +101,7 @@
 
     async function loadCursoFromCloud() {
       try {
-        const res = await fetch(FIREBASE_URL);
+        const res = await fetch(FIREBASE_URL + '?t=' + Date.now());
         const data = await res.json();
         if (!data) return;
         if (data.title) localStorage.setItem('course_title', data.title);
@@ -111,6 +111,13 @@
         console.error(e);
       }
     }
+
+    async function refreshStudentView() {
+      await loadCursoFromCloud();
+      loadCourseHeaderInfo();
+      renderLessons();
+    }
+
     function toggleSidebar() {
       document.getElementById('sidebar').classList.toggle('collapsed');
     }
@@ -401,10 +408,12 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-          loadCursoFromCloud().then(() => {
-      loadCourseHeaderInfo();
-      renderLessons();
+      refreshStudentView();
+      setInterval(refreshStudentView, 15000);
     });
+
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) refreshStudentView();
     });
   </script>
 </body>
