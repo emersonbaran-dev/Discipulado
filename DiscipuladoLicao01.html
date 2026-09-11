@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discipulado Lição 1 - Boas Novas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            font-size: 12pt; /* Tamanho da letra definido em 12pt */
+        }
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 6px solid #3C594D;
+        }
+        .header-title {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Alinha o conteúdo à esquerda */
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        .header-title img {
+            height: 60px;
+            width: auto;
+        }
+        h1 {
+            color: #3C594D;
+            margin: 0;
+            font-size: 32px; /* Título maior */
+            text-transform: uppercase;
+        }
+        .subtitle {
+            text-align: center;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 14pt;
+        }
+        .intro {
+            background-color: #eef3f1;
+            border-left: 4px solid #3C594D;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            font-size: 11pt;
+        }
+        .section-title {
+            background-color: #3C594D;
+            color: white;
+            padding: 6px 12px;
+            font-size: 13pt;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .verse-box {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-left: 3px solid #3C594D;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            font-style: italic;
+            font-size: 11pt;
+            color: #444;
+        }
+        .verse-title {
+            font-weight: bold;
+            font-style: normal;
+            color: #3C594D;
+            margin-bottom: 4px;
+        }
+        .question-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #222;
+        }
+        input[type="text"], input[type="date"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 11pt;
+            margin-top: 4px;
+        }
+        input[type="text"]:focus, textarea:focus {
+            border-color: #3C594D;
+            outline: none;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .checkbox-item input {
+            margin-right: 10px;
+            accent-color: #3C594D;
+        }
+        .table-names {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+        .table-names th, .table-names td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .table-names th {
+            background-color: #f2f2f2;
+            color: #3C594D;
+        }
+        .footer-info {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .footer-info .field {
+            flex: 1;
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: #3C594D;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #2d4238;
+        }
+        .btn-submit.sent {
+            background-color: #24352e !important;
+            cursor: default;
+        }
+        .final-note {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 20px;
+            font-size: 11pt;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-title">
+        <!-- Logo alinhada à esquerda do título -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
+        <h1>Lição 1</h1>
+    </div>
+    <div class="subtitle">BOAS NOVAS</div>
+    
+    <div class="intro">
+        As Boas Novas é o anúncio do evangelho em que Jesus veio para salvar a todo aquele que crê em Jesus Cristo. Vejamos:
+    </div>
+
+    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
+        
+        <!-- SEÇÃO A -->
+        <div class="section-title">A – A HISTÓRIA E MOTIVO</div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Isaías 9:6-7 (ARA)</div>
+                "Porque um menino nos nasceu, um filho se nos deu; o governo está sobre os seus ombros; e o seu nome será: Maravilhoso Conselheiro, Deus Forte, Pai da Eternidade, Príncipe da Paz. Do aumento do seu governo e da paz não haverá fim..."
+            </div>
+            <label for="q1">Em Isaías 9:6-7, qual era a promessa do Senhor?</label>
+            <textarea id="q1" name="1. Promessa do Senhor (Is 9.6-7)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Mateus 1:21-23 (ARA)</div>
+                "Ela dará à luz um filho e lhe porás o nome de JESUS, porque ele salvará o seu povo dos pecados deles. Tudo isto aconteceu para que se cumprisse o que foi dito da parte do Senhor pelo profeta: Eis que a virgem conceberá e dará à luz um filho, e ele será chamado pelo nome de EMANUEL (que traduzido é: Deus conosco)."
+            </div>
+            <label>Em Mateus 1:21-23, cumpriu-se a profecia da vinda do Senhor. Dê os nomes desta criança e seu significado:</label>
+            <table class="table-names">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Significado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" name="Nome 1" value="1. JESUS" readonly style="background:#eee;"></td>
+                        <td><input type="text" name="Significado 1" required></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="Nome 2" value="2. EMANUEL" readonly style="background:#eee;"></td>
+                        <td><input type="text" name="Significado 2" required></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Atos 2:22-24 (ARA)</div>
+                "Varões israelitas, atendei a estas palavras: Jesus, o Nazareno, varão aprovado por Deus diante de vós com milagres, prodígios e sinais [...] sendo este entregue pelo determinado desígnio e presciência de Deus, vós o matastes, crucificando-o por mãos de iníquos; ao qual Deus ressuscitou..."
+            </div>
+            <label>Como foi a vida de Jesus conosco, de acordo com At 2.22-24? Assinale com as respostas afirmativas:</label>
+            <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox" name="At 2.22-24" value="Fez milagres, prodígios e sinais"> Fez milagres, prodígios e sinais</label>
+                <label class="checkbox-item"><input type="checkbox" name="At 2.22-24" value="Foi entregue à morte"> Foi entregue à morte</label>
+                <label class="checkbox-item"><input type="checkbox" name="At 2.22-24" value="Foi crucificado"> Foi crucificado</label>
+                <label class="checkbox-item"><input type="checkbox" name="At 2.22-24" value="Foi ressuscitado"> Foi ressuscitado</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">João 3:16 (ARA)</div>
+                "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna."
+            </div>
+            <label for="q4">Em Jo 3.16, qual é o motivo da vinda de Jesus Cristo?</label>
+            <textarea id="q4" name="4. Motivo da vinda (Jo 3.16)" rows="2" required></textarea>
+        </div>
+
+        <!-- SEÇÃO B -->
+        <div class="section-title">B – CREIA EM JESUS</div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Marcos 1:14-15 (ARA)</div>
+                "Depois de João ter sido preso, foi Jesus para a Galileia, pregando o evangelho de Deus e dizendo: O tempo está cumprido, e o reino de Deus está próximo; arrependei-vos e crede no evangelho."
+            </div>
+            <label>Em Mc 1.14,15, o que se deve fazer diante do Evangelho? Assinale as alternativas corretas:</label>
+            <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox" name="Mc 1.14-15" value="Crer"> Crer</label>
+                <label class="checkbox-item"><input type="checkbox" name="Mc 1.14-15" value="Arrepender-se"> Arrepender-se</label>
+                <label class="checkbox-item"><input type="checkbox" name="Mc 1.14-15" value="Obedecer a Lei"> Obedecer a Lei</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Lucas 8:48 (ARA)</div>
+                "Então, lhe disse: Filha, a tua fé te salvou; vai-te em paz."
+            </div>
+            <label for="q6">O que a mulher enferma fez que a salvou? (Lc 8.48)</label>
+            <textarea id="q6" name="6. O que salvou a mulher (Lc 8.48)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">João 10:9 (ARA)</div>
+                "Eu sou a porta. Se alguém entrar por mim, será salvo; entrará, e sairá, e achará pastagem."
+            </div>
+            <label for="q7">Em Jo 10.9, Jesus diz que é a porta para a salvação. O que se deve fazer para obter esta salvação?</label>
+            <textarea id="q7" name="7. Obter salvação (Jo 10.9)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">João 1:12 (ARA)</div>
+                "Mas, a todos quantos o receberam, deu-lhes o poder de serem feitos filhos de Deus, a saber, aos que creem no seu nome;"
+            </div>
+            <label for="q8">Ele veio para salvar, mas o que é necessário fazer? (Jo 1.12)</label>
+            <textarea id="q8" name="8. Necessario fazer (Jo 1.12)" rows="2" required></textarea>
+        </div>
+
+        <!-- SEÇÃO C -->
+        <div class="section-title">C – PROMESSAS PARA AOS QUE CREEM</div>
+
+        <div class="question-group">
+            <label for="q9">Ainda em Jo 1.12, quem receber a Jesus o que acontece?</label>
+            <textarea id="q9" name="9. O que acontece a quem recebe (Jo 1.12)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label>O que o Senhor promete aos que creem em Jesus?</label>
+            
+            <div class="verse-box">
+                <div class="verse-title">João 3:36 (ARA)</div>
+                "Por isso, quem crê no Filho tem a vida eterna; o que, todavia, se mantém rebelde contra o Filho não verá a vida, mas sobre ele permanece a ira de Deus."
+            </div>
+            <input type="text" name="Promessa Jo 3.36" placeholder="Resposta referente a Jo 3.36" required>
+
+            <div class="verse-box" style="margin-top: 10px;">
+                <div class="verse-title">João 6:35 (ARA)</div>
+                "Declarou-lhes, pois, Jesus: Eu sou o pão da vida; o que vem a mim jamais terá fome; e o que crê em mim jamais terá sede."
+            </div>
+            <input type="text" name="Promessa Jo 6.35" placeholder="Resposta referente a Jo 6.35" required>
+
+            <div class="verse-box" style="margin-top: 10px;">
+                <div class="verse-title">João 11:25 (ARA)</div>
+                "Disse-lhe Jesus: Eu sou a ressurreição e a vida. Quem crê em mim, ainda que morra, viverá;"
+            </div>
+            <input type="text" name="Promessa Jo 11.25" placeholder="Resposta referente a Jo 11.25" required>
+        </div>
+
+        <div class="final-note">
+            Lembre-se: O evangelho é a boa nova de salvação em que Jesus Cristo veio para salvar a todos aqueles que nele creem. Portanto, creia somente em Jesus Cristo!
+        </div>
+
+        <!-- DADOS FINAIS -->
+        <div class="footer-info">
+            <div class="field">
+                <label for="nomePessoa">Nome do Aluno:</label>
+                <input type="text" id="nomePessoa" name="Nome do Aluno" required>
+            </div>
+            <div class="field">
+                <label for="dataPreenchimento">Data:</label>
+                <input type="date" id="dataPreenchimento" name="Data" required>
+            </div>
+        </div>
+
+        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO</button>
+
+    </form>
+</div>
+
+<script>
+    function enviarFormulario(event) {
+        var btn = document.getElementById("btnEnviar");
+        btn.classList.add("sent");
+        btn.innerText = "ENVIADO";
+    }
+</script>
+
+</body>
+</html>
