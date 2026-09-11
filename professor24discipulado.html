@@ -68,7 +68,7 @@
     <main class="main-content">
       <header>
         <h1>Painel do Professor</h1>
-        <p>Escolha a Lição 01 a 24. O vídeo do aluno só fica verde depois do ENVIAR da lição.</p>
+        <p>Escolha a Lição 01 a 24. O vídeo do aluno fica amarelo até o ENVIAR da lição.</p>
       </header>
       <div class="card">
         <h2>⚙️ Informações Gerais do Curso</h2>
@@ -98,14 +98,13 @@
             <div class="form-group">
               <label for="licao-arquivo">Incluir página da lição</label>
               <select id="licao-arquivo" onchange="aoEscolherLicao()"></select>
-              <p class="hint">Arquivos na mesma pasta: DiscipuladoLicao01.html até DiscipuladoLicao24.html</p>
             </div>
-            <div class="form-group"><label>Título que o aluno verá</label><input type="text" id="first-html-title" placeholder="Ex: Lição 10 - Deus Pai"></div>
+            <div class="form-group"><label>Título que o aluno verá</label><input type="text" id="first-html-title"></div>
             <div class="form-group" style="margin-bottom:0;"><label>E-mail do relatório</label><input type="email" id="lesson-email" value="emersonbaran@gmail.com"></div>
           </div>
           <div class="video-box">
             <label>🎬 Vídeo da aula</label>
-            <p class="hint">Com lição selecionada, o botão começa amarelo. Fica verde só após o ENVIAR da lição.</p>
+            <p class="hint">O botão do aluno nasce amarelo. No ENVIAR da lição, fica verde e libera o vídeo.</p>
             <div class="form-group"><label>Título do vídeo</label><input type="text" id="video-title"></div>
             <div class="form-group" style="margin-bottom:0;"><label>URL do vídeo (YouTube)</label><input type="url" id="video-url" placeholder="https://www.youtube.com/watch?v=..."></div>
           </div>
