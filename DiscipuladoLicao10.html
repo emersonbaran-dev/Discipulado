@@ -23,7 +23,6 @@
     .footer-info { display: flex; gap: 15px; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
     .footer-info .field { flex: 1; }
     .btn-submit { width: 100%; background: #2D4F5C; color: #fff; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 25px; }
-    .btn-submit:disabled { opacity: .7; cursor: default; }
     .final-note { text-align: center; font-weight: bold; color: #2D4F5C; background: #f0f4f6; padding: 15px; border-radius: 6px; margin-top: 25px; }
     .unlock-note { text-align: center; font-size: 11pt; color: #b45309; background: #fef3c7; border: 1px solid #fde68a; padding: 10px; border-radius: 6px; margin-bottom: 18px; }
     #folha-pdf { position: absolute; left: -9999px; top: 0; width: 210mm; background: #fff; color: #222; padding: 18mm 16mm; font-size: 12px; }
@@ -32,7 +31,7 @@
   </style>
 </head>
 <body>
-<div class="container" id="pagina-licao">
+<div class="container">
   <div class="main-category">ELE É DEUS!</div>
   <div class="header-container">
     <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
@@ -40,30 +39,14 @@
   </div>
   <div class="subtitle">DEUS PAI</div>
   <div class="intro">Neste estudo, aprenderemos quem é o nosso Deus de uma maneira simples e resumida que servirá para o seu fortalecimento espiritual e temor diante deste nosso Senhor.</div>
-  <div class="unlock-note">
-    Clique em <strong>ENVIAR</strong> para gerar o PDF da lição preenchida, abrir em nova aba e enviar para
-    <strong id="emailDestinoTexto">emersonbaran@gmail.com</strong>. O botão do vídeo ficará verde na mesma hora.
-  </div>
-
+  <div class="unlock-note">Clique em <strong>ENVIAR</strong> para gerar o relatório, abrir o PDF e enviar para <strong id="emailDestinoTexto">emersonbaran@gmail.com</strong>. O vídeo da aula ficará verde na mesma hora.</div>
   <form id="discipuladoForm" onsubmit="enviarFormulario(event)">
     <div class="section-title">I - A TRINDADE</div>
-    <div class="question-group">
-      <label for="q1">1) Em Mt 3.16,17, quais as pessoas da divindade que descreve?</label>
-      <textarea id="q1" rows="2" required></textarea>
-    </div>
-    <div class="question-group">
-      <label for="q2">2) Na bênção apostólica, é feita em nome de quem? (2Co 13.13)</label>
-      <textarea id="q2" rows="2" required></textarea>
-    </div>
+    <div class="question-group"><label for="q1">1) Em Mt 3.16,17, quais as pessoas da divindade que descreve?</label><textarea id="q1" rows="2" required></textarea></div>
+    <div class="question-group"><label for="q2">2) Na bênção apostólica, é feita em nome de quem? (2Co 13.13)</label><textarea id="q2" rows="2" required></textarea></div>
     <div class="section-title">II - A EXISTÊNCIA E O CONHECIMENTO DE DEUS</div>
-    <div class="question-group">
-      <label for="q3">3) Leia Hb 11.6. Para se aproximar de Deus, o que é necessário?</label>
-      <textarea id="q3" rows="2" required></textarea>
-    </div>
-    <div class="question-group">
-      <label for="q4">4) O que disse Deus quanto a sua presença conosco? (Jr 23.23)</label>
-      <textarea id="q4" rows="2" required></textarea>
-    </div>
+    <div class="question-group"><label for="q3">3) Leia Hb 11.6. Para se aproximar de Deus, o que é necessário?</label><textarea id="q3" rows="2" required></textarea></div>
+    <div class="question-group"><label for="q4">4) O que disse Deus quanto a sua presença conosco? (Jr 23.23)</label><textarea id="q4" rows="2" required></textarea></div>
     <div class="section-title">III - ATRIBUTOS INCOMUNICÁVEIS</div>
     <div class="question-group">
       <label>5) Relacione as colunas indicando o atributo de Deus:</label>
@@ -74,18 +57,9 @@
       <div class="match-row"><select id="q5d" required><option value="">--</option><option>A</option><option>B</option><option>C</option><option>D</option></select><span>Imutável</span></div>
     </div>
     <div class="section-title">IV - ATRIBUTOS COMUNICÁVEIS</div>
-    <div class="question-group">
-      <label for="q6">6) Cite o atributo de Deus que falta em 2 Jo 1.3:</label>
-      <input type="text" id="q6" required>
-    </div>
-    <div class="question-group">
-      <label for="q7">7) Cite os dois atributos de Deus em At 3.14:</label>
-      <input type="text" id="q7" required>
-    </div>
-    <div class="question-group">
-      <label for="q8">8) Cite o atributo de Deus em Rm 2.4:</label>
-      <input type="text" id="q8" required>
-    </div>
+    <div class="question-group"><label for="q6">6) Cite o atributo de Deus que falta em 2 Jo 1.3:</label><input type="text" id="q6" required></div>
+    <div class="question-group"><label for="q7">7) Cite os dois atributos de Deus em At 3.14:</label><input type="text" id="q7" required></div>
+    <div class="question-group"><label for="q8">8) Cite o atributo de Deus em Rm 2.4:</label><input type="text" id="q8" required></div>
     <div class="final-note">Quanto mais conhecemos a Deus em sua Palavra, mais condições teremos de adorá-Lo e dedicar nossa vida inteiramente a Ele!</div>
     <div class="footer-info">
       <div class="field"><label for="nomePessoa">Nome do Aluno:</label><input type="text" id="nomePessoa" required></div>
@@ -94,124 +68,125 @@
     <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR</button>
   </form>
 </div>
-
 <div id="folha-pdf">
-  <div style="text-align:center;color:#2D4F5C;font-weight:bold;letter-spacing:1px;">ELE É DEUS!</div>
+  <div style="text-align:center;color:#2D4F5C;font-weight:bold;">ELE É DEUS!</div>
   <h1>LIÇÃO 10</h1>
   <div style="text-align:center;font-weight:bold;margin-bottom:12px;">DEUS PAI</div>
   <p><strong>Nome:</strong> <span id="pdf-nome"></span> &nbsp;&nbsp; <strong>Data:</strong> <span id="pdf-data"></span></p>
-  <p>Neste estudo, aprenderemos quem é o nosso Deus de uma maneira simples e resumida que servirá para o seu fortalecimento espiritual e temor diante deste nosso Senhor.</p>
   <div class="section-title">I - A TRINDADE</div>
-  <p><strong>1) Em Mt 3.16,17, quais as pessoas da divindade que descreve?</strong></p>
-  <div class="resp" id="pdf-q1"></div>
-  <p><strong>2) Na bênção apostólica, é feita em nome de quem? (2Co 13.13)</strong></p>
-  <div class="resp" id="pdf-q2"></div>
+  <p><strong>1) Em Mt 3.16,17, quais as pessoas da divindade que descreve?</strong></p><div class="resp" id="pdf-q1"></div>
+  <p><strong>2) Na bênção apostólica, é feita em nome de quem? (2Co 13.13)</strong></p><div class="resp" id="pdf-q2"></div>
   <div class="section-title">II - A EXISTÊNCIA E O CONHECIMENTO DE DEUS</div>
-  <p><strong>3) Leia Hb 11.6. Para se aproximar de Deus, o que é necessário?</strong></p>
-  <div class="resp" id="pdf-q3"></div>
-  <p><strong>4) O que disse Deus quanto à sua presença conosco? (Jr 23.23)</strong></p>
-  <div class="resp" id="pdf-q4"></div>
+  <p><strong>3) Leia Hb 11.6. Para se aproximar de Deus, o que é necessário?</strong></p><div class="resp" id="pdf-q3"></div>
+  <p><strong>4) O que disse Deus quanto à sua presença conosco? (Jr 23.23)</strong></p><div class="resp" id="pdf-q4"></div>
   <div class="section-title">III - ATRIBUTOS INCOMUNICÁVEIS</div>
-  <p>(A) Sl 139.7-10 | (B) Sl 90.2 | (C) Ml 3.6 | (D) Jo 5.26</p>
   <p>Eterno: <span id="pdf-q5a"></span></p>
   <p>Onipresente: <span id="pdf-q5b"></span></p>
   <p>Autoexistente: <span id="pdf-q5c"></span></p>
   <p>Imutável: <span id="pdf-q5d"></span></p>
   <div class="section-title">IV - ATRIBUTOS COMUNICÁVEIS</div>
-  <p><strong>6) Atributo que falta em 2 Jo 1.3</strong></p>
-  <div class="resp" id="pdf-q6"></div>
-  <p><strong>7) Dois atributos em At 3.14</strong></p>
-  <div class="resp" id="pdf-q7"></div>
-  <p><strong>8) Atributo em Rm 2.4</strong></p>
-  <div class="resp" id="pdf-q8"></div>
-  <p style="margin-top:18px;"><strong>Quanto mais conhecemos a Deus em sua Palavra, mais condições teremos de adorá-Lo e dedicar nossa vida inteiramente a Ele!</strong></p>
+  <p><strong>6) Atributo que falta em 2 Jo 1.3</strong></p><div class="resp" id="pdf-q6"></div>
+  <p><strong>7) Dois atributos em At 3.14</strong></p><div class="resp" id="pdf-q7"></div>
+  <p><strong>8) Atributo em Rm 2.4</strong></p><div class="resp" id="pdf-q8"></div>
 </div>
-
 <script>
   const params = new URLSearchParams(window.location.search);
   const EMAIL_DESTINO = params.get('email') || 'emersonbaran@gmail.com';
   const LESSON_INDEX = params.get('lessonIndex') || '0';
-  const SUBMIT_KEY = params.get('submitKey') || ('curso_licao_enviada_' + LESSON_INDEX + '_DiscipuladoLicao10.html');
+  const RELATORIOS_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/relatorios.json';
   document.getElementById('emailDestinoTexto').textContent = EMAIL_DESTINO;
 
   function letraRef(letra) {
     const mapa = { A: 'A - Sl 139.7-10', B: 'B - Sl 90.2', C: 'C - Ml 3.6', D: 'D - Jo 5.26' };
     return mapa[letra] || letra || '-';
   }
-  function preencherFolha() {
-    const data = document.getElementById('dataPreenchimento').value;
-    document.getElementById('pdf-nome').textContent = document.getElementById('nomePessoa').value.trim();
-    document.getElementById('pdf-data').textContent = data ? data.split('-').reverse().join('/') : '';
-    document.getElementById('pdf-q1').textContent = document.getElementById('q1').value.trim();
-    document.getElementById('pdf-q2').textContent = document.getElementById('q2').value.trim();
-    document.getElementById('pdf-q3').textContent = document.getElementById('q3').value.trim();
-    document.getElementById('pdf-q4').textContent = document.getElementById('q4').value.trim();
-    document.getElementById('pdf-q5a').textContent = letraRef(document.getElementById('q5a').value);
-    document.getElementById('pdf-q5b').textContent = letraRef(document.getElementById('q5b').value);
-    document.getElementById('pdf-q5c').textContent = letraRef(document.getElementById('q5c').value);
-    document.getElementById('pdf-q5d').textContent = letraRef(document.getElementById('q5d').value);
-    document.getElementById('pdf-q6').textContent = document.getElementById('q6').value.trim();
-    document.getElementById('pdf-q7').textContent = document.getElementById('q7').value.trim();
-    document.getElementById('pdf-q8').textContent = document.getElementById('q8').value.trim();
+  function val(id) { return document.getElementById(id).value.trim(); }
+  function preencherFolha(nome, dataBr) {
+    document.getElementById('pdf-nome').textContent = nome;
+    document.getElementById('pdf-data').textContent = dataBr;
+    ['q1','q2','q3','q4','q6','q7','q8'].forEach(id => document.getElementById('pdf-' + id).textContent = val(id));
+    document.getElementById('pdf-q5a').textContent = letraRef(val('q5a'));
+    document.getElementById('pdf-q5b').textContent = letraRef(val('q5b'));
+    document.getElementById('pdf-q5c').textContent = letraRef(val('q5c'));
+    document.getElementById('pdf-q5d').textContent = letraRef(val('q5d'));
   }
-  function liberarVideoNaPaginaDoAluno() {
-    localStorage.setItem(SUBMIT_KEY, '1');
+  function montarRelatorioTexto(nome, dataBr) {
+    return [
+      'RELATÓRIO - DISCIPULADO LIÇÃO 10 - DEUS PAI',
+      'Nome: ' + nome,
+      'Data: ' + dataBr,
+      '',
+      '1) Em Mt 3.16,17, quais as pessoas da divindade que descreve?',
+      'Resposta: ' + val('q1'),
+      '',
+      '2) Na bênção apostólica, é feita em nome de quem? (2Co 13.13)',
+      'Resposta: ' + val('q2'),
+      '',
+      '3) Hb 11.6 - O que é necessário para se aproximar de Deus?',
+      'Resposta: ' + val('q3'),
+      '',
+      '4) Jr 23.23 - O que Deus disse quanto à sua presença?',
+      'Resposta: ' + val('q4'),
+      '',
+      '5) Atributos:',
+      'Eterno: ' + letraRef(val('q5a')),
+      'Onipresente: ' + letraRef(val('q5b')),
+      'Autoexistente: ' + letraRef(val('q5c')),
+      'Imutável: ' + letraRef(val('q5d')),
+      '',
+      '6) Atributo em 2 Jo 1.3: ' + val('q6'),
+      '7) Atributos em At 3.14: ' + val('q7'),
+      '8) Atributo em Rm 2.4: ' + val('q8')
+    ].join('\n');
+  }
+  function liberarVideo() {
     if (window.parent && window.parent !== window) {
-      window.parent.postMessage({ type: 'LICAO_ENVIADA', lessonIndex: Number(LESSON_INDEX), submitKey: SUBMIT_KEY }, '*');
+      window.parent.postMessage({ type: 'LICAO_ENVIADA', lessonIndex: Number(LESSON_INDEX) }, '*');
     }
   }
-  async function enviarPdfPorEmail(nome, dataBr, pdfBlob, arquivoNome) {
+  async function enviarRelatorio(nome, dataBr, texto, pdfBlob, arquivoNome) {
     const arquivo = new File([pdfBlob], arquivoNome, { type: 'application/pdf' });
     const fd = new FormData();
-    fd.append('_subject', 'PDF Lição 10 - ' + nome);
-    fd.append('_template', 'table');
+    fd.append('_subject', 'Relatório Lição 10 - ' + nome);
     fd.append('nome', nome);
     fd.append('data', dataBr);
-    fd.append('licao', 'Discipulado Lição 10 - Deus Pai');
-    fd.append('mensagem', 'Segue em anexo a folha PDF da Lição 10 preenchida.');
+    fd.append('relatorio', texto);
     fd.append('anexo', arquivo, arquivoNome);
-    const res = await fetch('https://formsubmit.co/ajax/' + EMAIL_DESTINO, { method: 'POST', body: fd });
-    if (!res.ok) throw new Error('Falha no envio');
+    await fetch('https://formsubmit.co/ajax/' + EMAIL_DESTINO, { method: 'POST', body: fd });
+    await fetch(RELATORIOS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nome: nome, data: dataBr, licao: 'Lição 10 - Deus Pai', relatorio: texto, enviadoEm: new Date().toISOString() })
+    });
   }
   async function enviarFormulario(event) {
     event.preventDefault();
     const form = document.getElementById('discipuladoForm');
     if (!form.checkValidity()) { form.reportValidity(); return; }
-
     const btn = document.getElementById('btnEnviar');
     btn.disabled = true;
-    btn.innerText = 'ENVIAR';
-    preencherFolha();
-
-    const nome = document.getElementById('nomePessoa').value.trim();
-    const data = document.getElementById('dataPreenchimento').value;
+    const nome = val('nomePessoa');
+    const data = val('dataPreenchimento');
     const dataBr = data ? data.split('-').reverse().join('/') : '';
-    const arquivoNome = 'Licao10-' + nome.replace(/\s+/g, '_') + '.pdf';
-
+    const arquivoNome = 'Relatorio-Licao10-' + nome.replace(/\s+/g, '_') + '.pdf';
+    const texto = montarRelatorioTexto(nome, dataBr);
+    preencherFolha(nome, dataBr);
     try {
       const pdfBlob = await html2pdf().set({
-        margin: 0,
-        filename: arquivoNome,
-        image: { type: 'jpeg', quality: 0.95 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        margin: 0, filename: arquivoNome, image: { type: 'jpeg', quality: 0.95 },
+        html2canvas: { scale: 2, useCORS: true }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       }).from(document.getElementById('folha-pdf')).outputPdf('blob');
-
-      const pdfUrl = URL.createObjectURL(pdfBlob);
-      window.open(pdfUrl, '_blank');
-
-      liberarVideoNaPaginaDoAluno();
-
+      window.open(URL.createObjectURL(pdfBlob), '_blank');
+      liberarVideo();
       try {
-        await enviarPdfPorEmail(nome, dataBr, pdfBlob, arquivoNome);
+        await enviarRelatorio(nome, dataBr, texto, pdfBlob, arquivoNome);
       } catch (err) {
         const a = document.createElement('a');
-        a.href = pdfUrl;
-        a.download = arquivoNome;
+        a.href = 'mailto:' + EMAIL_DESTINO + '?subject=' + encodeURIComponent('Relatório Lição 10 - ' + nome) + '&body=' + encodeURIComponent(texto);
         a.click();
       }
     } catch (e) {
-      alert('Não foi possível gerar o PDF. Verifique a internet e tente novamente.');
+      alert('Não foi possível gerar o relatório. Verifique a internet.');
       btn.disabled = false;
     }
   }
