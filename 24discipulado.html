@@ -42,9 +42,9 @@
     .doc-header { width: 100%; background: #f1f5f9; border: none; padding: 14px 18px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
     .doc-body-inner { padding: 15px; }
     .licao-frame { width: 100%; min-height: 980px; height: 80vh; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; }
-    .btn-video { display: none; align-items: center; justify-content: center; gap: 8px; background: #16a34a; color: #fff; border: none; border-radius: 8px; padding: 14px 22px; font-size: 1rem; font-weight: 700; cursor: pointer; width: 100%; }
-    .btn-video.liberado { display: inline-flex; }
-    .btn-video:hover { background: #15803d; }
+    .btn-video { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; border: none; border-radius: 8px; padding: 14px 22px; font-size: 1rem; font-weight: 700; background: #eab308; color: #422006; cursor: not-allowed; pointer-events: none; }
+    .btn-video.liberado { background: #16a34a; color: #fff; cursor: pointer; pointer-events: auto; }
+    .btn-video.liberado:hover { background: #15803d; }
     .empty-state { text-align: center; padding: 40px; background: #fff; border-radius: 8px; color: #64748b; }
     @media (max-width: 768px) { .app-layout { flex-direction: column; } .sidebar { width: 100%; height: auto; position: relative; } }
   </style>
@@ -69,7 +69,6 @@
       <div id="course-modules"></div>
     </main>
   </div>
-
   <script>
     const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso.json';
     const DEFAULT_EMAIL = 'emersonbaran@gmail.com';
@@ -78,39 +77,26 @@
     function getLessonSubmitKey(lesson, index) {
       return 'curso_licao_enviada_' + index + '_' + (lesson.firstHtmlPage || 'licao');
     }
-
     function licaoFoiEnviada(lesson, index) {
       return localStorage.getItem(getLessonSubmitKey(lesson, index)) === '1';
     }
-
     function videoEstaLiberado(lesson, index) {
       if (!getVideoUrl(lesson)) return false;
       if (lesson.firstHtmlPage) return licaoFoiEnviada(lesson, index);
       return true;
     }
-
     function marcarLicaoEnviada(index) {
       const lessons = JSON.parse(localStorage.getItem('course_lessons') || '[]');
       if (!lessons[index]) return;
       localStorage.setItem(getLessonSubmitKey(lessons[index], index), '1');
     }
-
-    function getVideoUrl(lesson) {
-      return lesson.videoUrl || '';
-    }
-
-    function getVideoTitle(lesson) {
-      return lesson.videoTitle || 'Vídeo da aula';
-    }
-
+    function getVideoUrl(lesson) { return lesson.videoUrl || ''; }
+    function getVideoTitle(lesson) { return lesson.videoTitle || 'Vídeo da aula'; }
     function formatYouTubeUrl(url) {
       const match = (url || '').match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
       return (match && match[2].length === 11) ? 'https://www.youtube.com/embed/' + match[2] : null;
     }
-
-    function isModuleLocked(d) {
-      return !!(d && new Date() < new Date(d));
-    }
+    function isModuleLocked(d) { return !!(d && new Date() < new Date(d)); }
 
     async function loadCursoFromCloud() {
       try {
@@ -124,11 +110,8 @@
         if (data.subtitle) localStorage.setItem('course_subtitle', data.subtitle);
         if (data.lessons) localStorage.setItem('course_lessons', JSON.stringify(data.lessons));
         return true;
-      } catch (e) {
-        return false;
-      }
+      } catch (e) { return false; }
     }
-
     async function refreshStudentView() {
       const changed = await loadCursoFromCloud();
       if (!changed && document.getElementById('course-modules').innerHTML.trim()) return;
@@ -141,7 +124,6 @@
       const container = document.getElementById('course-modules');
       const sidebarMenu = document.getElementById('sidebar-menu');
       const lessons = JSON.parse(localStorage.getItem('course_lessons') || '[]');
-
       if (!lessons.length) {
         container.innerHTML = '<div class="empty-state"><h3>Nenhum módulo cadastrado ainda.</h3></div>';
         sidebarMenu.innerHTML = '<li style="color:#64748b;padding:10px;">Sem conteúdo.</li>';
@@ -170,7 +152,6 @@
         if (isModuleLocked(lesson.releaseDate)) {
           return `<div class="accordion-item" id="item-${i}"><div class="accordion-header"><span>🔒 ${lesson.title}</span><div class="lock-notice">Disponível em: ${new Date(lesson.releaseDate).toLocaleString('pt-BR')}</div></div></div>`;
         }
-
         const liberado = videoEstaLiberado(lesson, i);
         const email = encodeURIComponent(lesson.lessonEmail || DEFAULT_EMAIL);
         const submitKey = encodeURIComponent(getLessonSubmitKey(lesson, i));
@@ -192,20 +173,13 @@
           </div>` : '';
 
         let videoHTML = '';
-        if (videoUrl && lesson.firstHtmlPage && !liberado) {
-          videoHTML = `
-            <div class="section-block">
-              <div class="doc-accordion">
-                <div class="doc-header" style="cursor:not-allowed;color:#64748b;">
-                  <span>🔒 Vídeo bloqueado</span>
-                  <div class="lock-notice">Preencha a lição e clique em Enviar para liberar</div>
-                </div>
-              </div>
-            </div>`;
-        } else if (videoUrl && liberado) {
+        if (videoUrl) {
           videoHTML = `
             <div class="section-block" id="video-wrap-${i}">
-              <button class="btn-video liberado" onclick="abrirVideo(${i})">▶ Assistir vídeo</button>
+              <button class="btn-video ${liberado ? 'liberado' : ''}" ${liberado ? `onclick="abrirVideo(${i})"` : 'disabled'} id="btn-video-${i}">
+                ▶ Assistir vídeo
+              </button>
+              ${liberado ? `
               <div class="doc-accordion" id="doc-item-${i}-video" style="margin-top:12px;">
                 <button class="doc-header" onclick="toggleDocAccordion(${i}, 'video')">
                   <span>🎬 ${getVideoTitle(lesson)}</span>
@@ -216,7 +190,7 @@
                     ${yt ? `<div class="video-responsive"><iframe src="${yt}" allowfullscreen></iframe></div>` : `<a href="${videoUrl}" target="_blank">Abrir vídeo</a>`}
                   </div>
                 </div>
-              </div>
+              </div>` : ''}
             </div>`;
         }
 
@@ -238,6 +212,8 @@
     }
 
     function abrirVideo(i) {
+      const lessons = JSON.parse(localStorage.getItem('course_lessons') || '[]');
+      if (!videoEstaLiberado(lessons[i] || {}, i)) return;
       openAccordion(i);
       setTimeout(() => {
         toggleDocAccordion(i, 'video');
@@ -253,10 +229,11 @@
       marcarLicaoEnviada(i);
       renderLessons();
       openAccordion(i);
-      setTimeout(() => {
-        const btnArea = document.getElementById('video-wrap-' + i);
-        if (btnArea) btnArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 200);
+      const btn = document.getElementById('btn-video-' + i);
+      if (btn) {
+        btn.classList.add('liberado');
+        btn.removeAttribute('disabled');
+      }
     });
 
     function collapseAllModules() {
@@ -266,18 +243,15 @@
         if (body) body.style.maxHeight = null;
       });
     }
-
     function toggleSidebarModule(i) {
       const el = document.getElementById('sidebar-mod-' + i);
       if (el) el.classList.toggle('active');
       openAccordion(i);
     }
-
     function handleSidebarSubitemClick(i, key) {
       openAccordion(i);
       toggleDocAccordion(i, key);
     }
-
     function openAccordion(i) {
       const item = document.getElementById('item-' + i);
       const body = document.getElementById('body-' + i);
@@ -286,42 +260,27 @@
         body.style.maxHeight = (body.scrollHeight + 2500) + 'px';
       }
     }
-
     function toggleAccordion(i) {
       const item = document.getElementById('item-' + i);
       const body = document.getElementById('body-' + i);
       if (!item) return;
-      if (item.classList.contains('active')) {
-        item.classList.remove('active');
-        body.style.maxHeight = null;
-      } else {
-        item.classList.add('active');
-        body.style.maxHeight = (body.scrollHeight + 2500) + 'px';
-      }
+      if (item.classList.contains('active')) { item.classList.remove('active'); body.style.maxHeight = null; }
+      else { item.classList.add('active'); body.style.maxHeight = (body.scrollHeight + 2500) + 'px'; }
     }
-
     function toggleDocAccordion(i, key) {
       const docItem = document.getElementById('doc-item-' + i + '-' + key);
       const docBody = document.getElementById('doc-body-' + i + '-' + key);
       const mainBody = document.getElementById('body-' + i);
       if (!docItem || !docBody) return;
-      if (docItem.classList.contains('active')) {
-        docItem.classList.remove('active');
-        docBody.style.maxHeight = null;
-      } else {
+      if (docItem.classList.contains('active')) { docItem.classList.remove('active'); docBody.style.maxHeight = null; }
+      else {
         docItem.classList.add('active');
         docBody.style.maxHeight = (docBody.scrollHeight + 80) + 'px';
         if (mainBody) mainBody.style.maxHeight = (mainBody.scrollHeight + docBody.scrollHeight + 120) + 'px';
       }
     }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      refreshStudentView();
-      setInterval(refreshStudentView, 15000);
-    });
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) refreshStudentView();
-    });
+    document.addEventListener('DOMContentLoaded', () => { refreshStudentView(); setInterval(refreshStudentView, 15000); });
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshStudentView(); });
   </script>
 </body>
 </html>
