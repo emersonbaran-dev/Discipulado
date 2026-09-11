@@ -26,15 +26,13 @@
     .card h2 { font-size: 1.25rem; margin-bottom: 15px; color: #2563eb; }
     .form-group { margin-bottom: 18px; }
     label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; }
-    input, textarea { width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: inherit; }
+    input, textarea, select { width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: inherit; background: #fff; }
     textarea { min-height: 90px; }
     .checkbox-group { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 0.9rem; color: #475569; }
     .checkbox-group input { width: 16px; height: 16px; }
     .html-embed-box, .video-box { padding: 15px; border-radius: 8px; margin-bottom: 20px; }
     .html-embed-box { background: #eff6ff; border: 1px dashed #93c5fd; }
     .video-box { background: #f8fafc; border: 1px dashed #cbd5e1; }
-    .html-embed-fields { display: none; margin-top: 12px; }
-    .html-embed-fields.visible { display: block; }
     .hint { font-size: 0.85rem; color: #64748b; margin: 8px 0 12px; }
     .btn { padding: 10px 18px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
     .btn-primary { background: #2563eb; color: #fff; }
@@ -70,8 +68,9 @@
     <main class="main-content">
       <header>
         <h1>Painel do Professor</h1>
-        <p>O vídeo do aluno fica amarelo até o ENVIAR da lição. O relatório vai para emersonbaran@gmail.com</p>
+        <p>Inclua a Lição 01 até a Lição 24. O vídeo do aluno fica amarelo até o ENVIAR da lição.</p>
       </header>
+
       <div class="card">
         <h2>⚙️ Informações Gerais do Curso</h2>
         <div class="form-group"><label>Título Geral do Curso</label><input type="text" id="course-title-input"></div>
@@ -79,6 +78,7 @@
         <button type="button" class="btn btn-primary" onclick="saveCourseHeaderInfo()">💾 Salvar Título e Subtítulo</button>
         <div class="save-alert" id="header-save-alert">Informações salvas com sucesso!</div>
       </div>
+
       <div class="card" id="form-card">
         <h2>
           <span id="form-title">Adicionar Novo Módulo / Aula</span>
@@ -96,33 +96,37 @@
             </div>
           </div>
           <div class="form-group"><label>Descrição / Orientação</label><textarea id="lesson-description"></textarea></div>
+
           <div class="html-embed-box">
-            <div class="checkbox-group" style="margin-top:0;">
-              <input type="checkbox" id="include-html-page" onchange="document.getElementById('html-embed-fields').classList.toggle('visible', this.checked)">
-              <label for="include-html-page" style="margin:0;font-weight:normal;">Incluir <strong>DiscipuladoLicao10.html</strong> como primeiro item</label>
+            <div class="form-group">
+              <label for="licao-arquivo">Incluir página da lição</label>
+              <select id="licao-arquivo" onchange="aoEscolherLicao()"></select>
+              <p class="hint">Arquivos na mesma pasta: DiscipuladoLicao01.html até DiscipuladoLicao24.html</p>
             </div>
-            <div class="html-embed-fields" id="html-embed-fields">
-              <div class="form-group"><label>Título da lição</label><input type="text" id="first-html-title" value="Lição 10 - Deus Pai"></div>
-              <div class="form-group"><label>Arquivo HTML</label><input type="text" id="first-html-page" value="DiscipuladoLicao10.html"></div>
-              <div class="form-group" style="margin-bottom:0;">
-                <label>E-mail do relatório</label>
-                <input type="email" id="lesson-email" value="emersonbaran@gmail.com">
-                <p class="hint">O botão ENVIAR da lição gera o relatório/PDF e envia para este e-mail.</p>
-              </div>
+            <div class="form-group">
+              <label>Título que o aluno verá</label>
+              <input type="text" id="first-html-title" placeholder="Ex: Lição 10 - Deus Pai">
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label>E-mail do relatório</label>
+              <input type="email" id="lesson-email" value="emersonbaran@gmail.com">
             </div>
           </div>
+
           <div class="video-box">
             <label>🎬 Vídeo da aula</label>
-            <p class="hint">No aluno o botão começa amarelo e bloqueado. Depois do ENVIAR, fica verde e libera o vídeo.</p>
-            <div class="form-group"><label>Título do vídeo</label><input type="text" id="video-title" placeholder="Ex: Vídeo da Lição 10"></div>
+            <p class="hint">Se houver lição selecionada, o botão do vídeo começa amarelo e só fica verde depois do ENVIAR.</p>
+            <div class="form-group"><label>Título do vídeo</label><input type="text" id="video-title" placeholder="Ex: Vídeo da aula"></div>
             <div class="form-group" style="margin-bottom:0;"><label>URL do vídeo (YouTube)</label><input type="url" id="video-url" placeholder="https://www.youtube.com/watch?v=..."></div>
           </div>
+
           <div class="form-actions">
             <button type="button" id="btn-cancel" class="btn btn-cancel" style="display:none;" onclick="resetForm()">Cancelar Edição</button>
             <button type="submit" id="btn-submit" class="btn btn-primary">💾 Salvar Módulo</button>
           </div>
         </form>
       </div>
+
       <div class="card">
         <h2>Módulos Cadastrados</h2>
         <div id="modules-list"></div>
@@ -133,6 +137,31 @@
     let lessons = [];
     const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso.json';
     const DEFAULT_EMAIL = 'emersonbaran@gmail.com';
+
+    function nomeArquivoLicao(n) {
+      return 'DiscipuladoLicao' + String(n).padStart(2, '0') + '.html';
+    }
+    function montarSelectLicoes(selecionado) {
+      const sel = document.getElementById('licao-arquivo');
+      let html = '<option value="">Nenhuma lição</option>';
+      for (let i = 1; i <= 24; i++) {
+        const arquivo = nomeArquivoLicao(i);
+        const num = String(i).padStart(2, '0');
+        html += `<option value="${arquivo}" ${selecionado === arquivo ? 'selected' : ''}>Lição ${num} (${arquivo})</option>`;
+      }
+      sel.innerHTML = html;
+    }
+    function aoEscolherLicao() {
+      const arquivo = document.getElementById('licao-arquivo').value;
+      const titulo = document.getElementById('first-html-title');
+      if (!arquivo) { if (!titulo.value) titulo.value = ''; return; }
+      const num = arquivo.replace('DiscipuladoLicao', '').replace('.html', '');
+      if (!titulo.value || /^Lição \d+$/.test(titulo.value) || /^Lição \d+ - /.test(titulo.value) === false && titulo.value.indexOf('Lição ') === 0) {
+        titulo.value = 'Lição ' + num;
+      }
+      if (!titulo.value) titulo.value = 'Lição ' + num;
+    }
+
     async function syncCursoToCloud() {
       const payload = {
         title: localStorage.getItem('course_title') || 'Curso de Capacitação',
@@ -189,10 +218,8 @@
       document.getElementById('lesson-release-date').value = '';
       document.getElementById('lesson-release-date').disabled = false;
       document.getElementById('immediate-release').checked = false;
-      document.getElementById('include-html-page').checked = false;
-      document.getElementById('html-embed-fields').classList.remove('visible');
-      document.getElementById('first-html-title').value = 'Lição 10 - Deus Pai';
-      document.getElementById('first-html-page').value = 'DiscipuladoLicao10.html';
+      montarSelectLicoes('');
+      document.getElementById('first-html-title').value = '';
       document.getElementById('lesson-email').value = DEFAULT_EMAIL;
       document.getElementById('video-title').value = '';
       document.getElementById('video-url').value = '';
@@ -215,11 +242,8 @@
         document.getElementById('lesson-release-date').disabled = true;
         document.getElementById('immediate-release').checked = true;
       }
-      const includeHtml = !!m.firstHtmlPage;
-      document.getElementById('include-html-page').checked = includeHtml;
-      document.getElementById('html-embed-fields').classList.toggle('visible', includeHtml);
-      document.getElementById('first-html-title').value = m.firstHtmlTitle || 'Lição 10 - Deus Pai';
-      document.getElementById('first-html-page').value = m.firstHtmlPage || 'DiscipuladoLicao10.html';
+      montarSelectLicoes(m.firstHtmlPage || '');
+      document.getElementById('first-html-title').value = m.firstHtmlTitle || '';
       document.getElementById('lesson-email').value = m.lessonEmail || DEFAULT_EMAIL;
       document.getElementById('video-title').value = m.videoTitle || '';
       document.getElementById('video-url').value = m.videoUrl || '';
@@ -253,7 +277,7 @@
             </div>
           </div>
           ${m.releaseDate ? `<span class="badge badge-scheduled">📅 ${new Date(m.releaseDate).toLocaleString('pt-BR')}</span>` : `<span class="badge badge-released">⚡ Liberado</span>`}
-          ${m.firstHtmlPage ? `<span class="badge badge-html">📋 Relatório → ${m.lessonEmail || DEFAULT_EMAIL}</span>` : ''}
+          ${m.firstHtmlPage ? `<span class="badge badge-html">📋 ${m.firstHtmlTitle || m.firstHtmlPage}</span>` : ''}
           ${m.videoUrl ? `<span class="badge badge-video">🎬 ${m.videoTitle || 'Vídeo'}</span>` : ''}
           ${m.firstHtmlPage && m.videoUrl ? `<span class="badge badge-lock">🟡 Vídeo bloqueado até ENVIAR</span>` : ''}
           ${m.description ? `<p class="module-desc">${m.description}</p>` : ''}
@@ -262,15 +286,15 @@
     document.getElementById('lesson-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const editIndex = parseInt(document.getElementById('edit-index').value);
-      const includeHtml = document.getElementById('include-html-page').checked;
+      const arquivo = document.getElementById('licao-arquivo').value.trim();
       const moduleData = {
         title: document.getElementById('lesson-title').value.trim(),
         description: document.getElementById('lesson-description').value.trim(),
         releaseDate: document.getElementById('immediate-release').checked ? null : document.getElementById('lesson-release-date').value,
-        firstHtmlPage: includeHtml ? (document.getElementById('first-html-page').value.trim() || 'DiscipuladoLicao10.html') : null,
-        firstHtmlTitle: includeHtml ? (document.getElementById('first-html-title').value.trim() || 'Lição 10 - Deus Pai') : null,
-        lessonEmail: includeHtml ? (document.getElementById('lesson-email').value.trim() || DEFAULT_EMAIL) : DEFAULT_EMAIL,
-        lockLinksUntilLessonSubmit: true,
+        firstHtmlPage: arquivo || null,
+        firstHtmlTitle: arquivo ? (document.getElementById('first-html-title').value.trim() || arquivo.replace('.html', '')) : null,
+        lessonEmail: arquivo ? (document.getElementById('lesson-email').value.trim() || DEFAULT_EMAIL) : DEFAULT_EMAIL,
+        lockLinksUntilLessonSubmit: !!arquivo,
         videoTitle: document.getElementById('video-title').value.trim() || 'Vídeo da aula',
         videoUrl: document.getElementById('video-url').value.trim() || null,
         links: []
@@ -280,6 +304,7 @@
       resetForm();
     });
     document.addEventListener('DOMContentLoaded', () => {
+      montarSelectLicoes('');
       loadCursoFromCloud().then(() => { loadCourseHeaderInfo(); loadLessons(); });
       resetForm();
     });
