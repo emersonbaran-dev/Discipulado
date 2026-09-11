@@ -13,22 +13,21 @@
     .sidebar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #334155; }
     .sidebar-header h2 { font-size: 1.1rem; text-transform: uppercase; color: #94a3b8; white-space: nowrap; }
     .sidebar.collapsed .sidebar-header h2, .sidebar.collapsed .sidebar-menu { display: none; }
-    .btn-toggle-sidebar { background: none; border: none; color: #94a3b8; font-size: 1.4rem; cursor: pointer; width: 36px; height: 36px; border-radius: 6px; }
-    .sidebar.collapsed .sidebar-header { border-bottom: none; margin-bottom: 0; padding-bottom: 0; justify-content: center; }
+    .btn-toggle-sidebar { background: none; border: none; color: #94a3b8; font-size: 1.4rem; cursor: pointer; width: 36px; height: 36px; }
+    .sidebar.collapsed .sidebar-header { border: none; margin: 0; padding: 0; justify-content: center; }
     .sidebar-menu { list-style: none; }
     .sidebar-module { margin-bottom: 10px; }
-    .sidebar-module-title { width: 100%; background: none; border: none; color: #e2e8f0; font-size: 0.95rem; font-weight: 600; text-align: left; padding: 10px 12px; border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; }
+    .sidebar-module-title { width: 100%; background: none; border: none; color: #e2e8f0; font-weight: 600; text-align: left; padding: 10px 12px; border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; }
     .sidebar-module-title.locked { color: #64748b; cursor: not-allowed; opacity: .7; }
     .sidebar-sublist { list-style: none; padding-left: 15px; margin-top: 5px; display: none; }
     .sidebar-module.active .sidebar-sublist { display: block; }
     .sidebar-subitem { width: 100%; background: none; border: none; color: #94a3b8; font-size: 0.85rem; text-align: left; padding: 8px 10px; border-radius: 4px; cursor: pointer; }
     .main-content { flex: 1; padding: 30px 25px; max-width: 900px; margin: 0 auto; }
-    .header-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; margin-bottom: 25px; }
+    .header-top { display: flex; justify-content: space-between; gap: 15px; margin-bottom: 25px; }
     .header-title h1 { font-size: 2rem; margin-bottom: 8px; }
     .header-title p { color: #7f8c8d; }
     .btn-collapse-all { background: transparent; color: #64748b; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px; cursor: pointer; }
     .accordion-item { background: #fff; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e1e8ed; overflow: hidden; }
-    .accordion-item.is-locked { background: #f8fafc; }
     .accordion-header { width: 100%; background: none; border: none; padding: 20px 25px; font-size: 1.15rem; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
     .lock-notice { font-size: 0.85rem; background: #fef3c7; color: #b45309; padding: 6px 12px; border-radius: 6px; font-weight: 600; }
     .toggle-icon { width: 32px; height: 32px; background: #eef2f5; color: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-left: 15px; }
@@ -40,9 +39,11 @@
     .video-responsive { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; }
     .video-responsive iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
     .doc-accordion { border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden; background: #f8fafc; }
-    .doc-header { width: 100%; background: #f1f5f9; border: none; padding: 14px 18px; font-size: 0.95rem; font-weight: 600; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+    .doc-header { width: 100%; background: #f1f5f9; border: none; padding: 14px 18px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
     .doc-body-inner { padding: 15px; }
     .licao-frame { width: 100%; min-height: 980px; height: 80vh; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; }
+    .btn-video { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #16a34a; color: #fff; border: none; border-radius: 8px; padding: 14px 22px; font-size: 1rem; font-weight: 700; cursor: pointer; width: 100%; }
+    .btn-video:hover { background: #15803d; }
     .empty-state { text-align: center; padding: 40px; background: #fff; border-radius: 8px; color: #64748b; }
     @media (max-width: 768px) { .app-layout { flex-direction: column; } .sidebar { width: 100%; height: auto; position: relative; } }
   </style>
@@ -52,7 +53,7 @@
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <h2>📚 Módulos</h2>
-        <button class="btn-toggle-sidebar" onclick="toggleSidebar()">☰</button>
+        <button class="btn-toggle-sidebar" onclick="document.getElementById('sidebar').classList.toggle('collapsed')">☰</button>
       </div>
       <ul class="sidebar-menu" id="sidebar-menu"></ul>
     </aside>
@@ -67,39 +68,24 @@
       <div id="course-modules"></div>
     </main>
   </div>
-
   <script>
     const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso.json';
     const DEFAULT_EMAIL = 'emersonbaran@gmail.com';
     let lastCourseSnapshot = '';
 
-    function getLessonSubmitKey(lesson, index) {
-      return 'curso_licao_enviada_' + index + '_' + (lesson.firstHtmlPage || 'licao');
-    }
-    function isLessonFormSubmitted(lesson, index) {
-      if (!lesson.firstHtmlPage) return true;
-      return localStorage.getItem(getLessonSubmitKey(lesson, index)) === '1';
-    }
-    function markLessonSubmitted(lessonIndex) {
+    function getLessonSubmitKey(lesson, index) { return 'curso_licao_enviada_' + index + '_' + (lesson.firstHtmlPage || 'licao'); }
+    function isLessonFormSubmitted(lesson, index) { return !lesson.firstHtmlPage || localStorage.getItem(getLessonSubmitKey(lesson, index)) === '1'; }
+    function markLessonSubmitted(i) {
       const lessons = JSON.parse(localStorage.getItem('course_lessons') || '[]');
-      const lesson = lessons[lessonIndex];
-      if (lesson) localStorage.setItem(getLessonSubmitKey(lesson, lessonIndex), '1');
+      if (lessons[i]) localStorage.setItem(getLessonSubmitKey(lessons[i], i), '1');
     }
-    function getVideoUrl(lesson) {
-      if (lesson.videoUrl) return lesson.videoUrl;
-      if (lesson.links && lesson.links[0] && lesson.links[0].url) return lesson.links[0].url;
-      return '';
-    }
-    function getVideoTitle(lesson) {
-      return lesson.videoTitle || (lesson.links && lesson.links[0] && lesson.links[0].subtitle) || 'Vídeo da aula';
-    }
+    function getVideoUrl(lesson) { return lesson.videoUrl || (lesson.links && lesson.links[0] && lesson.links[0].url) || ''; }
+    function getVideoTitle(lesson) { return lesson.videoTitle || (lesson.links && lesson.links[0] && lesson.links[0].subtitle) || 'Vídeo da aula'; }
     function formatYouTubeUrl(url) {
       const match = (url || '').match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
       return (match && match[2].length === 11) ? 'https://www.youtube.com/embed/' + match[2] : null;
     }
-    function isModuleLocked(releaseDateStr) {
-      return !!(releaseDateStr && new Date() < new Date(releaseDateStr));
-    }
+    function isModuleLocked(d) { return !!(d && new Date() < new Date(d)); }
 
     async function loadCursoFromCloud() {
       try {
@@ -115,7 +101,6 @@
         return true;
       } catch (e) { return false; }
     }
-
     async function refreshStudentView() {
       const changed = await loadCursoFromCloud();
       if (!changed && document.getElementById('course-modules').innerHTML.trim()) return;
@@ -124,43 +109,30 @@
       renderLessons();
     }
 
-    function toggleSidebar() {
-      document.getElementById('sidebar').classList.toggle('collapsed');
-    }
-
     function renderLessons() {
       const container = document.getElementById('course-modules');
       const sidebarMenu = document.getElementById('sidebar-menu');
       const lessons = JSON.parse(localStorage.getItem('course_lessons') || '[]');
-
       if (!lessons.length) {
         container.innerHTML = '<div class="empty-state"><h3>Nenhum módulo cadastrado ainda.</h3></div>';
-        sidebarMenu.innerHTML = '<li style="color:#64748b; padding:10px;">Sem conteúdo.</li>';
+        sidebarMenu.innerHTML = '<li style="color:#64748b;padding:10px;">Sem conteúdo.</li>';
         return;
       }
-
       sidebarMenu.innerHTML = lessons.map((lesson, i) => {
-        if (isModuleLocked(lesson.releaseDate)) {
-          return `<li class="sidebar-module"><button class="sidebar-module-title locked" disabled>🔒 ${lesson.title || 'Módulo ' + (i + 1)}</button></li>`;
-        }
+        if (isModuleLocked(lesson.releaseDate)) return `<li class="sidebar-module"><button class="sidebar-module-title locked" disabled>🔒 ${lesson.title}</button></li>`;
         const submitted = isLessonFormSubmitted(lesson, i);
         const videoUrl = getVideoUrl(lesson);
         let subs = '';
         if (lesson.firstHtmlPage) subs += `<li><button class="sidebar-subitem" onclick="handleSidebarSubitemClick(${i}, 'html0')">📋 ${lesson.firstHtmlTitle || 'Lição 10'}</button></li>`;
-        if (videoUrl) {
-          subs += submitted
-            ? `<li><button class="sidebar-subitem" onclick="handleSidebarSubitemClick(${i}, 'video')">🎬 ${getVideoTitle(lesson)}</button></li>`
-            : `<li><button class="sidebar-subitem" disabled style="opacity:.6;cursor:not-allowed;">🔒 ${getVideoTitle(lesson)}</button></li>`;
-        }
-        return `<li class="sidebar-module" id="sidebar-mod-${i}">
-          <button class="sidebar-module-title" onclick="toggleSidebarModule(${i})"><span>${lesson.title || 'Módulo ' + (i + 1)}</span><span>▾</span></button>
-          <ul class="sidebar-sublist">${subs}</ul>
-        </li>`;
+        if (videoUrl) subs += submitted
+          ? `<li><button class="sidebar-subitem" onclick="abrirVideo(${i})">🎬 ${getVideoTitle(lesson)}</button></li>`
+          : `<li><button class="sidebar-subitem" disabled style="opacity:.6;cursor:not-allowed;">🔒 Vídeo bloqueado</button></li>`;
+        return `<li class="sidebar-module" id="sidebar-mod-${i}"><button class="sidebar-module-title" onclick="toggleSidebarModule(${i})"><span>${lesson.title}</span><span>▾</span></button><ul class="sidebar-sublist">${subs}</ul></li>`;
       }).join('');
 
       container.innerHTML = lessons.map((lesson, i) => {
         if (isModuleLocked(lesson.releaseDate)) {
-          return `<div class="accordion-item is-locked" id="item-${i}"><div class="accordion-header"><span>🔒 ${lesson.title}</span><div class="lock-notice">Disponível em: ${new Date(lesson.releaseDate).toLocaleString('pt-BR')}</div></div></div>`;
+          return `<div class="accordion-item" id="item-${i}"><div class="accordion-header"><span>🔒 ${lesson.title}</span><div class="lock-notice">Disponível em: ${new Date(lesson.releaseDate).toLocaleString('pt-BR')}</div></div></div>`;
         }
         const submitted = isLessonFormSubmitted(lesson, i);
         const email = encodeURIComponent(lesson.lessonEmail || DEFAULT_EMAIL);
@@ -168,75 +140,53 @@
         const licaoSrc = lesson.firstHtmlPage ? `${lesson.firstHtmlPage}?lessonIndex=${i}&email=${email}&submitKey=${submitKey}` : '';
         const videoUrl = getVideoUrl(lesson);
         const yt = formatYouTubeUrl(videoUrl);
-
-        let licaoHTML = '';
-        if (lesson.firstHtmlPage) {
-          licaoHTML = `
-            <div class="section-block">
-              <div class="doc-accordion" id="doc-item-${i}-html0">
-                <button class="doc-header" onclick="toggleDocAccordion(${i}, 'html0')"><span>📋 ${lesson.firstHtmlTitle || 'Lição 10'}</span><span class="toggle-icon">+</span></button>
-                <div class="doc-body" id="doc-body-${i}-html0"><div class="doc-body-inner"><iframe class="licao-frame" src="${licaoSrc}"></iframe></div></div>
-              </div>
-            </div>`;
-        }
-
+        const licaoHTML = lesson.firstHtmlPage ? `
+          <div class="section-block">
+            <div class="doc-accordion" id="doc-item-${i}-html0">
+              <button class="doc-header" onclick="toggleDocAccordion(${i}, 'html0')"><span>📋 ${lesson.firstHtmlTitle || 'Lição 10'}</span><span class="toggle-icon">+</span></button>
+              <div class="doc-body" id="doc-body-${i}-html0"><div class="doc-body-inner"><iframe class="licao-frame" src="${licaoSrc}"></iframe></div></div>
+            </div>
+          </div>` : '';
         let videoHTML = '';
         if (videoUrl) {
           if (!submitted) {
-            videoHTML = `
-              <div class="section-block">
-                <div class="doc-accordion">
-                  <div class="doc-header" style="cursor:not-allowed;color:#64748b;">
-                    <span>🔒 ${getVideoTitle(lesson)}</span>
-                    <div class="lock-notice">Envie o relatório da lição por e-mail para liberar</div>
-                  </div>
-                </div>
-              </div>`;
+            videoHTML = `<div class="section-block"><div class="doc-accordion"><div class="doc-header" style="cursor:not-allowed;color:#64748b;"><span>🔒 ${getVideoTitle(lesson)}</span><div class="lock-notice">Envie o PDF da lição para liberar o vídeo</div></div></div></div>`;
           } else {
             videoHTML = `
-              <div class="section-block">
-                <div class="doc-accordion" id="doc-item-${i}-video">
+              <div class="section-block" id="video-wrap-${i}">
+                <button class="btn-video" onclick="abrirVideo(${i})">▶ Assistir vídeo</button>
+                <div class="doc-accordion" id="doc-item-${i}-video" style="margin-top:12px;">
                   <button class="doc-header" onclick="toggleDocAccordion(${i}, 'video')"><span>🎬 ${getVideoTitle(lesson)}</span><span class="toggle-icon">+</span></button>
                   <div class="doc-body" id="doc-body-${i}-video">
-                    <div class="doc-body-inner">
-                      ${yt ? `<div class="video-responsive"><iframe src="${yt}" allowfullscreen></iframe></div>` : `<a href="${videoUrl}" target="_blank">Abrir vídeo</a>`}
-                    </div>
+                    <div class="doc-body-inner">${yt ? `<div class="video-responsive"><iframe src="${yt}" allowfullscreen></iframe></div>` : `<a href="${videoUrl}" target="_blank">Abrir vídeo</a>`}</div>
                   </div>
                 </div>
               </div>`;
           }
         }
-
-        return `
-          <div class="accordion-item" id="item-${i}">
-            <button class="accordion-header" onclick="toggleAccordion(${i})"><span>${lesson.title}</span><span class="toggle-icon">+</span></button>
-            <div class="accordion-body" id="body-${i}">
-              <div class="accordion-content">
-                ${lesson.description ? `<div class="section-block"><p class="lesson-text">${lesson.description}</p></div>` : ''}
-                ${licaoHTML}
-                ${videoHTML}
-              </div>
-            </div>
-          </div>`;
+        return `<div class="accordion-item" id="item-${i}"><button class="accordion-header" onclick="toggleAccordion(${i})"><span>${lesson.title}</span><span class="toggle-icon">+</span></button><div class="accordion-body" id="body-${i}"><div class="accordion-content">${lesson.description ? `<div class="section-block"><p class="lesson-text">${lesson.description}</p></div>` : ''}${licaoHTML}${videoHTML}</div></div></div>`;
       }).join('');
     }
 
-    function openFirstVideoAfterSubmit(i) {
+    function abrirVideo(i) {
       openAccordion(i);
       setTimeout(() => {
         toggleDocAccordion(i, 'video');
-        scrollToElement('doc-item-' + i + '-video');
-      }, 250);
+        const el = document.getElementById('video-wrap-' + i) || document.getElementById('doc-item-' + i + '-video');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 150);
     }
-
     window.addEventListener('message', function(event) {
       if (!event.data || event.data.type !== 'LICAO_ENVIADA') return;
       const i = Number(event.data.lessonIndex);
       markLessonSubmitted(i);
       renderLessons();
-      openFirstVideoAfterSubmit(i);
+      openAccordion(i);
+      setTimeout(() => {
+        const btnArea = document.getElementById('video-wrap-' + i);
+        if (btnArea) btnArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 200);
     });
-
     function collapseAllModules() {
       document.querySelectorAll('.doc-accordion.active, .accordion-item.active').forEach(item => {
         item.classList.remove('active');
@@ -248,19 +198,10 @@
       const el = document.getElementById('sidebar-mod-' + i);
       if (el) el.classList.toggle('active');
       openAccordion(i);
-      scrollToElement('item-' + i);
     }
     function handleSidebarSubitemClick(i, key) {
       openAccordion(i);
-      const docItem = document.getElementById('doc-item-' + i + '-' + key);
-      if (docItem) {
-        toggleDocAccordion(i, key);
-        scrollToElement('doc-item-' + i + '-' + key);
-      }
-    }
-    function scrollToElement(id) {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      toggleDocAccordion(i, key);
     }
     function openAccordion(i) {
       const item = document.getElementById('item-' + i);
@@ -273,34 +214,23 @@
     function toggleAccordion(i) {
       const item = document.getElementById('item-' + i);
       const body = document.getElementById('body-' + i);
-      if (!item || item.classList.contains('is-locked')) return;
-      if (item.classList.contains('active')) {
-        item.classList.remove('active');
-        body.style.maxHeight = null;
-      } else {
-        item.classList.add('active');
-        body.style.maxHeight = (body.scrollHeight + 2500) + 'px';
-      }
+      if (!item) return;
+      if (item.classList.contains('active')) { item.classList.remove('active'); body.style.maxHeight = null; }
+      else { item.classList.add('active'); body.style.maxHeight = (body.scrollHeight + 2500) + 'px'; }
     }
     function toggleDocAccordion(i, key) {
       const docItem = document.getElementById('doc-item-' + i + '-' + key);
       const docBody = document.getElementById('doc-body-' + i + '-' + key);
       const mainBody = document.getElementById('body-' + i);
       if (!docItem || !docBody) return;
-      if (docItem.classList.contains('active')) {
-        docItem.classList.remove('active');
-        docBody.style.maxHeight = null;
-      } else {
+      if (docItem.classList.contains('active')) { docItem.classList.remove('active'); docBody.style.maxHeight = null; }
+      else {
         docItem.classList.add('active');
         docBody.style.maxHeight = (docBody.scrollHeight + 80) + 'px';
         if (mainBody) mainBody.style.maxHeight = (mainBody.scrollHeight + docBody.scrollHeight + 120) + 'px';
       }
     }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      refreshStudentView();
-      setInterval(refreshStudentView, 15000);
-    });
+    document.addEventListener('DOMContentLoaded', () => { refreshStudentView(); setInterval(refreshStudentView, 15000); });
     document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshStudentView(); });
   </script>
 </body>
