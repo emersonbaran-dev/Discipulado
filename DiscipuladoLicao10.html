@@ -23,12 +23,9 @@
     .footer-info { display: flex; gap: 15px; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
     .footer-info .field { flex: 1; }
     .btn-submit { width: 100%; background: #2D4F5C; color: #fff; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 25px; }
-    .btn-submit.sent { background: #15242a; }
+    .btn-submit:disabled { opacity: .7; cursor: default; }
     .final-note { text-align: center; font-weight: bold; color: #2D4F5C; background: #f0f4f6; padding: 15px; border-radius: 6px; margin-top: 25px; }
     .unlock-note { text-align: center; font-size: 11pt; color: #b45309; background: #fef3c7; border: 1px solid #fde68a; padding: 10px; border-radius: 6px; margin-bottom: 18px; }
-    .ok-note { text-align: center; font-size: 11pt; color: #065f46; background: #d1fae5; border: 1px solid #a7f3d0; padding: 10px; border-radius: 6px; margin-bottom: 18px; }
-    #pdf-viewer { display: none; }
-    #pdf-frame { width: 100%; height: 90vh; min-height: 800px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff; }
     #folha-pdf { position: absolute; left: -9999px; top: 0; width: 210mm; background: #fff; color: #222; padding: 18mm 16mm; font-size: 12px; }
     #folha-pdf h1 { font-size: 22px; }
     #folha-pdf .resp { border: 1px solid #ccc; background: #f8fafc; padding: 8px; border-radius: 4px; min-height: 28px; white-space: pre-wrap; margin-top: 4px; }
@@ -44,8 +41,8 @@
   <div class="subtitle">DEUS PAI</div>
   <div class="intro">Neste estudo, aprenderemos quem é o nosso Deus de uma maneira simples e resumida que servirá para o seu fortalecimento espiritual e temor diante deste nosso Senhor.</div>
   <div class="unlock-note">
-    Ao concluir, uma folha PDF de toda a lição com as respostas será enviada para
-    <strong id="emailDestinoTexto">emersonbaran@gmail.com</strong>. Depois disso, o botão do vídeo será liberado.
+    Clique em <strong>ENVIAR</strong> para gerar o PDF da lição preenchida, abrir em nova aba e enviar para
+    <strong id="emailDestinoTexto">emersonbaran@gmail.com</strong>. O botão do vídeo ficará verde na mesma hora.
   </div>
 
   <form id="discipuladoForm" onsubmit="enviarFormulario(event)">
@@ -94,13 +91,8 @@
       <div class="field"><label for="nomePessoa">Nome do Aluno:</label><input type="text" id="nomePessoa" required></div>
       <div class="field"><label for="dataPreenchimento">Data:</label><input type="date" id="dataPreenchimento" required></div>
     </div>
-    <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR PDF DA LIÇÃO 10 POR E-MAIL</button>
+    <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR</button>
   </form>
-</div>
-
-<div class="container" id="pdf-viewer">
-  <div class="ok-note">Folha PDF gerada. O relatório foi enviado para <strong id="emailDestinoTexto2">emersonbaran@gmail.com</strong>. O botão do vídeo já está liberado na aula.</div>
-  <iframe id="pdf-frame" title="Folha da Lição 10"></iframe>
 </div>
 
 <div id="folha-pdf">
@@ -141,7 +133,6 @@
   const LESSON_INDEX = params.get('lessonIndex') || '0';
   const SUBMIT_KEY = params.get('submitKey') || ('curso_licao_enviada_' + LESSON_INDEX + '_DiscipuladoLicao10.html');
   document.getElementById('emailDestinoTexto').textContent = EMAIL_DESTINO;
-  document.getElementById('emailDestinoTexto2').textContent = EMAIL_DESTINO;
 
   function letraRef(letra) {
     const mapa = { A: 'A - Sl 139.7-10', B: 'B - Sl 90.2', C: 'C - Ml 3.6', D: 'D - Jo 5.26' };
@@ -163,13 +154,7 @@
     document.getElementById('pdf-q7').textContent = document.getElementById('q7').value.trim();
     document.getElementById('pdf-q8').textContent = document.getElementById('q8').value.trim();
   }
-  function mostrarPdfNoLugarDoFormulario(blob) {
-    const url = URL.createObjectURL(blob);
-    document.getElementById('pagina-licao').style.display = 'none';
-    document.getElementById('pdf-viewer').style.display = 'block';
-    document.getElementById('pdf-frame').src = url;
-  }
-  function avisarAluno() {
+  function liberarVideoNaPaginaDoAluno() {
     localStorage.setItem(SUBMIT_KEY, '1');
     if (window.parent && window.parent !== window) {
       window.parent.postMessage({ type: 'LICAO_ENVIADA', lessonIndex: Number(LESSON_INDEX), submitKey: SUBMIT_KEY }, '*');
@@ -183,7 +168,7 @@
     fd.append('nome', nome);
     fd.append('data', dataBr);
     fd.append('licao', 'Discipulado Lição 10 - Deus Pai');
-    fd.append('mensagem', 'Segue em anexo a folha PDF da Lição 10 preenchida pelo aluno.');
+    fd.append('mensagem', 'Segue em anexo a folha PDF da Lição 10 preenchida.');
     fd.append('anexo', arquivo, arquivoNome);
     const res = await fetch('https://formsubmit.co/ajax/' + EMAIL_DESTINO, { method: 'POST', body: fd });
     if (!res.ok) throw new Error('Falha no envio');
@@ -192,14 +177,17 @@
     event.preventDefault();
     const form = document.getElementById('discipuladoForm');
     if (!form.checkValidity()) { form.reportValidity(); return; }
+
     const btn = document.getElementById('btnEnviar');
-    btn.classList.add('sent');
-    btn.innerText = 'GERANDO PDF...';
+    btn.disabled = true;
+    btn.innerText = 'ENVIAR';
     preencherFolha();
+
     const nome = document.getElementById('nomePessoa').value.trim();
     const data = document.getElementById('dataPreenchimento').value;
     const dataBr = data ? data.split('-').reverse().join('/') : '';
     const arquivoNome = 'Licao10-' + nome.replace(/\s+/g, '_') + '.pdf';
+
     try {
       const pdfBlob = await html2pdf().set({
         margin: 0,
@@ -208,25 +196,23 @@
         html2canvas: { scale: 2, useCORS: true },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       }).from(document.getElementById('folha-pdf')).outputPdf('blob');
-      mostrarPdfNoLugarDoFormulario(pdfBlob);
-      btn.innerText = 'ENVIANDO PDF POR E-MAIL...';
+
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+      window.open(pdfUrl, '_blank');
+
+      liberarVideoNaPaginaDoAluno();
+
       try {
         await enviarPdfPorEmail(nome, dataBr, pdfBlob, arquivoNome);
       } catch (err) {
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(pdfBlob);
-        link.download = arquivoNome;
-        link.click();
-        const corpo = 'Segue o relatório em PDF da Lição 10 do aluno ' + nome + ' (' + dataBr + '). O arquivo PDF foi baixado neste computador para anexar ao e-mail.';
         const a = document.createElement('a');
-        a.href = 'mailto:' + EMAIL_DESTINO + '?subject=' + encodeURIComponent('PDF Lição 10 - ' + nome) + '&body=' + encodeURIComponent(corpo);
+        a.href = pdfUrl;
+        a.download = arquivoNome;
         a.click();
       }
-      avisarAluno();
     } catch (e) {
       alert('Não foi possível gerar o PDF. Verifique a internet e tente novamente.');
-      btn.innerText = 'ENVIAR PDF DA LIÇÃO 10 POR E-MAIL';
-      btn.classList.remove('sent');
+      btn.disabled = false;
     }
   }
 </script>
