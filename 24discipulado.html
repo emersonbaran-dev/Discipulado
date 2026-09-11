@@ -74,7 +74,7 @@
     const videosLiberados = new Set();
     let lastCourseSnapshot = '';
 
-    function chaveVideo(index) { return 'video_desbloqueado_v2_' + index; }
+    function chaveVideo(index) { return 'video_desbloqueado_v3_' + index; }
     function getVideoUrl(lesson) { return lesson.videoUrl || ''; }
     function getVideoTitle(lesson) { return lesson.videoTitle || 'Vídeo da aula'; }
     function formatYouTubeUrl(url) {
@@ -90,6 +90,25 @@
     function marcarVideoLiberado(index) {
       videosLiberados.add(String(index));
       localStorage.setItem(chaveVideo(index), '1');
+      renderLessons();
+      openAccordion(index);
+    }
+    window.liberarVideoAula = marcarVideoLiberado;
+
+    function conectarFormularioLicao(index, iframe) {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const form = doc.querySelector('form');
+        if (!form || form.dataset.unlockBound === '1') return;
+        form.dataset.unlockBound = '1';
+        const liberar = function() { marcarVideoLiberado(index); };
+        form.addEventListener('submit', liberar);
+        const btn = doc.querySelector('#btnEnviar, button[type="submit"]');
+        if (btn) btn.addEventListener('click', function() {
+          if (form.checkValidity()) liberar();
+        });
+        iframe.contentWindow.liberarVideoAula = function() { marcarVideoLiberado(index); };
+      } catch (e) {}
     }
 
     async function loadCursoFromCloud() {
@@ -144,7 +163,7 @@
           <div class="section-block">
             <div class="doc-accordion" id="doc-item-${i}-html0">
               <button class="doc-header" onclick="toggleDocAccordion(${i}, 'html0')"><span>📋 ${lesson.firstHtmlTitle || lesson.firstHtmlPage.replace('.html','')}</span><span class="toggle-icon">+</span></button>
-              <div class="doc-body" id="doc-body-${i}-html0"><div class="doc-body-inner"><iframe class="licao-frame" src="${licaoSrc}"></iframe></div></div>
+              <div class="doc-body" id="doc-body-${i}-html0"><div class="doc-body-inner"><iframe class="licao-frame" src="${licaoSrc}" onload="conectarFormularioLicao(${i}, this)"></iframe></div></div>
             </div>
           </div>` : '';
         let videoHTML = '';
@@ -169,16 +188,11 @@
       openAccordion(i);
       setTimeout(() => toggleDocAccordion(i, 'video'), 150);
     }
-
     window.addEventListener('message', function(event) {
       if (!event.data || event.data.type !== 'LICAO_ENVIADA') return;
       const i = Number(event.data.lessonIndex);
-      if (Number.isNaN(i)) return;
-      marcarVideoLiberado(i);
-      renderLessons();
-      openAccordion(i);
+      if (!Number.isNaN(i)) marcarVideoLiberado(i);
     });
-
     function collapseAllModules() {
       document.querySelectorAll('.doc-accordion.active, .accordion-item.active').forEach(item => {
         item.classList.remove('active');
