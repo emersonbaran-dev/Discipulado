@@ -13,20 +13,20 @@
     .sidebar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #334155; }
     .sidebar-header h2 { font-size: 1.1rem; text-transform: uppercase; color: #94a3b8; white-space: nowrap; }
     .sidebar.collapsed .sidebar-header h2, .sidebar.collapsed .sidebar-menu { display: none; }
-    .btn-toggle-sidebar { background: none; border: none; color: #94a3b8; font-size: 1.4rem; cursor: pointer; width: 36px; height: 36px; border-radius: 6px; }
-    .sidebar.collapsed .sidebar-header { border-bottom: none; margin-bottom: 0; padding-bottom: 0; justify-content: center; }
+    .btn-toggle-sidebar { background: none; border: none; color: #94a3b8; font-size: 1.4rem; cursor: pointer; width: 36px; height: 36px; }
+    .sidebar.collapsed .sidebar-header { border: none; margin: 0; padding: 0; justify-content: center; }
     .sidebar-menu { list-style: none; }
     .sidebar-module { margin-bottom: 10px; }
-    .sidebar-module-title { width: 100%; background: none; border: none; color: #e2e8f0; font-size: 0.95rem; font-weight: 600; text-align: left; padding: 10px 12px; border-radius: 6px; cursor: pointer; }
+    .sidebar-module-title { width: 100%; background: none; border: none; color: #e2e8f0; font-weight: 600; text-align: left; padding: 10px 12px; border-radius: 6px; cursor: pointer; }
     .main-content { flex: 1; padding: 30px 25px; max-width: 900px; margin: 0 auto; }
     header { text-align: center; margin-bottom: 30px; }
     header h1 { font-size: 2rem; margin-bottom: 6px; }
     header p { color: #64748b; }
     .card { background: #fff; padding: 25px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 25px; }
-    .card h2 { font-size: 1.25rem; margin-bottom: 15px; color: #2563eb; display: flex; justify-content: space-between; align-items: center; }
+    .card h2 { font-size: 1.25rem; margin-bottom: 15px; color: #2563eb; }
     .form-group { margin-bottom: 18px; }
-    label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: #334155; }
-    input, textarea { width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; font-family: inherit; }
+    label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; }
+    input, textarea { width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: inherit; }
     textarea { min-height: 90px; }
     .checkbox-group { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 0.9rem; color: #475569; }
     .checkbox-group input { width: 16px; height: 16px; }
@@ -70,23 +70,15 @@
     <main class="main-content">
       <header>
         <h1>Painel do Professor</h1>
-        <p>O vídeo fica amarelo e bloqueado. Só fica verde depois que o aluno clicar em ENVIAR na lição.</p>
+        <p>O vídeo do aluno fica amarelo até o ENVIAR da lição. O relatório vai para emersonbaran@gmail.com</p>
       </header>
-
       <div class="card">
         <h2>⚙️ Informações Gerais do Curso</h2>
-        <div class="form-group">
-          <label>Título Geral do Curso</label>
-          <input type="text" id="course-title-input">
-        </div>
-        <div class="form-group">
-          <label>Subtítulo Geral do Curso</label>
-          <input type="text" id="course-subtitle-input">
-        </div>
+        <div class="form-group"><label>Título Geral do Curso</label><input type="text" id="course-title-input"></div>
+        <div class="form-group"><label>Subtítulo Geral do Curso</label><input type="text" id="course-subtitle-input"></div>
         <button type="button" class="btn btn-primary" onclick="saveCourseHeaderInfo()">💾 Salvar Título e Subtítulo</button>
         <div class="save-alert" id="header-save-alert">Informações salvas com sucesso!</div>
       </div>
-
       <div class="card" id="form-card">
         <h2>
           <span id="form-title">Adicionar Novo Módulo / Aula</span>
@@ -94,10 +86,7 @@
         </h2>
         <form id="lesson-form">
           <input type="hidden" id="edit-index" value="-1">
-          <div class="form-group">
-            <label>Título do Módulo / Aula</label>
-            <input type="text" id="lesson-title" required>
-          </div>
+          <div class="form-group"><label>Título do Módulo / Aula</label><input type="text" id="lesson-title" required></div>
           <div class="form-group">
             <label>Data e Hora de Liberação para o Aluno</label>
             <input type="datetime-local" id="lesson-release-date">
@@ -106,53 +95,34 @@
               <label for="immediate-release" style="margin:0;font-weight:normal;">Liberar imediatamente</label>
             </div>
           </div>
-          <div class="form-group">
-            <label>Descrição / Orientação</label>
-            <textarea id="lesson-description"></textarea>
-          </div>
-
+          <div class="form-group"><label>Descrição / Orientação</label><textarea id="lesson-description"></textarea></div>
           <div class="html-embed-box">
             <div class="checkbox-group" style="margin-top:0;">
               <input type="checkbox" id="include-html-page" onchange="document.getElementById('html-embed-fields').classList.toggle('visible', this.checked)">
               <label for="include-html-page" style="margin:0;font-weight:normal;">Incluir <strong>DiscipuladoLicao10.html</strong> como primeiro item</label>
             </div>
             <div class="html-embed-fields" id="html-embed-fields">
-              <div class="form-group">
-                <label>Título da lição</label>
-                <input type="text" id="first-html-title" value="Lição 10 - Deus Pai">
-              </div>
-              <div class="form-group">
-                <label>Arquivo HTML</label>
-                <input type="text" id="first-html-page" value="DiscipuladoLicao10.html">
-              </div>
+              <div class="form-group"><label>Título da lição</label><input type="text" id="first-html-title" value="Lição 10 - Deus Pai"></div>
+              <div class="form-group"><label>Arquivo HTML</label><input type="text" id="first-html-page" value="DiscipuladoLicao10.html"></div>
               <div class="form-group" style="margin-bottom:0;">
-                <label>E-mail que receberá o PDF da lição</label>
+                <label>E-mail do relatório</label>
                 <input type="email" id="lesson-email" value="emersonbaran@gmail.com">
-                <p class="hint">No botão ENVIAR da lição: gera o PDF, abre em nova aba e envia para este e-mail.</p>
+                <p class="hint">O botão ENVIAR da lição gera o relatório/PDF e envia para este e-mail.</p>
               </div>
             </div>
           </div>
-
           <div class="video-box">
             <label>🎬 Vídeo da aula</label>
-            <p class="hint">Na página do aluno o botão começa amarelo e sem acesso. Depois do ENVIAR da lição, fica verde e libera o vídeo.</p>
-            <div class="form-group">
-              <label>Título do vídeo</label>
-              <input type="text" id="video-title" placeholder="Ex: Vídeo da Lição 10">
-            </div>
-            <div class="form-group" style="margin-bottom:0;">
-              <label>URL do vídeo (YouTube)</label>
-              <input type="url" id="video-url" placeholder="https://www.youtube.com/watch?v=...">
-            </div>
+            <p class="hint">No aluno o botão começa amarelo e bloqueado. Depois do ENVIAR, fica verde e libera o vídeo.</p>
+            <div class="form-group"><label>Título do vídeo</label><input type="text" id="video-title" placeholder="Ex: Vídeo da Lição 10"></div>
+            <div class="form-group" style="margin-bottom:0;"><label>URL do vídeo (YouTube)</label><input type="url" id="video-url" placeholder="https://www.youtube.com/watch?v=..."></div>
           </div>
-
           <div class="form-actions">
             <button type="button" id="btn-cancel" class="btn btn-cancel" style="display:none;" onclick="resetForm()">Cancelar Edição</button>
             <button type="submit" id="btn-submit" class="btn btn-primary">💾 Salvar Módulo</button>
           </div>
         </form>
       </div>
-
       <div class="card">
         <h2>Módulos Cadastrados</h2>
         <div id="modules-list"></div>
@@ -163,7 +133,6 @@
     let lessons = [];
     const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso.json';
     const DEFAULT_EMAIL = 'emersonbaran@gmail.com';
-
     async function syncCursoToCloud() {
       const payload = {
         title: localStorage.getItem('course_title') || 'Curso de Capacitação',
@@ -233,8 +202,7 @@
       document.getElementById('btn-submit').innerText = '💾 Salvar Módulo';
     }
     function editModule(index) {
-      const m = lessons[index];
-      if (!m) return;
+      const m = lessons[index]; if (!m) return;
       document.getElementById('edit-index').value = index;
       document.getElementById('lesson-title').value = m.title || '';
       document.getElementById('lesson-description').value = m.description || '';
@@ -259,7 +227,6 @@
       document.getElementById('editing-badge').style.display = 'inline-block';
       document.getElementById('btn-cancel').style.display = 'inline-block';
       document.getElementById('btn-submit').innerText = '🔄 Atualizar Módulo';
-      document.getElementById('form-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
     function deleteModule(index) {
       if (confirm('Excluir o módulo "' + lessons[index].title + '"?')) {
@@ -269,8 +236,9 @@
       }
     }
     function renderSidebarMenu() {
-      const menu = document.getElementById('sidebar-menu');
-      menu.innerHTML = lessons.length ? lessons.map((l, i) => `<li class="sidebar-module"><button class="sidebar-module-title" onclick="editModule(${i})">${i + 1}. ${l.title || 'Módulo'}</button></li>`).join('') : '<li style="color:#64748b;padding:10px;">Sem conteúdo.</li>';
+      document.getElementById('sidebar-menu').innerHTML = lessons.length
+        ? lessons.map((l, i) => `<li class="sidebar-module"><button class="sidebar-module-title" onclick="editModule(${i})">${i + 1}. ${l.title || 'Módulo'}</button></li>`).join('')
+        : '<li style="color:#64748b;padding:10px;">Sem conteúdo.</li>';
     }
     function renderModulesList() {
       const box = document.getElementById('modules-list');
@@ -285,9 +253,9 @@
             </div>
           </div>
           ${m.releaseDate ? `<span class="badge badge-scheduled">📅 ${new Date(m.releaseDate).toLocaleString('pt-BR')}</span>` : `<span class="badge badge-released">⚡ Liberado</span>`}
-          ${m.firstHtmlPage ? `<span class="badge badge-html">📋 PDF → ${m.lessonEmail || DEFAULT_EMAIL}</span>` : ''}
+          ${m.firstHtmlPage ? `<span class="badge badge-html">📋 Relatório → ${m.lessonEmail || DEFAULT_EMAIL}</span>` : ''}
           ${m.videoUrl ? `<span class="badge badge-video">🎬 ${m.videoTitle || 'Vídeo'}</span>` : ''}
-          ${m.firstHtmlPage && m.videoUrl ? `<span class="badge badge-lock">🟡 Vídeo amarelo até o ENVIAR</span>` : ''}
+          ${m.firstHtmlPage && m.videoUrl ? `<span class="badge badge-lock">🟡 Vídeo bloqueado até ENVIAR</span>` : ''}
           ${m.description ? `<p class="module-desc">${m.description}</p>` : ''}
         </div>`).join('');
     }
