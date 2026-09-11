@@ -51,7 +51,7 @@
     .badge-scheduled { background: #fef3c7; color: #b45309; }
     .badge-html { background: #dbeafe; color: #1d4ed8; }
     .badge-video { background: #ede9fe; color: #6d28d9; }
-    .badge-lock { background: #fee2e2; color: #b91c1c; }
+    .badge-lock { background: #fef08a; color: #854d0e; }
     .module-desc { font-size: 0.9rem; color: #475569; white-space: pre-wrap; }
     .badge-editing { font-size: 0.75rem; background: #fef3c7; color: #b45309; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
     .save-alert { display: none; padding: 10px; background: #d1fae5; color: #065f46; border-radius: 6px; margin-top: 10px; font-weight: 600; }
@@ -70,7 +70,7 @@
     <main class="main-content">
       <header>
         <h1>Painel do Professor</h1>
-        <p>A lição gera um PDF com as respostas e envia para o e-mail. Só então o aluno vê o botão do vídeo.</p>
+        <p>O vídeo fica amarelo e bloqueado. Só fica verde depois que o aluno clicar em ENVIAR na lição.</p>
       </header>
 
       <div class="card">
@@ -128,14 +128,14 @@
               <div class="form-group" style="margin-bottom:0;">
                 <label>E-mail que receberá o PDF da lição</label>
                 <input type="email" id="lesson-email" value="emersonbaran@gmail.com">
-                <p class="hint">Ao enviar a lição, o aluno gera uma folha PDF com todas as perguntas e respostas para este e-mail.</p>
+                <p class="hint">No botão ENVIAR da lição: gera o PDF, abre em nova aba e envia para este e-mail.</p>
               </div>
             </div>
           </div>
 
           <div class="video-box">
             <label>🎬 Vídeo da aula</label>
-            <p class="hint">O botão deste vídeo só aparece para o aluno depois que o PDF da lição for enviado por e-mail.</p>
+            <p class="hint">Na página do aluno o botão começa amarelo e sem acesso. Depois do ENVIAR da lição, fica verde e libera o vídeo.</p>
             <div class="form-group">
               <label>Título do vídeo</label>
               <input type="text" id="video-title" placeholder="Ex: Vídeo da Lição 10">
@@ -285,9 +285,9 @@
             </div>
           </div>
           ${m.releaseDate ? `<span class="badge badge-scheduled">📅 ${new Date(m.releaseDate).toLocaleString('pt-BR')}</span>` : `<span class="badge badge-released">⚡ Liberado</span>`}
-          ${m.firstHtmlPage ? `<span class="badge badge-html">📋 PDF da lição → ${m.lessonEmail || DEFAULT_EMAIL}</span>` : ''}
+          ${m.firstHtmlPage ? `<span class="badge badge-html">📋 PDF → ${m.lessonEmail || DEFAULT_EMAIL}</span>` : ''}
           ${m.videoUrl ? `<span class="badge badge-video">🎬 ${m.videoTitle || 'Vídeo'}</span>` : ''}
-          ${m.firstHtmlPage && m.videoUrl ? `<span class="badge badge-lock">🔒 Vídeo após envio do PDF</span>` : ''}
+          ${m.firstHtmlPage && m.videoUrl ? `<span class="badge badge-lock">🟡 Vídeo amarelo até o ENVIAR</span>` : ''}
           ${m.description ? `<p class="module-desc">${m.description}</p>` : ''}
         </div>`).join('');
     }
