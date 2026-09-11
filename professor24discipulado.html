@@ -68,9 +68,8 @@
     <main class="main-content">
       <header>
         <h1>Painel do Professor</h1>
-        <p>Inclua a Lição 01 até a Lição 24. O vídeo do aluno fica amarelo até o ENVIAR da lição.</p>
+        <p>Escolha a Lição 01 a 24. O vídeo do aluno só fica verde depois do ENVIAR da lição.</p>
       </header>
-
       <div class="card">
         <h2>⚙️ Informações Gerais do Curso</h2>
         <div class="form-group"><label>Título Geral do Curso</label><input type="text" id="course-title-input"></div>
@@ -78,7 +77,6 @@
         <button type="button" class="btn btn-primary" onclick="saveCourseHeaderInfo()">💾 Salvar Título e Subtítulo</button>
         <div class="save-alert" id="header-save-alert">Informações salvas com sucesso!</div>
       </div>
-
       <div class="card" id="form-card">
         <h2>
           <span id="form-title">Adicionar Novo Módulo / Aula</span>
@@ -96,37 +94,27 @@
             </div>
           </div>
           <div class="form-group"><label>Descrição / Orientação</label><textarea id="lesson-description"></textarea></div>
-
           <div class="html-embed-box">
             <div class="form-group">
               <label for="licao-arquivo">Incluir página da lição</label>
               <select id="licao-arquivo" onchange="aoEscolherLicao()"></select>
               <p class="hint">Arquivos na mesma pasta: DiscipuladoLicao01.html até DiscipuladoLicao24.html</p>
             </div>
-            <div class="form-group">
-              <label>Título que o aluno verá</label>
-              <input type="text" id="first-html-title" placeholder="Ex: Lição 10 - Deus Pai">
-            </div>
-            <div class="form-group" style="margin-bottom:0;">
-              <label>E-mail do relatório</label>
-              <input type="email" id="lesson-email" value="emersonbaran@gmail.com">
-            </div>
+            <div class="form-group"><label>Título que o aluno verá</label><input type="text" id="first-html-title" placeholder="Ex: Lição 10 - Deus Pai"></div>
+            <div class="form-group" style="margin-bottom:0;"><label>E-mail do relatório</label><input type="email" id="lesson-email" value="emersonbaran@gmail.com"></div>
           </div>
-
           <div class="video-box">
             <label>🎬 Vídeo da aula</label>
-            <p class="hint">Se houver lição selecionada, o botão do vídeo começa amarelo e só fica verde depois do ENVIAR.</p>
-            <div class="form-group"><label>Título do vídeo</label><input type="text" id="video-title" placeholder="Ex: Vídeo da aula"></div>
+            <p class="hint">Com lição selecionada, o botão começa amarelo. Fica verde só após o ENVIAR da lição.</p>
+            <div class="form-group"><label>Título do vídeo</label><input type="text" id="video-title"></div>
             <div class="form-group" style="margin-bottom:0;"><label>URL do vídeo (YouTube)</label><input type="url" id="video-url" placeholder="https://www.youtube.com/watch?v=..."></div>
           </div>
-
           <div class="form-actions">
             <button type="button" id="btn-cancel" class="btn btn-cancel" style="display:none;" onclick="resetForm()">Cancelar Edição</button>
             <button type="submit" id="btn-submit" class="btn btn-primary">💾 Salvar Módulo</button>
           </div>
         </form>
       </div>
-
       <div class="card">
         <h2>Módulos Cadastrados</h2>
         <div id="modules-list"></div>
@@ -137,31 +125,23 @@
     let lessons = [];
     const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso.json';
     const DEFAULT_EMAIL = 'emersonbaran@gmail.com';
-
-    function nomeArquivoLicao(n) {
-      return 'DiscipuladoLicao' + String(n).padStart(2, '0') + '.html';
-    }
+    function nomeArquivoLicao(n) { return 'DiscipuladoLicao' + String(n).padStart(2, '0') + '.html'; }
     function montarSelectLicoes(selecionado) {
       const sel = document.getElementById('licao-arquivo');
       let html = '<option value="">Nenhuma lição</option>';
       for (let i = 1; i <= 24; i++) {
         const arquivo = nomeArquivoLicao(i);
-        const num = String(i).padStart(2, '0');
-        html += `<option value="${arquivo}" ${selecionado === arquivo ? 'selected' : ''}>Lição ${num} (${arquivo})</option>`;
+        html += `<option value="${arquivo}" ${selecionado === arquivo ? 'selected' : ''}>Lição ${String(i).padStart(2,'0')} (${arquivo})</option>`;
       }
       sel.innerHTML = html;
     }
     function aoEscolherLicao() {
       const arquivo = document.getElementById('licao-arquivo').value;
       const titulo = document.getElementById('first-html-title');
-      if (!arquivo) { if (!titulo.value) titulo.value = ''; return; }
-      const num = arquivo.replace('DiscipuladoLicao', '').replace('.html', '');
-      if (!titulo.value || /^Lição \d+$/.test(titulo.value) || /^Lição \d+ - /.test(titulo.value) === false && titulo.value.indexOf('Lição ') === 0) {
-        titulo.value = 'Lição ' + num;
-      }
-      if (!titulo.value) titulo.value = 'Lição ' + num;
+      if (!arquivo) return;
+      const num = arquivo.replace('DiscipuladoLicao','').replace('.html','');
+      if (!titulo.value || titulo.value.indexOf('Lição ') === 0) titulo.value = 'Lição ' + num;
     }
-
     async function syncCursoToCloud() {
       const payload = {
         title: localStorage.getItem('course_title') || 'Curso de Capacitação',
@@ -292,7 +272,7 @@
         description: document.getElementById('lesson-description').value.trim(),
         releaseDate: document.getElementById('immediate-release').checked ? null : document.getElementById('lesson-release-date').value,
         firstHtmlPage: arquivo || null,
-        firstHtmlTitle: arquivo ? (document.getElementById('first-html-title').value.trim() || arquivo.replace('.html', '')) : null,
+        firstHtmlTitle: arquivo ? (document.getElementById('first-html-title').value.trim() || arquivo.replace('.html','')) : null,
         lessonEmail: arquivo ? (document.getElementById('lesson-email').value.trim() || DEFAULT_EMAIL) : DEFAULT_EMAIL,
         lockLinksUntilLessonSubmit: !!arquivo,
         videoTitle: document.getElementById('video-title').value.trim() || 'Vídeo da aula',
