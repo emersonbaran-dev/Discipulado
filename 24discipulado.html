@@ -44,7 +44,6 @@
     .licao-frame { width: 100%; min-height: 980px; height: 80vh; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; }
     .btn-video { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; border: none; border-radius: 8px; padding: 14px 22px; font-size: 1rem; font-weight: 700; background: #eab308; color: #422006; cursor: not-allowed; pointer-events: none; }
     .btn-video.liberado { background: #16a34a; color: #fff; cursor: pointer; pointer-events: auto; }
-    .btn-video.liberado:hover { background: #15803d; }
     .empty-state { text-align: center; padding: 40px; background: #fff; border-radius: 8px; color: #64748b; }
     @media (max-width: 768px) { .app-layout { flex-direction: column; } .sidebar { width: 100%; height: auto; position: relative; } }
   </style>
@@ -125,16 +124,13 @@
         return;
       }
       sidebarMenu.innerHTML = lessons.map((lesson, i) => {
-        if (isModuleLocked(lesson.releaseDate)) {
-          return `<li class="sidebar-module"><button class="sidebar-module-title locked" disabled>🔒 ${lesson.title}</button></li>`;
-        }
+        if (isModuleLocked(lesson.releaseDate)) return `<li class="sidebar-module"><button class="sidebar-module-title locked" disabled>🔒 ${lesson.title}</button></li>`;
         const liberado = videoEstaLiberado(lesson, i);
         let subs = '';
         if (lesson.firstHtmlPage) subs += `<li><button class="sidebar-subitem" onclick="handleSidebarSubitemClick(${i}, 'html0')">📋 ${lesson.firstHtmlTitle || lesson.firstHtmlPage.replace('.html','')}</button></li>`;
         if (getVideoUrl(lesson) && liberado) subs += `<li><button class="sidebar-subitem" onclick="abrirVideo(${i})">🎬 ${getVideoTitle(lesson)}</button></li>`;
         return `<li class="sidebar-module" id="sidebar-mod-${i}"><button class="sidebar-module-title" onclick="toggleSidebarModule(${i})"><span>${lesson.title}</span><span>▾</span></button><ul class="sidebar-sublist">${subs}</ul></li>`;
       }).join('');
-
       container.innerHTML = lessons.map((lesson, i) => {
         if (isModuleLocked(lesson.releaseDate)) {
           return `<div class="accordion-item" id="item-${i}"><div class="accordion-header"><span>🔒 ${lesson.title}</span><div class="lock-notice">Disponível em: ${new Date(lesson.releaseDate).toLocaleString('pt-BR')}</div></div></div>`;
@@ -173,6 +169,7 @@
       openAccordion(i);
       setTimeout(() => toggleDocAccordion(i, 'video'), 150);
     }
+
     window.addEventListener('message', function(event) {
       if (!event.data || event.data.type !== 'LICAO_ENVIADA') return;
       const i = Number(event.data.lessonIndex);
@@ -181,6 +178,7 @@
       renderLessons();
       openAccordion(i);
     });
+
     function collapseAllModules() {
       document.querySelectorAll('.doc-accordion.active, .accordion-item.active').forEach(item => {
         item.classList.remove('active');
