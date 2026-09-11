@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discipulado Lição 4 - Aquele que Aprende</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            font-size: 12pt;
+        }
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 6px solid #9E5945;
+        }
+        .header-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            min-height: 60px;
+        }
+        .header-container img {
+            position: absolute;
+            left: 0;
+            height: 60px;
+            width: auto;
+        }
+        h1 {
+            color: #9E5945;
+            margin: 0;
+            font-size: 32px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 14pt;
+        }
+        .intro {
+            background-color: #f7edea;
+            border-left: 4px solid #9E5945;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            font-size: 11pt;
+        }
+        .section-title {
+            background-color: #9E5945;
+            color: white;
+            padding: 6px 12px;
+            font-size: 13pt;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .verse-box {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-left: 3px solid #9E5945;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            font-style: italic;
+            font-size: 11pt;
+            color: #444;
+        }
+        .verse-title {
+            font-weight: bold;
+            font-style: normal;
+            color: #9E5945;
+            margin-bottom: 4px;
+        }
+        .question-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #222;
+        }
+        input[type="text"], input[type="date"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 11pt;
+            margin-top: 4px;
+        }
+        input[type="text"]:focus, textarea:focus {
+            border-color: #9E5945;
+            outline: none;
+        }
+        .sub-question {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .footer-info {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .footer-info .field {
+            flex: 1;
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: #9E5945;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #824736;
+        }
+        .btn-submit.sent {
+            background-color: #5c3226 !important;
+            cursor: default;
+        }
+        .final-note {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 20px;
+            font-size: 11pt;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Cabeçalho com Logo à esquerda e Título Centralizado -->
+    <div class="header-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
+        <h1>Lição 4</h1>
+    </div>
+    <div class="subtitle">AQUELE QUE APRENDE</div>
+    
+    <div class="intro">
+        O discípulo de Jesus foi salvo e chamado pelo Senhor para segui-Lo[cite: 2]. Mas para isso, é necessário que o servo aprenda a cada dia da sua Palavra andando nos caminhos do Senhor[cite: 2].
+    </div>
+
+    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
+        
+        <!-- SEÇÃO A -->
+        <div class="section-title">A – APRENDER PARA SEGUIR</div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Mateus 11:29</div>
+                "Tomai sobre vós o meu jugo e aprendei de mim, porque sou manso e humilde de coração; e achareis descanso para a vossa alma."
+            </div>
+            <label for="q1">Em Mt 11.29, além de tomar o jugo do Senhor Jesus Cristo o que mais o discípulo deve fazer?</label>
+            <textarea id="q1" name="1. Além de tomar o jugo (Mt 11.29)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Mateus 18:1</div>
+                "Naquela hora, aproximaram-se de Jesus os discípulos, perguntando: Quem é, porventura, o maior no reino dos céus?"
+            </div>
+            <label for="q2">O que os discípulos fizeram com Jesus, em Mt 18.1?</label>
+            <textarea id="q2" name="2. Ação dos discípulos (Mt 18.1)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Mateus 28:18-20</div>
+                "Jesus, aproximando-se, falou-lhes, dizendo: Toda a autoridade me foi dada no céu e na terra. Ide, portanto, fazei discípulos de todas as nações, batizando-os em nome do Pai, e do Filho, e do Espírito Santo; ensinando-os a guardar todas as coisas que vos tenho ordenado. E eis que estou convosco todos os dias até à consumação do século."
+            </div>
+            <label>Em Mateus 28.18-20 podemos aprender algumas verdades:</label>
+            
+            <div class="sub-question">
+                <label for="q3a">a) Quem tem autoridade?</label>
+                <input type="text" id="q3a" name="3a. Quem tem autoridade (Mt 28.18-20)" required>
+            </div>
+
+            <div class="sub-question">
+                <label for="q3b">b) Qual a primeira ação dos discípulos?</label>
+                <input type="text" id="q3b" name="3b. Primeira ação (Mt 28.18-20)" required>
+            </div>
+
+            <div class="sub-question">
+                <label for="q3c">c) Qual a segunda ação?</label>
+                <input type="text" id="q3c" name="3c. Segunda ação (Mt 28.18-20)" required>
+            </div>
+
+            <div class="sub-question">
+                <label for="q3d">d) Em qual lugar?</label>
+                <input type="text" id="q3d" name="3d. Lugar (Mt 28.18-20)" required>
+            </div>
+
+            <div class="sub-question">
+                <label for="q3e">e) Qual a terceira ação?</label>
+                <input type="text" id="q3e" name="3e. Terceira ação (Mt 28.18-20)" required>
+            </div>
+
+            <div class="sub-question">
+                <label for="q3f">f) E a quarta ação?</label>
+                <input type="text" id="q3f" name="3f. Quarta ação (Mt 28.18-20)" required>
+            </div>
+
+            <div class="sub-question">
+                <label for="q3g">g) Qual a promessa?</label>
+                <input type="text" id="q3g" name="3g. Promessa (Mt 28.18-20)" required>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">João 5:39</div>
+                "Examinais as Escrituras, porque vós cuidais ter nelas a vida eterna, e são elas mesmas que de mim testificam;"
+            </div>
+            <label>Veja o que Jesus disse aos discípulos em Jo 5.39 com respeito à Escritura e responda:</label>
+            
+            <div class="sub-question">
+                <label for="q4a">a) O que deveriam fazer?</label>
+                <input type="text" id="q4a" name="4a. O que deveriam fazer (Jo 5.39)" required>
+            </div>
+
+            <div class="sub-question">
+                <label for="q4b">b) O que eles julgavam?</label>
+                <input type="text" id="q4b" name="4b. O que julgavm (Jo 5.39)" required>
+            </div>
+
+            <div class="sub-question">
+                <label for="q4c">c) O que testifica?</label>
+                <input type="text" id="q4c" name="4c. O que testifica (Jo 5.39)" required>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">João 6:68-69</div>
+                "Respondeu-lhe Simão Pedro: Senhor, para quem iremos? Tu tens as palavras da vida eterna; e nós temos crido e conhecido que tu és o Santo de Deus."
+            </div>
+            <label for="q5">Qual foi a confissão de Pedro, após muitas pessoas terem deixado a Jesus Cristo? (Jo 6.68–69)</label>
+            <textarea id="q5" name="5. Confissão de Pedro (Jo 6.68-69)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Salmo 119:11</div>
+                "Guardo no coração as tuas palavras, para não pecar contra ti."
+            </div>
+            <label for="q6">Para não pecar, o que o discípulo deve fazer de acordo com Sl 119.11?</label>
+            <textarea id="q6" name="6. Para não pecar (Sl 119.11)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Salmo 1:2</div>
+                "Antes, o seu prazer está na lei do SENHOR, e na sua lei medita de dia e de noite."
+            </div>
+            <label for="q7">Aquele que quer andar no caminho do Senhor o que deve fazer, de acordo com Sl 1.2?</label>
+            <textarea id="q7" name="7. Andar no caminho do Senhor (Sl 1.2)" rows="2" required></textarea>
+        </div>
+
+        <div class="final-note">
+            Como vimos, é fundamental o discípulo aprender dos ensinos de Jesus Cristo, ou seja, de toda a sua Palavra, justamente para seguir a Cristo conforme o que colocou na Bíblia[cite: 2]. Então, tenha sempre sede de aprender a Palavra do Senhor![cite: 2]
+        </div>
+
+        <!-- DADOS FINAIS -->
+        <div class="footer-info">
+            <div class="field">
+                <label for="nomePessoa">Nome do Aluno:</label>
+                <input type="text" id="nomePessoa" name="Nome do Aluno" required>
+            </div>
+            <div class="field">
+                <label for="dataPreenchimento">Data:</label>
+                <input type="date" id="dataPreenchimento" name="Data" required>
+            </div>
+        </div>
+
+        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 04</button>
+
+    </form>
+</div>
+
+<script>
+    function enviarFormulario(event) {
+        var btn = document.getElementById("btnEnviar");
+        btn.classList.add("sent");
+        btn.innerText = "ENVIANDO PELO EMAIL...";
+        
+        setTimeout(function(){
+            // O formulário continuará seu curso natural de envio
+        }, 500);
+    }
+</script>
+
+</body>
+</html>

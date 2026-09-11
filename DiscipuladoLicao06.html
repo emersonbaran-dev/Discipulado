@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discipulado Lição 6 - Aquele que se Entrega</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            font-size: 12pt;
+        }
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 6px solid #B86B53;
+        }
+        .header-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            min-height: 60px;
+        }
+        .header-container img {
+            position: absolute;
+            left: 0;
+            height: 60px;
+            width: auto;
+        }
+        h1 {
+            color: #B86B53;
+            margin: 0;
+            font-size: 32px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 14pt;
+        }
+        .intro {
+            background-color: #fcf3f0;
+            border-left: 4px solid #B86B53;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            font-size: 11pt;
+        }
+        .section-title {
+            background-color: #B86B53;
+            color: white;
+            padding: 6px 12px;
+            font-size: 13pt;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .verse-box {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-left: 3px solid #B86B53;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            font-style: italic;
+            font-size: 11pt;
+            color: #444;
+        }
+        .verse-title {
+            font-weight: bold;
+            font-style: normal;
+            color: #B86B53;
+            margin-bottom: 4px;
+        }
+        .question-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #222;
+        }
+        input[type="text"], input[type="date"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 11pt;
+            margin-top: 4px;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #B86B53;
+            outline: none;
+        }
+        .sub-question {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .matching-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .matching-row span {
+            flex: 1;
+        }
+        .matching-row select {
+            width: 80px;
+        }
+        .footer-info {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .footer-info .field {
+            flex: 1;
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: #B86B53;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #9a5742;
+        }
+        .btn-submit.sent {
+            background-color: #723e2f !important;
+            cursor: default;
+        }
+        .final-note {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 20px;
+            font-size: 11pt;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Cabeçalho com Logo à esquerda e Título Centralizado -->
+    <div class="header-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
+        <h1>Lição 6</h1>
+    </div>
+    <div class="subtitle">AQUELE QUE SE ENTREGA</div>
+    
+    <div class="intro">
+        A pessoa que responde em fé e se entrega como discípulo de Cristo vive em amor e humildade. Vejamos:
+    </div>
+
+    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
+        
+        <!-- SEÇÃO I -->
+        <div class="section-title">I - AMOR AO SENHOR</div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">João 14:15</div>
+                "Se me amais, guardareis os meus mandamentos."
+            </div>
+            <label for="q1">Em Jo 14.15, qual a base para guardar os mandamentos?</label>
+            <textarea id="q1" name="1. Base para guardar os mandamentos (Jo 14.15)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">João 15:10</div>
+                "Se guardardes os meus mandamentos, permanecereis no meu amor; assim como também eu tenho guardado os mandamentos de meu Pai e permaneço no seu amor."
+            </div>
+            <label>Leia Jo 15.10 e responda:</label>
+            
+            <div class="sub-question">
+                <label for="q2a">O que acontece com aquele que guarda os mandamentos?</label>
+                <textarea id="q2a" name="2a. O que acontece com quem guarda os mandamentos (Jo 15.10)" rows="2" required></textarea>
+            </div>
+
+            <div class="sub-question">
+                <label for="q2b">O que Jesus faz em relação ao Pai?</label>
+                <textarea id="q2b" name="2b. O que Jesus faz em relacao ao Pai (Jo 15.10)" rows="2" required></textarea>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">João 15:12-13</div>
+                "O meu mandamento é este: que vos ameis uns aos outros, assim como eu vos amei. Ninguém tem maior amor do que este: de dar alguém a própria vida em favor dos seus amigos."
+            </div>
+            <label>Veja em Jo 15.12-13 e responda:</label>
+
+            <div class="sub-question">
+                <label for="q3a">Qual o mandamento do Senhor?</label>
+                <textarea id="q3a" name="3a. Mandamento do Senhor (Jo 15.12-13)" rows="2" required></textarea>
+            </div>
+
+            <div class="sub-question">
+                <label for="q3b">Como devemos amar?</label>
+                <textarea id="q3b" name="3b. Como devemos amar (Jo 15.12-13)" rows="2" required></textarea>
+            </div>
+
+            <div class="sub-question">
+                <label for="q3c">Como Jesus demonstrou seu amor?</label>
+                <textarea id="q3c" name="3c. Como Jesus demonstrou seu amor (Jo 15.12-13)" rows="2" required></textarea>
+            </div>
+        </div>
+
+        <!-- SEÇÃO II -->
+        <div class="section-title">II - HUMILDADE AO SENHOR</div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Mateus 18:4</div>
+                "Portanto, aquele que se humilhar como esta criança, esse é o maior no reino dos céus."
+            </div>
+            <label for="q4">Como uma pessoa pode entrar no reino dos céus de acordo com Mt 18.4?</label>
+            <textarea id="q4" name="4. Como entrar no reino dos ceus (Mt 18.4)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Lucas 14:11</div>
+                "Pois todo o que se exalta será humilhado; e o que se humilha será exaltado."
+            </div>
+            <label>Qual o ensinamento de Jesus em Lc 14.11?</label>
+            
+            <div class="sub-question">
+                <label for="q5a">Quem se exalta será:</label>
+                <input type="text" id="q5a" name="5a. Quem se exalta sera (Lc 14.11)" required>
+            </div>
+
+            <div class="sub-question">
+                <label for="q5b">Quem se humilha será:</label>
+                <input type="text" id="q5b" name="5b. Quem se humilha sera (Lc 14.11)" required>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">João 13:14-15</div>
+                "Ora, se eu, sendo o Senhor e o Mestre, lavei os vossos pés, também vós deveis lavar os pés uns dos outros. Porque eu vos dei o exemplo, para que, como eu fiz, façais vós também."
+            </div>
+            <label for="q6">Por que Jesus lavou os pés dos discípulos (Jo 13.14,15)?</label>
+            <textarea id="q6" name="6. Por que Jesus lavou os pes dos discipulos (Jo 13.14-15)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">1 Pedro 5:5-6</div>
+                "Rogo igualmente aos jovens: sede submissos aos presbíteros. Rogo a todos: cingindo-vos de humildade, sede submissos uns aos outros, porque Deus resiste aos soberbos, contudo, dá graça aos humildes. Humilhai-vos, portanto, sob a poderosa mão de Deus, para que ele, a seu tempo, vos exalte,"
+            </div>
+            <label>Leia 1Pedro 5.5-6 e responda relacionando a coluna B com as opções da coluna A:</label>
+            
+            <div style="background: #f9f9f9; padding: 10px; border-radius: 4px; margin-bottom: 12px; font-size: 10.5pt;">
+                <strong>Coluna A:</strong><br>
+                (A) O que todos devem fazer<br>
+                (B) O que o Senhor concede<br>
+                (C) A quem se humilhar<br>
+                (D) No tempo o que Deus faz
+            </div>
+
+            <div class="matching-row">
+                <select name="7. Relacao - Exalta os humildes" required>
+                    <option value="">--</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+                <span>Exalta os humildes</span>
+            </div>
+
+            <div class="matching-row">
+                <select name="7. Relacao - Cingir de humildade" required>
+                    <option value="">--</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+                <span>Cingir de humildade</span>
+            </div>
+
+            <div class="matching-row">
+                <select name="7. Relacao - A sua graca" required>
+                    <option value="">--</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+                <span>A sua graça</span>
+            </div>
+
+            <div class="matching-row">
+                <select name="7. Relacao - Poderoso Deus" required>
+                    <option value="">--</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+                <span>Poderoso Deus</span>
+            </div>
+        </div>
+
+        <div class="final-note">
+            Conforme vimos na Palavra, um discípulo de Jesus Cristo é aquele que se entrega totalmente ao Senhor, amando-o de todo coração e agindo de humildade perante o Soberano Deus. Consequentemente, o discípulo demonstra seu amor e humildade a Jesus, amando e se humilhando perante o próximo.
+        </div>
+
+        <!-- DADOS FINAIS -->
+        <div class="footer-info">
+            <div class="field">
+                <label for="nomePessoa">Nome do Aluno:</label>
+                <input type="text" id="nomePessoa" name="Nome do Aluno" required>
+            </div>
+            <div class="field">
+                <label for="dataPreenchimento">Data:</label>
+                <input type="date" id="dataPreenchimento" name="Data" required>
+            </div>
+        </div>
+
+        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 06</button>
+
+    </form>
+</div>
+
+<script>
+    function enviarFormulario(event) {
+        var btn = document.getElementById("btnEnviar");
+        btn.classList.add("sent");
+        btn.innerText = "ENVIANDO PELO EMAIL...";
+        
+        setTimeout(function(){
+            // O formulário continuará seu curso natural de envio
+        }, 500);
+    }
+</script>
+
+</body>
+</html>

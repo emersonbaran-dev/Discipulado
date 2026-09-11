@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discipulado Lição 19 - Testemunho - Sal e Luz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            font-size: 12pt;
+        }
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 6px solid #866348;
+        }
+        .header-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            min-height: 60px;
+        }
+        .header-container img {
+            position: absolute;
+            left: 0;
+            height: 60px;
+            width: auto;
+        }
+        .main-category {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            color: #866348;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        h1 {
+            color: #866348;
+            margin: 0;
+            font-size: 32px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 14pt;
+        }
+        .intro {
+            background-color: #f0f4f6;
+            border-left: 4px solid #866348;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            font-size: 11pt;
+        }
+        .section-title {
+            background-color: #866348;
+            color: white;
+            padding: 6px 12px;
+            font-size: 13pt;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .question-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #222;
+        }
+        input[type="text"], input[type="date"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 11pt;
+            margin-top: 4px;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #866348;
+            outline: none;
+        }
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 8px;
+        }
+        .radio-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .radio-group input[type="radio"] {
+            margin: 0;
+            width: 16px;
+            height: 16px;
+        }
+        .footer-info {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .footer-info .field {
+            flex: 1;
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: #866348;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #654933;
+        }
+        .btn-submit.sent {
+            background-color: #202224 !important;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-category">IDENTIDADE</div>
+    
+    <div class="header-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
+        <h1>Lição 19</h1>
+    </div>
+    <div class="subtitle">TESTEMUNHO - SAL E LUZ</div>
+    
+    <div class="intro">
+        Testemunha é uma pessoa que relata com fidelidade aquilo que viu ou ouviu. Na área do direito civil, testemunha "é um terceiro que intervenha no processo, por indicação de uma das partes ou por ordem do juiz, para responder a questões sobre os factos que são duvidosos ou controvertidos". Há três tipos de testemunhas: (1) Testemunha presencial: é aquela que estava presente quando o fato aconteceu. (2) Testemunha de referência: é aquela que não estava presente, mas soube do fato por outra pessoa. (3) Testemunha referida: é aquela que ninguém sabia, mas foi citada por alguém que testemunhava. Os principais deveres das testemunhas são comparecer em juízo, prestar depoimento e falar a verdade.
+    </div>
+
+    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
+        
+        <!-- SEÇÃO A -->
+        <div class="section-title">A – TESTEMUNHA</div>
+
+        <div class="question-group">
+            <label for="q1">1) Uma testemunha é aquela que viu, ouviu ou conheceu algum fato verídico. Em 1Ts 2.10, quem eram as testemunhas de Paulo?</label>
+            <textarea id="q1" name="1. Quem eram as testemunhas de Paulo (1Ts 2.10)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label>2) Também, é aquela que é mártir, capaz de até a morte em falar do Evangelho. Em Ap 2.13, quem era a fiel testemunha?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="2. Fiel testemunha (Ap 2.13)" value="Pedro" required> Pedro</label>
+                <label><input type="radio" name="2. Fiel testemunha (Ap 2.13)" value="Antipas" required> Antipas</label>
+            </div>
+        </div>
+
+        <!-- SEÇÃO B -->
+        <div class="section-title">B – SAL E LUZ</div>
+
+        <div class="question-group">
+            <label>3) Leia Mt 5.13, e responda:</label>
+            <div style="margin-top: 8px;">
+                <label for="q3_a" style="font-weight: normal; margin-bottom: 2px;">a) Quem são o sal da terra?</label>
+                <input type="text" id="q3_a" name="3a. Quem sao o sal da terra (Mt 5.13)" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q3_b" style="font-weight: normal; margin-bottom: 2px;">b) Se o sal tornar insípido, serve para algo?</label>
+                <input type="text" id="q3_b" name="3b. Se o sal tornar insipido serve para algo (Mt 5.13)" required>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label>4) Leia Mt 5.14-16, e responda:</label>
+            <div style="margin-top: 8px;">
+                <label for="q4_a" style="font-weight: normal; margin-bottom: 2px;">a) Quem são a luz do mundo?</label>
+                <input type="text" id="q4_a" name="4a. Quem sao a luz do mundo (Mt 5.14)" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label style="font-weight: normal; margin-bottom: 2px;">b) Pode esconder uma cidade e uma candeia?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="4b. Pode esconder uma cidade e candeia (Mt 5.14-15)" value="SIM" required> SIM</label>
+                    <label><input type="radio" name="4b. Pode esconder uma cidade e candeia (Mt 5.14-15)" value="NÃO" required> NÃO</label>
+                </div>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q4_c" style="font-weight: normal; margin-bottom: 2px;">c) Nossa luz deve brilhar diante de quem?</label>
+                <input type="text" id="q4_c" name="4c. Nossa luz deve brilhar diante de quem (Mt 5.16)" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label style="font-weight: normal; margin-bottom: 2px;">d) Quais as finalidades de brilhar a nossa luz?</label>
+                <input type="text" name="4d. Finalidade 1 de brilhar a luz (Mt 5.16)" placeholder="1)" style="margin-bottom: 6px;" required>
+                <input type="text" name="4d. Finalidade 2 de brilhar a luz (Mt 5.16)" placeholder="2)" required>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q5">5) Quem é a boa semente de acordo com Mt 13.38?</label>
+            <input type="text" id="q5" name="5. Quem e a boa semente (Mt 13.38)" required>
+        </div>
+
+        <div class="question-group">
+            <label for="q6">6) Ao receber poder de Deus em Atos 1.8, o que Jesus disse que os discípulos se tornariam?</label>
+            <input type="text" id="q6" name="6. O que os discipulos se tornariam (At 1.8)" required>
+        </div>
+
+        <div class="intro" style="margin-top: 25px; margin-bottom: 25px; border-left-color: #866348;">
+            Portanto, agora pela graça de Deus não negue por toda a sua vida aquilo que o Senhor o transformou: ser testemunha de Cristo!
+        </div>
+
+        <!-- DADOS FINAIS -->
+        <div class="footer-info">
+            <div class="field">
+                <label for="nomePessoa">Nome do Aluno:</label>
+                <input type="text" id="nomePessoa" name="Nome do Aluno" required>
+            </div>
+            <div class="field">
+                <label for="dataPreenchimento">Data:</label>
+                <input type="date" id="dataPreenchimento" name="Data" required>
+            </div>
+        </div>
+
+        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 19</button>
+
+    </form>
+</div>
+
+<script>
+    function enviarFormulario(event) {
+        var btn = document.getElementById("btnEnviar");
+        btn.classList.add("sent");
+        btn.innerText = "ENVIANDO PELO EMAIL...";
+        
+        setTimeout(function(){
+            // O formulário continuará seu curso natural de envio
+        }, 500);
+    }
+</script>
+
+</body>
+</html>

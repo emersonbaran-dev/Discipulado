@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discipulado Lição 7 - Comunhão na Palavra</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            font-size: 12pt;
+        }
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 6px solid #A88237;
+        }
+        .header-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            min-height: 60px;
+        }
+        .header-container img {
+            position: absolute;
+            left: 0;
+            height: 60px;
+            width: auto;
+        }
+        .main-category {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            color: #A88237;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        h1 {
+            color: #A88237;
+            margin: 0;
+            font-size: 32px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 14pt;
+        }
+        .intro {
+            background-color: #fcf9f0;
+            border-left: 4px solid #A88237;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            font-size: 11pt;
+        }
+        .section-title {
+            background-color: #A88237;
+            color: white;
+            padding: 6px 12px;
+            font-size: 13pt;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .verse-box {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-left: 3px solid #A88237;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            font-style: italic;
+            font-size: 11pt;
+            color: #444;
+        }
+        .verse-title {
+            font-weight: bold;
+            font-style: normal;
+            color: #A88237;
+            margin-bottom: 4px;
+        }
+        .question-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #222;
+        }
+        input[type="text"], input[type="date"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 11pt;
+            margin-top: 4px;
+        }
+        input[type="text"]:focus, textarea:focus {
+            border-color: #A88237;
+            outline: none;
+        }
+        .sub-question {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .footer-info {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .footer-info .field {
+            flex: 1;
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: #A88237;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #8c6a2b;
+        }
+        .btn-submit.sent {
+            background-color: #6d5220 !important;
+            cursor: default;
+        }
+        .final-note {
+            text-align: justify;
+            font-style: italic;
+            color: #555;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            margin-top: 20px;
+            font-size: 10.5pt;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-category">III - COMUNHÃO</div>
+    
+    <!-- Cabeçalho com Logo à esquerda e Título Centralizado -->
+    <div class="header-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
+        <h1>Lição 7</h1>
+    </div>
+    <div class="subtitle">COMUNHÃO NA PALAVRA</div>
+    
+    <div class="intro">
+        <strong>O QUE É VIDA DEVOCIONAL:</strong><br>
+        Vida devocional é o momento do dia em que você se dedica para usufruir de uma comunhão com Deus por meio da meditação da Palavra e oração. Exige-se tempo, disciplina e prazer em estar na presença do Senhor. Agende-se diariamente com Deus e viva esta comunhão com o Senhor! Vejamos os itens de uma devocional:
+    </div>
+
+    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
+        
+        <!-- SEÇÃO A -->
+        <div class="section-title">A - DEVOCIONAL: AGENDE DIARIAMENTE</div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Lucas 5:15-16</div>
+                "Porem a sua fama se espalhava mais e mais, e concorriam grandes multidões para o ouvir e serem por ele curadas das suas enfermidades. Ele, porem, se retirava para os lugares solitários e orava."
+            </div>
+            <label for="q1">1) Que evidências você vê em Lucas 5.15,16 em que Jesus considera que um tempo a sós com Deus é muito importante?</label>
+            <textarea id="q1" name="1. Evidencias em Lc 5.15-16" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Lucas 6:12-13</div>
+                "Naqueles dias, retirou-se para o monte, a fim de orar, e passou a noite orando a Deus. E, quando deu o dia, chamou a si os seus discípulos e escolheu doze dentre eles, aos quais deu também o nome de apóstolos;"
+            </div>
+            <label for="q2">2) O que Jesus fez antes de chamar os 12 apóstolos? (Lc 6.12,13)</label>
+            <textarea id="q2" name="2. Acao de Jesus antes de chamar os doze (Lc 6.12-13)" rows="2" required></textarea>
+        </div>
+
+        <!-- SEÇÃO B -->
+        <div class="section-title">B - BÍBLIA: DEUS FALANDO</div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Salmo 1:2</div>
+                "Antes, o seu prazer está na lei do Senhor, e na sua lei medita de dia e de noite."
+            </div>
+            <label>3) Veja o Salmo 1.2 e responda:</label>
+            
+            <div class="sub-question">
+                <label for="q3a">Qual o prazer do justo?</label>
+                <input type="text" id="q3a" name="3a. Prazer do justo (Sl 1.2)" required>
+            </div>
+
+            <div class="sub-question">
+                <label for="q3b">O que ele faz?</label>
+                <input type="text" id="q3b" name="3b. O que ele faz (Sl 1.2)" required>
+            </div>
+
+            <div class="sub-question">
+                <label for="q3c">Quando ele medita na lei?</label>
+                <input type="text" id="q3c" name="3c. Quando ele medita (Sl 1.2)" required>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Salmo 119:97</div>
+                "Quanto amo a tua lei! É a minha meditação todo o dia."
+            </div>
+            <label for="q4">4) Cite o sentimento que o salmista tem diariamente pela Bíblia (Sl 119.97):</label>
+            <textarea id="q4" name="4. Sentimento do salmista pela Biblia (Sl 119.97)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">João 5:39</div>
+                "Examinais as Escrituras, porque vós cuidais ter nelas a vida eterna, e são elas mesmas que testificam de mim."
+            </div>
+            <label for="q5">5) A quem a Bíblia testifica? (Jo 5.39)</label>
+            <textarea id="q5" name="5. A quem a Biblia testifica (Jo 5.39)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">2 Timóteo 3:16</div>
+                "Toda a Escritura é inspirada por Deus e útil para o ensino, para a repreensão, para a correção, para a educação na justiça,"
+            </div>
+            <label>6) Em 2 Tm 3.16 diz que a Bíblia foi inspirada por Deus e é útil para:</label>
+            
+            <div class="sub-question">
+                <label for="q6_1">1)</label>
+                <input type="text" id="q6_1" name="6.1 Utilidade da Biblia (2Tm 3.16)" required>
+            </div>
+
+            <div class="sub-question">
+                <label for="q6_2">2)</label>
+                <input type="text" id="q6_2" name="6.2 Utilidade da Biblia (2Tm 3.16)" required>
+            </div>
+
+            <div class="sub-question">
+                <label for="q6_3">3)</label>
+                <input type="text" id="q6_3" name="6.3 Utilidade da Biblia (2Tm 3.16)" required>
+            </div>
+
+            <div class="sub-question">
+                <label for="q6_4">4)</label>
+                <input type="text" id="q6_4" name="6.4 Utilidade da Biblia (2Tm 3.16)" required>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Salmo 119:11</div>
+                "Guardo no meu coração as tuas palavras, para não pecar contra ti."
+            </div>
+            <label>7) O que o crente no Senhor deve fazer quanto à Palavra de Deus, conforme em Sl 119.11?</label>
+            
+            <div class="sub-question">
+                <label for="q7a">a) Guarda a Palavra no:</label>
+                <input type="text" id="q7a" name="7a. Guarda a Palavra no (Sl 119.11)" required>
+            </div>
+
+            <div class="sub-question">
+                <label for="q7b">b) Para não:</label>
+                <input type="text" id="q7b" name="7b. Para nao (Sl 119.11)" required>
+            </div>
+        </div>
+
+        <div class="final-note">
+            <strong>Dica:</strong> Escolha um livro da Bíblia. Todos os dias, num horário marcado, ore antes, leia o capítulo do dia da Bíblia e responda ao Senhor, em oração, o que Ele falar ao seu coração. Depois ore por você, por outras pessoas, pela igreja, país, outros.<br>
+            Uma outra forma é seguir um plano anual de leitura bíblica.
+        </div>
+
+        <!-- DADOS FINAIS -->
+        <div class="footer-info">
+            <div class="field">
+                <label for="nomePessoa">Nome do Aluno:</label>
+                <input type="text" id="nomePessoa" name="Nome do Aluno" required>
+            </div>
+            <div class="field">
+                <label for="dataPreenchimento">Data:</label>
+                <input type="date" id="dataPreenchimento" name="Data" required>
+            </div>
+        </div>
+
+        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 07</button>
+
+    </form>
+</div>
+
+<script>
+    function enviarFormulario(event) {
+        var btn = document.getElementById("btnEnviar");
+        btn.classList.add("sent");
+        btn.innerText = "ENVIANDO PELO EMAIL...";
+        
+        setTimeout(function(){
+            // O formulário continuará seu curso natural de envio
+        }, 500);
+    }
+</script>
+
+</body>
+</html>

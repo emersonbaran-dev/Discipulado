@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discipulado Lição 2 - Salvação</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            font-size: 12pt; /* Tamanho da letra base */
+        }
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 6px solid #436255; /* Nova cor principal */
+        }
+        
+        /* Estilo do Cabeçalho para Logo à esquerda e Título Centralizado */
+        .header-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Centraliza o título */
+            margin-bottom: 10px;
+            min-height: 60px;
+        }
+        .header-container img {
+            position: absolute;
+            left: 0; /* Fixa a logo na esquerda */
+            height: 60px;
+            width: auto;
+        }
+        h1 {
+            color: #436255; /* Nova cor principal */
+            margin: 0;
+            font-size: 32px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 14pt;
+        }
+        .intro {
+            background-color: #edf0ef; /* Tom leve da nova cor */
+            border-left: 4px solid #436255; /* Nova cor principal */
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            font-size: 11pt;
+        }
+        .section-title {
+            background-color: #436255; /* Nova cor principal */
+            color: white;
+            padding: 6px 12px;
+            font-size: 13pt;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .verse-box {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-left: 3px solid #436255; /* Nova cor principal */
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            font-style: italic;
+            font-size: 11pt;
+            color: #444;
+        }
+        .verse-title {
+            font-weight: bold;
+            font-style: normal;
+            color: #436255; /* Nova cor principal */
+            margin-bottom: 4px;
+        }
+        .question-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #222;
+        }
+        input[type="text"], input[type="date"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 11pt;
+            margin-top: 4px;
+        }
+        input[type="text"]:focus, textarea:focus {
+            border-color: #436255; /* Nova cor principal */
+            outline: none;
+        }
+        .table-names {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+        .table-names th, .table-names td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .table-names th {
+            background-color: #f2f2f2;
+            color: #436255; /* Nova cor principal */
+        }
+        .footer-info {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .footer-info .field {
+            flex: 1;
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: #436255; /* Nova cor principal */
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #344d42;
+        }
+        .btn-submit.sent {
+            background-color: #263830 !important;
+            cursor: default;
+        }
+        .final-note {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 20px;
+            font-size: 11pt;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Cabeçalho com Logo à esquerda e Título Centralizado -->
+    <div class="header-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
+        <h1>Lição 2</h1>
+    </div>
+    <div class="subtitle">A SALVAÇÃO</div>
+    
+    <div class="intro">
+        A salvação é o livramento do poder e da penalidade do pecado, e a concessão da vida eterna em Jesus Cristo. Vamos entender como recebemos esse presente de Deus.
+    </div>
+
+    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
+        
+        <!-- SEÇÃO A -->
+        <div class="section-title">A – O PROBLEMA: O PECADO</div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Romanos 3:23 (ARA)</div>
+                "pois todos pecaram e carecem da glória de Deus,"
+            </div>
+            <label for="q1">De acordo com Romanos 3:23, quem pecou e qual a consequência em relação a Deus?</label>
+            <textarea id="q1" name="1. Quem pecou (Rm 3.23)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Romanos 6:23 (ARA)</div>
+                "porque o salário do pecado é a morte, mas o dom gratuito de Deus é a vida eterna em Cristo Jesus, nosso Senhor."
+            </div>
+            <label>Complete a tabela baseada em Romanos 6:23:</label>
+            <table class="table-names">
+                <thead>
+                    <tr>
+                        <th>Conceito</th>
+                        <th>Resultado/Significado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" value="Salário do Pecado" readonly style="background:#eee; font-weight:bold;"></td>
+                        <td><input type="text" name="Salario do Pecado" required placeholder="O que se recebe?"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" value="Dom Gratuito de Deus" readonly style="background:#eee; font-weight:bold;"></td>
+                        <td><input type="text" name="Dom de Deus" required placeholder="O que é e onde está?"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SEÇÃO B -->
+        <div class="section-title">B – A SOLUÇÃO DE DEUS: JESUS CRISTO</div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Romanos 5:8 (ARA)</div>
+                "Mas Deus prova o seu próprio amor para conosco pelo fato de ter Cristo morrido por nós, sendo nós ainda pecadores."
+            </div>
+            <label for="q3">Como Deus provou o seu amor por nós, segundo Romanos 5:8?</label>
+            <textarea id="q3" name="3. Prova do amor (Rm 5.8)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">1 Coríntios 15:3-4 (ARA)</div>
+                "... Cristo morreu pelos nossos pecados, segundo as Escrituras, e que foi sepultado, e que ressuscitou ao terceiro dia, segundo as Escrituras."
+            </div>
+            <label for="q4">Quais são os três fatos centrais do Evangelho mencionados neste versículo?</label>
+            <textarea id="q4" name="4. Fatos do Evangelho (1Co 15.3-4)" rows="3" required placeholder="1. ...&#10;2. ...&#10;3. ..."></textarea>
+        </div>
+
+        <!-- SEÇÃO C -->
+        <div class="section-title">C – A NOSSA RESPOSTA: FÉ E ARREPENDIMENTO</div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Efésios 2:8-9 (ARA)</div>
+                "Porque pela graça sois salvos, mediante a fé; e isto não vem de vós; é dom de Deus; não vem das obras, para que ninguém se glorie."
+            </div>
+            <label for="q5">A salvação vem através das nossas boas obras? Como somos salvos segundo este trecho?</label>
+            <textarea id="q5" name="5. Salvo por obras (Ef 2.8-9)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Atos 3:19 (ARA)</div>
+                "Arrependei-vos, pois, e convertei-vos para serem cancelados os vossos pecados,"
+            </div>
+            <label for="q6">Além de crer, o que Atos 3:19 nos ordena a fazer para que os pecados sejam cancelados?</label>
+            <textarea id="q6" name="6. Ordenança (At 3.19)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <div class="verse-box">
+                <div class="verse-title">Romanos 10:9 (ARA)</div>
+                "Se, com a tua boca, confessares Jesus como Senhor e, em teu coração, creres que Deus o ressuscitou dentre os mortos, serás salvo."
+            </div>
+            <label for="q7">Quais são as duas condições apresentadas em Romanos 10:9 para a salvação?</label>
+            <textarea id="q7" name="7. Condicoes (Rm 10.9)" rows="2" required></textarea>
+        </div>
+
+        <div class="final-note">
+            A salvação é um presente gracioso de Deus, conquistado por Jesus na cruz e recebido mediante a fé e o arrependimento. Não há outro caminho.
+        </div>
+
+        <!-- DADOS FINAIS -->
+        <div class="footer-info">
+            <div class="field">
+                <label for="nomePessoa">Nome do Aluno:</label>
+                <input type="text" id="nomePessoa" name="Nome do Aluno" required>
+            </div>
+            <div class="field">
+                <label for="dataPreenchimento">Data:</label>
+                <input type="date" id="dataPreenchimento" name="Data" required>
+            </div>
+        </div>
+
+        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 02</button>
+
+    </form>
+</div>
+
+<script>
+    function enviarFormulario(event) {
+        // Esta função apenas visualmente muda o botão. 
+        // O envio real é feito pelo 'action=mailto' do form.
+        var btn = document.getElementById("btnEnviar");
+        btn.classList.add("sent");
+        btn.innerText = "ENVIANDO PELO EMAIL...";
+        
+        // Pequeno delay para permitir que o usuário veja a mudança antes que o cliente de email abra
+        setTimeout(function(){
+            // O formulário continuará seu curso natural de envio
+        }, 500);
+    }
+</script>
+
+</body>
+</html>

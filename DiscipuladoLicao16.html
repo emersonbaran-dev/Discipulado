@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discipulado Lição 16 - Criação e Queda</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            font-size: 12pt;
+        }
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 6px solid #664661;
+        }
+        .header-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            min-height: 60px;
+        }
+        .header-container img {
+            position: absolute;
+            left: 0;
+            height: 60px;
+            width: auto;
+        }
+        .main-category {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            color: #664661;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        h1 {
+            color: #664661;
+            margin: 0;
+            font-size: 32px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 14pt;
+        }
+        .intro {
+            background-color: #f0f4f6;
+            border-left: 4px solid #664661;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            font-size: 11pt;
+        }
+        .section-title {
+            background-color: #664661;
+            color: white;
+            padding: 6px 12px;
+            font-size: 13pt;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .question-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #222;
+        }
+        input[type="text"], input[type="date"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 11pt;
+            margin-top: 4px;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #664661;
+            outline: none;
+        }
+        .matching-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .matching-row select {
+            width: 70px;
+            margin-top: 0;
+            padding: 6px;
+            text-align: center;
+        }
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 8px;
+        }
+        .radio-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .radio-group input[type="radio"] {
+            margin: 0;
+            width: 16px;
+            height: 16px;
+        }
+        .footer-info {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .footer-info .field {
+            flex: 1;
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: #664661;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #4e354a;
+        }
+        .btn-submit.sent {
+            background-color: #202224 !important;
+            cursor: default;
+        }
+        .final-note {
+            text-align: center;
+            font-weight: bold;
+            color: #664661;
+            background-color: #f0f4f6;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            margin-top: 25px;
+            font-size: 11pt;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-category">DOUTRINA BÍBLICA</div>
+    
+    <div class="header-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
+        <h1>Lição 16</h1>
+    </div>
+    <div class="subtitle">CRIAÇÃO E QUEDA</div>
+    
+    <div class="intro">
+        A partir desta nova série de estudos, veremos os 4 pilares de cosmovisão cristã, que são: criação, queda, redenção e consumação. Quando falamos de cosmovisão queremos dizer a maneira como enxergamos as coisas que estão ao nosso redor dentro de uma ótica de dentro do nosso coração. Exemplo prático: um óculos. Vejamos a Criação e a Queda, primeiramente:
+    </div>
+
+    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
+        
+        <!-- SEÇÃO A -->
+        <div class="section-title">A – CRIAÇÃO</div>
+
+        <div class="question-group">
+            <label for="q1">1) Quem criou os céus e a terra? (Gn 1.1)</label>
+            <textarea id="q1" name="1. Quem criou os ceus e a terra (Gn 1.1)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label>2) Relacione as colunas quanto a criação do homem:</label>
+            <div style="margin-top: 10px;">
+                <div class="matching-row">
+                    <select name="Relacione Criacao - Do po da terra" required>
+                        <option value="">--</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                    <span>Do pó da terra e fôlego da vida</span>
+                </div>
+                <div class="matching-row">
+                    <select name="Relacione Criacao - Imagem e semelhanca" required>
+                        <option value="">--</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                    <span>Imagem e semelhança de Deus</span>
+                </div>
+                <div class="matching-row">
+                    <select name="Relacione Criacao - Homem e mulher uma so carne" required>
+                        <option value="">--</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                    <span>Homem e mulher uma só carne</span>
+                </div>
+                <div class="matching-row">
+                    <select name="Relacione Criacao - Mulher foi formada da costela" required>
+                        <option value="">--</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                    <span>Mulher foi formada da costela do homem</span>
+                </div>
+            </div>
+            <div style="font-size: 10pt; color: #666; margin-top: 8px;">
+                (A) Gn 1.26a &nbsp;&nbsp; (B) Gn 2.7 &nbsp;&nbsp; (C) Gn 2.21,22 &nbsp;&nbsp; (D) Gn 2.24
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label>3) Qual deve ser nossa atitude diante do Deus Criador?</label>
+            <div style="margin-top: 8px;">
+                <label for="q3_hb" style="font-weight: normal; margin-bottom: 2px;">a) Hb 11.3:</label>
+                <input type="text" id="q3_hb" name="3a. Atitude diante do Criador - Hb 11.3" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q3_ne" style="font-weight: normal; margin-bottom: 2px;">b) Ne 9.6:</label>
+                <input type="text" id="q3_ne" name="3b. Atitude diante do Criador - Ne 9.6" required>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q4">4) Além de criar, o que mais Deus fez/faz? (Is 40.25,26)</label>
+            <textarea id="q4" name="4. Arem de criar o que mais Deus fez/faz (Is 40.25,26)" rows="2" required></textarea>
+        </div>
+
+        <!-- SEÇÃO B -->
+        <div class="section-title">B – QUEDA</div>
+
+        <div class="intro" style="border-left-color: #555; background-color: #f9f9f9; margin-bottom: 15px;">
+            Antes de tudo vamos definir pecado? Pecado é qualquer falta de conformidade com a lei de Deus, ou qualquer transgressão desta lei. (Tg 2.10; 4.17; 1Jo 3.4)
+        </div>
+
+        <div class="question-group">
+            <label>5) Relacione as colunas quanto a queda do homem:</label>
+            <div style="margin-top: 10px;">
+                <div class="matching-row">
+                    <select name="Relacione Queda - Diabo" required>
+                        <option value="">--</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                    <span>Diabo</span>
+                </div>
+                <div class="matching-row">
+                    <select name="Relacione Queda - Adao era responsavel" required>
+                        <option value="">--</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                    <span>Adão era responsável</span>
+                </div>
+                <div class="matching-row">
+                    <select name="Relacione Queda - Expulsao do Jardim" required>
+                        <option value="">--</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                    <span>Expulsão do Jardim (Separação)</span>
+                </div>
+                <div class="matching-row">
+                    <select name="Relacione Queda - Obedecer a Deus" required>
+                        <option value="">--</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                    <span>Obedecer a Deus</span>
+                </div>
+            </div>
+            <div style="font-size: 10pt; color: #666; margin-top: 8px;">
+                (A) Gn 2.16,17 &nbsp;&nbsp; (B) Gn 3.1 &nbsp;&nbsp; (C) Gn 3.6 &nbsp;&nbsp; (D) Gn 3.23,24
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q6">6) Com o que todo homem já nasce? (Sl 51.5)</label>
+            <textarea id="q6" name="6. Com o que todo homem ja nasce (Sl 51.5)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label>7) Além de Jesus, tem alguém que nunca pecou? (Rm 3.23)</label>
+            <div class="radio-group">
+                <label><input type="radio" name="7. Alguem nunca pecou (Rm 3.23)" value="SIM" required> SIM</label>
+                <label><input type="radio" name="7. Alguem nunca pecou (Rm 3.23)" value="NÃO" required> NÃO</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label>8) Há alguém justo e que busque a Deus por si só? (Rm 3.10,11)</label>
+            <div class="radio-group">
+                <label><input type="radio" name="8. Ha alguem justo e que busque a Deus (Rm 3.10,11)" value="SIM" required> SIM</label>
+                <label><input type="radio" name="8. Ha alguem justo e que busque a Deus (Rm 3.10,11)" value="NÃO" required> NÃO</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label>9) O homem consegue mudar seu estado? (Jr 13.23)</label>
+            <div class="radio-group">
+                <label><input type="radio" name="9. O homem consegue mudar seu estado (Jr 13.23)" value="SIM" required> SIM</label>
+                <label><input type="radio" name="9. O homem consegue mudar seu estado (Jr 13.23)" value="NÃO" required> NÃO</label>
+            </div>
+        </div>
+
+        <div class="final-note">
+            Como vimos, o Senhor criou o ser humano, homem e mulher, conforme a sua imagem e semelhança, sem pecado. Mas o homem resolveu desobedecer contaminando a todos com o pecado original levando-o a separação de Deus (morte). Porém, Deus tem algo amoroso para os seus. Veremos adiante!
+        </div>
+
+        <!-- DADOS FINAIS -->
+        <div class="footer-info">
+            <div class="field">
+                <label for="nomePessoa">Nome do Aluno:</label>
+                <input type="text" id="nomePessoa" name="Nome do Aluno" required>
+            </div>
+            <div class="field">
+                <label for="dataPreenchimento">Data:</label>
+                <input type="date" id="dataPreenchimento" name="Data" required>
+            </div>
+        </div>
+
+        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 16</button>
+
+    </form>
+</div>
+
+<script>
+    function enviarFormulario(event) {
+        var btn = document.getElementById("btnEnviar");
+        btn.classList.add("sent");
+        btn.innerText = "ENVIANDO PELO EMAIL...";
+        
+        setTimeout(function(){
+            // O formulário continuará seu curso natural de envio
+        }, 500);
+    }
+</script>
+
+</body>
+</html>

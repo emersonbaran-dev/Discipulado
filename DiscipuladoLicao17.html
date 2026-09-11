@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discipulado Lição 17 - Redenção e Consumação</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            font-size: 12pt;
+        }
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 6px solid #72506E;
+        }
+        .header-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            min-height: 60px;
+        }
+        .header-container img {
+            position: absolute;
+            left: 0;
+            height: 60px;
+            width: auto;
+        }
+        .main-category {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            color: #72506E;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        h1 {
+            color: #72506E;
+            margin: 0;
+            font-size: 32px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 14pt;
+        }
+        .intro {
+            background-color: #f0f4f6;
+            border-left: 4px solid #72506E;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            font-size: 11pt;
+        }
+        .section-title {
+            background-color: #72506E;
+            color: white;
+            padding: 6px 12px;
+            font-size: 13pt;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .question-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #222;
+        }
+        input[type="text"], input[type="date"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 11pt;
+            margin-top: 4px;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #72506E;
+            outline: none;
+        }
+        .matching-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .matching-row select {
+            width: 70px;
+            margin-top: 0;
+            padding: 6px;
+            text-align: center;
+        }
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 8px;
+        }
+        .radio-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .radio-group input[type="radio"] {
+            margin: 0;
+            width: 16px;
+            height: 16px;
+        }
+        .footer-info {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .footer-info .field {
+            flex: 1;
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: #72506E;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #583c55;
+        }
+        .btn-submit.sent {
+            background-color: #202224 !important;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-category">DOUTRINA BÍBLICA</div>
+    
+    <div class="header-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
+        <h1>Lição 17</h1>
+    </div>
+    <div class="subtitle">REDENÇÃO E CONSUMAÇÃO</div>
+    
+    <div class="intro">
+        Na lição anterior, iniciamos os 4 pilares de cosmovisão cristã. Vimos as duas primeiras: Criação e a Queda. Agora veremos as outras duas: Redenção e Consumação:
+    </div>
+
+    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
+        
+        <!-- SEÇÃO A -->
+        <div class="section-title">A – REDENÇÃO</div>
+
+        <div class="question-group">
+            <label for="q1">1) O que o pecado produz, de acordo com Rm 6.23?</label>
+            <textarea id="q1" name="1. O que o pecado produz (Rm 6.23)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label for="q2">2) O que era feito devido ao pecado, no altar? (Lv 17.11)</label>
+            <textarea id="q2" name="2. O que era feito no altar (Lv 17.11)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label>3) Sendo os sacrifícios sombras do real, era possível o perdão de pecados por meio de tais sacrifícios? (Hb 10.4)</label>
+            <div class="radio-group">
+                <label><input type="radio" name="3. Perdao por meio de sacrificios (Hb 10.4)" value="SIM" required> SIM</label>
+                <label><input type="radio" name="3. Perdao por meio de sacrificios (Hb 10.4)" value="NÃO" required> NÃO</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q4">4) Quem é o sacrifício superior e perfeito, capaz de purificar do pecado, diante da Lei Cerimonial? (Hb 9.11-12)</label>
+            <textarea id="q4" name="4. Sacrificio superior e perfeito (Hb 9.11-12)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label for="q5">5) Cristo veio para resgatar da maldição do quê? (Gl 4.4,5)</label>
+            <textarea id="q5" name="5. Resgatar da maldicao do que (Gl 4.4,5)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label>6) Por quem o Servo sofredor tomou o pecado? (Is 53.11-12)</label>
+            <div class="radio-group">
+                <label><input type="radio" name="6. Servo sofredor tomou o pecado (Is 53.11-12)" value="Todos" required> Todos</label>
+                <label><input type="radio" name="6. Servo sofredor tomou o pecado (Is 53.11-12)" value="Muitos" required> Muitos</label>
+            </div>
+        </div>
+
+        <!-- SEÇÃO B -->
+        <div class="section-title">B – CONSUMAÇÃO</div>
+
+        <div class="question-group">
+            <label for="q7">7) Em Mt 24.5-13 fala de 9 sinais que acontecem antes da volta de Cristo, mas ainda não é o fim (Falsos Cristos, Guerras, Fome, Terremotos, Tribulação dos crentes, Escândalos, Falsos Profetas, Iniquidade, Sem amor). Qual o sinal em que após acontecer virá o fim (v. 14)?</label>
+            <textarea id="q7" name="7. Sinal apos o qual vira o fim (Mt 24.14)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label>8) Ainda em Mt 24, associe as colunas quanto à volta de Cristo:</label>
+            <div style="margin-top: 10px;">
+                <div class="matching-row">
+                    <select name="Volta de Cristo - Prepara-te para a vinda" required>
+                        <option value="">--</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                    <span>Prepara-te para a vinda de Cristo</span>
+                </div>
+                <div class="matching-row">
+                    <select name="Volta de Cristo - Cristo vira com poder e gloria" required>
+                        <option value="">--</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                    <span>Cristo virá com poder e glória</span>
+                </div>
+                <div class="matching-row">
+                    <select name="Volta de Cristo - Ninguem sabe a volta, so o Pai" required>
+                        <option value="">--</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                    <span>Ninguém sabe a volta de Jesus, só o Pai</span>
+                </div>
+            </div>
+            <div style="font-size: 10pt; color: #666; margin-top: 8px;">
+                (A) v.30 &nbsp;&nbsp; (B) v.36 &nbsp;&nbsp; (C) v.44
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label>9) Quem será ressuscitado e transformado? (1Ts 4.16,17)</label>
+            <div style="margin-top: 8px;">
+                <label for="q9_ressuscitados" style="font-weight: normal; margin-bottom: 2px;">Ressuscitados:</label>
+                <input type="text" id="q9_ressuscitados" name="9a. Ressuscitados (1Ts 4.16,17)" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q9_transformados" style="font-weight: normal; margin-bottom: 2px;">Transformados:</label>
+                <input type="text" id="q9_transformados" name="9b. Transformados (1Ts 4.16,17)" required>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q10">10) Quem foram julgados de acordo com Ap 20.11,12?</label>
+            <textarea id="q10" name="10. Quem foram julgados (Ap 20.11,12)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label for="q11">11) O que João viu em Ap 21.1,2?</label>
+            <textarea id="q11" name="11. O que Joao viu (Ap 21.1,2)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label>12) Associe as colunas quanto ao nosso preparo:</label>
+            <div style="margin-top: 10px;">
+                <div class="matching-row">
+                    <select name="Preparo - Vigiar" required>
+                        <option value="">--</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                    <span>Vigiar</span>
+                </div>
+                <div class="matching-row">
+                    <select name="Preparo - Ate ao encontro tenho que servir" required>
+                        <option value="">--</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                    <span>Até ao encontro de Jesus tenho que servir</span>
+                </div>
+                <div class="matching-row">
+                    <select name="Preparo - Ser fiel e prudente" required>
+                        <option value="">--</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                    <span>Ser fiel e prudente</span>
+                </div>
+            </div>
+            <div style="font-size: 10pt; color: #666; margin-top: 8px;">
+                (A) Mt 24.42 &nbsp;&nbsp; (B) Mt 24.45,46 &nbsp;&nbsp; (C) 1Co 15.58
+            </div>
+        </div>
+
+        <!-- DADOS FINAIS -->
+        <div class="footer-info">
+            <div class="field">
+                <label for="nomePessoa">Nome do Aluno:</label>
+                <input type="text" id="nomePessoa" name="Nome do Aluno" required>
+            </div>
+            <div class="field">
+                <label for="dataPreenchimento">Data:</label>
+                <input type="date" id="dataPreenchimento" name="Data" required>
+            </div>
+        </div>
+
+        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 17</button>
+
+    </form>
+</div>
+
+<script>
+    function enviarFormulario(event) {
+        var btn = document.getElementById("btnEnviar");
+        btn.classList.add("sent");
+        btn.innerText = "ENVIANDO PELO EMAIL...";
+        
+        setTimeout(function(){
+            // O formulário continuará seu curso natural de envio
+        }, 500);
+    }
+</script>
+
+</body>
+</html>

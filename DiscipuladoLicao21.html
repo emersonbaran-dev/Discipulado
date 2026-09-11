@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discipulado Lição 21 - Testemunho - Missões</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            font-size: 12pt;
+        }
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 6px solid #A27B5C;
+        }
+        .header-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            min-height: 60px;
+        }
+        .header-container img {
+            position: absolute;
+            left: 0;
+            height: 60px;
+            width: auto;
+        }
+        .main-category {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            color: #A27B5C;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        h1 {
+            color: #A27B5C;
+            margin: 0;
+            font-size: 32px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 14pt;
+        }
+        .intro {
+            background-color: #f0f4f6;
+            border-left: 4px solid #A27B5C;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            font-size: 11pt;
+        }
+        .section-title {
+            background-color: #A27B5C;
+            color: white;
+            padding: 6px 12px;
+            font-size: 13pt;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .question-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #222;
+        }
+        input[type="text"], input[type="date"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 11pt;
+            margin-top: 4px;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #A27B5C;
+            outline: none;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .checkbox-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        .checkbox-group input[type="checkbox"] {
+            margin: 0;
+            width: 18px;
+            height: 18px;
+        }
+        .footer-info {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .footer-info .field {
+            flex: 1;
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: #A27B5C;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #836247;
+        }
+        .btn-submit.sent {
+            background-color: #202224 !important;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-category">MISSÕES</div>
+    
+    <div class="header-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
+        <h1>Lição 21</h1>
+    </div>
+    <div class="subtitle">TESTEMUNHO - MISSÕES</div>
+    
+    <div class="intro">
+        Desde a descida do Espírito Santo de Deus no Pentecoste, cabe à igreja do Senhor (todos os membros) realizar missões, conforme a própria ordem do Senhor Jesus Cristo em Atos 1.8. Antes o povo de Deus deveria pregar para os de fora dentro de seus arraiais. Agora, todo o crente já tem esta responsabilidade de sair para viver e anunciar o evangelho em todos os lugares ao mesmo tempo.
+    </div>
+
+    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
+        
+        <!-- SEÇÃO A -->
+        <div class="section-title">A – O PRINCÍPIO DAS MISSÕES</div>
+
+        <div class="question-group">
+            <label>1) Leia em At 1.8 e responda:</label>
+            <div style="margin-top: 8px;">
+                <label for="q1_a" style="font-weight: normal; margin-bottom: 2px;">a) O que receberiam?</label>
+                <input type="text" id="q1_a" name="1a. O que receberiam (At 1.8)" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q1_b" style="font-weight: normal; margin-bottom: 2px;">b) Quem daria este poder?</label>
+                <input type="text" id="q1_b" name="1b. Quem daria este poder (At 1.8)" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q1_c" style="font-weight: normal; margin-bottom: 2px;">c) O que seriam?</label>
+                <input type="text" id="q1_c" name="1c. O que seriam (At 1.8)" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q1_d" style="font-weight: normal; margin-bottom: 2px;">d) Onde realizariam?</label>
+                <textarea id="q1_d" name="1d. Onde realizariam (At 1.8)" rows="2" required></textarea>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q1_e" style="font-weight: normal; margin-bottom: 2px;">e) Quanto ao tempo nos lugares, como seria?</label>
+                <input type="text" id="q1_e" name="1e. Quanto ao tempo nos lugares como seria (At 1.8)" required>
+            </div>
+        </div>
+
+        <!-- SEÇÃO B -->
+        <div class="section-title">B – AS 3 FASES DAS MISSÕES</div>
+
+        <div class="question-group">
+            <label>2) Quais as fases de uma tarefa missionária?</label>
+            <div style="margin-top: 8px;">
+                <label for="q2_fase1" style="font-weight: normal; margin-bottom: 2px;">FASE 1: Mc 16.15</label>
+                <input type="text" id="q2_fase1" name="2. Fase 1 (Mc 16.15)" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q2_fase2" style="font-weight: normal; margin-bottom: 2px;">FASE 2: Mt 28.19</label>
+                <input type="text" id="q2_fase2" name="2. Fase 2 (Mt 28.19)" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q2_fase3" style="font-weight: normal; margin-bottom: 2px;">FASE 3: Tt 1.5</label>
+                <input type="text" id="q2_fase3" name="2. Fase 3 (Tt 1.5)" required>
+            </div>
+        </div>
+
+        <!-- SEÇÃO C -->
+        <div class="section-title">C – IGREJA FAZENDO MISSÕES</div>
+
+        <div class="question-group">
+            <label>3) Quando a igreja realiza missões, como age? (Selecione as opções correspondentes):</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="3. Como age a igreja em missoes" value="At 13.2,3 - Envia missionarios"> At 13.2,3 - Envia missionários</label>
+                <label><input type="checkbox" name="3. Como age a igreja em missoes" value="Ef 6.18-19 - Ora pelos missionarios"> Ef 6.18-19 - Ora pelos missionários</label>
+                <label><input type="checkbox" name="3. Como age a igreja em missoes" value="Fp 4.18 - Oferta aos missionarios"> Fp 4.18 - Oferta aos missionários</label>
+                <label><input type="checkbox" name="3. Como age a igreja em missoes" value="Fp 4.14 - Associa em tudo com eles"> Fp 4.14 - Associa em tudo com eles</label>
+            </div>
+        </div>
+
+        <div class="intro" style="margin-top: 25px; margin-bottom: 25px; border-left-color: #A27B5C;">
+            Como vimos, cabe a toda a igreja, inclusive a você, anunciar o evangelho em todos os lugares ao mesmo tempo: onde você mora e onde você não está através dos missionários, para que estes estabeleçam igrejas e continuem o ciclo para honra e glória do Senhor!
+        </div>
+
+        <!-- DADOS FINAIS -->
+        <div class="footer-info">
+            <div class="field">
+                <label for="nomePessoa">Nome do Aluno:</label>
+                <input type="text" id="nomePessoa" name="Nome do Aluno" required>
+            </div>
+            <div class="field">
+                <label for="dataPreenchimento">Data:</label>
+                <input type="date" id="dataPreenchimento" name="Data" required>
+            </div>
+        </div>
+
+        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 21</button>
+
+    </form>
+</div>
+
+<script>
+    function enviarFormulario(event) {
+        var btn = document.getElementById("btnEnviar");
+        btn.classList.add("sent");
+        btn.innerText = "ENVIANDO PELO EMAIL...";
+        
+        setTimeout(function(){
+            // O formulário continuará seu curso natural de envio
+        }, 500);
+    }
+</script>
+
+</body>
+</html>

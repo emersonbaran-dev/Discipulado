@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discipulado Lição 23 - A Igreja e a Comunhão</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            font-size: 12pt;
+        }
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 6px solid #496E65;
+        }
+        .header-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            min-height: 60px;
+        }
+        .header-container img {
+            position: absolute;
+            left: 0;
+            height: 60px;
+            width: auto;
+        }
+        .main-category {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            color: #496E65;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        h1 {
+            color: #496E65;
+            margin: 0;
+            font-size: 32px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 14pt;
+        }
+        .intro {
+            background-color: #f0f4f6;
+            border-left: 4px solid #496E65;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            font-size: 11pt;
+        }
+        .section-title {
+            background-color: #496E65;
+            color: white;
+            padding: 6px 12px;
+            font-size: 13pt;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .question-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #222;
+        }
+        input[type="text"], input[type="date"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 11pt;
+            margin-top: 4px;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #496E65;
+            outline: none;
+        }
+        .footer-info {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .footer-info .field {
+            flex: 1;
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: #496E65;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #38554e;
+        }
+        .btn-submit.sent {
+            background-color: #202224 !important;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-category">A IGREJA E A COMUNHÃO</div>
+    
+    <div class="header-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
+        <h1>Lição 23</h1>
+    </div>
+    <div class="subtitle">A IGREJA E A COMUNHÃO</div>
+    
+    <div class="intro">
+        A comunhão na igreja é fundamental para promover a glória do Senhor e a edificação dos crentes, pois além de ser uma ordem expressa divina, é fundamental pois, o crente remido pelo Senhor, faz parte do corpo de Cristo (cada um é membro deste corpo onde Jesus é o cabeça), que é a igreja e, deve vivenciar junto de maneira constante.
+    </div>
+
+    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
+        
+        <!-- SEÇÃO A -->
+        <div class="section-title">A – A IGREJA SEMPRE SE REÚNE</div>
+
+        <div class="question-group">
+            <label for="q1">1) No Sl 133, como os irmãos devem viver?</label>
+            <input type="text" id="q1" name="1. Como os irmaos devem viver (Sl 133)" required>
+        </div>
+
+        <div class="question-group">
+            <label>2) Complete de acordo com as referências:</label>
+            <div style="margin-top: 8px;">
+                <label for="q2_a" style="font-weight: normal; margin-bottom: 2px;">a) Em At 2.44, tudo tinha em comum e estava:</label>
+                <input type="text" id="q2_a" name="2a. At 2.44 estava" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q2_b" style="font-weight: normal; margin-bottom: 2px;">b) Em At 4.31, a igreja orou, pois estava:</label>
+                <input type="text" id="q2_b" name="2b. At 4.31 estava" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q2_c" style="font-weight: normal; margin-bottom: 2px;">c) Em At 15.6, examinaram a questão, pois estavam:</label>
+                <input type="text" id="q2_c" name="2c. At 15.6 estavam" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q2_d" style="font-weight: normal; margin-bottom: 2px;">d) Em At 20.7,8, a igreja partiu o pão, pois estava:</label>
+                <input type="text" id="q2_d" name="2d. At 20.7,8 estava" required>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q3">3) Qual o mandamento do Senhor em Hb 10.25a?</label>
+            <textarea id="q3" name="3. Mandamento do Senhor (Hb 10.25a)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label for="q4">4) A grande multidão estava diante de quem, conforme Ap 7.9?</label>
+            <input type="text" id="q4" name="4. Diante de quem estava a multidao (Ap 7.9)" required>
+        </div>
+
+        <!-- SEÇÃO B -->
+        <div class="section-title">B – A IGREJA É ONDE SE EXERCE AMOR</div>
+
+        <div class="question-group">
+            <label for="q5">5) Qual a ordem do Senhor para com os irmãos? (Rm 12.10)</label>
+            <input type="text" id="q5" name="5. Ordem para com os irmaos (Rm 12.10)" required>
+        </div>
+
+        <div class="question-group">
+            <label>6) Quem diz que ama a Deus a quem deve amar e por quê? (1Jo 4.19-21)</label>
+            <div style="margin-top: 8px;">
+                <label for="q6_a" style="font-weight: normal; margin-bottom: 2px;">A quem:</label>
+                <input type="text" id="q6_a" name="6a. A quem amar (1Jo 4.19-21)" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q6_b" style="font-weight: normal; margin-bottom: 2px;">Por quê?</label>
+                <textarea id="q6_b" name="6b. Por que amar (1Jo 4.19-21)" rows="2" required></textarea>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q7">7) Qual a evidência de que somos nascidos de Deus e, portanto, seus filhos e membros de sua igreja? (1Jo 4.7,8)</label>
+            <textarea id="q7" name="7. Evidencia de que somos nascidos de Deus (1Jo 4.7,8)" rows="2" required></textarea>
+        </div>
+
+        <!-- SEÇÃO C -->
+        <div class="section-title">C – A IGREJA É ONDE EXERCE EDIFICAÇÃO</div>
+
+        <div class="question-group">
+            <label>8) Cite dois objetivos primários da igreja, além do serviço (At 6.4):</label>
+            <input type="text" name="8. Objetivo primario 1 (At 6.4)" placeholder="1º" style="margin-bottom: 6px;" required>
+            <input type="text" name="8. Objetivo primario 2 (At 6.4)" placeholder="2º" required>
+        </div>
+
+        <div class="question-group">
+            <label for="q9">9) Em Ef 4.12, Deus concedeu dons aos membros da igreja para:</label>
+            <textarea id="q9" name="9. Para que Deus concedeu dons (Ef 4.12)" rows="3" required></textarea>
+        </div>
+
+        <div class="intro" style="margin-top: 25px; margin-bottom: 25px; border-left-color: #496E65;">
+            Como vimos, exercer a comunhão é fundamental para a nossa santificação e, também, a dos irmãos em Cristo. Exerçamos sempre esta preciosa comunhão!
+        </div>
+
+        <!-- DADOS FINAIS -->
+        <div class="footer-info">
+            <div class="field">
+                <label for="nomePessoa">Nome do Aluno:</label>
+                <input type="text" id="nomePessoa" name="Nome do Aluno" required>
+            </div>
+            <div class="field">
+                <label for="dataPreenchimento">Data:</label>
+                <input type="date" id="dataPreenchimento" name="Data" required>
+            </div>
+        </div>
+
+        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 23</button>
+
+    </form>
+</div>
+
+<script>
+    function enviarFormulario(event) {
+        var btn = document.getElementById("btnEnviar");
+        btn.classList.add("sent");
+        btn.innerText = "ENVIANDO PELO EMAIL...";
+        
+        setTimeout(function(){
+            // O formulário continuará seu curso natural de envio
+        }, 500);
+    }
+</script>
+
+</body>
+</html>

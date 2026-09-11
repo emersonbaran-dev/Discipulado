@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discipulado Lição 20 - Evangelização</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            font-size: 12pt;
+        }
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 6px solid #946F52;
+        }
+        .header-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            min-height: 60px;
+        }
+        .header-container img {
+            position: absolute;
+            left: 0;
+            height: 60px;
+            width: auto;
+        }
+        .main-category {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            color: #946F52;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        h1 {
+            color: #946F52;
+            margin: 0;
+            font-size: 32px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 14pt;
+        }
+        .intro {
+            background-color: #f0f4f6;
+            border-left: 4px solid #946F52;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            font-size: 11pt;
+        }
+        .section-title {
+            background-color: #946F52;
+            color: white;
+            padding: 6px 12px;
+            font-size: 13pt;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .question-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #222;
+        }
+        input[type="text"], input[type="date"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 11pt;
+            margin-top: 4px;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #946F52;
+            outline: none;
+        }
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 8px;
+        }
+        .radio-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .radio-group input[type="radio"] {
+            margin: 0;
+            width: 16px;
+            height: 16px;
+        }
+        .footer-info {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .footer-info .field {
+            flex: 1;
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: #946F52;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #78583f;
+        }
+        .btn-submit.sent {
+            background-color: #202224 !important;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-category">EVANGELIZAÇÃO</div>
+    
+    <div class="header-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
+        <h1>Lição 20</h1>
+    </div>
+    <div class="subtitle">TESTEMUNHO - EVANGELIZAÇÃO</div>
+    
+    <div class="intro">
+        Cabe a cada crente no Senhor Jesus Cristo, que foi transformado pelo poder do Evangelho, anunciar este mesmo Evangelho às pessoas que carecem da salvação, assim como aconteceu com você onde te anunciou o Evangelho.
+    </div>
+
+    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
+        
+        <!-- SEÇÃO A -->
+        <div class="section-title">A – ORDEM</div>
+
+        <div class="question-group">
+            <label for="q1">1) Qual é a ordem de Jesus em Mc 16.15?</label>
+            <textarea id="q1" name="1. Qual e a ordem de Jesus (Mc 16.15)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label>2) Leia em Rm 1.14-16 e responda:</label>
+            <div style="margin-top: 8px;">
+                <label for="q2_a" style="font-weight: normal; margin-bottom: 2px;">a) A quem Paulo era devedor?</label>
+                <input type="text" id="q2_a" name="2a. A quem Paulo era devedor (Rm 1.14)" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q2_b" style="font-weight: normal; margin-bottom: 2px;">b) O que ele estava pronto a anunciar?</label>
+                <input type="text" id="q2_b" name="2b. O que ele estava pronto a anunciar (Rm 1.15)" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label style="font-weight: normal; margin-bottom: 2px;">c) Ele tinha vergonha do Evangelho?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="2c. Ele tinha vergonha do Evangelho (Rm 1.16)" value="SIM" required> SIM</label>
+                    <label><input type="radio" name="2c. Ele tinha vergonha do Evangelho (Rm 1.16)" value="NÃO" required> NÃO</label>
+                </div>
+            </div>
+            <div style="margin-top: 10px;">
+                <label style="font-weight: normal; margin-bottom: 2px;">d) O que o Evangelho é?</label>
+                <input type="text" name="2d. O que o Evangelho e - 1 (Rm 1.16)" placeholder="1)" style="margin-bottom: 6px;" required>
+                <input type="text" name="2d. O que o Evangelho e - 2 (Rm 1.16)" placeholder="2)" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q2_e" style="font-weight: normal; margin-bottom: 2px;">e) O que o Evangelho faz?</label>
+                <input type="text" id="q2_e" name="2e. O que o Evangelho faz (Rm 1.16)" required>
+            </div>
+        </div>
+
+        <!-- SEÇÃO B -->
+        <div class="section-title">B – CONTEÚDO</div>
+
+        <div class="question-group">
+            <label for="q3">3) Quem é o único salvador, conforme Pedro disse em At 4.11-12?</label>
+            <input type="text" id="q3" name="3. Quem e o unico salvador (At 4.11-12)" required>
+        </div>
+
+        <div class="question-group">
+            <label for="q4">4) Em At 18.5, o que Paulo e Silas anunciavam?</label>
+            <textarea id="q4" name="4. O que Paulo e Silas anunciavam (At 18.5)" rows="2" required></textarea>
+        </div>
+
+        <!-- SEÇÃO C -->
+        <div class="section-title">C – MÉTODO</div>
+
+        <div class="question-group">
+            <label>5) Leia em Atos 2.37-39 e responda:</label>
+            <div style="margin-top: 8px;">
+                <label for="q5_a" style="font-weight: normal; margin-bottom: 2px;">a) O que significa “ouvindo eles estas coisas”?</label>
+                <input type="text" id="q5_a" name="5a. O que significa ouvindo eles estas coisas (At 2.37)" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q5_b" style="font-weight: normal; margin-bottom: 2px;">b) O que os ouvintes deveriam fazer?</label>
+                <input type="text" id="q5_b" name="5b. O que os ouvintes deveriam fazer (At 2.38)" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q5_c" style="font-weight: normal; margin-bottom: 2px;">c) O que ainda estava longe para os ouvintes, seus filhos e os que tinham ainda a chamar?</label>
+                <input type="text" id="q5_c" name="5c. O que ainda estava longe (At 2.39)" required>
+            </div>
+        </div>
+
+        <div class="intro" style="margin-top: 25px; margin-bottom: 25px; border-left-color: #946F52;">
+            Jesus Cristo deu a ordem para que cada discípulo Dele fale do Evangelho às pessoas que carecem de salvação, transmitindo somente que Jesus é o salvador, de uma maneira em que fale da história e o porquê Ele veio ao mundo, chamando outras pessoas a se arrependerem e crerem Nele para receber as mais preciosas promessas decorrentes da obra de Cristo Jesus.
+        </div>
+
+        <!-- DADOS FINAIS -->
+        <div class="footer-info">
+            <div class="field">
+                <label for="nomePessoa">Nome do Aluno:</label>
+                <input type="text" id="nomePessoa" name="Nome do Aluno" required>
+            </div>
+            <div class="field">
+                <label for="dataPreenchimento">Data:</label>
+                <input type="date" id="dataPreenchimento" name="Data" required>
+            </div>
+        </div>
+
+        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 20</button>
+
+    </form>
+</div>
+
+<script>
+    function enviarFormulario(event) {
+        var btn = document.getElementById("btnEnviar");
+        btn.classList.add("sent");
+        btn.innerText = "ENVIANDO PELO EMAIL...";
+        
+        setTimeout(function(){
+            // O formulário continuará seu curso natural de envio
+        }, 500);
+    }
+</script>
+
+</body>
+</html>

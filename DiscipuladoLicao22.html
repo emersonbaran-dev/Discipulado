@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discipulado Lição 22 - A Igreja do Senhor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            font-size: 12pt;
+        }
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 6px solid #3F6259;
+        }
+        .header-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            min-height: 60px;
+        }
+        .header-container img {
+            position: absolute;
+            left: 0;
+            height: 60px;
+            width: auto;
+        }
+        .main-category {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            color: #3F6259;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        h1 {
+            color: #3F6259;
+            margin: 0;
+            font-size: 32px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 14pt;
+        }
+        .intro {
+            background-color: #f0f4f6;
+            border-left: 4px solid #3F6259;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            font-size: 11pt;
+        }
+        .section-title {
+            background-color: #3F6259;
+            color: white;
+            padding: 6px 12px;
+            font-size: 13pt;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .question-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #222;
+        }
+        input[type="text"], input[type="date"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 11pt;
+            margin-top: 4px;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #3F6259;
+            outline: none;
+        }
+        .matching-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .matching-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .matching-item select {
+            width: 180px;
+            margin-top: 0;
+        }
+        .footer-info {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .footer-info .field {
+            flex: 1;
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: #3F6259;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #2e4942;
+        }
+        .btn-submit.sent {
+            background-color: #202224 !important;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-category">A IGREJA DO SENHOR</div>
+    
+    <div class="header-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
+        <h1>Lição 22</h1>
+    </div>
+    <div class="subtitle">A IGREJA EM GERAL E A IGREJA LOCAL</div>
+    
+    <!-- SEÇÃO A -->
+    <div class="section-title">A – A IGREJA EM GERAL</div>
+
+    <div class="intro">
+        “A Igreja é o número completo dos eleitos, que têm sido e que hão de ser reunidos em um corpo sob Cristo, a cabeça.” (Catecismo Maior). É um organismo vivo onde o cabeça é Cristo e os membros são os crentes.
+    </div>
+
+    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
+        
+        <div class="question-group">
+            <label for="q1">1) Qual fato acerca de Cristo é mencionado em Cl 1.18?</label>
+            <input type="text" id="q1" name="1. Fato acerca de Cristo (Cl 1.18)" required>
+        </div>
+
+        <div class="question-group">
+            <label for="q2">2) Em Ef 1.7, o que Cristo conseguiu à igreja pela sua morte?</label>
+            <input type="text" id="q2" name="2. O que Cristo conseguiu pela morte (Ef 1.7)" required>
+        </div>
+
+        <div class="question-group">
+            <label for="q3">3) O que aprendemos sobre todos os crentes, em Rm 12.4,5?</label>
+            <textarea id="q3" name="3. O que aprendemos sobre crentes (Rm 12.4,5)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label>4) O que é o povo de Deus de acordo com 1Pe 2.9?</label>
+            <input type="text" name="4. Povo de Deus - 1 (1Pe 2.9)" placeholder="1)" style="margin-bottom: 6px;" required>
+            <input type="text" name="4. Povo de Deus - 2 (1Pe 2.9)" placeholder="2)" style="margin-bottom: 6px;" required>
+            <input type="text" name="4. Povo de Deus - 3 (1Pe 2.9)" placeholder="3)" style="margin-bottom: 6px;" required>
+            <input type="text" name="4. Povo de Deus - 4 (1Pe 2.9)" placeholder="4)" required>
+        </div>
+
+        <div class="intro" style="margin-top: 25px; margin-bottom: 25px; border-left-color: #3F6259;">
+            Como vimos, Cristo Jesus é o cabeça da igreja, pois a resgatou com sua preciosa obra realizada uma única vez em favor de seus eleitos, fazendo um povo santo, de propriedade exclusiva de Deus, pronto para servir ao Senhor, bem como aos irmãos, através dos dons dados pelo Espírito de Deus.
+        </div>
+
+        <!-- SEÇÃO B -->
+        <div class="section-title">B – A IGREJA LOCAL</div>
+
+        <div class="question-group">
+            <label>5) Onde a igreja se reunia, de acordo com os versos abaixo? Associe os locais aos textos correspondentes:</label>
+            <div class="matching-group">
+                <div class="matching-item">
+                    <span style="flex: 1;">a) At 2.46, 3.1, 5.12</span>
+                    <select name="5a. Local de reuniao (At 2.46, 3.1, 5.12)" required>
+                        <option value="">Selecione...</option>
+                        <option value="Casa">Casa</option>
+                        <option value="Templo">Templo</option>
+                        <option value="Sinagoga">Sinagoga</option>
+                        <option value="Escola">Escola</option>
+                    </select>
+                </div>
+                <div class="matching-item">
+                    <span style="flex: 1;">b) At 13.14,43</span>
+                    <select name="5b. Local de reuniao (At 13.14,43)" required>
+                        <option value="">Selecione...</option>
+                        <option value="Casa">Casa</option>
+                        <option value="Templo">Templo</option>
+                        <option value="Sinagoga">Sinagoga</option>
+                        <option value="Escola">Escola</option>
+                    </select>
+                </div>
+                <div class="matching-item">
+                    <span style="flex: 1;">c) At 19.9</span>
+                    <select name="5c. Local de reuniao (At 19.9)" required>
+                        <option value="">Selecione...</option>
+                        <option value="Casa">Casa</option>
+                        <option value="Templo">Templo</option>
+                        <option value="Sinagoga">Sinagoga</option>
+                        <option value="Escola">Escola</option>
+                    </select>
+                </div>
+                <div class="matching-item">
+                    <span style="flex: 1;">d) Rm 16.5; 1Co 16.19</span>
+                    <select name="5d. Local de reuniao (Rm 16.5; 1Co 16.19)" required>
+                        <option value="">Selecione...</option>
+                        <option value="Casa">Casa</option>
+                        <option value="Templo">Templo</option>
+                        <option value="Sinagoga">Sinagoga</option>
+                        <option value="Escola">Escola</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label>6) Em At 2.42-47, cite 5 ações da igreja primitiva:</label>
+            <input type="text" name="6. Acao da igreja primitiva - 1 (At 2.42-47)" placeholder="1)" style="margin-bottom: 6px;" required>
+            <input type="text" name="6. Acao da igreja primitiva - 2 (At 2.42-47)" placeholder="2)" style="margin-bottom: 6px;" required>
+            <input type="text" name="6. Acao da igreja primitiva - 3 (At 2.42-47)" placeholder="3)" style="margin-bottom: 6px;" required>
+            <input type="text" name="6. Acao da igreja primitiva - 4 (At 2.42-47)" placeholder="4)" style="margin-bottom: 6px;" required>
+            <input type="text" name="6. Acao da igreja primitiva - 5 (At 2.42-47)" placeholder="5)" required>
+        </div>
+
+        <div class="question-group">
+            <label>7) Quais os 2 ofícios da igreja, de acordo com os versos abaixo?</label>
+            <div style="margin-top: 8px;">
+                <label for="q7_a" style="font-weight: normal; margin-bottom: 2px;">At 15.6; 20.17,28; Tt 1.5:</label>
+                <input type="text" id="q7_a" name="7a. Oficio 1 (At 15.6; 20.17,28; Tt 1.5)" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q7_b" style="font-weight: normal; margin-bottom: 2px;">At 6.3; 1Tm 3.8:</label>
+                <input type="text" id="q7_b" name="7b. Oficio 2 (At 6.3; 1Tm 3.8)" required>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label>8) Quais os dois tipos de presbíteros, conforme 1Tm 5.17?</label>
+            <input type="text" name="8. Tipo de presbitero - 1 (1Tm 5.17)" placeholder="1)" style="margin-bottom: 6px;" required>
+            <input type="text" name="8. Tipo de presbitero - 2 (1Tm 5.17)" placeholder="2)" required>
+        </div>
+
+        <div class="question-group">
+            <label>9) Os sacramentos da igreja que devem ser ministrados são:</label>
+            <div style="margin-top: 8px;">
+                <label for="q9_a" style="font-weight: normal; margin-bottom: 2px;">Mt 26.26; At 2.42:</label>
+                <input type="text" id="q9_a" name="9a. Sacramento 1 (Mt 26.26; At 2.42)" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q9_b" style="font-weight: normal; margin-bottom: 2px;">Mt 28.19; At 2.38:</label>
+                <input type="text" id="q9_b" name="9b. Sacramento 2 (Mt 28.19; At 2.38)" required>
+            </div>
+        </div>
+
+        <div class="intro" style="margin-top: 25px; margin-bottom: 25px; border-left-color: #3F6259;">
+            A igreja do Senhor só pode exercer seus dons e adoração localmente e constantemente, perseverando na doutrina, na comunhão, na Ceia e na oração, sob a liderança de oficiais como diáconos e presbíteros, para o bom andamento da obra da igreja, até a volta do noivo que irá se encontrar com sua noiva!
+        </div>
+
+        <!-- DADOS FINAIS -->
+        <div class="footer-info">
+            <div class="field">
+                <label for="nomePessoa">Nome do Aluno:</label>
+                <input type="text" id="nomePessoa" name="Nome do Aluno" required>
+            </div>
+            <div class="field">
+                <label for="dataPreenchimento">Data:</label>
+                <input type="date" id="dataPreenchimento" name="Data" required>
+            </div>
+        </div>
+
+        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 22</button>
+
+    </form>
+</div>
+
+<script>
+    function enviarFormulario(event) {
+        var btn = document.getElementById("btnEnviar");
+        btn.classList.add("sent");
+        btn.innerText = "ENVIANDO PELO EMAIL...";
+        
+        setTimeout(function(){
+            // O formulário continuará seu curso natural de envio
+        }, 500);
+    }
+</script>
+
+</body>
+</html>

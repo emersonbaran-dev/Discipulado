@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discipulado Lição 24 - A Igreja e o Compromisso</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            font-size: 12pt;
+        }
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 6px solid #537A71;
+        }
+        .header-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            min-height: 60px;
+        }
+        .header-container img {
+            position: absolute;
+            left: 0;
+            height: 60px;
+            width: auto;
+        }
+        .main-category {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            color: #537A71;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        h1 {
+            color: #537A71;
+            margin: 0;
+            font-size: 32px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 14pt;
+        }
+        .intro {
+            background-color: #f0f4f6;
+            border-left: 4px solid #537A71;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            font-size: 11pt;
+        }
+        .section-title {
+            background-color: #537A71;
+            color: white;
+            padding: 6px 12px;
+            font-size: 13pt;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .question-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #222;
+        }
+        input[type="text"], input[type="date"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 11pt;
+            margin-top: 4px;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #537A71;
+            outline: none;
+        }
+        .footer-info {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .footer-info .field {
+            flex: 1;
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: #537A71;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #3f5d56;
+        }
+        .btn-submit.sent {
+            background-color: #202224 !important;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-category">A IGREJA E COMPROMISSO</div>
+    
+    <div class="header-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
+        <h1>Lição 24</h1>
+    </div>
+    <div class="subtitle">A IGREJA E COMPROMISSO</div>
+    
+    <div class="intro">
+        Em Cristo, os salvos pertencem ao povo de Deus, que é a igreja do Senhor. Temos, portanto, várias orientações bíblicas que reportam aos compromissos daquele que é membro da igreja do Senhor, assim como os demais irmãos, tendo Cristo como cabeça. Vejamos quais são:
+    </div>
+
+    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
+        
+        <!-- SEÇÃO A -->
+        <div class="section-title">A – TORNAR MEMBRO</div>
+
+        <div class="question-group">
+            <label>Para se tornar membro de uma igreja é necessário, basicamente, 2 atitudes:</label>
+            <div style="margin-top: 8px;">
+                <label for="q1_a" style="font-weight: normal; margin-bottom: 2px;">• Mt 28.19:</label>
+                <input type="text" id="q1_a" name="1a. Mt 28.19" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q1_b" style="font-weight: normal; margin-bottom: 2px;">• Mt 10.32:</label>
+                <input type="text" id="q1_b" name="1b. Mt 10.32" required>
+            </div>
+        </div>
+
+        <!-- SEÇÃO B -->
+        <div class="section-title">B – VIVER DE ACORDO COMO O EVANGELHO</div>
+
+        <div class="question-group">
+            <label for="q2">Qual o objetivo do homem em todas as coisas? (1Co 10.31)</label>
+            <input type="text" id="q2" name="2. Objetivo do homem em todas as coisas (1Co 10.31)" required>
+        </div>
+
+        <div class="question-group">
+            <label for="q3">O que Jesus disse que é inevitável, mas ai daquele que faz? (Mt 18.7)</label>
+            <textarea id="q3" name="3. O que Jesus disse que e inevitavel (Mt 18.7)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label for="q4">O que o cristão deve ser? (Mt 5.13,14)</label>
+            <input type="text" id="q4" name="4. O que o cristao deve ser (Mt 5.13,14)" required>
+        </div>
+
+        <!-- SEÇÃO C -->
+        <div class="section-title">C – ORAR PELA IGREJA</div>
+
+        <div class="intro" style="margin-bottom: 15px;">
+            Oração é submeter nossas necessidades ao Senhor, por meio de Cristo e, em especial, entregar a igreja perante a Deus.
+        </div>
+
+        <div class="question-group">
+            <label>Quem intercede pela igreja nos textos abaixo:</label>
+            <div style="margin-top: 8px;">
+                <label for="q5_a" style="font-weight: normal; margin-bottom: 2px;">• Jo 17.20:</label>
+                <input type="text" id="q5_a" name="5a. Jo 17.20" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q5_b" style="font-weight: normal; margin-bottom: 2px;">• At 12.5:</label>
+                <input type="text" id="q5_b" name="5b. At 12.5" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q5_c" style="font-weight: normal; margin-bottom: 2px;">• Ef 6.17,18:</label>
+                <input type="text" id="q5_c" name="5c. Ef 6.17,18" required>
+            </div>
+        </div>
+
+        <!-- SEÇÃO D -->
+        <div class="section-title">D – SERVIR AOS IRMÃOS</div>
+
+        <div class="question-group">
+            <label for="q6">Como devemos servir ao irmão, de acordo com Gl 5.13?</label>
+            <textarea id="q6" name="6. Como devemos servir ao irmao (Gl 5.13)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label for="q7">Como devemos servir aos irmãos, conforme 1Pe 4.10?</label>
+            <textarea id="q7" name="7. Como devemos servir aos irmaos (1Pe 4.10)" rows="2" required></textarea>
+        </div>
+
+        <!-- SEÇÃO E -->
+        <div class="section-title">E – DIZIMAR REGULARMENTE</div>
+
+        <div class="question-group">
+            <label for="q8">Como a nossa renda deve ser entregue ao Senhor? (Pv 3.9)</label>
+            <input type="text" id="q8" name="8. Como a renda deve ser entregue (Pv 3.9)" required>
+        </div>
+
+        <div class="question-group">
+            <label for="q9">Em Mt 23.23, qual a ordem de Jesus?</label>
+            <textarea id="q9" name="9. Ordem de Jesus (Mt 23.23)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label for="q10">Abraão deu dízimo a quem; e com quem é comparado? (Hb 7.2)</label>
+            <textarea id="q10" name="10. Abraao deu dizimo a quem e comparacao (Hb 7.2)" rows="2" required></textarea>
+        </div>
+
+        <!-- SEÇÃO F -->
+        <div class="section-title">F – SUBMETER ÀS AUTORIDADES</div>
+
+        <div class="question-group">
+            <label for="q11">A quem devemos obedecer e por quê? (Hb 13.17)</label>
+            <textarea id="q11" name="11. A quem obedecer e por que (Hb 13.17)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label for="q12">A quem devemos acatar e de que maneira? (1Ts 5.12,13)</label>
+            <textarea id="q12" name="12. A quem acatar e de que maneira (1Ts 5.12,13)" rows="2" required></textarea>
+        </div>
+
+        <div class="intro" style="margin-top: 25px; margin-bottom: 25px; border-left-color: #537A71;">
+            Assim, nosso dever é assumir um compromisso com a igreja local, pois fazemos parte dela e é onde desenvolvemos nossa comunhão.
+        </div>
+
+        <!-- DADOS FINAIS -->
+        <div class="footer-info">
+            <div class="field">
+                <label for="nomePessoa">Nome do Aluno:</label>
+                <input type="text" id="nomePessoa" name="Nome do Aluno" required>
+            </div>
+            <div class="field">
+                <label for="dataPreenchimento">Data:</label>
+                <input type="date" id="dataPreenchimento" name="Data" required>
+            </div>
+        </div>
+
+        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 24</button>
+
+    </form>
+</div>
+
+<script>
+    function enviarFormulario(event) {
+        var btn = document.getElementById("btnEnviar");
+        btn.classList.add("sent");
+        btn.innerText = "ENVIANDO PELO EMAIL...";
+        
+        setTimeout(function(){
+            // O formulário continuará seu curso natural de envio
+        }, 500);
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discipulado Lição 14 - A Luta Contra o Pecado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            font-size: 12pt;
+        }
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 6px solid #52585D;
+        }
+        .header-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            min-height: 60px;
+        }
+        .header-container img {
+            position: absolute;
+            left: 0;
+            height: 60px;
+            width: auto;
+        }
+        .main-category {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            color: #52585D;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        h1 {
+            color: #52585D;
+            margin: 0;
+            font-size: 32px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 14pt;
+        }
+        .intro {
+            background-color: #f0f4f6;
+            border-left: 4px solid #52585D;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            font-size: 11pt;
+        }
+        .section-title {
+            background-color: #52585D;
+            color: white;
+            padding: 6px 12px;
+            font-size: 13pt;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .question-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #222;
+        }
+        input[type="text"], input[type="date"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 11pt;
+            margin-top: 4px;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #52585D;
+            outline: none;
+        }
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 8px;
+        }
+        .radio-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .radio-group input[type="radio"] {
+            margin: 0;
+            width: 16px;
+            height: 16px;
+        }
+        .footer-info {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .footer-info .field {
+            flex: 1;
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: #52585D;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #3b3f43;
+        }
+        .btn-submit.sent {
+            background-color: #202224 !important;
+            cursor: default;
+        }
+        .final-note {
+            text-align: center;
+            font-weight: bold;
+            color: #52585D;
+            background-color: #f0f4f6;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            margin-top: 25px;
+            font-size: 11pt;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-category">AMADURECIMENTO</div>
+    
+    <div class="header-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
+        <h1>Lição 14</h1>
+    </div>
+    <div class="subtitle">A LUTA CONTRA O PECADO</div>
+    
+    <div class="intro">
+        Neste processo de crescimento no Senhor, é necessário ter as informações bíblicas para combater o pecado que sempre está rondando nossa vida. Vejamos, então:
+    </div>
+
+    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
+        
+        <!-- SEÇÃO A -->
+        <div class="section-title">A – TENTAÇÃO</div>
+
+        <div class="intro" style="border-left-color: #555; background-color: #f9f9f9; margin-bottom: 15px;">
+            É importante definir que tentação é toda a forma para induzir a pessoa a pecar, ou seja, tentação não é pecado, mas são sugestões que, sendo aceitas, gera ato pecaminoso.
+        </div>
+
+        <div class="question-group">
+            <label for="q1">1) Quem foi tentado no deserto? (Mt 4.1)</label>
+            <textarea id="q1" name="1. Quem foi tentado no deserto (Mt 4.1)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label>2) Deus pode tentar, de acordo com Tg 1.13?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="2. Deus pode tentar (Tg 1.13)" value="SIM" required> SIM</label>
+                <label><input type="radio" name="2. Deus pode tentar (Tg 1.13)" value="NÃO" required> NÃO</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label>3) Quais fontes de tentação, de acordo com os versos abaixo?</label>
+            <div style="margin-top: 8px;">
+                <label for="q3_tg" style="font-weight: normal; margin-bottom: 2px;">- Tg 4.7:</label>
+                <input type="text" id="q3_tg" name="3. Fonte de tentacao - Tg 4.7" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q3_gl" style="font-weight: normal; margin-bottom: 2px;">- Gl 5.16:</label>
+                <input type="text" id="q3_gl" name="3. Fonte de tentacao - Gl 5.16" required>
+            </div>
+            <div style="margin-top: 10px;">
+                <label for="q3_1jo" style="font-weight: normal; margin-bottom: 2px;">- 1Jo 2.15:</label>
+                <input type="text" id="q3_1jo" name="3. Fonte de tentacao - 1Jo 2.15" required>
+            </div>
+        </div>
+
+        <!-- SEÇÃO B -->
+        <div class="section-title">B – O PECADO</div>
+
+        <div class="question-group">
+            <label for="q4">4) O que é pecado? (1Jo 3.4)</label>
+            <textarea id="q4" name="4. O que e pecado (1Jo 3.4)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label>5) Sendo salvos pela graça, devemos pecar? (Rm 6.1,2)</label>
+            <div class="radio-group">
+                <label><input type="radio" name="5. Sendo salvos pela graca devemos pecar (Rm 6.1,2)" value="SIM" required> SIM</label>
+                <label><input type="radio" name="5. Sendo salvos pela graca devemos pecar (Rm 6.1,2)" value="NÃO" required> NÃO</label>
+            </div>
+        </div>
+
+        <!-- SEÇÃO C -->
+        <div class="section-title">C – ARREPENDIMENTO</div>
+
+        <div class="question-group">
+            <label for="q6">6) E se pecarmos, o que temos? (1Jo 2.1)</label>
+            <textarea id="q6" name="6. E se pecarmos o que temos (1Jo 2.1)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label for="q7">7) E o que mais deve-se fazer? (At 3.19)</label>
+            <textarea id="q7" name="7. E o que mais deve-se fazer (At 3.19)" rows="2" required></textarea>
+        </div>
+
+        <!-- SEÇÃO D -->
+        <div class="section-title">D – LIVRES DO PODER DO PECADO</div>
+
+        <div class="question-group">
+            <label for="q8">8) O que a fé em Cristo nos dá, de acordo com Rm 8.1?</label>
+            <textarea id="q8" name="8. O que a fe em Cristo nos da (Rm 8.1)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label>9) Existe tentação superior às nossas forças? (1Co 10.13)</label>
+            <div class="radio-group">
+                <label><input type="radio" name="9. Existe tentacao superior as nossas forcas (1Co 10.13)" value="SIM" required> SIM</label>
+                <label><input type="radio" name="9. Existe tentacao superior as nossas forcas (1Co 10.13)" value="NÃO" required> NÃO</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q10">10) Que ações devemos ter para não cair em tentação? (Lc 22.46)</label>
+            <textarea id="q10" name="10. Acoes para nao cair em tentacao (Lc 22.46)" rows="2" required></textarea>
+        </div>
+
+        <div class="final-note">
+            Como vimos, é fundamental lutarmos contra as tentações que tem como origem o mundo, a carne e o diabo. Não somos mais escravos do pecado, mas livres para agradar a Deus com a bendita força do Senhor. Confie Nele e resista às tentações.
+        </div>
+
+        <!-- DADOS FINAIS -->
+        <div class="footer-info">
+            <div class="field">
+                <label for="nomePessoa">Nome do Aluno:</label>
+                <input type="text" id="nomePessoa" name="Nome do Aluno" required>
+            </div>
+            <div class="field">
+                <label for="dataPreenchimento">Data:</label>
+                <input type="date" id="dataPreenchimento" name="Data" required>
+            </div>
+        </div>
+
+        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 14</button>
+
+    </form>
+</div>
+
+<script>
+    function enviarFormulario(event) {
+        var btn = document.getElementById("btnEnviar");
+        btn.classList.add("sent");
+        btn.innerText = "ENVIANDO PELO EMAIL...";
+        
+        setTimeout(function(){
+            // O formulário continuará seu curso natural de envio
+        }, 500);
+    }
+</script>
+
+</body>
+</html>
