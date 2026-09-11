@@ -72,24 +72,10 @@
   <script>
     const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso.json';
     const DEFAULT_EMAIL = 'emersonbaran@gmail.com';
+    const videosLiberados = new Set();
     let lastCourseSnapshot = '';
 
-    function getLessonSubmitKey(lesson, index) {
-      return 'curso_licao_enviada_' + index + '_' + (lesson.firstHtmlPage || 'licao');
-    }
-    function licaoFoiEnviada(lesson, index) {
-      return localStorage.getItem(getLessonSubmitKey(lesson, index)) === '1';
-    }
-    function videoEstaLiberado(lesson, index) {
-      if (!getVideoUrl(lesson)) return false;
-      if (lesson.firstHtmlPage) return licaoFoiEnviada(lesson, index);
-      return true;
-    }
-    function marcarLicaoEnviada(index) {
-      const lessons = JSON.parse(localStorage.getItem('course_lessons') || '[]');
-      if (!lessons[index]) return;
-      localStorage.setItem(getLessonSubmitKey(lessons[index], index), '1');
-    }
+    function chaveVideo(index) { return 'video_desbloqueado_v2_' + index; }
     function getVideoUrl(lesson) { return lesson.videoUrl || ''; }
     function getVideoTitle(lesson) { return lesson.videoTitle || 'Vídeo da aula'; }
     function formatYouTubeUrl(url) {
@@ -97,6 +83,17 @@
       return (match && match[2].length === 11) ? 'https://www.youtube.com/embed/' + match[2] : null;
     }
     function isModuleLocked(d) { return !!(d && new Date() < new Date(d)); }
+    function videoEstaLiberado(lesson, index) {
+      if (!getVideoUrl(lesson)) return false;
+      if (lesson.firstHtmlPage) {
+        return videosLiberados.has(String(index)) || localStorage.getItem(chaveVideo(index)) === '1';
+      }
+      return true;
+    }
+    function marcarVideoLiberado(index) {
+      videosLiberados.add(String(index));
+      localStorage.setItem(chaveVideo(index), '1');
+    }
 
     async function loadCursoFromCloud() {
       try {
@@ -129,23 +126,15 @@
         sidebarMenu.innerHTML = '<li style="color:#64748b;padding:10px;">Sem conteúdo.</li>';
         return;
       }
-
       sidebarMenu.innerHTML = lessons.map((lesson, i) => {
         if (isModuleLocked(lesson.releaseDate)) {
           return `<li class="sidebar-module"><button class="sidebar-module-title locked" disabled>🔒 ${lesson.title}</button></li>`;
         }
         const liberado = videoEstaLiberado(lesson, i);
         let subs = '';
-        if (lesson.firstHtmlPage) {
-          subs += `<li><button class="sidebar-subitem" onclick="handleSidebarSubitemClick(${i}, 'html0')">📋 ${lesson.firstHtmlTitle || 'Lição 10'}</button></li>`;
-        }
-        if (getVideoUrl(lesson) && liberado) {
-          subs += `<li><button class="sidebar-subitem" onclick="abrirVideo(${i})">🎬 ${getVideoTitle(lesson)}</button></li>`;
-        }
-        return `<li class="sidebar-module" id="sidebar-mod-${i}">
-          <button class="sidebar-module-title" onclick="toggleSidebarModule(${i})"><span>${lesson.title}</span><span>▾</span></button>
-          <ul class="sidebar-sublist">${subs}</ul>
-        </li>`;
+        if (lesson.firstHtmlPage) subs += `<li><button class="sidebar-subitem" onclick="handleSidebarSubitemClick(${i}, 'html0')">📋 ${lesson.firstHtmlTitle || 'Lição 10'}</button></li>`;
+        if (getVideoUrl(lesson) && liberado) subs += `<li><button class="sidebar-subitem" onclick="abrirVideo(${i})">🎬 ${getVideoTitle(lesson)}</button></li>`;
+        return `<li class="sidebar-module" id="sidebar-mod-${i}"><button class="sidebar-module-title" onclick="toggleSidebarModule(${i})"><span>${lesson.title}</span><span>▾</span></button><ul class="sidebar-sublist">${subs}</ul></li>`;
       }).join('');
 
       container.innerHTML = lessons.map((lesson, i) => {
@@ -154,60 +143,29 @@
         }
         const liberado = videoEstaLiberado(lesson, i);
         const email = encodeURIComponent(lesson.lessonEmail || DEFAULT_EMAIL);
-        const submitKey = encodeURIComponent(getLessonSubmitKey(lesson, i));
-        const licaoSrc = lesson.firstHtmlPage ? `${lesson.firstHtmlPage}?lessonIndex=${i}&email=${email}&submitKey=${submitKey}` : '';
+        const licaoSrc = lesson.firstHtmlPage ? `${lesson.firstHtmlPage}?lessonIndex=${i}&email=${email}` : '';
         const videoUrl = getVideoUrl(lesson);
         const yt = formatYouTubeUrl(videoUrl);
-
         const licaoHTML = lesson.firstHtmlPage ? `
           <div class="section-block">
             <div class="doc-accordion" id="doc-item-${i}-html0">
-              <button class="doc-header" onclick="toggleDocAccordion(${i}, 'html0')">
-                <span>📋 ${lesson.firstHtmlTitle || 'Lição 10'}</span>
-                <span class="toggle-icon">+</span>
-              </button>
-              <div class="doc-body" id="doc-body-${i}-html0">
-                <div class="doc-body-inner"><iframe class="licao-frame" src="${licaoSrc}"></iframe></div>
-              </div>
+              <button class="doc-header" onclick="toggleDocAccordion(${i}, 'html0')"><span>📋 ${lesson.firstHtmlTitle || 'Lição 10'}</span><span class="toggle-icon">+</span></button>
+              <div class="doc-body" id="doc-body-${i}-html0"><div class="doc-body-inner"><iframe class="licao-frame" src="${licaoSrc}"></iframe></div></div>
             </div>
           </div>` : '';
-
         let videoHTML = '';
         if (videoUrl) {
           videoHTML = `
             <div class="section-block" id="video-wrap-${i}">
-              <button class="btn-video ${liberado ? 'liberado' : ''}" ${liberado ? `onclick="abrirVideo(${i})"` : 'disabled'} id="btn-video-${i}">
-                ▶ Assistir vídeo
-              </button>
+              <button class="btn-video ${liberado ? 'liberado' : ''}" ${liberado ? `onclick="abrirVideo(${i})"` : 'disabled tabindex="-1"'} id="btn-video-${i}">▶ Assistir vídeo</button>
               ${liberado ? `
               <div class="doc-accordion" id="doc-item-${i}-video" style="margin-top:12px;">
-                <button class="doc-header" onclick="toggleDocAccordion(${i}, 'video')">
-                  <span>🎬 ${getVideoTitle(lesson)}</span>
-                  <span class="toggle-icon">+</span>
-                </button>
-                <div class="doc-body" id="doc-body-${i}-video">
-                  <div class="doc-body-inner">
-                    ${yt ? `<div class="video-responsive"><iframe src="${yt}" allowfullscreen></iframe></div>` : `<a href="${videoUrl}" target="_blank">Abrir vídeo</a>`}
-                  </div>
-                </div>
+                <button class="doc-header" onclick="toggleDocAccordion(${i}, 'video')"><span>🎬 ${getVideoTitle(lesson)}</span><span class="toggle-icon">+</span></button>
+                <div class="doc-body" id="doc-body-${i}-video"><div class="doc-body-inner">${yt ? `<div class="video-responsive"><iframe src="${yt}" allowfullscreen></iframe></div>` : `<a href="${videoUrl}" target="_blank">Abrir vídeo</a>`}</div></div>
               </div>` : ''}
             </div>`;
         }
-
-        return `
-          <div class="accordion-item" id="item-${i}">
-            <button class="accordion-header" onclick="toggleAccordion(${i})">
-              <span>${lesson.title}</span>
-              <span class="toggle-icon">+</span>
-            </button>
-            <div class="accordion-body" id="body-${i}">
-              <div class="accordion-content">
-                ${lesson.description ? `<div class="section-block"><p class="lesson-text">${lesson.description}</p></div>` : ''}
-                ${licaoHTML}
-                ${videoHTML}
-              </div>
-            </div>
-          </div>`;
+        return `<div class="accordion-item" id="item-${i}"><button class="accordion-header" onclick="toggleAccordion(${i})"><span>${lesson.title}</span><span class="toggle-icon">+</span></button><div class="accordion-body" id="body-${i}"><div class="accordion-content">${lesson.description ? `<div class="section-block"><p class="lesson-text">${lesson.description}</p></div>` : ''}${licaoHTML}${videoHTML}</div></div></div>`;
       }).join('');
     }
 
@@ -215,27 +173,16 @@
       const lessons = JSON.parse(localStorage.getItem('course_lessons') || '[]');
       if (!videoEstaLiberado(lessons[i] || {}, i)) return;
       openAccordion(i);
-      setTimeout(() => {
-        toggleDocAccordion(i, 'video');
-        const el = document.getElementById('video-wrap-' + i);
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 150);
+      setTimeout(() => { toggleDocAccordion(i, 'video'); }, 150);
     }
-
     window.addEventListener('message', function(event) {
       if (!event.data || event.data.type !== 'LICAO_ENVIADA') return;
       const i = Number(event.data.lessonIndex);
       if (Number.isNaN(i)) return;
-      marcarLicaoEnviada(i);
+      marcarVideoLiberado(i);
       renderLessons();
       openAccordion(i);
-      const btn = document.getElementById('btn-video-' + i);
-      if (btn) {
-        btn.classList.add('liberado');
-        btn.removeAttribute('disabled');
-      }
     });
-
     function collapseAllModules() {
       document.querySelectorAll('.doc-accordion.active, .accordion-item.active').forEach(item => {
         item.classList.remove('active');
@@ -243,22 +190,12 @@
         if (body) body.style.maxHeight = null;
       });
     }
-    function toggleSidebarModule(i) {
-      const el = document.getElementById('sidebar-mod-' + i);
-      if (el) el.classList.toggle('active');
-      openAccordion(i);
-    }
-    function handleSidebarSubitemClick(i, key) {
-      openAccordion(i);
-      toggleDocAccordion(i, key);
-    }
+    function toggleSidebarModule(i) { const el = document.getElementById('sidebar-mod-' + i); if (el) el.classList.toggle('active'); openAccordion(i); }
+    function handleSidebarSubitemClick(i, key) { openAccordion(i); toggleDocAccordion(i, key); }
     function openAccordion(i) {
       const item = document.getElementById('item-' + i);
       const body = document.getElementById('body-' + i);
-      if (item && body && !item.classList.contains('active')) {
-        item.classList.add('active');
-        body.style.maxHeight = (body.scrollHeight + 2500) + 'px';
-      }
+      if (item && body && !item.classList.contains('active')) { item.classList.add('active'); body.style.maxHeight = (body.scrollHeight + 2500) + 'px'; }
     }
     function toggleAccordion(i) {
       const item = document.getElementById('item-' + i);
