@@ -85,9 +85,7 @@
     function isModuleLocked(d) { return !!(d && new Date() < new Date(d)); }
     function videoEstaLiberado(lesson, index) {
       if (!getVideoUrl(lesson)) return false;
-      if (lesson.firstHtmlPage) {
-        return videosLiberados.has(String(index)) || localStorage.getItem(chaveVideo(index)) === '1';
-      }
+      if (lesson.firstHtmlPage) return videosLiberados.has(String(index)) || localStorage.getItem(chaveVideo(index)) === '1';
       return true;
     }
     function marcarVideoLiberado(index) {
@@ -132,7 +130,7 @@
         }
         const liberado = videoEstaLiberado(lesson, i);
         let subs = '';
-        if (lesson.firstHtmlPage) subs += `<li><button class="sidebar-subitem" onclick="handleSidebarSubitemClick(${i}, 'html0')">📋 ${lesson.firstHtmlTitle || 'Lição 10'}</button></li>`;
+        if (lesson.firstHtmlPage) subs += `<li><button class="sidebar-subitem" onclick="handleSidebarSubitemClick(${i}, 'html0')">📋 ${lesson.firstHtmlTitle || lesson.firstHtmlPage.replace('.html','')}</button></li>`;
         if (getVideoUrl(lesson) && liberado) subs += `<li><button class="sidebar-subitem" onclick="abrirVideo(${i})">🎬 ${getVideoTitle(lesson)}</button></li>`;
         return `<li class="sidebar-module" id="sidebar-mod-${i}"><button class="sidebar-module-title" onclick="toggleSidebarModule(${i})"><span>${lesson.title}</span><span>▾</span></button><ul class="sidebar-sublist">${subs}</ul></li>`;
       }).join('');
@@ -149,7 +147,7 @@
         const licaoHTML = lesson.firstHtmlPage ? `
           <div class="section-block">
             <div class="doc-accordion" id="doc-item-${i}-html0">
-              <button class="doc-header" onclick="toggleDocAccordion(${i}, 'html0')"><span>📋 ${lesson.firstHtmlTitle || 'Lição 10'}</span><span class="toggle-icon">+</span></button>
+              <button class="doc-header" onclick="toggleDocAccordion(${i}, 'html0')"><span>📋 ${lesson.firstHtmlTitle || lesson.firstHtmlPage.replace('.html','')}</span><span class="toggle-icon">+</span></button>
               <div class="doc-body" id="doc-body-${i}-html0"><div class="doc-body-inner"><iframe class="licao-frame" src="${licaoSrc}"></iframe></div></div>
             </div>
           </div>` : '';
@@ -173,7 +171,7 @@
       const lessons = JSON.parse(localStorage.getItem('course_lessons') || '[]');
       if (!videoEstaLiberado(lessons[i] || {}, i)) return;
       openAccordion(i);
-      setTimeout(() => { toggleDocAccordion(i, 'video'); }, 150);
+      setTimeout(() => toggleDocAccordion(i, 'video'), 150);
     }
     window.addEventListener('message', function(event) {
       if (!event.data || event.data.type !== 'LICAO_ENVIADA') return;
