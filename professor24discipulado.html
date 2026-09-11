@@ -7,23 +7,19 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f1f5f9; color: #1e293b; display: flex; min-height: 100vh; }
-    
-    /* Layout Global com Sidebar */
     .app-layout { display: flex; width: 100%; }
     .sidebar { width: 280px; background-color: #1e293b; color: #f8fafc; padding: 20px 15px; height: 100vh; position: sticky; top: 0; overflow-y: auto; flex-shrink: 0; border-right: 1px solid #334155; transition: width 0.3s ease, padding 0.3s ease; }
     .sidebar.collapsed { width: 60px; padding: 15px 10px; overflow-x: hidden; }
     .sidebar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #334155; }
     .sidebar-header h2 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.8px; color: #94a3b8; white-space: nowrap; }
     .sidebar.collapsed .sidebar-header h2, .sidebar.collapsed .sidebar-menu { display: none; }
-    .btn-toggle-sidebar { background: none; border: none; color: #94a3b8; font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 6px; transition: background-color 0.2s, color 0.2s; }
+    .btn-toggle-sidebar { background: none; border: none; color: #94a3b8; font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 6px; }
     .btn-toggle-sidebar:hover { background-color: #334155; color: #fff; }
     .sidebar.collapsed .sidebar-header { border-bottom: none; margin-bottom: 0; padding-bottom: 0; justify-content: center; }
     .sidebar-menu { list-style: none; }
     .sidebar-module { margin-bottom: 10px; }
-    .sidebar-module-title { width: 100%; background: none; border: none; color: #e2e8f0; font-size: 0.95rem; font-weight: 600; text-align: left; padding: 10px 12px; border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.2s, color 0.2s; }
+    .sidebar-module-title { width: 100%; background: none; border: none; color: #e2e8f0; font-size: 0.95rem; font-weight: 600; text-align: left; padding: 10px 12px; border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
     .sidebar-module-title:hover { background-color: #334155; color: #fff; }
-
-    /* Conteúdo Principal */
     .main-content { flex: 1; padding: 30px 25px; max-width: 900px; margin: 0 auto; }
     header { text-align: center; margin-bottom: 30px; }
     header h1 { color: #0f172a; font-size: 2rem; margin-bottom: 6px; }
@@ -32,46 +28,43 @@
     .card h2 { font-size: 1.25rem; margin-bottom: 15px; color: #2563eb; display: flex; justify-content: space-between; align-items: center; }
     .form-group { margin-bottom: 18px; }
     label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: #334155; }
-    input[type="text"], input[type="datetime-local"], textarea { width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; font-family: inherit; outline: none; transition: border-color 0.2s; }
-    input[type="text"]:focus, input[type="datetime-local"]:focus, textarea:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+    input[type="text"], input[type="email"], input[type="datetime-local"], textarea { width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; font-family: inherit; outline: none; }
+    input:focus, textarea:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
     textarea { resize: vertical; min-height: 90px; }
     .checkbox-group { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 0.9rem; color: #475569; }
     .checkbox-group input { width: 16px; height: 16px; cursor: pointer; }
+    .html-embed-box { background-color: #eff6ff; padding: 15px; border-radius: 8px; border: 1px dashed #93c5fd; margin-bottom: 20px; }
+    .html-embed-fields { display: none; margin-top: 12px; }
+    .html-embed-fields.visible { display: block; }
     .links-section { background-color: #f8fafc; padding: 15px; border-radius: 8px; border: 1px dashed #cbd5e1; margin-bottom: 20px; }
     .link-row { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; padding: 10px; background: #fff; border: 1px solid #cbd5e1; border-radius: 6px; }
-    .link-row-top { display: flex; gap: 10px; align-items: center; }
-    .link-row-schedule { display: flex; gap: 10px; align-items: center; }
-    .btn { padding: 10px 18px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.9rem; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px; }
+    .link-row-top, .link-row-schedule { display: flex; gap: 10px; align-items: center; }
+    .btn { padding: 10px 18px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; }
     .btn-primary { background-color: #2563eb; color: white; }
     .btn-primary:hover { background-color: #1d4ed8; }
     .btn-secondary { background-color: #e2e8f0; color: #334155; }
-    .btn-secondary:hover { background-color: #cbd5e1; }
     .btn-danger { background-color: #ef4444; color: white; padding: 8px 12px; }
-    .btn-danger:hover { background-color: #dc2626; }
     .btn-move { background-color: #64748b; color: white; padding: 8px 10px; }
-    .btn-move:hover { background-color: #475569; }
     .btn-edit { background-color: #f59e0b; color: white; }
-    .btn-edit:hover { background-color: #d97706; }
     .btn-cancel { background-color: #64748b; color: white; }
-    .btn-cancel:hover { background-color: #475569; }
     .form-actions { display: flex; gap: 10px; justify-content: flex-end; }
     .module-item { background: #ffffff; border-radius: 8px; border: 1px solid #e2e8f0; padding: 18px; margin-bottom: 15px; }
     .module-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
     .module-title { font-size: 1.1rem; font-weight: 700; color: #0f172a; }
     .module-actions { display: flex; gap: 8px; }
-    .module-schedule-badge { display: inline-block; font-size: 0.8rem; font-weight: 600; padding: 4px 8px; border-radius: 4px; margin-bottom: 10px; }
+    .module-schedule-badge { display: inline-block; font-size: 0.8rem; font-weight: 600; padding: 4px 8px; border-radius: 4px; margin-bottom: 10px; margin-right: 6px; }
     .badge-released { background: #d1fae5; color: #065f46; }
     .badge-scheduled { background: #fef3c7; color: #b45309; }
+    .badge-html { background: #dbeafe; color: #1d4ed8; }
+    .badge-lock { background: #fee2e2; color: #b91c1c; }
     .module-desc { font-size: 0.9rem; color: #475569; margin-bottom: 12px; white-space: pre-wrap; }
     .badge-editing { font-size: 0.75rem; background: #fef3c7; color: #b45309; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
     .save-alert { display: none; padding: 10px; background-color: #d1fae5; color: #065f46; border-radius: 6px; margin-top: 10px; font-size: 0.85rem; font-weight: 600; }
-    @media (max-width: 768px) { .app-layout { flex-direction: column; } .sidebar { width: 100%; height: auto; position: relative; } .sidebar.collapsed { width: 100%; } }
+    @media (max-width: 768px) { .app-layout { flex-direction: column; } .sidebar { width: 100%; height: auto; position: relative; } }
   </style>
 </head>
 <body>
-
   <div class="app-layout">
-    <!-- Menu Lateral (Sidebar) -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <h2>📚 Módulos</h2>
@@ -80,14 +73,12 @@
       <ul class="sidebar-menu" id="sidebar-menu"></ul>
     </aside>
 
-    <!-- Conteúdo Principal -->
     <main class="main-content">
       <header>
         <h1>Painel do Professor</h1>
-        <p>Gerencie títulos, módulos e agende datas de liberação</p>
+        <p>Gerencie títulos, módulos, lições e o desbloqueio do vídeo após o envio do e-mail</p>
       </header>
 
-      <!-- Configuração Geral -->
       <div class="card">
         <h2>⚙️ Informações Gerais do Curso</h2>
         <div class="form-group">
@@ -98,13 +89,10 @@
           <label for="course-subtitle-input">Subtítulo Geral do Curso</label>
           <input type="text" id="course-subtitle-input" placeholder="Ex: Acesse os módulos e aulas abaixo">
         </div>
-        <button type="button" class="btn btn-primary" onclick="saveCourseHeaderInfo()">
-          💾 Salvar Título e Subtítulo
-        </button>
+        <button type="button" class="btn btn-primary" onclick="saveCourseHeaderInfo()">💾 Salvar Título e Subtítulo</button>
         <div class="save-alert" id="header-save-alert">Informações salvas com sucesso!</div>
       </div>
 
-      <!-- Formulário de Módulo com Agendamento -->
       <div class="card" id="form-card">
         <h2>
           <span id="form-title">Adicionar Novo Módulo / Aula</span>
@@ -133,26 +121,48 @@
             <textarea id="lesson-description" placeholder="Escreva aqui os detalhes do módulo..."></textarea>
           </div>
 
+          <div class="html-embed-box">
+            <div class="checkbox-group" style="margin-top:0;">
+              <input type="checkbox" id="include-html-page" onchange="toggleHtmlEmbed(this)">
+              <label for="include-html-page" style="margin:0; font-weight:normal;">
+                Incluir <strong>DiscipuladoLicao10.html</strong> como primeiro item da aula
+              </label>
+            </div>
+            <div class="html-embed-fields" id="html-embed-fields">
+              <div class="form-group">
+                <label for="first-html-title">Título que o aluno verá</label>
+                <input type="text" id="first-html-title" value="Lição 10 - Deus Pai">
+              </div>
+              <div class="form-group">
+                <label for="first-html-page">Arquivo HTML (mesma pasta)</label>
+                <input type="text" id="first-html-page" value="DiscipuladoLicao10.html">
+              </div>
+              <div class="form-group">
+                <label for="lesson-email">E-mail que receberá as respostas da lição</label>
+                <input type="email" id="lesson-email" value="emersonbaran@gmail.com">
+              </div>
+              <div class="checkbox-group">
+                <input type="checkbox" id="lock-links-until-submit" checked>
+                <label for="lock-links-until-submit" style="margin:0; font-weight:normal;">
+                  Manter o vídeo/links fechados até o aluno clicar em Enviar e-mail
+                </label>
+              </div>
+            </div>
+          </div>
+
           <div class="links-section">
-            <label>Materiais, Recursos e Links</label>
+            <label>Vídeo e outros materiais (aparecem depois da Lição 10)</label>
             <div id="links-container"></div>
-            <button type="button" class="btn btn-secondary" onclick="addLinkRow()">
-              ➕ Adicionar Outro Link
-            </button>
+            <button type="button" class="btn btn-secondary" onclick="addLinkRow()">➕ Adicionar Outro Link</button>
           </div>
 
           <div class="form-actions">
-            <button type="button" id="btn-cancel" class="btn btn-cancel" style="display: none;" onclick="resetForm()">
-              Cancelar Edição
-            </button>
-            <button type="submit" id="btn-submit" class="btn btn-primary">
-              💾 Salvar Módulo
-            </button>
+            <button type="button" id="btn-cancel" class="btn btn-cancel" style="display: none;" onclick="resetForm()">Cancelar Edição</button>
+            <button type="submit" id="btn-submit" class="btn btn-primary">💾 Salvar Módulo</button>
           </div>
         </form>
       </div>
 
-      <!-- Módulos Cadastrados -->
       <div class="card">
         <h2>Módulos Cadastrados</h2>
         <div id="modules-list"></div>
@@ -163,6 +173,7 @@
   <script>
     let lessons = [];
     const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso.json';
+    const DEFAULT_EMAIL = 'emersonbaran@gmail.com';
 
     async function syncCursoToCloud() {
       const payload = {
@@ -210,6 +221,17 @@
       }
     }
 
+    function toggleHtmlEmbed(checkbox) {
+      const fields = document.getElementById('html-embed-fields');
+      fields.classList.toggle('visible', checkbox.checked);
+      if (checkbox.checked) {
+        if (!document.getElementById('first-html-page').value.trim()) document.getElementById('first-html-page').value = 'DiscipuladoLicao10.html';
+        if (!document.getElementById('first-html-title').value.trim()) document.getElementById('first-html-title').value = 'Lição 10 - Deus Pai';
+        if (!document.getElementById('lesson-email').value.trim()) document.getElementById('lesson-email').value = DEFAULT_EMAIL;
+        document.getElementById('lock-links-until-submit').checked = true;
+      }
+    }
+
     function loadCourseHeaderInfo() {
       document.getElementById('course-title-input').value = localStorage.getItem('course_title') || 'Curso de Capacitação';
       document.getElementById('course-subtitle-input').value = localStorage.getItem('course_subtitle') || 'Acesse os módulos e aulas abaixo';
@@ -239,16 +261,12 @@
 
     function moveLinkRowUp(btn) {
       const row = btn.closest('.link-row');
-      if (row && row.previousElementSibling) {
-        row.parentNode.insertBefore(row, row.previousElementSibling);
-      }
+      if (row && row.previousElementSibling) row.parentNode.insertBefore(row, row.previousElementSibling);
     }
 
     function moveLinkRowDown(btn) {
       const row = btn.closest('.link-row');
-      if (row && row.nextElementSibling) {
-        row.parentNode.insertBefore(row.nextElementSibling, row);
-      }
+      if (row && row.nextElementSibling) row.parentNode.insertBefore(row.nextElementSibling, row);
     }
 
     function addLinkRow(subtitle = '', url = '', releaseDate = '') {
@@ -257,10 +275,10 @@
       rowDiv.className = 'link-row';
       rowDiv.innerHTML = `
         <div class="link-row-top">
-          <input type="text" class="link-subtitle" placeholder="Legenda do recurso" value="${subtitle}" style="flex: 1;">
+          <input type="text" class="link-subtitle" placeholder="Legenda do recurso (ex: Vídeo da aula)" value="${subtitle}" style="flex: 1;">
           <input type="text" class="link-url" placeholder="https://..." value="${url}" style="flex: 2;">
-          <button type="button" class="btn btn-move" onclick="moveLinkRowUp(this)" title="Mover para cima">▲</button>
-          <button type="button" class="btn btn-move" onclick="moveLinkRowDown(this)" title="Mover para baixo">▼</button>
+          <button type="button" class="btn btn-move" onclick="moveLinkRowUp(this)">▲</button>
+          <button type="button" class="btn btn-move" onclick="moveLinkRowDown(this)">▼</button>
           <button type="button" class="btn btn-danger" onclick="this.closest('.link-row').remove()">✕</button>
         </div>
         <div class="link-row-schedule">
@@ -275,12 +293,16 @@
       document.getElementById('edit-index').value = '-1';
       document.getElementById('lesson-title').value = '';
       document.getElementById('lesson-description').value = '';
-      
       const dateInput = document.getElementById('lesson-release-date');
       dateInput.value = '';
       dateInput.disabled = false;
       document.getElementById('immediate-release').checked = false;
-
+      document.getElementById('include-html-page').checked = false;
+      document.getElementById('html-embed-fields').classList.remove('visible');
+      document.getElementById('first-html-title').value = 'Lição 10 - Deus Pai';
+      document.getElementById('first-html-page').value = 'DiscipuladoLicao10.html';
+      document.getElementById('lesson-email').value = DEFAULT_EMAIL;
+      document.getElementById('lock-links-until-submit').checked = true;
       document.getElementById('links-container').innerHTML = '';
       document.getElementById('form-title').innerText = 'Adicionar Novo Módulo / Aula';
       document.getElementById('editing-badge').style.display = 'none';
@@ -292,14 +314,11 @@
     function editModule(index) {
       const module = lessons[index];
       if (!module) return;
-
       document.getElementById('edit-index').value = index;
       document.getElementById('lesson-title').value = module.title || '';
       document.getElementById('lesson-description').value = module.description || '';
-
       const dateInput = document.getElementById('lesson-release-date');
       const immCheckbox = document.getElementById('immediate-release');
-
       if (module.releaseDate) {
         dateInput.value = module.releaseDate;
         dateInput.disabled = false;
@@ -309,20 +328,21 @@
         dateInput.disabled = true;
         immCheckbox.checked = true;
       }
-
+      const includeHtml = !!(module.firstHtmlPage);
+      document.getElementById('include-html-page').checked = includeHtml;
+      document.getElementById('html-embed-fields').classList.toggle('visible', includeHtml);
+      document.getElementById('first-html-title').value = module.firstHtmlTitle || 'Lição 10 - Deus Pai';
+      document.getElementById('first-html-page').value = module.firstHtmlPage || 'DiscipuladoLicao10.html';
+      document.getElementById('lesson-email').value = module.lessonEmail || DEFAULT_EMAIL;
+      document.getElementById('lock-links-until-submit').checked = module.lockLinksUntilLessonSubmit !== false;
       const container = document.getElementById('links-container');
       container.innerHTML = '';
-      if (module.links && module.links.length > 0) {
-        module.links.forEach(l => addLinkRow(l.subtitle, l.url, l.releaseDate || ''));
-      } else {
-        addLinkRow();
-      }
-
+      if (module.links && module.links.length > 0) module.links.forEach(l => addLinkRow(l.subtitle, l.url, l.releaseDate || ''));
+      else addLinkRow();
       document.getElementById('form-title').innerText = `Editando: ${module.title}`;
       document.getElementById('editing-badge').style.display = 'inline-block';
       document.getElementById('btn-cancel').style.display = 'inline-block';
       document.getElementById('btn-submit').innerText = '🔄 Atualizar Módulo';
-      
       document.getElementById('form-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
@@ -340,7 +360,6 @@
         sidebarMenu.innerHTML = `<li style="color: #64748b; font-size: 0.85rem; padding: 10px;">Sem conteúdo.</li>`;
         return;
       }
-
       sidebarMenu.innerHTML = lessons.map((lesson, index) => `
         <li class="sidebar-module">
           <button class="sidebar-module-title" onclick="editModule(${index})">
@@ -356,16 +375,14 @@
         container.innerHTML = `<p style="color:#64748b; text-align:center; padding:20px;">Nenhum módulo cadastrado.</p>`;
         return;
       }
-
       container.innerHTML = lessons.map((m, index) => {
-        let releaseBadge = '';
-        if (m.releaseDate) {
-          const dateFormatted = new Date(m.releaseDate).toLocaleString('pt-BR');
-          releaseBadge = `<span class="module-schedule-badge badge-scheduled">📅 Agendado para: ${dateFormatted}</span>`;
-        } else {
-          releaseBadge = `<span class="module-schedule-badge badge-released">⚡ Liberado Imediatamente</span>`;
-        }
-
+        const releaseBadge = m.releaseDate
+          ? `<span class="module-schedule-badge badge-scheduled">📅 Agendado para: ${new Date(m.releaseDate).toLocaleString('pt-BR')}</span>`
+          : `<span class="module-schedule-badge badge-released">⚡ Liberado Imediatamente</span>`;
+        const htmlBadge = m.firstHtmlPage ? `<span class="module-schedule-badge badge-html">📋 1º item: ${m.firstHtmlTitle || m.firstHtmlPage}</span>` : '';
+        const lockBadge = (m.firstHtmlPage && m.lockLinksUntilLessonSubmit !== false)
+          ? `<span class="module-schedule-badge badge-lock">🔒 Vídeo só após e-mail (${m.lessonEmail || DEFAULT_EMAIL})</span>`
+          : '';
         return `
           <div class="module-item">
             <div class="module-item-header">
@@ -375,7 +392,7 @@
                 <button class="btn btn-danger" onclick="deleteModule(${index})">🗑️ Excluir</button>
               </div>
             </div>
-            ${releaseBadge}
+            ${releaseBadge}${htmlBadge}${lockBadge}
             ${m.description ? `<p class="module-desc">${m.description}</p>` : ''}
           </div>
         `;
@@ -389,7 +406,7 @@
       const description = document.getElementById('lesson-description').value.trim();
       const isImmediate = document.getElementById('immediate-release').checked;
       const releaseDate = isImmediate ? null : document.getElementById('lesson-release-date').value;
-
+      const includeHtml = document.getElementById('include-html-page').checked;
       const links = [];
       document.querySelectorAll('.link-row').forEach(row => {
         const subtitle = row.querySelector('.link-subtitle').value.trim();
@@ -397,12 +414,18 @@
         const linkReleaseDate = row.querySelector('.link-release-date').value;
         if (url) links.push({ subtitle: subtitle || 'Material', url, releaseDate: linkReleaseDate || null });
       });
-
-      const moduleData = { title, description, releaseDate, links };
-
+      const moduleData = {
+        title,
+        description,
+        releaseDate,
+        firstHtmlPage: includeHtml ? (document.getElementById('first-html-page').value.trim() || 'DiscipuladoLicao10.html') : null,
+        firstHtmlTitle: includeHtml ? (document.getElementById('first-html-title').value.trim() || 'Lição 10 - Deus Pai') : null,
+        lessonEmail: includeHtml ? (document.getElementById('lesson-email').value.trim() || DEFAULT_EMAIL) : null,
+        lockLinksUntilLessonSubmit: includeHtml ? document.getElementById('lock-links-until-submit').checked : false,
+        links
+      };
       if (editIndex >= 0) lessons[editIndex] = moduleData;
       else lessons.push(moduleData);
-
       saveLessonsToStorage();
       resetForm();
     });
