@@ -18,7 +18,7 @@
                 max-width: none !important;
                 width: 100% !important;
             }
-            #btnEnviar, #btnPdf {
+            #btnEnviar, #btnPdf, #btnCorrigir, #resultado {
                 display: none !important;
             }
         }
@@ -169,6 +169,58 @@
             cursor: pointer;
             margin-top: 10px;
         }
+        .alternativas {
+            margin-top: 8px;
+        }
+        .alternativas label {
+            display: block;
+            padding: 8px 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .alternativas label input {
+            margin-right: 8px;
+        }
+        .alternativas label.certa {
+            background-color: #d9f2df !important;
+            border-color: #28a745 !important;
+            color: #176b2c !important;
+        }
+        .alternativas label.errada {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #842029 !important;
+        }
+        .btn-corrigir {
+            width: 100%;
+            background-color: #2e7d32;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn-corrigir:hover {
+            background-color: #256628;
+        }
+        .resultado {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            text-align: center;
+            font-size: 14pt;
+            font-weight: bold;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            background: #f7f7f7;
+        }
+
         .final-note {
             text-align: center;
             font-weight: bold;
@@ -207,24 +259,44 @@
 
         <div class="question-group">
             <label for="q1">1) Em Mt 3.16,17, quais as pessoas da divindade que descreve?</label>
-            <textarea id="q1" name="1. Pessoas da divindade descritas (Mt 3.16-17)" rows="2" required></textarea>
+            <div class="alternativas">
+<label><input type="radio" name="q1" value="A" required> A) Pai, Filho e Espírito Santo.</label>
+<label><input type="radio" name="q1" value="B"> B) Somente o Pai.</label>
+<label><input type="radio" name="q1" value="C"> C) Somente o Filho e o Pai.</label>
+<label><input type="radio" name="q1" value="D"> D) Somente o Espírito Santo.</label>
+</div>
         </div>
 
         <div class="question-group">
             <label for="q2">2) Na bênção apostólica, é feita em nome de quem? (2Co 13.13)</label>
-            <textarea id="q2" name="2. Bencao apostolica feita em nome de quem (2Co 13.13)" rows="2" required></textarea>
+            <div class="alternativas">
+<label><input type="radio" name="q2" value="A" required> A) Somente em nome de Deus Pai.</label>
+<label><input type="radio" name="q2" value="B"> B) Em nome do Pai, do Filho e do Espírito Santo.</label>
+<label><input type="radio" name="q2" value="C"> C) Somente em nome de Jesus Cristo.</label>
+<label><input type="radio" name="q2" value="D"> D) Em nome dos apóstolos e profetas.</label>
+</div>
         </div>
 
         <div class="section-title">II - A EXISTÊNCIA E O CONHECIMENTO DE DEUS</div>
 
         <div class="question-group">
             <label for="q3">3) Leia Hb 11.6. Para se aproximar de Deus, o que é necessário?</label>
-            <textarea id="q3" name="3. O que e necessario para se aproximar de Deus (Hb 11.6)" rows="2" required></textarea>
+            <div class="alternativas">
+<label><input type="radio" name="q3" value="A" required> A) Ter riquezas e posição social.</label>
+<label><input type="radio" name="q3" value="B"> B) Ser perfeito e nunca cometer erros.</label>
+<label><input type="radio" name="q3" value="C"> C) Crer que Deus existe e que se torna galardoador dos que o buscam.</label>
+<label><input type="radio" name="q3" value="D"> D) Fazer muitos sacrifícios materiais.</label>
+</div>
         </div>
 
         <div class="question-group">
             <label for="q4">4) O que disse Deus quanto a sua presença conosco? (Jr 23.23)</label>
-            <textarea id="q4" name="4. O que disse Deus quanto a sua presenca (Jr 23.23)" rows="2" required></textarea>
+            <div class="alternativas">
+<label><input type="radio" name="q4" value="A" required> A) Deus está presente somente no céu.</label>
+<label><input type="radio" name="q4" value="B"> B) Deus está presente somente no templo.</label>
+<label><input type="radio" name="q4" value="C"> C) Deus está distante e não vê o que acontece na terra.</label>
+<label><input type="radio" name="q4" value="D"> D) Deus é Deus apenas de perto e não também de longe.</label>
+</div>
         </div>
 
         <div class="section-title">III - ATRIBUTOS INCOMUNICÁVEIS</div>
@@ -235,49 +307,12 @@
                 (A) Sl 139.7-10 | (B) Sl 90.2 | (C) Ml 3.6 | (D) Jo 5.26
             </div>
 
-            <div class="match-row">
-                <select id="q5a" name="5. Atributo - Eterno" required>
-                    <option value="">--</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                </select>
-                <span>Eterno</span>
-            </div>
-
-            <div class="match-row">
-                <select id="q5b" name="5. Atributo - Onipresente" required>
-                    <option value="">--</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                </select>
-                <span>Onipresente</span>
-            </div>
-
-            <div class="match-row">
-                <select id="q5c" name="5. Atributo - Autoexistente" required>
-                    <option value="">--</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                </select>
-                <span>Autoexistente</span>
-            </div>
-
-            <div class="match-row">
-                <select id="q5d" name="5. Atributo - Imutavel" required>
-                    <option value="">--</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                </select>
-                <span>Imutável</span>
-            </div>
+            <div class="alternativas">
+<label><input type="radio" name="q5" value="A" required> A) A = Eterno; B = Onipresente; C = Imutável; D = Autoexistente.</label>
+<label><input type="radio" name="q5" value="B"> B) A = Onipresente; B = Eterno; C = Imutável; D = Autoexistente.</label>
+<label><input type="radio" name="q5" value="C"> C) A = Eterno; B = Onipresente; C = Autoexistente; D = Imutável.</label>
+<label><input type="radio" name="q5" value="D"> D) A = Autoexistente; B = Onipresente; C = Eterno; D = Imutável.</label>
+</div>
         </div>
 
         <div class="section-title">IV - ATRIBUTOS COMUNICÁVEIS</div>
@@ -287,7 +322,12 @@
             <div style="font-style: italic; margin-bottom: 8px; color: #444;">
                 “a ___________, a misericórdia e a paz, da parte de Deus Pai e de Jesus Cristo, o Filho do Pai, serão conosco em verdade e amor.”
             </div>
-            <input type="text" id="q6" name="6. Atributo faltante em 2 Jo 1.3" required>
+            <div class="alternativas">
+<label><input type="radio" name="q6" value="A" required> A) Graça.</label>
+<label><input type="radio" name="q6" value="B"> B) Justiça.</label>
+<label><input type="radio" name="q6" value="C"> C) Ira.</label>
+<label><input type="radio" name="q6" value="D"> D) Poder.</label>
+</div>
         </div>
 
         <div class="question-group">
@@ -295,7 +335,12 @@
             <div style="font-style: italic; margin-bottom: 8px; color: #444;">
                 “Vós, porém, negastes o ____________________ e o _______________ e pedistes que vos concedessem um homicida.”
             </div>
-            <input type="text" id="q7" name="7. Atributos de Deus em At 3.14" required>
+            <div class="alternativas">
+<label><input type="radio" name="q7" value="A" required> A) Santo e Justo.</label>
+<label><input type="radio" name="q7" value="B"> B) Eterno e Onipotente.</label>
+<label><input type="radio" name="q7" value="C"> C) Misericordioso e Paciente.</label>
+<label><input type="radio" name="q7" value="D"> D) Onipresente e Imutável.</label>
+</div>
         </div>
 
         <div class="question-group">
@@ -303,7 +348,12 @@
             <div style="font-style: italic; margin-bottom: 8px; color: #444;">
                 “Ou desprezas a riqueza da sua bondade, e tolerância, e longanimidade, ignorando que a ___________________ de Deus é que te conduz ao arrependimento?”
             </div>
-            <input type="text" id="q8" name="8. Atributos de Deus em Rm 2.4" required>
+            <div class="alternativas">
+<label><input type="radio" name="q8" value="A" required> A) Justiça.</label>
+<label><input type="radio" name="q8" value="B"> B) Bondade.</label>
+<label><input type="radio" name="q8" value="C"> C) Santidade.</label>
+<label><input type="radio" name="q8" value="D"> D) Onipotência.</label>
+</div>
         </div>
 
         <div class="final-note">
@@ -321,6 +371,8 @@
             </div>
         </div>
 
+        <button type="button" id="btnCorrigir" class="btn-corrigir" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS</button>
+        <div id="resultado" class="resultado"></div>
         <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR POR E-MAIL</button>
         <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
 
@@ -330,7 +382,7 @@
 <script>
     var EMAIL = 'emersonbaran@gmail.com';
     var CACHE = 'licao10_cache';
-    var CAMPOS = ['q1','q2','q3','q4','q5a','q5b','q5c','q5d','q6','q7','q8','nomePessoa','dataPreenchimento'];
+    var CAMPOS = ['q1','q2','q3','q4','q5','q6','q7','q8','nomePessoa','dataPreenchimento'];
 
     function val(id) {
         var el = document.getElementById(id);
@@ -352,6 +404,59 @@
             });
         } catch (e) {}
     }
+    function valRadio(nome) {
+        var el = document.querySelector('input[name="' + nome + '"]:checked');
+        return el ? el.value : '';
+    }
+
+    var GABARITO = {
+        q1: 'A',
+        q2: 'B',
+        q3: 'C',
+        q4: 'D',
+        q5: 'C',
+        q6: 'A',
+        q7: 'A',
+        q8: 'B'
+    };
+
+    function corrigirRespostas() {
+        var form = document.getElementById('discipuladoForm');
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        var acertos = 0;
+        var total = Object.keys(GABARITO).length;
+
+        Object.keys(GABARITO).forEach(function(nome) {
+            var opcoes = document.querySelectorAll('input[name="' + nome + '"]');
+            var resposta = document.querySelector('input[name="' + nome + '"]:checked');
+
+            opcoes.forEach(function(input) {
+                input.parentElement.classList.remove('certa', 'errada');
+                if (input.value === GABARITO[nome]) {
+                    input.parentElement.classList.add('certa');
+                } else if (resposta && input.value === resposta.value) {
+                    input.parentElement.classList.add('errada');
+                }
+            });
+
+            if (resposta && resposta.value === GABARITO[nome]) {
+                acertos++;
+            }
+        });
+
+        var percentual = Math.round((acertos / total) * 100);
+        var resultado = document.getElementById('resultado');
+        resultado.style.display = 'block';
+        resultado.innerHTML = 'RESULTADO: ' + acertos + ' de ' + total +
+            ' questões corretas (' + percentual + '%).';
+
+        gravarCache();
+    }
+
     function montarTexto() {
         var d = val('dataPreenchimento');
         var dataBr = d ? d.split('-').reverse().join('/') : '';
@@ -364,13 +469,10 @@
             '2) 2Co 13.13: ' + val('q2'),
             '3) Hb 11.6: ' + val('q3'),
             '4) Jr 23.23: ' + val('q4'),
-            '5) Eterno: ' + val('q5a'),
-            '   Onipresente: ' + val('q5b'),
-            '   Autoexistente: ' + val('q5c'),
-            '   Imutável: ' + val('q5d'),
-            '6) 2 Jo 1.3: ' + val('q6'),
-            '7) At 3.14: ' + val('q7'),
-            '8) Rm 2.4: ' + val('q8')
+            '5) Atributos (A-D): ' + valRadio('q5'),
+            '6) 2 Jo 1.3: ' + valRadio('q6'),
+            '7) At 3.14: ' + valRadio('q7'),
+            '8) Rm 2.4: ' + valRadio('q8')
         ].join('\n');
     }
     function baixarPdf() {
@@ -390,6 +492,12 @@
 
         btnEnviar.style.display = 'none';
         btnPdf.style.display = 'none';
+        var btnCorrigir = document.getElementById('btnCorrigir');
+        var resultado = document.getElementById('resultado');
+        var displayCorrigir = btnCorrigir.style.display;
+        var displayResultado = resultado.style.display;
+        btnCorrigir.style.display = 'none';
+        resultado.style.display = 'none';
 
         html2pdf().set({
             margin: [8, 8, 8, 8],
@@ -416,9 +524,13 @@
         }).from(elemento).save().then(function() {
             btnEnviar.style.display = displayEnviar;
             btnPdf.style.display = displayPdf;
+            btnCorrigir.style.display = displayCorrigir;
+            resultado.style.display = displayResultado;
         }).catch(function(erro) {
             btnEnviar.style.display = displayEnviar;
             btnPdf.style.display = displayPdf;
+            btnCorrigir.style.display = displayCorrigir;
+            resultado.style.display = displayResultado;
             console.error(erro);
             alert('Não foi possível gerar o PDF. Tente novamente.');
         });
