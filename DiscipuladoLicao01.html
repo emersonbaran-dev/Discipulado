@@ -18,7 +18,7 @@
                 max-width: none !important;
                 width: 100% !important;
             }
-            #btnEnviar, #btnPdf, #btnCorrigir, #resultado {
+            #btnPdf, #btnCorrigir, #resultado {
                 display: none !important;
             }
         }
@@ -127,26 +127,6 @@
         .footer-info .field {
             flex: 1;
         }
-        .btn-submit {
-            width: 100%;
-            background-color: #2D4F5C;
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 4px;
-            font-size: 12pt;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 25px;
-            transition: background-color 0.3s ease;
-        }
-        .btn-submit:hover {
-            background-color: #1e363f;
-        }
-        .btn-submit.sent {
-            background-color: #15242a !important;
-            cursor: default;
-        }
         .btn-pdf {
             width: 100%;
             background-color: #3d6b7a;
@@ -194,7 +174,7 @@
             font-size: 12pt;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 25px;
         }
         .btn-corrigir:hover {
             background-color: #256628;
@@ -238,7 +218,7 @@
         As Boas Novas é o anúncio do evangelho em que Jesus veio para salvar a todo aquele que crê em Jesus Cristo. Vejamos:
     </div>
 
-    <form id="discipuladoForm" onsubmit="enviarFormulario(event)">
+    <form id="discipuladoForm">
         
         <div class="section-title">A – A HISTÓRIA E MOTIVO</div>
 
@@ -353,14 +333,12 @@
 
         <button type="button" id="btnCorrigir" class="btn-corrigir" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS</button>
         <div id="resultado" class="resultado"></div>
-        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR POR E-MAIL</button>
         <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
 
     </form>
 </div>
 
 <script>
-    var EMAIL = 'emersonbaran@gmail.com';
     var CACHE = 'licao01_cache';
     var CAMPOS = ['q1','q2','q3','q4','q5','q6','q7','q8','q9','nomePessoa','dataPreenchimento'];
 
@@ -383,10 +361,6 @@
                 }
             });
         } catch (e) {}
-    }
-    function valRadio(nome) {
-        var el = document.querySelector('input[name="' + nome + '"]:checked');
-        return el ? el.value : '';
     }
 
     var GABARITO = {
@@ -438,26 +412,6 @@
         gravarCache();
     }
 
-    function montarTexto() {
-        var d = val('dataPreenchimento');
-        var dataBr = d ? d.split('-').reverse().join('/') : '';
-        return [
-            'DISCIPULADO - LIÇÃO 01 - BOAS NOVAS',
-            'Nome do Aluno: ' + val('nomePessoa'),
-            'Data: ' + dataBr,
-            '',
-            '1) Is 9.6-7: ' + valRadio('q1'),
-            '2) Mt 1.21-23: ' + valRadio('q2'),
-            '3) At 2.22-24: ' + valRadio('q3'),
-            '4) Jo 3.16: ' + valRadio('q4'),
-            '5) Mc 1.14-15: ' + valRadio('q5'),
-            '6) Lc 8.48: ' + valRadio('q6'),
-            '7) Jo 10.9: ' + valRadio('q7'),
-            '8) Jo 1.12: ' + valRadio('q8'),
-            '9) Promessas (Jo 3.36, 6.35, 11.25): ' + valRadio('q9')
-        ].join('\n');
-    }
-
     function baixarPdf() {
         gravarCache();
         var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
@@ -467,12 +421,9 @@
         }
         var elemento = document.getElementById('licaoImpressao');
 
-        var btnEnviar = document.getElementById('btnEnviar');
         var btnPdf = document.getElementById('btnPdf');
-        var displayEnviar = btnEnviar.style.display;
         var displayPdf = btnPdf.style.display;
 
-        btnEnviar.style.display = 'none';
         btnPdf.style.display = 'none';
         var btnCorrigir = document.getElementById('btnCorrigir');
         var resultado = document.getElementById('resultado');
@@ -504,49 +455,16 @@
                 orientation: 'portrait'
             }
         }).from(elemento).save().then(function() {
-            btnEnviar.style.display = displayEnviar;
             btnPdf.style.display = displayPdf;
             btnCorrigir.style.display = displayCorrigir;
             resultado.style.display = displayResultado;
         }).catch(function(erro) {
-            btnEnviar.style.display = displayEnviar;
             btnPdf.style.display = displayPdf;
             btnCorrigir.style.display = displayCorrigir;
             resultado.style.display = displayResultado;
             console.error(erro);
             alert('Não foi possível gerar o PDF. Tente novamente.');
         });
-    }
-
-    function enviarFormulario(event) {
-        event.preventDefault();
-        var form = document.getElementById('discipuladoForm');
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
-        gravarCache();
-        var nome = val('nomePessoa');
-        var a = document.createElement('a');
-        a.href = 'mailto:' + EMAIL
-            + '?subject=' + encodeURIComponent('Relatório Lição 01 - ' + nome)
-            + '&body=' + encodeURIComponent(montarTexto());
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-
-        var btn = document.getElementById('btnEnviar');
-        btn.classList.add('sent');
-        btn.innerText = 'ENVIANDO PELO EMAIL...';
-        setTimeout(function() { btn.innerText = 'RELATÓRIO ENVIADO'; }, 800);
-
-        try {
-            var idx = Number(new URLSearchParams(window.location.search).get('lessonIndex') || '0');
-            if (window.parent && window.parent !== window) {
-                window.parent.postMessage({ type: 'LICAO_ENVIADA', lessonIndex: idx }, '*');
-                if (typeof window.parent.liberarVideoAula === 'function') window.parent.liberarVideoAula(idx);
-            }
-        } catch (e) {}
     }
 
     document.addEventListener('DOMContentLoaded', function() {
