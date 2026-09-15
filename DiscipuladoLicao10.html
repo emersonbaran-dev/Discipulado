@@ -6,6 +6,23 @@
     <title>Discipulado Lição 10 - Deus Pai</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
+        @media print {
+            body {
+                background: #ffffff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .container {
+                box-shadow: none !important;
+                margin: 0 !important;
+                max-width: none !important;
+                width: 100% !important;
+            }
+            #btnEnviar, #btnPdf {
+                display: none !important;
+            }
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f7f6;
@@ -363,13 +380,48 @@
             alert('Não foi possível carregar o gerador de PDF. Verifique a internet.');
             return;
         }
+        var elemento = document.getElementById('licaoImpressao');
+
+        // Esconde os botões durante a captura e restaura depois.
+        var btnEnviar = document.getElementById('btnEnviar');
+        var btnPdf = document.getElementById('btnPdf');
+        var displayEnviar = btnEnviar.style.display;
+        var displayPdf = btnPdf.style.display;
+
+        btnEnviar.style.display = 'none';
+        btnPdf.style.display = 'none';
+
         html2pdf().set({
-            margin: 10,
+            margin: [8, 8, 8, 8],
             filename: 'Licao10-' + nome + '.pdf',
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        }).from(document.getElementById('licaoImpressao')).save();
+            html2canvas: {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                scrollX: 0,
+                scrollY: 0,
+                windowWidth: elemento.scrollWidth,
+                windowHeight: elemento.scrollHeight
+            },
+            pagebreak: {
+                mode: ['css', 'legacy'],
+                avoid: ['.question-group', '.section-title', '.final-note']
+            },
+            jsPDF: {
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait'
+            }
+        }).from(elemento).save().then(function() {
+            btnEnviar.style.display = displayEnviar;
+            btnPdf.style.display = displayPdf;
+        }).catch(function(erro) {
+            btnEnviar.style.display = displayEnviar;
+            btnPdf.style.display = displayPdf;
+            console.error(erro);
+            alert('Não foi possível gerar o PDF. Tente novamente.');
+        });
     }
     function enviarFormulario(event) {
         event.preventDefault();
