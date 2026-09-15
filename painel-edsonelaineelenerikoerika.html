@@ -3,77 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Painel do Professor - Gestão e Agendamento</title>
+  <title>Painel do Professor - IPB</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f1f5f9; color: #1e293b; display: flex; min-height: 100vh; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6ef; color: #2f3b22; display: flex; min-height: 100vh; }
     .app-layout { display: flex; width: 100%; }
-    .sidebar { width: 280px; background: #1e293b; color: #f8fafc; padding: 20px 15px; height: 100vh; position: sticky; top: 0; overflow-y: auto; flex-shrink: 0; }
+    .sidebar { width: 280px; background-color: #3d4f21; color: #f8fafc; padding: 20px 15px; height: 100vh; position: sticky; top: 0; overflow-y: auto; flex-shrink: 0; border-right: 1px solid #556b2f; }
     .sidebar.collapsed { width: 60px; padding: 15px 10px; overflow-x: hidden; }
-    .sidebar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #334155; }
-    .sidebar-header h2 { font-size: 1.1rem; text-transform: uppercase; color: #94a3b8; white-space: nowrap; }
+    .sidebar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #556b2f; }
+    .sidebar-header h2 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.8px; color: #c5d4a1; white-space: nowrap; }
     .sidebar.collapsed .sidebar-header h2, .sidebar.collapsed .sidebar-menu { display: none; }
-    .btn-toggle-sidebar { background: none; border: none; color: #94a3b8; font-size: 1.4rem; cursor: pointer; width: 36px; height: 36px; }
-    .sidebar.collapsed .sidebar-header { border: none; margin: 0; padding: 0; justify-content: center; }
+    .btn-toggle-sidebar { background: none; border: none; color: #c5d4a1; font-size: 1.4rem; cursor: pointer; width: 36px; height: 36px; border-radius: 6px; }
+    .btn-toggle-sidebar:hover { background-color: #556b2f; color: #fff; }
+    .sidebar.collapsed .sidebar-header { border-bottom: none; margin-bottom: 0; padding-bottom: 0; justify-content: center; }
     .sidebar-menu { list-style: none; }
-    .sidebar-module { margin-bottom: 10px; }
-    .sidebar-module-title { width: 100%; background: none; border: none; color: #e2e8f0; font-weight: 600; text-align: left; padding: 10px 12px; border-radius: 6px; cursor: pointer; }
-    .main-content { flex: 1; padding: 30px 25px; max-width: 900px; margin: 0 auto; }
+    .sidebar-module { margin-bottom: 12px; }
+    .sidebar-module-title { width: 100%; background: none; border: none; color: #eef3e4; font-size: 0.95rem; font-weight: 600; text-align: left; padding: 10px 12px; border-radius: 6px; cursor: pointer; }
+    .sidebar-module-title:hover { background-color: #556b2f; color: #fff; }
+    .sidebar-sublist { list-style: none; padding-left: 14px; margin-top: 4px; }
+    .sidebar-subitem { color: #c5d4a1; font-size: 0.82rem; padding: 6px 8px; }
+    .main-content { flex: 1; padding: 30px 25px; max-width: 980px; margin: 0 auto; }
+    .brand { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 16px; }
+    .brand img { width: 72px; height: 72px; object-fit: contain; }
     header { text-align: center; margin-bottom: 30px; }
-    header h1 { font-size: 2rem; margin-bottom: 6px; }
-    header p { color: #64748b; }
-    .card { background: #fff; padding: 25px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 25px; }
-    .card h2 { font-size: 1.25rem; margin-bottom: 15px; color: #2563eb; }
+    header h1 { color: #3d4f21; font-size: 2rem; margin-bottom: 6px; }
+    header p { color: #6b7a52; }
+    .card { background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 12px rgba(61,79,33,0.08); border: 1px solid #d7dfc6; margin-bottom: 25px; }
+    .card h2 { font-size: 1.25rem; margin-bottom: 15px; color: #556b2f; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
     .form-group { margin-bottom: 18px; }
-    label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; }
-    input, textarea, select { width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: inherit; background: #fff; }
-    textarea { min-height: 90px; }
-    .checkbox-group { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 0.9rem; color: #475569; }
+    label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: #3d4f21; }
+    input[type="text"], input[type="datetime-local"], input[type="email"], input[type="url"], textarea, select {
+      width: 100%; padding: 10px 14px; border: 1px solid #c5d0a8; border-radius: 6px; font-size: 0.95rem; font-family: inherit; outline: none; background: #fff;
+    }
+    input:focus, textarea:focus, select:focus { border-color: #6b8e23; box-shadow: 0 0 0 3px rgba(107,142,35,0.15); }
+    textarea { resize: vertical; min-height: 90px; }
+    .checkbox-group { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 0.9rem; color: #556b2f; }
     .checkbox-group input { width: 16px; height: 16px; }
-    .html-embed-box, .video-box, .links-box { padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-    .html-embed-box { background: #eff6ff; border: 1px dashed #93c5fd; }
-    .video-box { background: #f8fafc; border: 1px dashed #cbd5e1; }
-    .links-box { background: #f0fdf4; border: 1px dashed #86efac; }
-    .hint { font-size: 0.85rem; color: #64748b; margin: 8px 0 12px; }
-    .btn { padding: 10px 18px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.88rem; }
-    .btn-sm { padding: 6px 12px; font-size: 0.8rem; }
-    .btn-primary { background: #2563eb; color: #fff; }
-    .btn-success { background: #16a34a; color: #fff; }
-    .btn-danger { background: #ef4444; color: #fff; }
-    .btn-edit { background: #f59e0b; color: #fff; }
-    .btn-cancel { background: #64748b; color: #fff; }
-    .btn-order { background: #475569; color: #fff; padding: 4px 8px; }
-    .btn-order:disabled { opacity: 0.3; cursor: not-allowed; }
+    .links-section, .html-embed-box, .video-box {
+      background-color: #f4f6ef; padding: 15px; border-radius: 8px; border: 1px dashed #b7c394; margin-bottom: 20px;
+    }
+    .html-embed-box { background: #eef3e4; border: 1px dashed #8aa05a; }
+    .video-box { background: #f7f8f1; }
+    .link-row { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; padding: 10px; background: #fff; border: 1px solid #c5d0a8; border-radius: 6px; }
+    .link-row-top, .link-row-schedule { display: flex; gap: 10px; align-items: center; }
+    .btn { padding: 10px 18px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-primary { background-color: #556b2f; color: white; }
+    .btn-primary:hover { background-color: #3d4f21; }
+    .btn-secondary { background-color: #d7dfc6; color: #3d4f21; }
+    .btn-danger { background-color: #a34a3a; color: white; padding: 8px 12px; }
+    .btn-move { background-color: #6b7a52; color: white; padding: 8px 10px; }
+    .btn-edit { background-color: #808000; color: white; }
+    .btn-cancel { background-color: #6b7a52; color: white; }
     .form-actions { display: flex; gap: 10px; justify-content: flex-end; }
-    .module-item { border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px; margin-bottom: 15px; background: #fff; }
-    .module-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 10px; flex-wrap: wrap; }
-    .module-title { font-weight: 700; }
-    .module-actions { display: flex; gap: 6px; align-items: center; }
-    .badge { display: inline-block; font-size: 0.8rem; font-weight: 600; padding: 4px 8px; border-radius: 4px; margin: 0 6px 10px 0; }
-    .badge-released { background: #d1fae5; color: #065f46; }
-    .badge-scheduled { background: #fef3c7; color: #b45309; }
-    .badge-html { background: #dbeafe; color: #1d4ed8; }
-    .badge-video { background: #ede9fe; color: #6d28d9; }
-    .badge-lock { background: #fef08a; color: #854d0e; }
-    .module-desc { font-size: 0.9rem; color: #475569; white-space: pre-wrap; margin-bottom: 12px; }
-    .badge-editing { font-size: 0.75rem; background: #fef3c7; color: #b45309; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
-    .save-alert { display: none; padding: 10px; background: #d1fae5; color: #065f46; border-radius: 6px; margin-top: 10px; font-weight: 600; }
-    .curso-id-aviso { font-size: 0.85rem; color: #334155; background: #e2e8f0; display: inline-block; padding: 4px 8px; border-radius: 4px; margin-top: 8px; }
-
-    /* Área de Inputs de Links Dinâmicos */
-    .link-item-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; background: #fff; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; }
-    .link-item-row input[type="text"] { flex: 1; }
-    .link-item-row input[type="url"] { flex: 2; }
-    .link-controls { display: flex; gap: 4px; }
-
-    .card-links-section { margin-top: 15px; border-top: 1px dashed #cbd5e1; padding-top: 12px; }
-    .card-link-row { background: #f8fafc; padding: 6px 10px; border-radius: 6px; margin-bottom: 6px; border: 1px solid #e2e8f0; font-size: 0.88rem; }
-    .card-link-row a { color: #2563eb; text-decoration: none; word-break: break-all; }
-
-    @media (max-width: 768px) { 
-      .app-layout { flex-direction: column; } 
-      .sidebar { width: 100%; height: auto; position: relative; } 
-      .link-item-row { flex-direction: column; align-items: stretch; }
+    .item-card { background: #fff; border-radius: 8px; border: 1px solid #d7dfc6; padding: 16px; margin-bottom: 12px; }
+    .item-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .item-title { font-size: 1.05rem; font-weight: 700; color: #2f3b22; }
+    .item-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+    .badge { display: inline-block; font-size: 0.78rem; font-weight: 600; padding: 4px 8px; border-radius: 4px; margin-right: 6px; margin-bottom: 8px; }
+    .badge-released { background: #e4edcf; color: #3d4f21; }
+    .badge-scheduled { background: #efe9c8; color: #6b5b16; }
+    .badge-html { background: #dce8c4; color: #3d4f21; }
+    .badge-video { background: #e8edd4; color: #4a5c28; }
+    .badge-lock { background: #efe9c8; color: #6b5b16; }
+    .badge-editing { font-size: 0.75rem; background: #efe9c8; color: #6b5b16; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+    .hint { font-size: 0.85rem; color: #6b7a52; margin-bottom: 12px; }
+    .save-alert { display: none; padding: 10px; background-color: #e4edcf; color: #3d4f21; border-radius: 6px; margin-top: 10px; font-size: 0.85rem; font-weight: 600; }
+    .lesson-group-title { font-size: 0.95rem; color: #556b2f; font-weight: 700; margin: 16px 0 8px; }
+    @media (max-width: 768px) {
+      .app-layout { flex-direction: column; }
+      .sidebar { width: 100%; height: auto; position: relative; }
+      .link-row-top, .link-row-schedule { flex-wrap: wrap; }
     }
   </style>
 </head>
@@ -82,359 +81,585 @@
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <h2>📚 Módulos</h2>
-        <button class="btn-toggle-sidebar" onclick="document.getElementById('sidebar').classList.toggle('collapsed')">☰</button>
+        <button class="btn-toggle-sidebar" onclick="toggleSidebar()">☰</button>
       </div>
       <ul class="sidebar-menu" id="sidebar-menu"></ul>
     </aside>
+
     <main class="main-content">
       <header>
-        <h1>Painel do Professor</h1>
-        <p>Escolha a Lição 01 a 24. O vídeo do aluno fica amarelo até o ENVIAR da lição.</p>
-        <p class="curso-id-aviso">Turma desta cópia: <strong id="curso-id-texto"></strong></p>
+        <div class="brand">
+          <img src="logo-ipb.png" alt="IPB" onerror="this.onerror=null;this.src='https://commons.wikimedia.org/wiki/Special:FilePath/Ipb_logo.png'">
+          <div>
+            <h1>Painel do Professor</h1>
+            <p>Igreja Presbiteriana do Brasil</p>
+          </div>
+        </div>
       </header>
+
       <div class="card">
-        <h2>⚙️ Informações Gerais do Curso</h2>
-        <div class="form-group"><label>Título Geral do Curso</label><input type="text" id="course-title-input"></div>
-        <div class="form-group"><label>Subtítulo Geral do Curso</label><input type="text" id="course-subtitle-input"></div>
+        <h2>1. Informações Gerais</h2>
+        <div class="form-group">
+          <label for="course-title-input">Título Geral do Curso</label>
+          <input type="text" id="course-title-input" placeholder="Ex: Discipulado IPB">
+        </div>
+        <div class="form-group">
+          <label for="course-subtitle-input">Subtítulo Geral do Curso</label>
+          <input type="text" id="course-subtitle-input" placeholder="Ex: Acesse os módulos e aulas abaixo">
+        </div>
         <button type="button" class="btn btn-primary" onclick="saveCourseHeaderInfo()">💾 Salvar Título e Subtítulo</button>
         <div class="save-alert" id="header-save-alert">Informações salvas com sucesso!</div>
       </div>
-      <div class="card" id="form-card">
+
+      <div class="card" id="module-form-card">
         <h2>
-          <span id="form-title">Adicionar Novo Módulo / Aula</span>
-          <span id="editing-badge" class="badge-editing" style="display:none;">MODO DE EDIÇÃO</span>
+          <span id="module-form-title">2. Módulos</span>
+          <span id="module-editing-badge" class="badge-editing" style="display:none;">MODO DE EDIÇÃO</span>
         </h2>
-        <form id="lesson-form">
-          <input type="hidden" id="edit-index" value="-1">
-          <div class="form-group"><label>Título do Módulo / Aula</label><input type="text" id="lesson-title" required></div>
+        <p class="hint">Cada módulo deve ter até 3 lições. Cadastre o módulo e depois preencha as lições na seção abaixo.</p>
+        <form id="module-form">
+          <input type="hidden" id="module-edit-index" value="-1">
           <div class="form-group">
-            <label>Data e Hora de Liberação para o Aluno</label>
-            <input type="datetime-local" id="lesson-release-date">
+            <label for="module-title">Título do Módulo</label>
+            <input type="text" id="module-title" placeholder="Ex: Módulo 1 - Introdução" required>
+          </div>
+          <div class="form-group">
+            <label for="module-release-date">Data e Hora de Liberação do Módulo</label>
+            <input type="datetime-local" id="module-release-date">
             <div class="checkbox-group">
-              <input type="checkbox" id="immediate-release" onchange="toggleImmediateRelease(this)">
-              <label for="immediate-release" style="margin:0;font-weight:normal;">Liberar imediatamente</label>
+              <input type="checkbox" id="module-immediate-release" onchange="toggleImmediateRelease('module-release-date', this)">
+              <label for="module-immediate-release" style="margin:0;font-weight:normal;">Liberar imediatamente</label>
             </div>
           </div>
-          <div class="form-group"><label>Descrição / Orientação</label><textarea id="lesson-description"></textarea></div>
+          <div class="form-group">
+            <label for="module-description">Descrição do Módulo</label>
+            <textarea id="module-description" placeholder="Orientação geral do módulo..."></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="button" id="btn-cancel-module" class="btn btn-cancel" style="display:none;" onclick="resetModuleForm()">Cancelar Edição</button>
+            <button type="submit" id="btn-submit-module" class="btn btn-primary">💾 Salvar Módulo</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Módulos Cadastrados</h2>
+        <div id="modules-list"></div>
+      </div>
+
+      <div class="card" id="lesson-form-card">
+        <h2>
+          <span id="lesson-form-title">3. Lições</span>
+          <span id="lesson-editing-badge" class="badge-editing" style="display:none;">MODO DE EDIÇÃO</span>
+        </h2>
+        <p class="hint">Cada módulo aceita no máximo 3 lições. Inclua a página da lição (01 a 24) no bloco abaixo.</p>
+        <form id="lesson-form">
+          <input type="hidden" id="lesson-edit-module" value="-1">
+          <input type="hidden" id="lesson-edit-index" value="-1">
+          <div class="form-group">
+            <label for="lesson-module">Módulo da Lição</label>
+            <select id="lesson-module" required></select>
+          </div>
+          <div class="form-group">
+            <label for="lesson-title">Título da Lição</label>
+            <input type="text" id="lesson-title" placeholder="Ex: Lição 1 - Conceitos iniciais" required>
+          </div>
+          <div class="form-group">
+            <label for="lesson-release-date">Data e Hora de Liberação para o Aluno</label>
+            <input type="datetime-local" id="lesson-release-date">
+            <div class="checkbox-group">
+              <input type="checkbox" id="immediate-release" onchange="toggleImmediateRelease('lesson-release-date', this)">
+              <label for="immediate-release" style="margin:0;font-weight:normal;">Liberar imediatamente (sem agendamento)</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lesson-description">Descrição / Orientação</label>
+            <textarea id="lesson-description" placeholder="Escreva aqui os detalhes da lição..."></textarea>
+          </div>
+
           <div class="html-embed-box">
             <div class="form-group">
               <label for="licao-arquivo">Incluir página da lição</label>
               <select id="licao-arquivo" onchange="aoEscolherLicao()"></select>
             </div>
-            <div class="form-group"><label>Título que o aluno verá</label><input type="text" id="first-html-title"></div>
-            <div class="form-group" style="margin-bottom:0;"><label>E-mail do relatório</label><input type="email" id="lesson-email" value="emersonbaran@gmail.com"></div>
+            <div class="form-group">
+              <label for="first-html-title">Título que o aluno verá</label>
+              <input type="text" id="first-html-title" placeholder="">
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="lesson-email">E-mail do relatório</label>
+              <input type="email" id="lesson-email" value="emersonbaran@gmail.com">
+            </div>
           </div>
+
           <div class="video-box">
             <label>🎬 Vídeo da aula</label>
             <p class="hint">O botão do aluno nasce amarelo. No ENVIAR da lição, fica verde e libera o vídeo.</p>
-            <div class="form-group"><label>Título do vídeo</label><input type="text" id="video-title"></div>
-            <div class="form-group" style="margin-bottom:0;"><label>URL do vídeo (YouTube)</label><input type="url" id="video-url" placeholder="https://www.youtube.com/watch?v=..."></div>
+            <div class="form-group">
+              <label for="video-title">Título do vídeo</label>
+              <input type="text" id="video-title">
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="video-url">URL do vídeo (YouTube)</label>
+              <input type="url" id="video-url" placeholder="https://www.youtube.com/watch?v=...">
+            </div>
           </div>
 
-          <!-- LINKS DINÂMICOS COM REORDENAÇÃO -->
-          <div class="links-box">
-            <label>🔗 Links Complementares do Módulo</label>
-            <p class="hint">Adicione quantos links precisar e use os botões ⬆ e ⬇ para alternar a ordem dos links.</p>
-            <div id="form-links-list"></div>
-            <button type="button" class="btn btn-success btn-sm" onclick="addLinkToForm()">➕ Adicionar Novo Link</button>
+          <div class="links-section">
+            <label>Materiais, Recursos e Links</label>
+            <div id="links-container"></div>
+            <button type="button" class="btn btn-secondary" onclick="addLinkRow()">➕ Adicionar Outro Link</button>
           </div>
 
           <div class="form-actions">
-            <button type="button" id="btn-cancel" class="btn btn-cancel" style="display:none;" onclick="resetForm()">Cancelar Edição</button>
-            <button type="submit" id="btn-submit" class="btn btn-primary">💾 Salvar Módulo</button>
+            <button type="button" id="btn-cancel-lesson" class="btn btn-cancel" style="display:none;" onclick="resetLessonForm()">Cancelar Edição</button>
+            <button type="submit" id="btn-submit-lesson" class="btn btn-primary">💾 Salvar Lição</button>
           </div>
         </form>
       </div>
+
       <div class="card">
-        <h2>Módulos Cadastrados</h2>
-        <div id="modules-list"></div>
+        <h2>Lições Cadastradas</h2>
+        <div id="lessons-list"></div>
       </div>
     </main>
   </div>
+
   <script>
-    const CURSO_ID = 'edsonelaineelenerikoerika';
-    const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso_' + CURSO_ID + '.json';
+    let modules = [];
+    const MAX_LESSONS = 3;
     const DEFAULT_EMAIL = 'emersonbaran@gmail.com';
-    let lessons = [];
-    let formLinks = [];
+    const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso_ipb.json';
+    const LS_TITLE = 'ipb_course_title';
+    const LS_SUBTITLE = 'ipb_course_subtitle';
+    const LS_MODULES = 'ipb_course_modules';
 
-    function lsGet(chave) { return localStorage.getItem(CURSO_ID + '_' + chave); }
-    function lsSet(chave, valor) { localStorage.setItem(CURSO_ID + '_' + chave, valor); }
+    function nomeArquivoLicao(n) {
+      return 'DiscipuladoLicao' + String(n).padStart(2, '0') + '.html';
+    }
 
-    function nomeArquivoLicao(n) { return 'DiscipuladoLicao' + String(n).padStart(2, '0') + '.html'; }
     function montarSelectLicoes(selecionado) {
       const sel = document.getElementById('licao-arquivo');
       let html = '<option value="">Nenhuma lição</option>';
       for (let i = 1; i <= 24; i++) {
         const arquivo = nomeArquivoLicao(i);
-        html += `<option value="${arquivo}" ${selecionado === arquivo ? 'selected' : ''}>Lição ${String(i).padStart(2,'0')} (${arquivo})</option>`;
+        html += `<option value="${arquivo}" ${selecionado === arquivo ? 'selected' : ''}>Lição ${String(i).padStart(2, '0')} (${arquivo})</option>`;
       }
       sel.innerHTML = html;
     }
+
     function aoEscolherLicao() {
       const arquivo = document.getElementById('licao-arquivo').value;
       const titulo = document.getElementById('first-html-title');
       if (!arquivo) return;
-      const num = arquivo.replace('DiscipuladoLicao','').replace('.html','');
+      const num = arquivo.replace('DiscipuladoLicao', '').replace('.html', '');
       if (!titulo.value || titulo.value.indexOf('Lição ') === 0) titulo.value = 'Lição ' + num;
     }
+
     async function syncCursoToCloud() {
       const payload = {
-        title: lsGet('course_title') || 'Curso de Capacitação',
-        subtitle: lsGet('course_subtitle') || 'Acesse os módulos e aulas abaixo',
-        lessons: JSON.parse(lsGet('course_lessons') || '[]')
+        title: localStorage.getItem(LS_TITLE) || 'Discipulado IPB',
+        subtitle: localStorage.getItem(LS_SUBTITLE) || 'Acesse os módulos e aulas abaixo',
+        modules: JSON.parse(localStorage.getItem(LS_MODULES) || '[]')
       };
       try {
-        const res = await fetch(FIREBASE_URL, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-        if (!res.ok) throw new Error('Falha');
-      } catch (e) { alert('Não foi possível salvar na nuvem.'); }
+        const res = await fetch(FIREBASE_URL, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('Falha ao salvar na nuvem');
+      } catch (e) {
+        alert('Não foi possível salvar na nuvem. Verifique a internet.');
+        console.error(e);
+      }
     }
+
     async function loadCursoFromCloud() {
       try {
         const res = await fetch(FIREBASE_URL + '?t=' + Date.now());
         const data = await res.json();
         if (!data) return;
-        if (data.title) lsSet('course_title', data.title);
-        if (data.subtitle) lsSet('course_subtitle', data.subtitle);
-        if (data.lessons) lsSet('course_lessons', JSON.stringify(data.lessons));
-      } catch (e) {}
-    }
-    function toggleImmediateRelease(checkbox) {
-      const d = document.getElementById('lesson-release-date');
-      d.value = checkbox.checked ? '' : d.value;
-      d.disabled = checkbox.checked;
-    }
-    function loadCourseHeaderInfo() {
-      document.getElementById('course-title-input').value = lsGet('course_title') || 'Curso de Capacitação';
-      document.getElementById('course-subtitle-input').value = lsGet('course_subtitle') || 'Acesse os módulos e aulas abaixo';
-    }
-    async function saveCourseHeaderInfo() {
-      lsSet('course_title', document.getElementById('course-title-input').value.trim() || 'Curso de Capacitação');
-      lsSet('course_subtitle', document.getElementById('course-subtitle-input').value.trim() || 'Acesse os módulos e aulas abaixo');
-      await syncCursoToCloud();
-      const a = document.getElementById('header-save-alert');
-      a.style.display = 'block';
-      setTimeout(() => a.style.display = 'none', 3000);
-    }
-    function loadLessons() {
-      lessons = JSON.parse(lsGet('course_lessons') || '[]');
-      renderModulesList();
-      renderSidebarMenu();
-    }
-    async function saveLessonsToStorage() {
-      lsSet('course_lessons', JSON.stringify(lessons));
-      renderModulesList();
-      renderSidebarMenu();
-      await syncCursoToCloud();
+        if (data.title) localStorage.setItem(LS_TITLE, data.title);
+        if (data.subtitle) localStorage.setItem(LS_SUBTITLE, data.subtitle);
+        if (data.modules) localStorage.setItem(LS_MODULES, JSON.stringify(data.modules));
+      } catch (e) { console.error(e); }
     }
 
-    /* --- SISTEMA DE GESTÃO DE LINKS DO FORMULÁRIO --- */
-
-    function captureFormLinksValues() {
-      const rows = document.querySelectorAll('.link-item-row');
-      rows.forEach((row, i) => {
-        if (formLinks[i]) {
-          const inputs = row.querySelectorAll('input');
-          formLinks[i].title = inputs[0].value;
-          formLinks[i].url = inputs[1].value;
-        }
-      });
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('collapsed');
     }
 
-    function renderFormLinks() {
-      const container = document.getElementById('form-links-list');
-      if (!formLinks.length) {
-        container.innerHTML = '<p style="color:#64748b; font-size:0.85rem; margin-bottom:10px;">Nenhum link adicionado ainda.</p>';
-        return;
+    function toggleImmediateRelease(inputId, checkbox) {
+      const dateInput = document.getElementById(inputId);
+      if (checkbox.checked) {
+        dateInput.value = '';
+        dateInput.disabled = true;
+      } else {
+        dateInput.disabled = false;
       }
-      container.innerHTML = formLinks.map((link, idx) => `
-        <div class="link-item-row">
-          <input type="text" placeholder="Título do link" value="${link.title || ''}" oninput="formLinks[${idx}].title = this.value">
-          <input type="url" placeholder="https://exemplo.com" value="${link.url || ''}" oninput="formLinks[${idx}].url = this.value">
-          <div class="link-controls">
-            <button type="button" class="btn btn-order" onclick="moveFormLink(${idx}, -1)" ${idx === 0 ? 'disabled' : ''} title="Subir Link">⬆</button>
-            <button type="button" class="btn btn-order" onclick="moveFormLink(${idx}, 1)" ${idx === formLinks.length - 1 ? 'disabled' : ''} title="Descer Link">⬇</button>
-            <button type="button" class="btn btn-danger btn-sm" onclick="removeFormLink(${idx})" title="Excluir Link">🗑️</button>
-          </div>
+    }
+
+    function loadCourseHeaderInfo() {
+      document.getElementById('course-title-input').value = localStorage.getItem(LS_TITLE) || 'Discipulado IPB';
+      document.getElementById('course-subtitle-input').value = localStorage.getItem(LS_SUBTITLE) || 'Acesse os módulos e aulas abaixo';
+    }
+
+    async function saveCourseHeaderInfo() {
+      localStorage.setItem(LS_TITLE, document.getElementById('course-title-input').value.trim() || 'Discipulado IPB');
+      localStorage.setItem(LS_SUBTITLE, document.getElementById('course-subtitle-input').value.trim() || 'Acesse os módulos e aulas abaixo');
+      await syncCursoToCloud();
+      const alertBox = document.getElementById('header-save-alert');
+      alertBox.style.display = 'block';
+      setTimeout(() => { alertBox.style.display = 'none'; }, 3000);
+    }
+
+    function loadModules() {
+      modules = JSON.parse(localStorage.getItem(LS_MODULES) || '[]');
+      renderAll();
+    }
+
+    async function saveModulesToStorage() {
+      localStorage.setItem(LS_MODULES, JSON.stringify(modules));
+      renderAll();
+      await syncCursoToCloud();
+    }
+
+    function renderAll() {
+      renderSidebarMenu();
+      renderModulesList();
+      renderLessonModuleSelect();
+      renderLessonsList();
+    }
+
+    function moveLinkRowUp(btn) {
+      const row = btn.closest('.link-row');
+      if (row && row.previousElementSibling) row.parentNode.insertBefore(row, row.previousElementSibling);
+    }
+    function moveLinkRowDown(btn) {
+      const row = btn.closest('.link-row');
+      if (row && row.nextElementSibling) row.parentNode.insertBefore(row.nextElementSibling, row);
+    }
+
+    function addLinkRow(subtitle = '', url = '', releaseDate = '') {
+      const container = document.getElementById('links-container');
+      const rowDiv = document.createElement('div');
+      rowDiv.className = 'link-row';
+      rowDiv.innerHTML = `
+        <div class="link-row-top">
+          <input type="text" class="link-subtitle" placeholder="Legenda do recurso" value="${subtitle}" style="flex:1;">
+          <input type="text" class="link-url" placeholder="https://..." value="${url}" style="flex:2;">
+          <button type="button" class="btn btn-move" onclick="moveLinkRowUp(this)">▲</button>
+          <button type="button" class="btn btn-move" onclick="moveLinkRowDown(this)">▼</button>
+          <button type="button" class="btn btn-danger" onclick="this.closest('.link-row').remove()">✕</button>
         </div>
-      `).join('');
+        <div class="link-row-schedule">
+          <label style="font-size:0.8rem;margin:0;min-width:140px;">📅 Agendamento do Link:</label>
+          <input type="datetime-local" class="link-release-date" value="${releaseDate}" style="font-size:0.85rem;padding:6px 10px;">
+        </div>`;
+      container.appendChild(rowDiv);
     }
 
-    function addLinkToForm() {
-      captureFormLinksValues();
-      formLinks.push({ title: '', url: '' });
-      renderFormLinks();
+    function resetModuleForm() {
+      document.getElementById('module-edit-index').value = '-1';
+      document.getElementById('module-title').value = '';
+      document.getElementById('module-description').value = '';
+      const dateInput = document.getElementById('module-release-date');
+      dateInput.value = '';
+      dateInput.disabled = false;
+      document.getElementById('module-immediate-release').checked = false;
+      document.getElementById('module-form-title').innerText = '2. Módulos';
+      document.getElementById('module-editing-badge').style.display = 'none';
+      document.getElementById('btn-cancel-module').style.display = 'none';
+      document.getElementById('btn-submit-module').innerText = '💾 Salvar Módulo';
     }
 
-    function removeFormLink(index) {
-      captureFormLinksValues();
-      formLinks.splice(index, 1);
-      renderFormLinks();
-    }
-
-    function moveFormLink(index, direction) {
-      captureFormLinksValues();
-      const newIndex = index + direction;
-      if (newIndex < 0 || newIndex >= formLinks.length) return;
-      const item = formLinks.splice(index, 1)[0];
-      formLinks.splice(newIndex, 0, item);
-      renderFormLinks();
-    }
-
-    /* --- SISTEMA DE REORDENAÇÃO DE MÓDULOS CADASTRADOS --- */
-
-    function moveModule(index, direction) {
-      const targetIndex = index + direction;
-      if (targetIndex < 0 || targetIndex >= lessons.length) return;
-      
-      const item = lessons.splice(index, 1)[0];
-      lessons.splice(targetIndex, 0, item);
-      
-      saveLessonsToStorage();
-    }
-
-    /* --- FORMULÁRIO DE EDIÇÃO E REINICIALIZAÇÃO --- */
-
-    function resetForm() {
-      document.getElementById('edit-index').value = '-1';
+    function resetLessonForm() {
+      document.getElementById('lesson-edit-module').value = '-1';
+      document.getElementById('lesson-edit-index').value = '-1';
       document.getElementById('lesson-title').value = '';
       document.getElementById('lesson-description').value = '';
-      document.getElementById('lesson-release-date').value = '';
-      document.getElementById('lesson-release-date').disabled = false;
+      const dateInput = document.getElementById('lesson-release-date');
+      dateInput.value = '';
+      dateInput.disabled = false;
       document.getElementById('immediate-release').checked = false;
       montarSelectLicoes('');
       document.getElementById('first-html-title').value = '';
       document.getElementById('lesson-email').value = DEFAULT_EMAIL;
       document.getElementById('video-title').value = '';
       document.getElementById('video-url').value = '';
-      
-      formLinks = [];
-      renderFormLinks();
-
-      document.getElementById('form-title').innerText = 'Adicionar Novo Módulo / Aula';
-      document.getElementById('editing-badge').style.display = 'none';
-      document.getElementById('btn-cancel').style.display = 'none';
-      document.getElementById('btn-submit').innerText = '💾 Salvar Módulo';
+      document.getElementById('links-container').innerHTML = '';
+      document.getElementById('lesson-form-title').innerText = '3. Lições';
+      document.getElementById('lesson-editing-badge').style.display = 'none';
+      document.getElementById('btn-cancel-lesson').style.display = 'none';
+      document.getElementById('btn-submit-lesson').innerText = '💾 Salvar Lição';
+      addLinkRow();
+      renderLessonModuleSelect();
     }
 
     function editModule(index) {
-      const m = lessons[index]; if (!m) return;
-      document.getElementById('edit-index').value = index;
-      document.getElementById('lesson-title').value = m.title || '';
-      document.getElementById('lesson-description').value = m.description || '';
-      if (m.releaseDate) {
-        document.getElementById('lesson-release-date').value = m.releaseDate;
-        document.getElementById('lesson-release-date').disabled = false;
-        document.getElementById('immediate-release').checked = false;
+      const module = modules[index];
+      if (!module) return;
+      document.getElementById('module-edit-index').value = index;
+      document.getElementById('module-title').value = module.title || '';
+      document.getElementById('module-description').value = module.description || '';
+      const dateInput = document.getElementById('module-release-date');
+      const imm = document.getElementById('module-immediate-release');
+      if (module.releaseDate) {
+        dateInput.value = module.releaseDate;
+        dateInput.disabled = false;
+        imm.checked = false;
       } else {
-        document.getElementById('lesson-release-date').value = '';
-        document.getElementById('lesson-release-date').disabled = true;
-        document.getElementById('immediate-release').checked = true;
+        dateInput.value = '';
+        dateInput.disabled = true;
+        imm.checked = true;
       }
-      montarSelectLicoes(m.firstHtmlPage || '');
-      document.getElementById('first-html-title').value = m.firstHtmlTitle || '';
-      document.getElementById('lesson-email').value = m.lessonEmail || DEFAULT_EMAIL;
-      document.getElementById('video-title').value = m.videoTitle || '';
-      document.getElementById('video-url').value = m.videoUrl || '';
-      
-      formLinks = m.links ? JSON.parse(JSON.stringify(m.links)) : [];
-      renderFormLinks();
-
-      document.getElementById('form-title').innerText = 'Editando: ' + m.title;
-      document.getElementById('editing-badge').style.display = 'inline-block';
-      document.getElementById('btn-cancel').style.display = 'inline-block';
-      document.getElementById('btn-submit').innerText = '🔄 Atualizar Módulo';
-      
-      document.getElementById('form-card').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('module-form-title').innerText = `Editando módulo: ${module.title}`;
+      document.getElementById('module-editing-badge').style.display = 'inline-block';
+      document.getElementById('btn-cancel-module').style.display = 'inline-block';
+      document.getElementById('btn-submit-module').innerText = '🔄 Atualizar Módulo';
+      document.getElementById('module-form-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     function deleteModule(index) {
-      if (confirm('Excluir o módulo "' + lessons[index].title + '"?')) {
-        lessons.splice(index, 1);
-        saveLessonsToStorage();
-        if (parseInt(document.getElementById('edit-index').value) === index) resetForm();
+      if (confirm(`Excluir o módulo "${modules[index].title}" e suas lições?`)) {
+        modules.splice(index, 1);
+        saveModulesToStorage();
+        resetModuleForm();
+        resetLessonForm();
       }
     }
 
-    /* --- RENDERIZAÇÃO --- */
+    function moveModule(index, direction) {
+      const target = index + direction;
+      if (target < 0 || target >= modules.length) return;
+      const item = modules.splice(index, 1)[0];
+      modules.splice(target, 0, item);
+      saveModulesToStorage();
+    }
+
+    function editLesson(moduleIndex, lessonIndex) {
+      const lesson = modules[moduleIndex].lessons[lessonIndex];
+      if (!lesson) return;
+      document.getElementById('lesson-edit-module').value = moduleIndex;
+      document.getElementById('lesson-edit-index').value = lessonIndex;
+      renderLessonModuleSelect();
+      document.getElementById('lesson-module').value = String(moduleIndex);
+      document.getElementById('lesson-title').value = lesson.title || '';
+      document.getElementById('lesson-description').value = lesson.description || '';
+      const dateInput = document.getElementById('lesson-release-date');
+      const imm = document.getElementById('immediate-release');
+      if (lesson.releaseDate) {
+        dateInput.value = lesson.releaseDate;
+        dateInput.disabled = false;
+        imm.checked = false;
+      } else {
+        dateInput.value = '';
+        dateInput.disabled = true;
+        imm.checked = true;
+      }
+      montarSelectLicoes(lesson.firstHtmlPage || '');
+      document.getElementById('first-html-title').value = lesson.firstHtmlTitle || '';
+      document.getElementById('lesson-email').value = lesson.lessonEmail || DEFAULT_EMAIL;
+      document.getElementById('video-title').value = lesson.videoTitle || '';
+      document.getElementById('video-url').value = lesson.videoUrl || '';
+      const container = document.getElementById('links-container');
+      container.innerHTML = '';
+      if (lesson.links && lesson.links.length) lesson.links.forEach(l => addLinkRow(l.subtitle, l.url, l.releaseDate || ''));
+      else addLinkRow();
+      document.getElementById('lesson-form-title').innerText = `Editando lição: ${lesson.title}`;
+      document.getElementById('lesson-editing-badge').style.display = 'inline-block';
+      document.getElementById('btn-cancel-lesson').style.display = 'inline-block';
+      document.getElementById('btn-submit-lesson').innerText = '🔄 Atualizar Lição';
+      document.getElementById('lesson-form-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function deleteLesson(moduleIndex, lessonIndex) {
+      if (confirm(`Excluir a lição "${modules[moduleIndex].lessons[lessonIndex].title}"?`)) {
+        modules[moduleIndex].lessons.splice(lessonIndex, 1);
+        saveModulesToStorage();
+        resetLessonForm();
+      }
+    }
+
+    function moveLesson(moduleIndex, lessonIndex, direction) {
+      const list = modules[moduleIndex].lessons;
+      const target = lessonIndex + direction;
+      if (target < 0 || target >= list.length) return;
+      const item = list.splice(lessonIndex, 1)[0];
+      list.splice(target, 0, item);
+      saveModulesToStorage();
+    }
+
+    function renderLessonModuleSelect() {
+      const select = document.getElementById('lesson-module');
+      const current = select.value;
+      if (!modules.length) {
+        select.innerHTML = `<option value="">Cadastre um módulo primeiro</option>`;
+        return;
+      }
+      select.innerHTML = modules.map((m, i) => `<option value="${i}">${i + 1}. ${m.title || 'Módulo sem título'}</option>`).join('');
+      if (current !== '') select.value = current;
+    }
 
     function renderSidebarMenu() {
-      document.getElementById('sidebar-menu').innerHTML = lessons.length
-        ? lessons.map((l, i) => `<li class="sidebar-module"><button class="sidebar-module-title" onclick="editModule(${i})">${i + 1}. ${l.title || 'Módulo'}</button></li>`).join('')
-        : '<li style="color:#64748b;padding:10px;">Sem conteúdo.</li>';
+      const sidebarMenu = document.getElementById('sidebar-menu');
+      if (!modules.length) {
+        sidebarMenu.innerHTML = `<li style="color:#c5d4a1;font-size:0.85rem;padding:10px;">Sem conteúdo.</li>`;
+        return;
+      }
+      sidebarMenu.innerHTML = modules.map((module, mIndex) => `
+        <li class="sidebar-module">
+          <button class="sidebar-module-title" onclick="editModule(${mIndex})">${mIndex + 1}. ${module.title || 'Módulo sem título'}</button>
+          <ul class="sidebar-sublist">
+            ${(module.lessons || []).map((lesson, lIndex) => `<li class="sidebar-subitem">L${lIndex + 1}. ${lesson.title || 'Lição sem título'}</li>`).join('')}
+          </ul>
+        </li>`).join('');
+    }
+
+    function releaseBadge(date) {
+      if (date) return `<span class="badge badge-scheduled">📅 ${new Date(date).toLocaleString('pt-BR')}</span>`;
+      return `<span class="badge badge-released">⚡ Liberado imediatamente</span>`;
     }
 
     function renderModulesList() {
-      const box = document.getElementById('modules-list');
-      if (!lessons.length) { box.innerHTML = '<p style="color:#64748b;text-align:center;padding:20px;">Nenhum módulo cadastrado.</p>'; return; }
-      
-      box.innerHTML = lessons.map((m, i) => {
-        const hasLinks = m.links && m.links.length > 0;
-        
-        return `
-        <div class="module-item">
-          <div class="module-item-header">
-            <span class="module-title">${i + 1}. ${m.title}</span>
-            <div class="module-actions">
-              <button class="btn btn-order" onclick="moveModule(${i}, -1)" ${i === 0 ? 'disabled' : ''} title="Subir Módulo">⬆ Subir</button>
-              <button class="btn btn-order" onclick="moveModule(${i}, 1)" ${i === lessons.length - 1 ? 'disabled' : ''} title="Descer Módulo">⬇ Descer</button>
-              <button class="btn btn-edit" onclick="editModule(${i})">✏️ Editar</button>
-              <button class="btn btn-danger" onclick="deleteModule(${i})">🗑️ Excluir</button>
+      const container = document.getElementById('modules-list');
+      if (!modules.length) {
+        container.innerHTML = `<p style="color:#6b7a52;text-align:center;padding:20px;">Nenhum módulo cadastrado.</p>`;
+        return;
+      }
+      container.innerHTML = modules.map((m, index) => `
+        <div class="item-card">
+          <div class="item-header">
+            <span class="item-title">${index + 1}. ${m.title}</span>
+            <div class="item-actions">
+              <button class="btn btn-move" onclick="moveModule(${index}, -1)">▲</button>
+              <button class="btn btn-move" onclick="moveModule(${index}, 1)">▼</button>
+              <button class="btn btn-edit" onclick="editModule(${index})">✏️ Editar</button>
+              <button class="btn btn-danger" onclick="deleteModule(${index})">🗑️ Excluir</button>
             </div>
           </div>
-          ${m.releaseDate ? `<span class="badge badge-scheduled">📅 ${new Date(m.releaseDate).toLocaleString('pt-BR')}</span>` : `<span class="badge badge-released">⚡ Liberado</span>`}
-          ${m.firstHtmlPage ? `<span class="badge badge-html">📋 ${m.firstHtmlTitle || m.firstHtmlPage}</span>` : ''}
-          ${m.videoUrl ? `<span class="badge badge-video">🎬 ${m.videoTitle || 'Vídeo'}</span>` : ''}
-          ${m.firstHtmlPage && m.videoUrl ? `<span class="badge badge-lock">🟡 Vídeo bloqueado até ENVIAR</span>` : ''}
-          ${m.description ? `<p class="module-desc">${m.description}</p>` : ''}
+          ${releaseBadge(m.releaseDate)}
+          <span class="badge badge-released">${(m.lessons || []).length}/3 lições</span>
+          ${m.description ? `<p class="hint">${m.description}</p>` : ''}
+        </div>`).join('');
+    }
 
-          <!-- EXIBIÇÃO DOS LINKS DO MÓDULO -->
-          ${hasLinks ? `
-            <div class="card-links-section">
-              <strong style="font-size:0.88rem; color:#1e293b; display:block; margin-bottom:6px;">🔗 Links de Apoio (${m.links.length}):</strong>
-              ${m.links.map((link, lIdx) => `
-                <div class="card-link-row">
-                  <strong>${lIdx + 1}. ${link.title || 'Link'}:</strong> <a href="${link.url}" target="_blank">${link.url}</a>
-                </div>
-              `).join('')}
+    function renderLessonsList() {
+      const container = document.getElementById('lessons-list');
+      if (!modules.length) {
+        container.innerHTML = `<p style="color:#6b7a52;text-align:center;padding:20px;">Cadastre um módulo para adicionar lições.</p>`;
+        return;
+      }
+      container.innerHTML = modules.map((module, mIndex) => {
+        const lessons = module.lessons || [];
+        const lessonsHTML = lessons.length ? lessons.map((lesson, lIndex) => `
+          <div class="item-card">
+            <div class="item-header">
+              <span class="item-title">Lição ${lIndex + 1}. ${lesson.title}</span>
+              <div class="item-actions">
+                <button class="btn btn-move" onclick="moveLesson(${mIndex}, ${lIndex}, -1)">▲</button>
+                <button class="btn btn-move" onclick="moveLesson(${mIndex}, ${lIndex}, 1)">▼</button>
+                <button class="btn btn-edit" onclick="editLesson(${mIndex}, ${lIndex})">✏️ Editar</button>
+                <button class="btn btn-danger" onclick="deleteLesson(${mIndex}, ${lIndex})">🗑️ Excluir</button>
+              </div>
             </div>
-          ` : ''}
-        </div>`;
+            ${releaseBadge(lesson.releaseDate)}
+            ${lesson.firstHtmlPage ? `<span class="badge badge-html">📋 ${lesson.firstHtmlTitle || lesson.firstHtmlPage}</span>` : ''}
+            ${lesson.videoUrl ? `<span class="badge badge-video">🎬 ${lesson.videoTitle || 'Vídeo'}</span>` : ''}
+            ${lesson.firstHtmlPage && lesson.videoUrl ? `<span class="badge badge-lock">🟡 Vídeo bloqueado até ENVIAR</span>` : ''}
+            ${lesson.description ? `<p class="hint">${lesson.description}</p>` : ''}
+          </div>`).join('') : `<p class="hint">Nenhuma lição neste módulo.</p>`;
+        return `<div class="lesson-group-title">${mIndex + 1}. ${module.title} — ${lessons.length}/3</div>${lessonsHTML}`;
       }).join('');
     }
 
+    document.getElementById('module-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const editIndex = parseInt(document.getElementById('module-edit-index').value);
+      const title = document.getElementById('module-title').value.trim();
+      const description = document.getElementById('module-description').value.trim();
+      const isImmediate = document.getElementById('module-immediate-release').checked;
+      const releaseDate = isImmediate ? null : document.getElementById('module-release-date').value;
+      if (editIndex >= 0) {
+        modules[editIndex] = {
+          ...modules[editIndex],
+          title,
+          description,
+          releaseDate,
+          lessons: modules[editIndex].lessons || []
+        };
+      } else {
+        modules.push({ title, description, releaseDate, lessons: [] });
+      }
+      saveModulesToStorage();
+      resetModuleForm();
+    });
+
     document.getElementById('lesson-form').addEventListener('submit', function(e) {
       e.preventDefault();
-      captureFormLinksValues();
-
-      const editIndex = parseInt(document.getElementById('edit-index').value);
+      const moduleIndex = parseInt(document.getElementById('lesson-module').value);
+      const editModuleIndex = parseInt(document.getElementById('lesson-edit-module').value);
+      const editIndex = parseInt(document.getElementById('lesson-edit-index').value);
+      if (isNaN(moduleIndex) || !modules[moduleIndex]) {
+        alert('Selecione um módulo.');
+        return;
+      }
+      if (editIndex < 0 && (modules[moduleIndex].lessons || []).length >= MAX_LESSONS) {
+        alert('Este módulo já possui 3 lições.');
+        return;
+      }
+      const title = document.getElementById('lesson-title').value.trim();
+      const description = document.getElementById('lesson-description').value.trim();
+      const isImmediate = document.getElementById('immediate-release').checked;
+      const releaseDate = isImmediate ? null : document.getElementById('lesson-release-date').value;
       const arquivo = document.getElementById('licao-arquivo').value.trim();
-      
-      const cleanLinks = formLinks.filter(l => l.title.trim() !== '' || l.url.trim() !== '');
-
-      const moduleData = {
-        title: document.getElementById('lesson-title').value.trim(),
-        description: document.getElementById('lesson-description').value.trim(),
-        releaseDate: document.getElementById('immediate-release').checked ? null : document.getElementById('lesson-release-date').value,
+      const links = [];
+      document.querySelectorAll('.link-row').forEach(row => {
+        const subtitle = row.querySelector('.link-subtitle').value.trim();
+        const url = row.querySelector('.link-url').value.trim();
+        const linkReleaseDate = row.querySelector('.link-release-date').value;
+        if (url) links.push({ subtitle: subtitle || 'Material', url, releaseDate: linkReleaseDate || null });
+      });
+      const lessonData = {
+        title,
+        description,
+        releaseDate,
         firstHtmlPage: arquivo || null,
-        firstHtmlTitle: arquivo ? (document.getElementById('first-html-title').value.trim() || arquivo.replace('.html','')) : null,
+        firstHtmlTitle: arquivo ? (document.getElementById('first-html-title').value.trim() || arquivo.replace('.html', '')) : null,
         lessonEmail: arquivo ? (document.getElementById('lesson-email').value.trim() || DEFAULT_EMAIL) : DEFAULT_EMAIL,
         lockLinksUntilLessonSubmit: !!arquivo,
         videoTitle: document.getElementById('video-title').value.trim() || 'Vídeo da aula',
         videoUrl: document.getElementById('video-url').value.trim() || null,
-        links: cleanLinks
+        links
       };
-
-      if (editIndex >= 0) lessons[editIndex] = moduleData; else lessons.push(moduleData);
-      saveLessonsToStorage();
-      resetForm();
+      if (editIndex >= 0) {
+        if (editModuleIndex !== moduleIndex) {
+          if ((modules[moduleIndex].lessons || []).length >= MAX_LESSONS) {
+            alert('O módulo de destino já possui 3 lições.');
+            return;
+          }
+          modules[editModuleIndex].lessons.splice(editIndex, 1);
+          modules[moduleIndex].lessons.push(lessonData);
+        } else {
+          modules[moduleIndex].lessons[editIndex] = lessonData;
+        }
+      } else {
+        if (!modules[moduleIndex].lessons) modules[moduleIndex].lessons = [];
+        modules[moduleIndex].lessons.push(lessonData);
+      }
+      saveModulesToStorage();
+      resetLessonForm();
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('curso-id-texto').innerText = CURSO_ID;
       montarSelectLicoes('');
-      loadCursoFromCloud().then(() => { loadCourseHeaderInfo(); loadLessons(); });
-      resetForm();
+      loadCursoFromCloud().then(() => {
+        loadCourseHeaderInfo();
+        loadModules();
+      });
+      resetModuleForm();
+      resetLessonForm();
     });
   </script>
 </body>
