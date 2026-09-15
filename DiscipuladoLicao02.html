@@ -3,8 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discipulado Lição 2 - Salvação</title>
+    <title>Discipulado Lição 02 - A Nova Vida</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
+        @media print {
+            body {
+                background: #ffffff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .container {
+                box-shadow: none !important;
+                margin: 0 !important;
+                max-width: none !important;
+                width: 100% !important;
+            }
+            #btnPdf, #btnCorrigir, #resultado {
+                display: none !important;
+            }
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f7f6;
@@ -12,7 +30,7 @@
             line-height: 1.6;
             margin: 0;
             padding: 20px;
-            font-size: 12pt; /* Tamanho da letra base */
+            font-size: 12pt;
         }
         .container {
             max-width: 750px;
@@ -21,32 +39,38 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #436255; /* Nova cor principal */
+            border-top: 6px solid #2D4F5C;
         }
-        
-        /* Estilo do Cabeçalho para Logo à esquerda e Título Centralizado */
         .header-container {
             position: relative;
             display: flex;
             align-items: center;
-            justify-content: center; /* Centraliza o título */
+            justify-content: center;
             margin-bottom: 10px;
             min-height: 60px;
         }
         .header-container img {
             position: absolute;
-            left: 0; /* Fixa a logo na esquerda */
+            left: 0;
             height: 60px;
             width: auto;
         }
+        .main-category {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            color: #2D4F5C;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
         h1 {
-            color: #436255; /* Nova cor principal */
+            color: #2D4F5C;
             margin: 0;
             font-size: 32px;
             text-transform: uppercase;
             text-align: center;
         }
-
         .subtitle {
             text-align: center;
             font-weight: bold;
@@ -55,14 +79,14 @@
             font-size: 14pt;
         }
         .intro {
-            background-color: #edf0ef; /* Tom leve da nova cor */
-            border-left: 4px solid #436255; /* Nova cor principal */
+            background-color: #f0f4f6;
+            border-left: 4px solid #2D4F5C;
             padding: 12px 15px;
             margin-bottom: 25px;
             font-size: 11pt;
         }
         .section-title {
-            background-color: #436255; /* Nova cor principal */
+            background-color: #2D4F5C;
             color: white;
             padding: 6px 12px;
             font-size: 13pt;
@@ -70,22 +94,6 @@
             border-radius: 4px;
             margin-top: 25px;
             margin-bottom: 15px;
-        }
-        .verse-box {
-            background-color: #f9f9f9;
-            border: 1px solid #e0e0e0;
-            border-left: 3px solid #436255; /* Nova cor principal */
-            padding: 10px 15px;
-            margin-bottom: 10px;
-            font-style: italic;
-            font-size: 11pt;
-            color: #444;
-        }
-        .verse-title {
-            font-weight: bold;
-            font-style: normal;
-            color: #436255; /* Nova cor principal */
-            margin-bottom: 4px;
         }
         .question-group {
             margin-bottom: 20px;
@@ -96,7 +104,7 @@
             margin-bottom: 6px;
             color: #222;
         }
-        input[type="text"], input[type="date"], textarea {
+        input[type="text"], input[type="date"], textarea, select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -105,23 +113,9 @@
             font-size: 11pt;
             margin-top: 4px;
         }
-        input[type="text"]:focus, textarea:focus {
-            border-color: #436255; /* Nova cor principal */
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #2D4F5C;
             outline: none;
-        }
-        .table-names {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 8px;
-        }
-        .table-names th, .table-names td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        .table-names th {
-            background-color: #f2f2f2;
-            color: #436255; /* Nova cor principal */
         }
         .footer-info {
             display: flex;
@@ -133,9 +127,46 @@
         .footer-info .field {
             flex: 1;
         }
-        .btn-submit {
+        .btn-pdf {
             width: 100%;
-            background-color: #436255; /* Nova cor principal */
+            background-color: #3d6b7a;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .alternativas {
+            margin-top: 8px;
+        }
+        .alternativas label {
+            display: block;
+            padding: 8px 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .alternativas label input {
+            margin-right: 8px;
+        }
+        .alternativas label.certa {
+            background-color: #d9f2df !important;
+            border-color: #28a745 !important;
+            color: #176b2c !important;
+        }
+        .alternativas label.errada {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #842029 !important;
+        }
+        .btn-corrigir {
+            width: 100%;
+            background-color: #2e7d32;
             color: white;
             padding: 14px;
             border: none;
@@ -144,134 +175,141 @@
             font-weight: bold;
             cursor: pointer;
             margin-top: 25px;
-            transition: background-color 0.3s ease;
         }
-        .btn-submit:hover {
-            background-color: #344d42;
+        .btn-corrigir:hover {
+            background-color: #256628;
         }
-        .btn-submit.sent {
-            background-color: #263830 !important;
-            cursor: default;
+        .resultado {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            text-align: center;
+            font-size: 14pt;
+            font-weight: bold;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            background: #f7f7f7;
         }
         .final-note {
             text-align: center;
-            font-style: italic;
-            color: #666;
-            margin-top: 20px;
-            font-size: 11pt;
+            font-weight: bold;
+            color: #2D4F5C;
+            background-color: #f0f4f6;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            margin-top: 25px;
+            font-size: 12pt;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- Cabeçalho com Logo à esquerda e Título Centralizado -->
+<div class="container" id="licaoImpressao">
+    <div class="main-category">DISCIPULADO</div>
+    
     <div class="header-container">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
-        <h1>Lição 2</h1>
+        <h1>Lição 02</h1>
     </div>
-    <div class="subtitle">A SALVAÇÃO</div>
+    <div class="subtitle">A NOVA VIDA</div>
     
     <div class="intro">
-        A salvação é o livramento do poder e da penalidade do pecado, e a concessão da vida eterna em Jesus Cristo. Vamos entender como recebemos esse presente de Deus.
+        Todo aquele que crê unicamente na pessoa e obra de Jesus Cristo tem uma nova vida. Aprenderemos, nesta lição, alguns princípios que mostram como viver esta nova vida!
     </div>
 
-    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
+    <form id="discipuladoForm">
         
-        <!-- SEÇÃO A -->
-        <div class="section-title">A – O PROBLEMA: O PECADO</div>
+        <div class="section-title">A - FILHOS DE DEUS</div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Romanos 3:23 (ARA)</div>
-                "pois todos pecaram e carecem da glória de Deus,"
+            <label for="q1">1) Em Gálatas 3.26, o que permite que sejamos filhos de Deus?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q1" value="A" required> A) A fé em Cristo Jesus.</label>
+                <label><input type="radio" name="q1" value="B"> B) A obediência estrita aos costumes da época.</label>
+                <label><input type="radio" name="q1" value="C"> C) O nascimento de acordo com uma linhagem sanguínea.</label>
+                <label><input type="radio" name="q1" value="D"> D) A realização diária de ritos de purificação.</label>
             </div>
-            <label for="q1">De acordo com Romanos 3:23, quem pecou e qual a consequência em relação a Deus?</label>
-            <textarea id="q1" name="1. Quem pecou (Rm 3.23)" rows="2" required></textarea>
         </div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Romanos 6:23 (ARA)</div>
-                "porque o salário do pecado é a morte, mas o dom gratuito de Deus é a vida eterna em Cristo Jesus, nosso Senhor."
+            <label for="q2">2) No texto de Gálatas 4.4-7, diz que Cristo veio para nos redimir. Qual a afirmação correta sobre nossa condição?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q2" value="A" required> A) Nós somos filhos de Deus, mas só em sentido muito limitado.</label>
+                <label><input type="radio" name="q2" value="B"> B) Nós somos filhos de Deus com amplos direitos como seus herdeiros.</label>
+                <label><input type="radio" name="q2" value="C"> C) Nós somos mais como escravos de Deus que seus filhos.</label>
+                <label><input type="radio" name="q2" value="D"> D) Nós continuamos distantes de ter qualquer herança divina.</label>
             </div>
-            <label>Complete a tabela baseada em Romanos 6:23:</label>
-            <table class="table-names">
-                <thead>
-                    <tr>
-                        <th>Conceito</th>
-                        <th>Resultado/Significado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="text" value="Salário do Pecado" readonly style="background:#eee; font-weight:bold;"></td>
-                        <td><input type="text" name="Salario do Pecado" required placeholder="O que se recebe?"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" value="Dom Gratuito de Deus" readonly style="background:#eee; font-weight:bold;"></td>
-                        <td><input type="text" name="Dom de Deus" required placeholder="O que é e onde está?"></td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
 
-        <!-- SEÇÃO B -->
-        <div class="section-title">B – A SOLUÇÃO DE DEUS: JESUS CRISTO</div>
+        <div class="section-title">B – NOVA CRIATURA</div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Romanos 5:8 (ARA)</div>
-                "Mas Deus prova o seu próprio amor para conosco pelo fato de ter Cristo morrido por nós, sendo nós ainda pecadores."
+            <label for="q3">3) Leia 2 Coríntios 5.17. Como é descrita a pessoa que está em Cristo?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q3" value="A" required> A) Ela permanece com as mesmas coisas velhas controlando sua vida.</label>
+                <label><input type="radio" name="q3" value="B"> B) É uma nova criatura; as coisas antigas já passaram e tudo se fez novo.</label>
+                <label><input type="radio" name="q3" value="C"> C) É um seguidor apenas de princípios morais.</label>
+                <label><input type="radio" name="q3" value="D"> D) É alguém que tenta melhorar aos poucos por força de vontade.</label>
             </div>
-            <label for="q3">Como Deus provou o seu amor por nós, segundo Romanos 5:8?</label>
-            <textarea id="q3" name="3. Prova do amor (Rm 5.8)" rows="2" required></textarea>
         </div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">1 Coríntios 15:3-4 (ARA)</div>
-                "... Cristo morreu pelos nossos pecados, segundo as Escrituras, e que foi sepultado, e que ressuscitou ao terceiro dia, segundo as Escrituras."
+            <label for="q4">4) Em Romanos 6.11, como devemos considerar a nossa vida para o pecado e para Deus?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q4" value="A" required> A) Vivos para o pecado e indiferentes para Deus.</label>
+                <label><input type="radio" name="q4" value="B"> B) Mortos para o pecado, mas vivos para Deus em Cristo Jesus.</label>
+                <label><input type="radio" name="q4" value="C"> C) Neutros tanto para o pecado quanto para Deus.</label>
+                <label><input type="radio" name="q4" value="D"> D) Vivos para as tentações do mundo e ocultos de Deus.</label>
             </div>
-            <label for="q4">Quais são os três fatos centrais do Evangelho mencionados neste versículo?</label>
-            <textarea id="q4" name="4. Fatos do Evangelho (1Co 15.3-4)" rows="3" required placeholder="1. ...&#10;2. ...&#10;3. ..."></textarea>
         </div>
 
-        <!-- SEÇÃO C -->
-        <div class="section-title">C – A NOSSA RESPOSTA: FÉ E ARREPENDIMENTO</div>
+        <div class="section-title">C – ENTREGA TOTAL A CRISTO</div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Efésios 2:8-9 (ARA)</div>
-                "Porque pela graça sois salvos, mediante a fé; e isto não vem de vós; é dom de Deus; não vem das obras, para que ninguém se glorie."
+            <label for="q5">5) Como devemos viver de acordo com 1 Coríntios 10.31?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q5" value="A" required> A) Buscando satisfazer os próprios desejos acima de tudo.</label>
+                <label><input type="radio" name="q5" value="B"> B) Quer comais, quer bebeis ou façais outra qualquer coisa, fazei tudo para a glória de Deus.</label>
+                <label><input type="radio" name="q5" value="C"> C) Fazendo apenas as obrigações religiosas no templo.</label>
+                <label><input type="radio" name="q5" value="D"> D) Vivendo para impressionar os outros com nossas ações.</label>
             </div>
-            <label for="q5">A salvação vem através das nossas boas obras? Como somos salvos segundo este trecho?</label>
-            <textarea id="q5" name="5. Salvo por obras (Ef 2.8-9)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Atos 3:19 (ARA)</div>
-                "Arrependei-vos, pois, e convertei-vos para serem cancelados os vossos pecados,"
-            </div>
-            <label for="q6">Além de crer, o que Atos 3:19 nos ordena a fazer para que os pecados sejam cancelados?</label>
-            <textarea id="q6" name="6. Ordenança (At 3.19)" rows="2" required></textarea>
         </div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Romanos 10:9 (ARA)</div>
-                "Se, com a tua boca, confessares Jesus como Senhor e, em teu coração, creres que Deus o ressuscitou dentre os mortos, serás salvo."
+            <label for="q6">6) Em Colossenses 3.17, em qual nome e como devemos agir em todas as coisas, quer por palavra ou ação?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q6" value="A" required> A) Em nome dos profetas, com orgulho próprio.</label>
+                <label><input type="radio" name="q6" value="B"> B) Em nome do Senhor Jesus, dando por ele graças a Deus Pai.</label>
+                <label><input type="radio" name="q6" value="C"> C) Em nosso próprio nome, com sabedoria humana.</label>
+                <label><input type="radio" name="q6" value="D"> D) Em nome da tradição, sem expressar gratidão.</label>
             </div>
-            <label for="q7">Quais são as duas condições apresentadas em Romanos 10:9 para a salvação?</label>
-            <textarea id="q7" name="7. Condicoes (Rm 10.9)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label for="q7">7) De acordo com Romanos 12.1,2, o que devemos apresentar a Deus e como deve ser esse sacrifício?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q7" value="A" required> A) Nossos corpos como sacrifício vivo, santo e agradável a Deus, que é o nosso culto racional.</label>
+                <label><input type="radio" name="q7" value="B"> B) Sacrifícios materiais de animais no altar divino.</label>
+                <label><input type="radio" name="q7" value="C"> C) Ofertas em dinheiro sem dedicação de vida.</label>
+                <label><input type="radio" name="q7" value="D"> D) Nossos dons intelectuais como única exigência.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q8">8) Ainda segundo Romanos 12.2, qual a atitude contra o século e o que a transformação da mente nos permite experimentar?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q8" value="A" required> A) Conformar-se com o mundo para experimentar riquezas terrenas.</label>
+                <label><input type="radio" name="q8" value="B"> B) Não se conformar com este século, renovar a mente e experimentar a boa, agradável e perfeita vontade de Deus.</label>
+                <label><input type="radio" name="q8" value="C"> C) Isolar-se completamente da sociedade sem mudar o pensamento.</label>
+                <label><input type="radio" name="q8" value="D"> D) Aceitar a cultura do mundo e duvidar dos planos de Deus.</label>
+            </div>
         </div>
 
         <div class="final-note">
-            A salvação é um presente gracioso de Deus, conquistado por Jesus na cruz e recebido mediante a fé e o arrependimento. Não há outro caminho.
+            Lembre-se: Agora você é uma nova criatura, pois foi o Senhor que transformou sua vida quando você creu unicamente em Jesus. Assim, entenda sua situação agora e dedique-se inteiramente ao Senhor!
         </div>
 
-        <!-- DADOS FINAIS -->
         <div class="footer-info">
             <div class="field">
                 <label for="nomePessoa">Nome do Aluno:</label>
@@ -283,24 +321,149 @@
             </div>
         </div>
 
-        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 02</button>
+        <button type="button" id="btnCorrigir" class="btn-corrigir" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS</button>
+        <div id="resultado" class="resultado"></div>
+        <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
 
     </form>
 </div>
 
 <script>
-    function enviarFormulario(event) {
-        // Esta função apenas visualmente muda o botão. 
-        // O envio real é feito pelo 'action=mailto' do form.
-        var btn = document.getElementById("btnEnviar");
-        btn.classList.add("sent");
-        btn.innerText = "ENVIANDO PELO EMAIL...";
-        
-        // Pequeno delay para permitir que o usuário veja a mudança antes que o cliente de email abra
-        setTimeout(function(){
-            // O formulário continuará seu curso natural de envio
-        }, 500);
+    var CACHE = 'licao02_cache';
+    var CAMPOS = ['q1','q2','q3','q4','q5','q6','q7','q8','nomePessoa','dataPreenchimento'];
+
+    function val(id) {
+        var el = document.getElementById(id);
+        return el ? el.value : '';
     }
+    function gravarCache() {
+        var dados = {};
+        CAMPOS.forEach(function(id) { dados[id] = val(id); });
+        localStorage.setItem(CACHE, JSON.stringify(dados));
+    }
+    function lerCache() {
+        try {
+            var dados = JSON.parse(localStorage.getItem(CACHE) || 'null');
+            if (!dados) return;
+            CAMPOS.forEach(function(id) {
+                if (dados[id] != null && document.getElementById(id)) {
+                    document.getElementById(id).value = dados[id];
+                }
+            });
+        } catch (e) {}
+    }
+
+    var GABARITO = {
+        q1: 'A',
+        q2: 'B',
+        q3: 'B',
+        q4: 'B',
+        q5: 'B',
+        q6: 'B',
+        q7: 'A',
+        q8: 'B'
+    };
+
+    function corrigirRespostas() {
+        var form = document.getElementById('discipuladoForm');
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        var acertos = 0;
+        var total = Object.keys(GABARITO).length;
+
+        Object.keys(GABARITO).forEach(function(nome) {
+            var opcoes = document.querySelectorAll('input[name="' + nome + '"]');
+            var resposta = document.querySelector('input[name="' + nome + '"]:checked');
+
+            opcoes.forEach(function(input) {
+                input.parentElement.classList.remove('certa', 'errada');
+                if (input.value === GABARITO[nome]) {
+                    input.parentElement.classList.add('certa');
+                } else if (resposta && input.value === resposta.value) {
+                    input.parentElement.classList.add('errada');
+                }
+            });
+
+            if (resposta && resposta.value === GABARITO[nome]) {
+                acertos++;
+            }
+        });
+
+        var percentual = Math.round((acertos / total) * 100);
+        var resultado = document.getElementById('resultado');
+        resultado.style.display = 'block';
+        resultado.innerHTML = 'RESULTADO: ' + acertos + ' de ' + total +
+            ' questões corretas (' + percentual + '%).';
+
+        gravarCache();
+    }
+
+    function baixarPdf() {
+        gravarCache();
+        var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
+        if (typeof html2pdf === 'undefined') {
+            alert('Não foi possível carregar o gerador de PDF. Verifique a internet.');
+            return;
+        }
+        var elemento = document.getElementById('licaoImpressao');
+
+        var btnPdf = document.getElementById('btnPdf');
+        var displayPdf = btnPdf.style.display;
+
+        btnPdf.style.display = 'none';
+        var btnCorrigir = document.getElementById('btnCorrigir');
+        var resultado = document.getElementById('resultado');
+        var displayCorrigir = btnCorrigir.style.display;
+        var displayResultado = resultado.style.display;
+        btnCorrigir.style.display = 'none';
+        resultado.style.display = 'none';
+
+        html2pdf().set({
+            margin: [8, 8, 8, 8],
+            filename: 'Licao02-' + nome + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                scrollX: 0,
+                scrollY: 0,
+                windowWidth: elemento.scrollWidth,
+                windowHeight: elemento.scrollHeight
+            },
+            pagebreak: {
+                mode: ['css', 'legacy'],
+                avoid: ['.question-group', '.section-title', '.final-note']
+            },
+            jsPDF: {
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait'
+            }
+        }).from(elemento).save().then(function() {
+            btnPdf.style.display = displayPdf;
+            btnCorrigir.style.display = displayCorrigir;
+            resultado.style.display = displayResultado;
+        }).catch(function(erro) {
+            btnPdf.style.display = displayPdf;
+            btnCorrigir.style.display = displayCorrigir;
+            resultado.style.display = displayResultado;
+            console.error(erro);
+            alert('Não foi possível gerar o PDF. Tente novamente.');
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        lerCache();
+        CAMPOS.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.addEventListener('input', gravarCache);
+            if (el) el.addEventListener('change', gravarCache);
+        });
+    });
 </script>
 
 </body>
