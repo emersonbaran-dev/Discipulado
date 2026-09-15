@@ -140,18 +140,6 @@
             background-color: #15242a !important;
             cursor: default;
         }
-        .btn-pdf {
-            width: 100%;
-            background-color: #3d6b7a;
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 4px;
-            font-size: 12pt;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
         .final-note {
             text-align: center;
             font-weight: bold;
@@ -304,8 +292,7 @@
             </div>
         </div>
 
-        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 10</button>
-        <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
+        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR E BAIXAR PDF</button>
 
     </form>
 </div>
@@ -356,21 +343,7 @@
             '8) Rm 2.4: ' + val('q8')
         ].join('\n');
     }
-    function baixarPdf() {
-        gravarCache();
-        var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
-        if (typeof html2pdf === 'undefined') {
-            alert('Não foi possível carregar o gerador de PDF. Verifique a internet.');
-            return;
-        }
-        html2pdf().set({
-            margin: 10,
-            filename: 'Licao10-' + nome + '.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        }).from(document.getElementById('licaoImpressao')).save();
-    }
+
     function enviarFormulario(event) {
         event.preventDefault();
         var form = document.getElementById('discipuladoForm');
@@ -379,27 +352,54 @@
             return;
         }
         gravarCache();
-        var nome = val('nomePessoa');
-        var a = document.createElement('a');
-        a.href = 'mailto:' + EMAIL
-            + '?subject=' + encodeURIComponent('Relatório Lição 10 - ' + nome)
-            + '&body=' + encodeURIComponent(montarTexto());
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
 
         var btn = document.getElementById('btnEnviar');
         btn.classList.add('sent');
-        btn.innerText = 'ENVIANDO PELO EMAIL...';
-        setTimeout(function() { btn.innerText = 'RELATÓRIO ENVIADO'; }, 800);
+        btn.innerText = 'GERANDO PDF E PREPARANDO EMAIL...';
 
-        try {
-            var idx = Number(new URLSearchParams(window.location.search).get('lessonIndex') || '0');
-            if (window.parent && window.parent !== window) {
-                window.parent.postMessage({ type: 'LICAO_ENVIADA', lessonIndex: idx }, '*');
-                if (typeof window.parent.liberarVideoAula === 'function') window.parent.liberarVideoAula(idx);
-            }
-        } catch (e) {}
+        var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
+
+        if (typeof html2pdf === 'undefined') {
+            alert('Não foi possível carregar a biblioteca de PDF. Verifique sua conexão com a internet.');
+            btn.innerText = 'ENVIAR E BAIXAR PDF';
+            btn.classList.remove('sent');
+            return;
+        }
+
+        // Configuração do PDF
+        var opt = {
+            margin: 10,
+            filename: 'Licao10-' + nome + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        // Salva o PDF e só depois abre o gerenciador de e-mail
+        html2pdf().set(opt).from(document.getElementById('licaoImpressao')).save().then(function() {
+            // Pequeno delay para garantir que o download foi aceito pelo navegador antes de redirecionar
+            setTimeout(function() {
+                var mailtoUrl = 'mailto:' + EMAIL
+                    + '?subject=' + encodeURIComponent('Relatório Lição 10 - ' + val('nomePessoa'))
+                    + '&body=' + encodeURIComponent(montarTexto());
+                
+                window.location.href = mailtoUrl;
+
+                btn.innerText = 'RELATÓRIO ENVIADO E PDF BAIXADO';
+
+                try {
+                    var idx = Number(new URLSearchParams(window.location.search).get('lessonIndex') || '0');
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage({ type: 'LICAO_ENVIADA', lessonIndex: idx }, '*');
+                        if (typeof window.parent.liberarVideoAula === 'function') window.parent.liberarVideoAula(idx);
+                    }
+                } catch (e) {}
+            }, 800);
+        }).catch(function(err) {
+            console.error(err);
+            alert('Ocorreu um erro ao gerar o PDF, mas abriremos seu e-mail.');
+            window.location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('Relatório Lição 10 - ' + val('nomePessoa')) + '&body=' + encodeURIComponent(montarTexto());
+        });
     }
 
     document.addEventListener('DOMContentLoaded', function() {
