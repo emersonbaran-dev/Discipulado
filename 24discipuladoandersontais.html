@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plataforma de Curso - Área do Aluno</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f6; color: #333; display: flex; min-height: 100vh; }
+    .app-layout { display: flex; width: 100%; }
+    .sidebar { width: 280px; background: #1e293b; color: #f8fafc; padding: 20px 15px; height: 100vh; position: sticky; top: 0; overflow-y: auto; flex-shrink: 0; }
+    .sidebar.collapsed { width: 60px; padding: 15px 10px; overflow-x: hidden; }
+    .sidebar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #334155; }
+    .sidebar-header h2 { font-size: 1.1rem; text-transform: uppercase; color: #94a3b8; white-space: nowrap; }
+    .sidebar.collapsed .sidebar-header h2, .sidebar.collapsed .sidebar-menu { display: none; }
+    .btn-toggle-sidebar { background: none; border: none; color: #94a3b8; font-size: 1.4rem; cursor: pointer; width: 36px; height: 36px; }
+    .sidebar.collapsed .sidebar-header { border: none; margin: 0; padding: 0; justify-content: center; }
+    .sidebar-menu { list-style: none; }
+    .sidebar-module { margin-bottom: 10px; }
+    .sidebar-module-title { width: 100%; background: none; border: none; color: #e2e8f0; font-weight: 600; text-align: left; padding: 10px 12px; border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; }
+    .sidebar-module-title.locked { color: #64748b; cursor: not-allowed; opacity: .7; }
+    .sidebar-sublist { list-style: none; padding-left: 15px; margin-top: 5px; display: none; }
+    .sidebar-module.active .sidebar-sublist { display: block; }
+    .sidebar-subitem { width: 100%; background: none; border: none; color: #94a3b8; font-size: 0.85rem; text-align: left; padding: 8px 10px; border-radius: 4px; cursor: pointer; }
+    .main-content { flex: 1; padding: 30px 25px; max-width: 900px; margin: 0 auto; }
+    .header-top { display: flex; justify-content: space-between; gap: 15px; margin-bottom: 25px; }
+    .header-title h1 { font-size: 2rem; margin-bottom: 8px; }
+    .header-title p { color: #7f8c8d; }
+    .btn-collapse-all { background: transparent; color: #64748b; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+    .accordion-item { background: #fff; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e1e8ed; overflow: hidden; }
+    .accordion-header { width: 100%; background: none; border: none; padding: 20px 25px; font-size: 1.15rem; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .lock-notice { font-size: 0.85rem; background: #fef3c7; color: #b45309; padding: 6px 12px; border-radius: 6px; font-weight: 600; }
+    .toggle-icon { width: 32px; height: 32px; background: #eef2f5; color: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-left: 15px; }
+    .accordion-item.active > .accordion-header .toggle-icon, .doc-accordion.active > .doc-header .toggle-icon { transform: rotate(45deg); background: #fee2e2; color: #dc2626; }
+    .accordion-body, .doc-body { max-height: 0; overflow: hidden; }
+    .accordion-content { padding: 0 25px 25px; border-top: 1px solid #f0f0f0; }
+    .section-block { margin-top: 20px; }
+    .lesson-text { line-height: 1.6; color: #475569; white-space: pre-wrap; }
+    .video-responsive { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; }
+    .video-responsive iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .doc-accordion { border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden; background: #f8fafc; }
+    .doc-header { width: 100%; background: #f1f5f9; border: none; padding: 14px 18px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+    .doc-body-inner { padding: 15px; }
+    .licao-frame { width: 100%; min-height: 980px; height: 80vh; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; }
+    .btn-video { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; border: none; border-radius: 8px; padding: 14px 22px; font-size: 1rem; font-weight: 700; background: #eab308; color: #422006; cursor: not-allowed; pointer-events: none; }
+    .btn-video.liberado { background: #16a34a; color: #fff; cursor: pointer; pointer-events: auto; }
+    .empty-state { text-align: center; padding: 40px; background: #fff; border-radius: 8px; color: #64748b; }
+    @media (max-width: 768px) { .app-layout { flex-direction: column; } .sidebar { width: 100%; height: auto; position: relative; } }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h2>📚 Módulos</h2>
+        <button class="btn-toggle-sidebar" onclick="document.getElementById('sidebar').classList.toggle('collapsed')">☰</button>
+      </div>
+      <ul class="sidebar-menu" id="sidebar-menu"></ul>
+    </aside>
+    <main class="main-content">
+      <header class="header-top">
+        <div class="header-title">
+          <h1 id="course-title-display">Curso de Capacitação</h1>
+          <p id="course-subtitle-display">Acesse os módulos e aulas abaixo</p>
+        </div>
+        <button class="btn-collapse-all" onclick="collapseAllModules()">▲ Fechar todos</button>
+      </header>
+      <div id="course-modules"></div>
+    </main>
+  </div>
+  <script>
+    const CURSO_ID = 'andersontais';
+    const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso_' + CURSO_ID + '.json';
+    const DEFAULT_EMAIL = 'emersonbaran@gmail.com';
+    const videosLiberados = new Set();
+    let lastCourseSnapshot = '';
+
+    function lsGet(chave) { return localStorage.getItem(CURSO_ID + '_' + chave); }
+    function lsSet(chave, valor) { localStorage.setItem(CURSO_ID + '_' + chave, valor); }
+
+    function chaveVideo(index) { return CURSO_ID + '_video_desbloqueado_v3_' + index; }
+    function getVideoUrl(lesson) { return lesson.videoUrl || ''; }
+    function getVideoTitle(lesson) { return lesson.videoTitle || 'Vídeo da aula'; }
+    function formatYouTubeUrl(url) {
+      const match = (url || '').match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
+      return (match && match[2].length === 11) ? 'https://www.youtube.com/embed/' + match[2] : null;
+    }
+    function isModuleLocked(d) { return !!(d && new Date() < new Date(d)); }
+    function videoEstaLiberado(lesson, index) {
+      if (!getVideoUrl(lesson)) return false;
+      if (lesson.firstHtmlPage) return videosLiberados.has(String(index)) || localStorage.getItem(chaveVideo(index)) === '1';
+      return true;
+    }
+    function marcarVideoLiberado(index) {
+      videosLiberados.add(String(index));
+      localStorage.setItem(chaveVideo(index), '1');
+      renderLessons();
+      openAccordion(index);
+    }
+    window.liberarVideoAula = marcarVideoLiberado;
+
+    function conectarFormularioLicao(index, iframe) {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const form = doc.querySelector('form');
+        if (!form || form.dataset.unlockBound === '1') return;
+        form.dataset.unlockBound = '1';
+        const liberar = function() { marcarVideoLiberado(index); };
+        form.addEventListener('submit', liberar);
+        const btn = doc.querySelector('#btnEnviar, button[type="submit"]');
+        if (btn) btn.addEventListener('click', function() {
+          if (form.checkValidity()) liberar();
+        });
+        iframe.contentWindow.liberarVideoAula = function() { marcarVideoLiberado(index); };
+      } catch (e) {}
+    }
+
+    async function loadCursoFromCloud() {
+      try {
+        const res = await fetch(FIREBASE_URL + '?t=' + Date.now());
+        const data = await res.json();
+        if (!data) return false;
+        const snapshot = JSON.stringify({ title: data.title || '', subtitle: data.subtitle || '', lessons: data.lessons || [] });
+        if (snapshot === lastCourseSnapshot) return false;
+        lastCourseSnapshot = snapshot;
+        if (data.title) lsSet('course_title', data.title);
+        if (data.subtitle) lsSet('course_subtitle', data.subtitle);
+        if (data.lessons) lsSet('course_lessons', JSON.stringify(data.lessons));
+        return true;
+      } catch (e) { return false; }
+    }
+    async function refreshStudentView() {
+      const changed = await loadCursoFromCloud();
+      if (!changed && document.getElementById('course-modules').innerHTML.trim()) return;
+      document.getElementById('course-title-display').innerText = lsGet('course_title') || 'Curso de Capacitação';
+      document.getElementById('course-subtitle-display').innerText = lsGet('course_subtitle') || 'Acesse os módulos e aulas abaixo';
+      renderLessons();
+    }
+
+    function renderLessons() {
+      const container = document.getElementById('course-modules');
+      const sidebarMenu = document.getElementById('sidebar-menu');
+      const lessons = JSON.parse(lsGet('course_lessons') || '[]');
+      if (!lessons.length) {
+        container.innerHTML = '<div class="empty-state"><h3>Nenhum módulo cadastrado ainda.</h3></div>';
+        sidebarMenu.innerHTML = '<li style="color:#64748b;padding:10px;">Sem conteúdo.</li>';
+        return;
+      }
+      sidebarMenu.innerHTML = lessons.map((lesson, i) => {
+        if (isModuleLocked(lesson.releaseDate)) return `<li class="sidebar-module"><button class="sidebar-module-title locked" disabled>🔒 ${lesson.title}</button></li>`;
+        const liberado = videoEstaLiberado(lesson, i);
+        let subs = '';
+        if (lesson.firstHtmlPage) subs += `<li><button class="sidebar-subitem" onclick="handleSidebarSubitemClick(${i}, 'html0')">📋 ${lesson.firstHtmlTitle || lesson.firstHtmlPage.replace('.html','')}</button></li>`;
+        if (getVideoUrl(lesson) && liberado) subs += `<li><button class="sidebar-subitem" onclick="abrirVideo(${i})">🎬 ${getVideoTitle(lesson)}</button></li>`;
+        return `<li class="sidebar-module" id="sidebar-mod-${i}"><button class="sidebar-module-title" onclick="toggleSidebarModule(${i})"><span>${lesson.title}</span><span>▾</span></button><ul class="sidebar-sublist">${subs}</ul></li>`;
+      }).join('');
+      container.innerHTML = lessons.map((lesson, i) => {
+        if (isModuleLocked(lesson.releaseDate)) {
+          return `<div class="accordion-item" id="item-${i}"><div class="accordion-header"><span>🔒 ${lesson.title}</span><div class="lock-notice">Disponível em: ${new Date(lesson.releaseDate).toLocaleString('pt-BR')}</div></div></div>`;
+        }
+        const liberado = videoEstaLiberado(lesson, i);
+        const email = encodeURIComponent(lesson.lessonEmail || DEFAULT_EMAIL);
+        const licaoSrc = lesson.firstHtmlPage ? `${lesson.firstHtmlPage}?lessonIndex=${i}&email=${email}` : '';
+        const videoUrl = getVideoUrl(lesson);
+        const yt = formatYouTubeUrl(videoUrl);
+        const licaoHTML = lesson.firstHtmlPage ? `
+          <div class="section-block">
+            <div class="doc-accordion" id="doc-item-${i}-html0">
+              <button class="doc-header" onclick="toggleDocAccordion(${i}, 'html0')"><span>📋 ${lesson.firstHtmlTitle || lesson.firstHtmlPage.replace('.html','')}</span><span class="toggle-icon">+</span></button>
+              <div class="doc-body" id="doc-body-${i}-html0"><div class="doc-body-inner"><iframe class="licao-frame" src="${licaoSrc}" onload="conectarFormularioLicao(${i}, this)"></iframe></div></div>
+            </div>
+          </div>` : '';
+        let videoHTML = '';
+        if (videoUrl) {
+          videoHTML = `
+            <div class="section-block" id="video-wrap-${i}">
+              <button class="btn-video ${liberado ? 'liberado' : ''}" ${liberado ? `onclick="abrirVideo(${i})"` : 'disabled tabindex="-1"'} id="btn-video-${i}">▶ Assistir vídeo</button>
+              ${liberado ? `
+              <div class="doc-accordion" id="doc-item-${i}-video" style="margin-top:12px;">
+                <button class="doc-header" onclick="toggleDocAccordion(${i}, 'video')"><span>🎬 ${getVideoTitle(lesson)}</span><span class="toggle-icon">+</span></button>
+                <div class="doc-body" id="doc-body-${i}-video"><div class="doc-body-inner">${yt ? `<div class="video-responsive"><iframe src="${yt}" allowfullscreen></iframe></div>` : `<a href="${videoUrl}" target="_blank">Abrir vídeo</a>`}</div></div>
+              </div>` : ''}
+            </div>`;
+        }
+        return `<div class="accordion-item" id="item-${i}"><button class="accordion-header" onclick="toggleAccordion(${i})"><span>${lesson.title}</span><span class="toggle-icon">+</span></button><div class="accordion-body" id="body-${i}"><div class="accordion-content">${lesson.description ? `<div class="section-block"><p class="lesson-text">${lesson.description}</p></div>` : ''}${licaoHTML}${videoHTML}</div></div></div>`;
+      }).join('');
+    }
+
+    function abrirVideo(i) {
+      const lessons = JSON.parse(lsGet('course_lessons') || '[]');
+      if (!videoEstaLiberado(lessons[i] || {}, i)) return;
+      openAccordion(i);
+      setTimeout(() => toggleDocAccordion(i, 'video'), 150);
+    }
+    window.addEventListener('message', function(event) {
+      if (!event.data || event.data.type !== 'LICAO_ENVIADA') return;
+      const i = Number(event.data.lessonIndex);
+      if (!Number.isNaN(i)) marcarVideoLiberado(i);
+    });
+    function collapseAllModules() {
+      document.querySelectorAll('.doc-accordion.active, .accordion-item.active').forEach(item => {
+        item.classList.remove('active');
+        const body = item.querySelector('.doc-body, .accordion-body');
+        if (body) body.style.maxHeight = null;
+      });
+    }
+    function toggleSidebarModule(i) { const el = document.getElementById('sidebar-mod-' + i); if (el) el.classList.toggle('active'); openAccordion(i); }
+    function handleSidebarSubitemClick(i, key) { openAccordion(i); toggleDocAccordion(i, key); }
+    function openAccordion(i) {
+      const item = document.getElementById('item-' + i);
+      const body = document.getElementById('body-' + i);
+      if (item && body && !item.classList.contains('active')) { item.classList.add('active'); body.style.maxHeight = (body.scrollHeight + 2500) + 'px'; }
+    }
+    function toggleAccordion(i) {
+      const item = document.getElementById('item-' + i);
+      const body = document.getElementById('body-' + i);
+      if (!item) return;
+      if (item.classList.contains('active')) { item.classList.remove('active'); body.style.maxHeight = null; }
+      else { item.classList.add('active'); body.style.maxHeight = (body.scrollHeight + 2500) + 'px'; }
+    }
+    function toggleDocAccordion(i, key) {
+      const docItem = document.getElementById('doc-item-' + i + '-' + key);
+      const docBody = document.getElementById('doc-body-' + i + '-' + key);
+      const mainBody = document.getElementById('body-' + i);
+      if (!docItem || !docBody) return;
+      if (docItem.classList.contains('active')) { docItem.classList.remove('active'); docBody.style.maxHeight = null; }
+      else {
+        docItem.classList.add('active');
+        docBody.style.maxHeight = (docBody.scrollHeight + 80) + 'px';
+        if (mainBody) mainBody.style.maxHeight = (mainBody.scrollHeight + docBody.scrollHeight + 120) + 'px';
+      }
+    }
+    document.addEventListener('DOMContentLoaded', () => { refreshStudentView(); setInterval(refreshStudentView, 15000); });
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshStudentView(); });
+  </script>
+</body>
+</html>

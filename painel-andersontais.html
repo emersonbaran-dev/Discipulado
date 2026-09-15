@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Professor - Gestão e Agendamento</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f1f5f9; color: #1e293b; display: flex; min-height: 100vh; }
+    .app-layout { display: flex; width: 100%; }
+    .sidebar { width: 280px; background: #1e293b; color: #f8fafc; padding: 20px 15px; height: 100vh; position: sticky; top: 0; overflow-y: auto; flex-shrink: 0; }
+    .sidebar.collapsed { width: 60px; padding: 15px 10px; overflow-x: hidden; }
+    .sidebar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #334155; }
+    .sidebar-header h2 { font-size: 1.1rem; text-transform: uppercase; color: #94a3b8; white-space: nowrap; }
+    .sidebar.collapsed .sidebar-header h2, .sidebar.collapsed .sidebar-menu { display: none; }
+    .btn-toggle-sidebar { background: none; border: none; color: #94a3b8; font-size: 1.4rem; cursor: pointer; width: 36px; height: 36px; }
+    .sidebar.collapsed .sidebar-header { border: none; margin: 0; padding: 0; justify-content: center; }
+    .sidebar-menu { list-style: none; }
+    .sidebar-module { margin-bottom: 10px; }
+    .sidebar-module-title { width: 100%; background: none; border: none; color: #e2e8f0; font-weight: 600; text-align: left; padding: 10px 12px; border-radius: 6px; cursor: pointer; }
+    .main-content { flex: 1; padding: 30px 25px; max-width: 900px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 30px; }
+    header h1 { font-size: 2rem; margin-bottom: 6px; }
+    header p { color: #64748b; }
+    .card { background: #fff; padding: 25px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 25px; }
+    .card h2 { font-size: 1.25rem; margin-bottom: 15px; color: #2563eb; }
+    .form-group { margin-bottom: 18px; }
+    label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; }
+    input, textarea, select { width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: inherit; background: #fff; }
+    textarea { min-height: 90px; }
+    .checkbox-group { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 0.9rem; color: #475569; }
+    .checkbox-group input { width: 16px; height: 16px; }
+    .html-embed-box, .video-box { padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+    .html-embed-box { background: #eff6ff; border: 1px dashed #93c5fd; }
+    .video-box { background: #f8fafc; border: 1px dashed #cbd5e1; }
+    .hint { font-size: 0.85rem; color: #64748b; margin: 8px 0 12px; }
+    .btn { padding: 10px 18px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+    .btn-primary { background: #2563eb; color: #fff; }
+    .btn-danger { background: #ef4444; color: #fff; padding: 8px 12px; }
+    .btn-edit { background: #f59e0b; color: #fff; }
+    .btn-cancel { background: #64748b; color: #fff; }
+    .form-actions { display: flex; gap: 10px; justify-content: flex-end; }
+    .module-item { border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px; margin-bottom: 15px; }
+    .module-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .module-title { font-weight: 700; }
+    .module-actions { display: flex; gap: 8px; }
+    .badge { display: inline-block; font-size: 0.8rem; font-weight: 600; padding: 4px 8px; border-radius: 4px; margin: 0 6px 10px 0; }
+    .badge-released { background: #d1fae5; color: #065f46; }
+    .badge-scheduled { background: #fef3c7; color: #b45309; }
+    .badge-html { background: #dbeafe; color: #1d4ed8; }
+    .badge-video { background: #ede9fe; color: #6d28d9; }
+    .badge-lock { background: #fef08a; color: #854d0e; }
+    .module-desc { font-size: 0.9rem; color: #475569; white-space: pre-wrap; }
+    .badge-editing { font-size: 0.75rem; background: #fef3c7; color: #b45309; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+    .save-alert { display: none; padding: 10px; background: #d1fae5; color: #065f46; border-radius: 6px; margin-top: 10px; font-weight: 600; }
+    .curso-id-aviso { font-size: 0.85rem; color: #334155; background: #e2e8f0; display: inline-block; padding: 4px 8px; border-radius: 4px; margin-top: 8px; }
+    @media (max-width: 768px) { .app-layout { flex-direction: column; } .sidebar { width: 100%; height: auto; position: relative; } }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h2>📚 Módulos</h2>
+        <button class="btn-toggle-sidebar" onclick="document.getElementById('sidebar').classList.toggle('collapsed')">☰</button>
+      </div>
+      <ul class="sidebar-menu" id="sidebar-menu"></ul>
+    </aside>
+    <main class="main-content">
+      <header>
+        <h1>Painel do Professor</h1>
+        <p>Escolha a Lição 01 a 24. O vídeo do aluno fica amarelo até o ENVIAR da lição.</p>
+        <p class="curso-id-aviso">Turma desta cópia: <strong id="curso-id-texto"></strong></p>
+      </header>
+      <div class="card">
+        <h2>⚙️ Informações Gerais do Curso</h2>
+        <div class="form-group"><label>Título Geral do Curso</label><input type="text" id="course-title-input"></div>
+        <div class="form-group"><label>Subtítulo Geral do Curso</label><input type="text" id="course-subtitle-input"></div>
+        <button type="button" class="btn btn-primary" onclick="saveCourseHeaderInfo()">💾 Salvar Título e Subtítulo</button>
+        <div class="save-alert" id="header-save-alert">Informações salvas com sucesso!</div>
+      </div>
+      <div class="card" id="form-card">
+        <h2>
+          <span id="form-title">Adicionar Novo Módulo / Aula</span>
+          <span id="editing-badge" class="badge-editing" style="display:none;">MODO DE EDIÇÃO</span>
+        </h2>
+        <form id="lesson-form">
+          <input type="hidden" id="edit-index" value="-1">
+          <div class="form-group"><label>Título do Módulo / Aula</label><input type="text" id="lesson-title" required></div>
+          <div class="form-group">
+            <label>Data e Hora de Liberação para o Aluno</label>
+            <input type="datetime-local" id="lesson-release-date">
+            <div class="checkbox-group">
+              <input type="checkbox" id="immediate-release" onchange="toggleImmediateRelease(this)">
+              <label for="immediate-release" style="margin:0;font-weight:normal;">Liberar imediatamente</label>
+            </div>
+          </div>
+          <div class="form-group"><label>Descrição / Orientação</label><textarea id="lesson-description"></textarea></div>
+          <div class="html-embed-box">
+            <div class="form-group">
+              <label for="licao-arquivo">Incluir página da lição</label>
+              <select id="licao-arquivo" onchange="aoEscolherLicao()"></select>
+            </div>
+            <div class="form-group"><label>Título que o aluno verá</label><input type="text" id="first-html-title"></div>
+            <div class="form-group" style="margin-bottom:0;"><label>E-mail do relatório</label><input type="email" id="lesson-email" value="emersonbaran@gmail.com"></div>
+          </div>
+          <div class="video-box">
+            <label>🎬 Vídeo da aula</label>
+            <p class="hint">O botão do aluno nasce amarelo. No ENVIAR da lição, fica verde e libera o vídeo.</p>
+            <div class="form-group"><label>Título do vídeo</label><input type="text" id="video-title"></div>
+            <div class="form-group" style="margin-bottom:0;"><label>URL do vídeo (YouTube)</label><input type="url" id="video-url" placeholder="https://www.youtube.com/watch?v=..."></div>
+          </div>
+          <div class="form-actions">
+            <button type="button" id="btn-cancel" class="btn btn-cancel" style="display:none;" onclick="resetForm()">Cancelar Edição</button>
+            <button type="submit" id="btn-submit" class="btn btn-primary">💾 Salvar Módulo</button>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <h2>Módulos Cadastrados</h2>
+        <div id="modules-list"></div>
+      </div>
+    </main>
+  </div>
+  <script>
+    const CURSO_ID = 'andersontais';
+    const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso_' + CURSO_ID + '.json';
+    const DEFAULT_EMAIL = 'emersonbaran@gmail.com';
+    let lessons = [];
+
+    function lsGet(chave) { return localStorage.getItem(CURSO_ID + '_' + chave); }
+    function lsSet(chave, valor) { localStorage.setItem(CURSO_ID + '_' + chave, valor); }
+
+    function nomeArquivoLicao(n) { return 'DiscipuladoLicao' + String(n).padStart(2, '0') + '.html'; }
+    function montarSelectLicoes(selecionado) {
+      const sel = document.getElementById('licao-arquivo');
+      let html = '<option value="">Nenhuma lição</option>';
+      for (let i = 1; i <= 24; i++) {
+        const arquivo = nomeArquivoLicao(i);
+        html += `<option value="${arquivo}" ${selecionado === arquivo ? 'selected' : ''}>Lição ${String(i).padStart(2,'0')} (${arquivo})</option>`;
+      }
+      sel.innerHTML = html;
+    }
+    function aoEscolherLicao() {
+      const arquivo = document.getElementById('licao-arquivo').value;
+      const titulo = document.getElementById('first-html-title');
+      if (!arquivo) return;
+      const num = arquivo.replace('DiscipuladoLicao','').replace('.html','');
+      if (!titulo.value || titulo.value.indexOf('Lição ') === 0) titulo.value = 'Lição ' + num;
+    }
+    async function syncCursoToCloud() {
+      const payload = {
+        title: lsGet('course_title') || 'Curso de Capacitação',
+        subtitle: lsGet('course_subtitle') || 'Acesse os módulos e aulas abaixo',
+        lessons: JSON.parse(lsGet('course_lessons') || '[]')
+      };
+      try {
+        const res = await fetch(FIREBASE_URL, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        if (!res.ok) throw new Error('Falha');
+      } catch (e) { alert('Não foi possível salvar na nuvem.'); }
+    }
+    async function loadCursoFromCloud() {
+      try {
+        const res = await fetch(FIREBASE_URL + '?t=' + Date.now());
+        const data = await res.json();
+        if (!data) return;
+        if (data.title) lsSet('course_title', data.title);
+        if (data.subtitle) lsSet('course_subtitle', data.subtitle);
+        if (data.lessons) lsSet('course_lessons', JSON.stringify(data.lessons));
+      } catch (e) {}
+    }
+    function toggleImmediateRelease(checkbox) {
+      const d = document.getElementById('lesson-release-date');
+      d.value = checkbox.checked ? '' : d.value;
+      d.disabled = checkbox.checked;
+    }
+    function loadCourseHeaderInfo() {
+      document.getElementById('course-title-input').value = lsGet('course_title') || 'Curso de Capacitação';
+      document.getElementById('course-subtitle-input').value = lsGet('course_subtitle') || 'Acesse os módulos e aulas abaixo';
+    }
+    async function saveCourseHeaderInfo() {
+      lsSet('course_title', document.getElementById('course-title-input').value.trim() || 'Curso de Capacitação');
+      lsSet('course_subtitle', document.getElementById('course-subtitle-input').value.trim() || 'Acesse os módulos e aulas abaixo');
+      await syncCursoToCloud();
+      const a = document.getElementById('header-save-alert');
+      a.style.display = 'block';
+      setTimeout(() => a.style.display = 'none', 3000);
+    }
+    function loadLessons() {
+      lessons = JSON.parse(lsGet('course_lessons') || '[]');
+      renderModulesList();
+      renderSidebarMenu();
+    }
+    async function saveLessonsToStorage() {
+      lsSet('course_lessons', JSON.stringify(lessons));
+      renderModulesList();
+      renderSidebarMenu();
+      await syncCursoToCloud();
+    }
+    function resetForm() {
+      document.getElementById('edit-index').value = '-1';
+      document.getElementById('lesson-title').value = '';
+      document.getElementById('lesson-description').value = '';
+      document.getElementById('lesson-release-date').value = '';
+      document.getElementById('lesson-release-date').disabled = false;
+      document.getElementById('immediate-release').checked = false;
+      montarSelectLicoes('');
+      document.getElementById('first-html-title').value = '';
+      document.getElementById('lesson-email').value = DEFAULT_EMAIL;
+      document.getElementById('video-title').value = '';
+      document.getElementById('video-url').value = '';
+      document.getElementById('form-title').innerText = 'Adicionar Novo Módulo / Aula';
+      document.getElementById('editing-badge').style.display = 'none';
+      document.getElementById('btn-cancel').style.display = 'none';
+      document.getElementById('btn-submit').innerText = '💾 Salvar Módulo';
+    }
+    function editModule(index) {
+      const m = lessons[index]; if (!m) return;
+      document.getElementById('edit-index').value = index;
+      document.getElementById('lesson-title').value = m.title || '';
+      document.getElementById('lesson-description').value = m.description || '';
+      if (m.releaseDate) {
+        document.getElementById('lesson-release-date').value = m.releaseDate;
+        document.getElementById('lesson-release-date').disabled = false;
+        document.getElementById('immediate-release').checked = false;
+      } else {
+        document.getElementById('lesson-release-date').value = '';
+        document.getElementById('lesson-release-date').disabled = true;
+        document.getElementById('immediate-release').checked = true;
+      }
+      montarSelectLicoes(m.firstHtmlPage || '');
+      document.getElementById('first-html-title').value = m.firstHtmlTitle || '';
+      document.getElementById('lesson-email').value = m.lessonEmail || DEFAULT_EMAIL;
+      document.getElementById('video-title').value = m.videoTitle || '';
+      document.getElementById('video-url').value = m.videoUrl || '';
+      document.getElementById('form-title').innerText = 'Editando: ' + m.title;
+      document.getElementById('editing-badge').style.display = 'inline-block';
+      document.getElementById('btn-cancel').style.display = 'inline-block';
+      document.getElementById('btn-submit').innerText = '🔄 Atualizar Módulo';
+    }
+    function deleteModule(index) {
+      if (confirm('Excluir o módulo "' + lessons[index].title + '"?')) {
+        lessons.splice(index, 1);
+        saveLessonsToStorage();
+        if (parseInt(document.getElementById('edit-index').value) === index) resetForm();
+      }
+    }
+    function renderSidebarMenu() {
+      document.getElementById('sidebar-menu').innerHTML = lessons.length
+        ? lessons.map((l, i) => `<li class="sidebar-module"><button class="sidebar-module-title" onclick="editModule(${i})">${i + 1}. ${l.title || 'Módulo'}</button></li>`).join('')
+        : '<li style="color:#64748b;padding:10px;">Sem conteúdo.</li>';
+    }
+    function renderModulesList() {
+      const box = document.getElementById('modules-list');
+      if (!lessons.length) { box.innerHTML = '<p style="color:#64748b;text-align:center;padding:20px;">Nenhum módulo cadastrado.</p>'; return; }
+      box.innerHTML = lessons.map((m, i) => `
+        <div class="module-item">
+          <div class="module-item-header">
+            <span class="module-title">${i + 1}. ${m.title}</span>
+            <div class="module-actions">
+              <button class="btn btn-edit" onclick="editModule(${i})">✏️ Editar</button>
+              <button class="btn btn-danger" onclick="deleteModule(${i})">🗑️ Excluir</button>
+            </div>
+          </div>
+          ${m.releaseDate ? `<span class="badge badge-scheduled">📅 ${new Date(m.releaseDate).toLocaleString('pt-BR')}</span>` : `<span class="badge badge-released">⚡ Liberado</span>`}
+          ${m.firstHtmlPage ? `<span class="badge badge-html">📋 ${m.firstHtmlTitle || m.firstHtmlPage}</span>` : ''}
+          ${m.videoUrl ? `<span class="badge badge-video">🎬 ${m.videoTitle || 'Vídeo'}</span>` : ''}
+          ${m.firstHtmlPage && m.videoUrl ? `<span class="badge badge-lock">🟡 Vídeo bloqueado até ENVIAR</span>` : ''}
+          ${m.description ? `<p class="module-desc">${m.description}</p>` : ''}
+        </div>`).join('');
+    }
+    document.getElementById('lesson-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const editIndex = parseInt(document.getElementById('edit-index').value);
+      const arquivo = document.getElementById('licao-arquivo').value.trim();
+      const moduleData = {
+        title: document.getElementById('lesson-title').value.trim(),
+        description: document.getElementById('lesson-description').value.trim(),
+        releaseDate: document.getElementById('immediate-release').checked ? null : document.getElementById('lesson-release-date').value,
+        firstHtmlPage: arquivo || null,
+        firstHtmlTitle: arquivo ? (document.getElementById('first-html-title').value.trim() || arquivo.replace('.html','')) : null,
+        lessonEmail: arquivo ? (document.getElementById('lesson-email').value.trim() || DEFAULT_EMAIL) : DEFAULT_EMAIL,
+        lockLinksUntilLessonSubmit: !!arquivo,
+        videoTitle: document.getElementById('video-title').value.trim() || 'Vídeo da aula',
+        videoUrl: document.getElementById('video-url').value.trim() || null,
+        links: []
+      };
+      if (editIndex >= 0) lessons[editIndex] = moduleData; else lessons.push(moduleData);
+      saveLessonsToStorage();
+      resetForm();
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('curso-id-texto').innerText = CURSO_ID;
+      montarSelectLicoes('');
+      loadCursoFromCloud().then(() => { loadCourseHeaderInfo(); loadLessons(); });
+      resetForm();
+    });
+  </script>
+</body>
+</html>
