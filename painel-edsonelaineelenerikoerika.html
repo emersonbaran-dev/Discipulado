@@ -46,9 +46,9 @@
     .btn-order:disabled { opacity: 0.3; cursor: not-allowed; }
     .form-actions { display: flex; gap: 10px; justify-content: flex-end; }
     .module-item { border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px; margin-bottom: 15px; background: #fff; }
-    .module-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .module-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 10px; flex-wrap: wrap; }
     .module-title { font-weight: 700; }
-    .module-actions { display: flex; gap: 8px; }
+    .module-actions { display: flex; gap: 6px; align-items: center; }
     .badge { display: inline-block; font-size: 0.8rem; font-weight: 600; padding: 4px 8px; border-radius: 4px; margin: 0 6px 10px 0; }
     .badge-released { background: #d1fae5; color: #065f46; }
     .badge-scheduled { background: #fef3c7; color: #b45309; }
@@ -60,16 +60,15 @@
     .save-alert { display: none; padding: 10px; background: #d1fae5; color: #065f46; border-radius: 6px; margin-top: 10px; font-weight: 600; }
     .curso-id-aviso { font-size: 0.85rem; color: #334155; background: #e2e8f0; display: inline-block; padding: 4px 8px; border-radius: 4px; margin-top: 8px; }
 
-    /* Estilização da Área de Links */
+    /* Área de Inputs de Links Dinâmicos */
     .link-item-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; background: #fff; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; }
     .link-item-row input[type="text"] { flex: 1; }
     .link-item-row input[type="url"] { flex: 2; }
     .link-controls { display: flex; gap: 4px; }
 
     .card-links-section { margin-top: 15px; border-top: 1px dashed #cbd5e1; padding-top: 12px; }
-    .card-link-row { display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 8px 12px; border-radius: 6px; margin-bottom: 6px; border: 1px solid #e2e8f0; }
-    .card-link-title { font-size: 0.88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 70%; }
-    .card-link-title a { color: #2563eb; text-decoration: none; font-weight: 600; }
+    .card-link-row { background: #f8fafc; padding: 6px 10px; border-radius: 6px; margin-bottom: 6px; border: 1px solid #e2e8f0; font-size: 0.88rem; }
+    .card-link-row a { color: #2563eb; text-decoration: none; word-break: break-all; }
 
     @media (max-width: 768px) { 
       .app-layout { flex-direction: column; } 
@@ -132,10 +131,10 @@
             <div class="form-group" style="margin-bottom:0;"><label>URL do vídeo (YouTube)</label><input type="url" id="video-url" placeholder="https://www.youtube.com/watch?v=..."></div>
           </div>
 
-          <!-- ÁREA DE LINKS COMPLEMENTARES COM MULTIPLICIDADE E REORDENAÇÃO -->
+          <!-- LINKS DINÂMICOS COM REORDENAÇÃO -->
           <div class="links-box">
             <label>🔗 Links Complementares do Módulo</label>
-            <p class="hint">Adicione quantos links precisar. Use os botões ⬆ e ⬇ para alterar a ordem a qualquer momento.</p>
+            <p class="hint">Adicione quantos links precisar e use os botões ⬆ e ⬇ para alternar a ordem dos links.</p>
             <div id="form-links-list"></div>
             <button type="button" class="btn btn-success btn-sm" onclick="addLinkToForm()">➕ Adicionar Novo Link</button>
           </div>
@@ -157,7 +156,7 @@
     const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso_' + CURSO_ID + '.json';
     const DEFAULT_EMAIL = 'emersonbaran@gmail.com';
     let lessons = [];
-    let formLinks = []; // Lista temporária de links em criação/edição no formulário
+    let formLinks = [];
 
     function lsGet(chave) { return localStorage.getItem(CURSO_ID + '_' + chave); }
     function lsSet(chave, valor) { localStorage.setItem(CURSO_ID + '_' + chave, valor); }
@@ -229,7 +228,7 @@
       await syncCursoToCloud();
     }
 
-    /* --- SISTEMA DE LINKS NO FORMULÁRIO PRINCIPAL --- */
+    /* --- SISTEMA DE GESTÃO DE LINKS DO FORMULÁRIO --- */
 
     function captureFormLinksValues() {
       const rows = document.querySelectorAll('.link-item-row');
@@ -282,7 +281,19 @@
       renderFormLinks();
     }
 
-    /* --- FORMULÁRIO DE AULAS/MÓDULOS --- */
+    /* --- SISTEMA DE REORDENAÇÃO DE MÓDULOS CADASTRADOS --- */
+
+    function moveModule(index, direction) {
+      const targetIndex = index + direction;
+      if (targetIndex < 0 || targetIndex >= lessons.length) return;
+      
+      const item = lessons.splice(index, 1)[0];
+      lessons.splice(targetIndex, 0, item);
+      
+      saveLessonsToStorage();
+    }
+
+    /* --- FORMULÁRIO DE EDIÇÃO E REINICIALIZAÇÃO --- */
 
     function resetForm() {
       document.getElementById('edit-index').value = '-1';
@@ -326,7 +337,6 @@
       document.getElementById('video-title').value = m.videoTitle || '';
       document.getElementById('video-url').value = m.videoUrl || '';
       
-      // Carrega os links do módulo no formulário
       formLinks = m.links ? JSON.parse(JSON.stringify(m.links)) : [];
       renderFormLinks();
 
@@ -346,39 +356,7 @@
       }
     }
 
-    /* --- SISTEMA DE ALTERNAR A ORDEM DOS LINKS NOS MÓDULOS CADASTRADOS --- */
-
-    function moveCardLink(moduleIndex, linkIndex, direction) {
-      const links = lessons[moduleIndex].links;
-      if (!links) return;
-      const targetIndex = linkIndex + direction;
-      if (targetIndex < 0 || targetIndex >= links.length) return;
-
-      const item = links.splice(linkIndex, 1)[0];
-      links.splice(targetIndex, 0, item);
-
-      saveLessonsToStorage();
-    }
-
-    function deleteCardLink(moduleIndex, linkIndex) {
-      if (confirm('Excluir este link?')) {
-        lessons[moduleIndex].links.splice(linkIndex, 1);
-        saveLessonsToStorage();
-      }
-    }
-
-    function addCardLink(moduleIndex) {
-      const title = prompt('Digite o Título do Link:');
-      if (title === null) return;
-      const url = prompt('Digite a URL do Link:');
-      if (!url) return;
-
-      if (!lessons[moduleIndex].links) lessons[moduleIndex].links = [];
-      lessons[moduleIndex].links.push({ title: title.trim(), url: url.trim() });
-      saveLessonsToStorage();
-    }
-
-    /* --- RENDERIZAÇÃO GERAL --- */
+    /* --- RENDERIZAÇÃO --- */
 
     function renderSidebarMenu() {
       document.getElementById('sidebar-menu').innerHTML = lessons.length
@@ -398,6 +376,8 @@
           <div class="module-item-header">
             <span class="module-title">${i + 1}. ${m.title}</span>
             <div class="module-actions">
+              <button class="btn btn-order" onclick="moveModule(${i}, -1)" ${i === 0 ? 'disabled' : ''} title="Subir Módulo">⬆ Subir</button>
+              <button class="btn btn-order" onclick="moveModule(${i}, 1)" ${i === lessons.length - 1 ? 'disabled' : ''} title="Descer Módulo">⬇ Descer</button>
               <button class="btn btn-edit" onclick="editModule(${i})">✏️ Editar</button>
               <button class="btn btn-danger" onclick="deleteModule(${i})">🗑️ Excluir</button>
             </div>
@@ -408,27 +388,17 @@
           ${m.firstHtmlPage && m.videoUrl ? `<span class="badge badge-lock">🟡 Vídeo bloqueado até ENVIAR</span>` : ''}
           ${m.description ? `<p class="module-desc">${m.description}</p>` : ''}
 
-          <!-- GERENCIADOR DE LINKS NOS MÓDULOS CADASTRADOS -->
-          <div class="card-links-section">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-              <strong style="font-size:0.9rem; color:#1e293b;">🔗 Links de Apoio (${m.links ? m.links.length : 0})</strong>
-              <button type="button" class="btn btn-success btn-sm" onclick="addCardLink(${i})">➕ Adicionar Link</button>
+          <!-- EXIBIÇÃO DOS LINKS DO MÓDULO -->
+          ${hasLinks ? `
+            <div class="card-links-section">
+              <strong style="font-size:0.88rem; color:#1e293b; display:block; margin-bottom:6px;">🔗 Links de Apoio (${m.links.length}):</strong>
+              ${m.links.map((link, lIdx) => `
+                <div class="card-link-row">
+                  <strong>${lIdx + 1}. ${link.title || 'Link'}:</strong> <a href="${link.url}" target="_blank">${link.url}</a>
+                </div>
+              `).join('')}
             </div>
-            
-            ${hasLinks ? m.links.map((link, lIdx) => `
-              <div class="card-link-row">
-                <div class="card-link-title">
-                  <strong>${lIdx + 1}. ${link.title || 'Link Sem Título'}</strong> - 
-                  <a href="${link.url}" target="_blank">${link.url}</a>
-                </div>
-                <div class="link-controls">
-                  <button type="button" class="btn btn-order" onclick="moveCardLink(${i}, ${lIdx}, -1)" ${lIdx === 0 ? 'disabled' : ''} title="Subir Link">⬆</button>
-                  <button type="button" class="btn btn-order" onclick="moveCardLink(${i}, ${lIdx}, 1)" ${lIdx === m.links.length - 1 ? 'disabled' : ''} title="Descer Link">⬇</button>
-                  <button type="button" class="btn btn-danger btn-sm" onclick="deleteCardLink(${i}, ${lIdx})" title="Excluir Link">🗑️</button>
-                </div>
-              </div>
-            `).join('') : '<p style="color:#94a3b8; font-size:0.85rem;">Nenhum link cadastrado neste módulo.</p>'}
-          </div>
+          ` : ''}
         </div>`;
       }).join('');
     }
@@ -440,7 +410,6 @@
       const editIndex = parseInt(document.getElementById('edit-index').value);
       const arquivo = document.getElementById('licao-arquivo').value.trim();
       
-      // Limpa links vazios antes de salvar
       const cleanLinks = formLinks.filter(l => l.title.trim() !== '' || l.url.trim() !== '');
 
       const moduleData = {
