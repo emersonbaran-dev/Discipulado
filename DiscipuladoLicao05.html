@@ -3,276 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discipulado Lição 5 - Aquele que Obedece</title>
+    <title>Discipulado Lição 05 - Aquele que Obedece</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            font-size: 12pt;
+        @media print {
+            body { background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
+            .container { box-shadow: none !important; margin: 0 !important; max-width: none !important; width: 100% !important; }
+            #btnPdf, #btnCorrigir, #resultado { display: none !important; }
         }
-        .container {
-            max-width: 750px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #AB624C;
-        }
-        .header-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            min-height: 60px;
-        }
-        .header-container img {
-            position: absolute;
-            left: 0;
-            height: 60px;
-            width: auto;
-        }
-        h1 {
-            color: #AB624C;
-            margin: 0;
-            font-size: 32px;
-            text-transform: uppercase;
-            text-align: center;
-        }
-        .subtitle {
-            text-align: center;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 20px;
-            font-size: 14pt;
-        }
-        .intro {
-            background-color: #f9f0ed;
-            border-left: 4px solid #AB624C;
-            padding: 12px 15px;
-            margin-bottom: 25px;
-            font-size: 11pt;
-        }
-        .section-title {
-            background-color: #AB624C;
-            color: white;
-            padding: 6px 12px;
-            font-size: 13pt;
-            font-weight: bold;
-            border-radius: 4px;
-            margin-top: 25px;
-            margin-bottom: 15px;
-        }
-        .verse-box {
-            background-color: #f9f9f9;
-            border: 1px solid #e0e0e0;
-            border-left: 3px solid #AB624C;
-            padding: 10px 15px;
-            margin-bottom: 10px;
-            font-style: italic;
-            font-size: 11pt;
-            color: #444;
-        }
-        .verse-title {
-            font-weight: bold;
-            font-style: normal;
-            color: #AB624C;
-            margin-bottom: 4px;
-        }
-        .question-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 6px;
-            color: #222;
-        }
-        input[type="text"], input[type="date"], textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 11pt;
-            margin-top: 4px;
-        }
-        input[type="text"]:focus, textarea:focus {
-            border-color: #AB624C;
-            outline: none;
-        }
-        .sub-question {
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-        .footer-info {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-        }
-        .footer-info .field {
-            flex: 1;
-        }
-        .btn-submit {
-            width: 100%;
-            background-color: #AB624C;
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 4px;
-            font-size: 12pt;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 25px;
-            transition: background-color 0.3s ease;
-        }
-        .btn-submit:hover {
-            background-color: #8e503e;
-        }
-        .btn-submit.sent {
-            background-color: #64382c !important;
-            cursor: default;
-        }
-        .final-note {
-            text-align: center;
-            font-style: italic;
-            color: #666;
-            margin-top: 20px;
-            font-size: 11pt;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; margin: 0; padding: 20px; font-size: 12pt; }
+        .container { max-width: 750px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-top: 6px solid #2D4F5C; }
+        .header-container { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; min-height: 60px; }
+        .header-container img { position: absolute; left: 0; height: 60px; width: auto; }
+        .main-category { text-align: center; font-size: 16pt; font-weight: bold; color: #2D4F5C; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        h1 { color: #2D4F5C; margin: 0; font-size: 32px; text-transform: uppercase; text-align: center; }
+        .subtitle { text-align: center; font-weight: bold; color: #555; margin-bottom: 20px; font-size: 14pt; }
+        .intro { background-color: #f0f4f6; border-left: 4px solid #2D4F5C; padding: 12px 15px; margin-bottom: 25px; font-size: 11pt; }
+        .section-title { background-color: #2D4F5C; color: white; padding: 6px 12px; font-size: 13pt; font-weight: bold; border-radius: 4px; margin-top: 25px; margin-bottom: 15px; }
+        .question-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 6px; color: #222; }
+        input[type="text"], input[type="date"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 11pt; margin-top: 4px; }
+        input[type="text"]:focus, select:focus { border-color: #2D4F5C; outline: none; }
+        .footer-info { display: flex; gap: 15px; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
+        .footer-info .field { flex: 1; }
+        .btn-pdf { width: 100%; background-color: #3d6b7a; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .alternativas { margin-top: 8px; }
+        .alternativas label { display: block; padding: 8px 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; font-weight: normal; cursor: pointer; }
+        .alternativas label input { margin-right: 8px; }
+        .alternativas label.certa { background-color: #d9f2df !important; border-color: #28a745 !important; color: #176b2c !important; }
+        .alternativas label.errada { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #842029 !important; }
+        .btn-corrigir { width: 100%; background-color: #2e7d32; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 25px; }
+        .btn-corrigir:hover { background-color: #256628; }
+        .resultado { display: none; margin-top: 15px; padding: 15px; text-align: center; font-size: 14pt; font-weight: bold; border-radius: 6px; border: 1px solid #ddd; background: #f7f7f7; }
+        .final-note { text-align: center; font-weight: bold; color: #2D4F5C; background-color: #f0f4f6; padding: 15px; border-radius: 6px; border: 1px solid #e0e0e0; margin-top: 25px; font-size: 12pt; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- Cabeçalho com Logo à esquerda e Título Centralizado -->
+<div class="container" id="licaoImpressao">
+    <div class="main-category">DISCIPULADO</div>
+    
     <div class="header-container">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
-        <h1>Lição 5</h1>
+        <h1>Lição 05</h1>
     </div>
     <div class="subtitle">AQUELE QUE OBEDECE</div>
     
     <div class="intro">
-        O discípulo de Jesus Cristo foi salvo e chamado pelo Senhor para segui-Lo[cite: 3]. Como vimos na lição anterior é necessário aprender para seguir a Jesus[cite: 3]. Neste sentido, aquele que é verdadeiramente discípulo de Cristo, aprende e coloca em prática os ensinos do Senhor[cite: 3]. Portanto, o discípulo aprende para obedecer[cite: 3]. Veremos neste estudo![cite: 3]
+        O discípulo de Jesus Cristo foi salvo e chamado pelo Senhor para segui-Lo[cite: 5]. Como vimos na lição anterior, é necessário aprender para seguir a Jesus[cite: 5]. Neste sentido, aquele que é verdadeiramente discípulo de Cristo aprende e coloca em prática os ensinos do Senhor[cite: 5]. Portanto, o discípulo aprende para obedecer[cite: 5]!
     </div>
 
-    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
-        
-        <!-- SEÇÃO A -->
-        <div class="section-title">A – SEGUIR É OBEDECER</div>
+    <form id="discipuladoForm">
+        <div class="section-title">SEGUIR É OBEDECER</div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Mateus 7:24-25</div>
-                "Todo aquele, pois, que ouve estas minhas palavras e as pratica será comparado a um homem prudente, que edificou a sua casa sobre a rocha; e caiu a chuva, transbordaram os rios, sopraram os ventos e deram com ímpeto contra aquela casa, que não caiu, porque fora edificada sobre a rocha."
-            </div>
-            
-            <div class="sub-question">
-                <label for="q1a">Qual o motivo em que a casa permanece na tempestade? (Mt 7.24,25)</label>
-                <textarea id="q1a" name="1a. Motivo da casa permanecer (Mt 7.24-25)" rows="2" required></textarea>
-            </div>
-
-            <div class="sub-question">
-                <label for="q1b">Qual o ensino?</label>
-                <textarea id="q1b" name="1b. Qual o ensino (Mt 7.24-25)" rows="2" required></textarea>
+            <label for="q1">1) De acordo com Mateus 7.24,25, por qual motivo a casa do homem prudente permanece firme na tempestade e qual é o ensino principal dessa parábola?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q1" value="A" required> A) Porque foi construída em local alto; o ensino é que devemos evitar lugares perigosos nas tempestades.</label>
+                <label><input type="radio" name="q1" value="B"> B) Porque foi edificada sobre a rocha; o ensino é que todo aquele que ouve as palavras de Jesus e as pratica é prudente e firme.</label>
+                <label><input type="radio" name="q1" value="C"> C) Porque tinha estruturas de ferro reforçadas; o ensino é que a força física do homem garante a salvação.</label>
+                <label><input type="radio" name="q1" value="D"> D) Porque o homem fez orações durante a chuva; o ensino é orar apenas quando os problemas surgirem.</label>
             </div>
         </div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Mateus 10:24</div>
-                "O discípulo não está acima do seu mestre, nem o servo, acima do seu senhor."
-            </div>
-            <label for="q2">Em Mateus 10.24 qual deve ser a posição dos discípulos perante seu Mestre?</label>
-            <textarea id="q2" name="2. Posição dos discípulos (Mt 10.24)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Mateus 21:6</div>
-                "Indo os discípulos e fazendo como Jesus lhes ordenara,"
-            </div>
-            <label for="q3">Em Mt 21.6, o que caracteriza os discípulos de Jesus Cristo como seus seguidores?</label>
-            <textarea id="q3" name="3. Característica dos discípulos (Mt 21.6)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">João 1:37</div>
-                "Os dois discípulos ouviram-no dizer isto e seguiram a Jesus."
-            </div>
-            <label for="q4">O que os dois discípulos de João Batista fizeram? (Jo 1.37)</label>
-            <textarea id="q4" name="4. Ação dos discípulos de João (Jo 1.37)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">João 2:5</div>
-                "Sua mãe disse aos serventes: Fazei tudo o que ele vos disser."
-            </div>
-            <label for="q5">Em Jo 2.5, o que Maria disse aos servos?</label>
-            <textarea id="q5" name="5. Fala de Maria aos servos (Jo 2.5)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">João 15:1-6</div>
-                "Eu sou a videira verdadeira, e meu Pai é o agricultor. Todo ramo que, estando em mim, não der fruto, ele o corta; e todo o que dá fruto, ele o limpa, para que dê mais fruto ainda... Se alguém não permanecer em mim, será lançado fora, à semelhança do ramo, e secará;"
-            </div>
-            <label>O que podemos aprender em Jo 15.1-6, sobre:</label>
-            
-            <div class="sub-question">
-                <label for="q6a">a) Quem é o agricultor?</label>
-                <input type="text" id="q6a" name="6a. Quem e o agricultor (Jo 15.1-6)" required>
-            </div>
-
-            <div class="sub-question">
-                <label for="q6b">b) Quem é a videira?</label>
-                <input type="text" id="q6b" name="6b. Quem e a videira (Jo 15.1-6)" required>
-            </div>
-
-            <div class="sub-question">
-                <label for="q6c">c) Que é o ramo?</label>
-                <input type="text" id="q6c" name="6c. Quem e o ramo (Jo 15.1-6)" required>
-            </div>
-
-            <div class="sub-question">
-                <label for="q6d">d) O que são os frutos?</label>
-                <input type="text" id="q6d" name="6d. O que sao os frutos (Jo 15.1-6)" required>
-            </div>
-
-            <div class="sub-question">
-                <label for="q6e">e) Quem permanece na Videira, o que acontece?:</label>
-                <textarea id="q6e" name="6e. Quem permanece na Videira (Jo 15.1-6)" rows="2" required></textarea>
-            </div>
-
-            <div class="sub-question">
-                <label for="q6f">f) E quem não permanece?:</label>
-                <textarea id="q6f" name="6f. Quem nao permanece (Jo 15.1-6)" rows="2" required></textarea>
+            <label for="q2">2) Em Mateus 10.24, qual deve ser a posição do discípulo perante o seu Mestre?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q2" value="A" required> A) O discípulo deve buscar ser superior ao Mestre em honra e autoridade pública.</label>
+                <label><input type="radio" name="q2" value="B"> B) O discípulo está em pé de igualdade total com o Mestre nas tomadas de decisão.</label>
+                <label><input type="radio" name="q2" value="C"> C) O discípulo não é superior ao seu Mestre, nem o servo é superior ao seu Senhor.</label>
+                <label><input type="radio" name="q2" value="D"> D) O discípulo só deve obediência ao Mestre em assuntos teológicos avançados.</label>
             </div>
         </div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">João 16:13</div>
-                "Quando vier, porém, o Espírito da verdade, ele vos meará a toda a verdade; porque não falará por si mesmo, mas dirá tudo o que tiver ouvido e vos anunciará as coisas que hão de vir."
+            <label for="q3">3) Em Mateus 21.6, o que caracteriza a atitude dos discípulos como verdadeiros seguidores de Jesus?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q3" value="A" required> A) Eles questionaram as ordens recebidas antes de agir.</label>
+                <label><input type="radio" name="q3" value="B"> B) Eles foram e fizeram exatamente como Jesus lhes havia ordenado.</label>
+                <label><input type="radio" name="q3" value="C"> C) Eles pediram um sinal do céu antes de cumprir a missão.</label>
+                <label><input type="radio" name="q3" value="D"> D) Eles delegaram a tarefa para outras pessoas da multidão.</label>
             </div>
-            <label for="q7">Em Jo 16.13, quem guia para que os discípulos permaneçam na verdade do Senhor?</label>
-            <textarea id="q7" name="7. Quem guia os discípulos (Jo 16.13)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label for="q4">4) De acordo com João 1.37, o que fizeram os dois discípulos de João Batista ao ouvirem ele falar sobre Jesus?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q4" value="A" required> A) Voltaram imediatamente para as suas famílias e casas.</label>
+                <label><input type="radio" name="q4" value="B"> B) Discutiram teologia com os fariseus da região.</label>
+                <label><input type="radio" name="q4" value="C"> C) Ouviram João Batista falar e seguiram a Jesus.</label>
+                <label><input type="radio" name="q4" value="D"> D) Pediram licença a João Batista para descansar.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q5">5) Em João 2.5, nas bodas de Caná, qual foi a instrução direta de Maria aos servos?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q5" value="A" required> A) "Fazei tudo quanto ele vos disser."</label>
+                <label><input type="radio" name="q5" value="B"> B) "Busquem mais vinho com os comerciantes locais."</label>
+                <label><input type="radio" name="q5" value="C"> C) "Avisem os convidados que a festa acabou."</label>
+                <label><input type="radio" name="q5" value="D"> D) "Esperem os discípulos tomarem uma providência."</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q6">6) Com base em João 15.1-6 (a parábola da Videira Verdadeira), assinale a associação correta:</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q6" value="A" required> A) O Agricultor é o crente; a Videira é a igreja local; os ramos são as boas obras.</label>
+                <label><input type="radio" name="q6" value="B"> B) O Agricultor é o Pai; a Videira é Jesus; os Ramos são os discípulos; quem permanece n'Ele dá muito fruto, e quem não permanece é lançado fora e seca.</label>
+                <label><input type="radio" name="q6" value="C"> C) O Agricultor é o anjo; a Videira é o mundo; os Ramos são os líderes religiosos.</label>
+                <label><input type="radio" name="q6" value="D"> D) O Agricultor é Jesus; a Videira é a Lei de Moisés; os Ramos são as nações.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q7">7) Em João 16.13, quem é prometido por Jesus para guiar os discípulos em toda a verdade?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q7" value="A" required> A) Os governantes das nações.</label>
+                <label><input type="radio" name="q7" value="B"> B) A tradição dos anciãos.</label>
+                <label><input type="radio" name="q7" value="C"> C) O Espírito da verdade (Espírito Santo).</label>
+                <label><input type="radio" name="q7" value="D"> D) A sabedoria filosófica dos homens.</label>
+            </div>
         </div>
 
         <div class="final-note">
-            Portanto, o discípulo de Jesus Cristo ouve a Escritura Sagrada e obedece, com toda gratidão e louvor a Deus, pela graça e poder do Espírito Santo.[cite: 3]
+            Portanto, o discípulo de Jesus Cristo ouve a Escritura Sagrada e obedece, com toda gratidão e louvor a Deus, pela graça e poder do Espírito Santo[cite: 5]!
         </div>
 
-        <!-- DADOS FINAIS -->
         <div class="footer-info">
             <div class="field">
                 <label for="nomePessoa">Nome do Aluno:</label>
@@ -284,22 +141,97 @@
             </div>
         </div>
 
-        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 05</button>
-
+        <button type="button" id="btnCorrigir" class="btn-corrigir" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS</button>
+        <div id="resultado" class="resultado"></div>
+        <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
     </form>
 </div>
 
 <script>
-    function enviarFormulario(event) {
-        var btn = document.getElementById("btnEnviar");
-        btn.classList.add("sent");
-        btn.innerText = "ENVIANDO PELO EMAIL...";
-        
-        setTimeout(function(){
-            // O formulário continuará seu curso natural de envio
-        }, 500);
-    }
-</script>
+    var CACHE = 'licao05_cache';
+    var CAMPOS = ['q1','q2','q3','q4','q5','q6','q7','nomePessoa','dataPreenchimento'];
 
+    function val(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+    function gravarCache() {
+        var dados = {};
+        CAMPOS.forEach(function(id) { dados[id] = val(id); });
+        localStorage.setItem(CACHE, JSON.stringify(dados));
+    }
+    function lerCache() {
+        try {
+            var dados = JSON.parse(localStorage.getItem(CACHE) || 'null');
+            if (!dados) return;
+            CAMPOS.forEach(function(id) {
+                if (dados[id] != null && document.getElementById(id)) { document.getElementById(id).value = dados[id]; }
+            });
+        } catch (e) {}
+    }
+
+    var GABARITO = { q1: 'B', q2: 'C', q3: 'B', q4: 'C', q5: 'A', q6: 'B', q7: 'C' };
+
+    function corrigirRespostas() {
+        var form = document.getElementById('discipuladoForm');
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+
+        var acertos = 0;
+        var total = Object.keys(GABARITO).length;
+
+        Object.keys(GABARITO).forEach(function(nome) {
+            var opcoes = document.querySelectorAll('input[name="' + nome + '"]');
+            var resposta = document.querySelector('input[name="' + nome + '"]:checked');
+
+            opcoes.forEach(function(input) {
+                input.parentElement.classList.remove('certa', 'errada');
+                if (input.value === GABARITO[nome]) {
+                    input.parentElement.classList.add('certa');
+                } else if (resposta && input.value === resposta.value) {
+                    input.parentElement.classList.add('errada');
+                }
+            });
+            if (resposta && resposta.value === GABARITO[nome]) { acertos++; }
+        });
+
+        var percentual = Math.round((acertos / total) * 100);
+        var resultado = document.getElementById('resultado');
+        resultado.style.display = 'block';
+        resultado.innerHTML = 'RESULTADO: ' + acertos + ' de ' + total + ' questões corretas (' + percentual + '%).';
+        gravarCache();
+    }
+
+    function baixarPdf() {
+        gravarCache();
+        var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
+        if (typeof html2pdf === 'undefined') { alert('Não foi possível carregar o gerador de PDF.'); return; }
+        var elemento = document.getElementById('licaoImpressao');
+        var btnPdf = document.getElementById('btnPdf');
+        var btnCorrigir = document.getElementById('btnCorrigir');
+        var resultado = document.getElementById('resultado');
+        
+        btnPdf.style.display = 'none';
+        btnCorrigir.style.display = 'none';
+        resultado.style.display = 'none';
+
+        html2pdf().set({
+            margin: [8, 8, 8, 8],
+            filename: 'Licao05-' + nome + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+            pagebreak: { mode: ['css', 'legacy'], avoid: ['.question-group', '.section-title', '.final-note'] },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).from(elemento).save().then(function() {
+            btnPdf.style.display = 'block';
+            btnCorrigir.style.display = 'block';
+            resultado.style.display = 'block';
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        lerCache();
+        CAMPOS.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) { el.addEventListener('input', gravarCache); el.addEventListener('change', gravarCache); }
+        });
+    });
+</script>
 </body>
 </html>
