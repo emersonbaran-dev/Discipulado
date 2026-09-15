@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discipulado Lição 10 - Deus Pai</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,7 +14,7 @@
             margin: 0;
             padding: 20px;
             font-size: 12pt;
-        } 
+        }
         .container {
             max-width: 750px;
             margin: 0 auto;
@@ -139,7 +140,7 @@
             background-color: #15242a !important;
             cursor: default;
         }
-        .btn-download {
+        .btn-pdf {
             width: 100%;
             background-color: #3d6b7a;
             color: white;
@@ -150,7 +151,6 @@
             font-weight: bold;
             cursor: pointer;
             margin-top: 10px;
-            display: none;
         }
         .final-note {
             text-align: center;
@@ -167,7 +167,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="licaoImpressao">
     <div class="main-category">ELE É DEUS!</div>
     
     <div class="header-container">
@@ -305,114 +305,71 @@
         </div>
 
         <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 10</button>
-        <button type="button" id="btnDownload" class="btn-download" onclick="baixarLicaoFeita()">BAIXAR LIÇÃO FEITA</button>
+        <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
 
     </form>
 </div>
 
 <script>
-    var EMAIL_DESTINO = 'emersonbaran@gmail.com';
-    var CHAVE = 'licao10_respostas';
-    var ultimoRelatorio = '';
-    var ultimoNome = 'Aluno';
+    var EMAIL = 'emersonbaran@gmail.com';
+    var CACHE = 'licao10_cache';
+    var CAMPOS = ['q1','q2','q3','q4','q5a','q5b','q5c','q5d','q6','q7','q8','nomePessoa','dataPreenchimento'];
 
-    function letraRef(letra) {
-        var mapa = { A: 'A - Sl 139.7-10', B: 'B - Sl 90.2', C: 'C - Ml 3.6', D: 'D - Jo 5.26' };
-        return mapa[letra] || letra || '-';
-    }
     function val(id) {
         var el = document.getElementById(id);
-        return el ? el.value.trim() : '';
+        return el ? el.value : '';
     }
-    function dataBr() {
+    function gravarCache() {
+        var dados = {};
+        CAMPOS.forEach(function(id) { dados[id] = val(id); });
+        localStorage.setItem(CACHE, JSON.stringify(dados));
+    }
+    function lerCache() {
+        try {
+            var dados = JSON.parse(localStorage.getItem(CACHE) || 'null');
+            if (!dados) return;
+            CAMPOS.forEach(function(id) {
+                if (dados[id] != null && document.getElementById(id)) {
+                    document.getElementById(id).value = dados[id];
+                }
+            });
+        } catch (e) {}
+    }
+    function montarTexto() {
         var d = val('dataPreenchimento');
-        return d ? d.split('-').reverse().join('/') : '';
-    }
-    function montarRelatorio() {
+        var dataBr = d ? d.split('-').reverse().join('/') : '';
         return [
             'DISCIPULADO - LIÇÃO 10 - DEUS PAI',
             'Nome do Aluno: ' + val('nomePessoa'),
-            'Data: ' + dataBr(),
+            'Data: ' + dataBr,
             '',
-            'I - A TRINDADE',
-            '1) Em Mt 3.16,17, quais as pessoas da divindade que descreve?',
-            val('q1'),
-            '',
-            '2) Na bênção apostólica, é feita em nome de quem? (2Co 13.13)',
-            val('q2'),
-            '',
-            'II - A EXISTÊNCIA E O CONHECIMENTO DE DEUS',
-            '3) Leia Hb 11.6. Para se aproximar de Deus, o que é necessário?',
-            val('q3'),
-            '',
-            '4) O que disse Deus quanto a sua presença conosco? (Jr 23.23)',
-            val('q4'),
-            '',
-            'III - ATRIBUTOS INCOMUNICÁVEIS',
-            '5) Relacione as colunas:',
-            'Eterno: ' + letraRef(val('q5a')),
-            'Onipresente: ' + letraRef(val('q5b')),
-            'Autoexistente: ' + letraRef(val('q5c')),
-            'Imutável: ' + letraRef(val('q5d')),
-            '',
-            'IV - ATRIBUTOS COMUNICÁVEIS',
-            '6) Atributo que falta em 2 Jo 1.3:',
-            val('q6'),
-            '',
-            '7) Dois atributos em At 3.14:',
-            val('q7'),
-            '',
-            '8) Atributo em Rm 2.4:',
-            val('q8')
+            '1) Mt 3.16-17: ' + val('q1'),
+            '2) 2Co 13.13: ' + val('q2'),
+            '3) Hb 11.6: ' + val('q3'),
+            '4) Jr 23.23: ' + val('q4'),
+            '5) Eterno: ' + val('q5a'),
+            '   Onipresente: ' + val('q5b'),
+            '   Autoexistente: ' + val('q5c'),
+            '   Imutável: ' + val('q5d'),
+            '6) 2 Jo 1.3: ' + val('q6'),
+            '7) At 3.14: ' + val('q7'),
+            '8) Rm 2.4: ' + val('q8')
         ].join('\n');
     }
-    function gravarRespostas() {
-        var dados = {
-            q1: val('q1'), q2: val('q2'), q3: val('q3'), q4: val('q4'),
-            q5a: val('q5a'), q5b: val('q5b'), q5c: val('q5c'), q5d: val('q5d'),
-            q6: val('q6'), q7: val('q7'), q8: val('q8'),
-            nomePessoa: val('nomePessoa'),
-            dataPreenchimento: val('dataPreenchimento'),
-            relatorio: montarRelatorio()
-        };
-        localStorage.setItem(CHAVE, JSON.stringify(dados));
-        ultimoRelatorio = dados.relatorio;
-        ultimoNome = dados.nomePessoa || 'Aluno';
-    }
-    function restaurarRespostas() {
-        try {
-            var dados = JSON.parse(localStorage.getItem(CHAVE) || 'null');
-            if (!dados) return;
-            ['q1','q2','q3','q4','q5a','q5b','q5c','q5d','q6','q7','q8','nomePessoa','dataPreenchimento'].forEach(function(id) {
-                if (dados[id] && document.getElementById(id)) document.getElementById(id).value = dados[id];
-            });
-            if (dados.relatorio) {
-                ultimoRelatorio = dados.relatorio;
-                ultimoNome = dados.nomePessoa || 'Aluno';
-                document.getElementById('btnDownload').style.display = 'block';
-            }
-        } catch (e) {}
-    }
-    function baixarLicaoFeita() {
-        var texto = ultimoRelatorio || montarRelatorio();
-        var nome = (ultimoNome || val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
-        var blob = new Blob([texto], { type: 'text/plain;charset=utf-8' });
-        var a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'Licao10-' + nome + '.txt';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-    }
-    function avisarAluno() {
-        var params = new URLSearchParams(window.location.search);
-        var idx = Number(params.get('lessonIndex') || '0');
-        try {
-            if (window.parent && window.parent !== window) {
-                window.parent.postMessage({ type: 'LICAO_ENVIADA', lessonIndex: idx }, '*');
-                if (typeof window.parent.liberarVideoAula === 'function') window.parent.liberarVideoAula(idx);
-            }
-        } catch (e) {}
+    function baixarPdf() {
+        gravarCache();
+        var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
+        if (typeof html2pdf === 'undefined') {
+            alert('Não foi possível carregar o gerador de PDF. Verifique a internet.');
+            return;
+        }
+        html2pdf().set({
+            margin: 10,
+            filename: 'Licao10-' + nome + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).from(document.getElementById('licaoImpressao')).save();
     }
     function enviarFormulario(event) {
         event.preventDefault();
@@ -421,26 +378,38 @@
             form.reportValidity();
             return;
         }
-        gravarRespostas();
+        gravarCache();
         var nome = val('nomePessoa');
-        var corpo = montarRelatorio();
-        var assunto = 'Relatório Lição 10 - ' + nome;
-
         var a = document.createElement('a');
-        a.href = 'mailto:' + EMAIL_DESTINO
-            + '?subject=' + encodeURIComponent(assunto)
-            + '&body=' + encodeURIComponent(corpo);
+        a.href = 'mailto:' + EMAIL
+            + '?subject=' + encodeURIComponent('Relatório Lição 10 - ' + nome)
+            + '&body=' + encodeURIComponent(montarTexto());
         document.body.appendChild(a);
         a.click();
         a.remove();
 
-        document.getElementById('btnDownload').style.display = 'block';
         var btn = document.getElementById('btnEnviar');
         btn.classList.add('sent');
-        btn.innerText = 'RELATÓRIO ENVIADO';
-        avisarAluno();
+        btn.innerText = 'ENVIANDO PELO EMAIL...';
+        setTimeout(function() { btn.innerText = 'RELATÓRIO ENVIADO'; }, 800);
+
+        try {
+            var idx = Number(new URLSearchParams(window.location.search).get('lessonIndex') || '0');
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({ type: 'LICAO_ENVIADA', lessonIndex: idx }, '*');
+                if (typeof window.parent.liberarVideoAula === 'function') window.parent.liberarVideoAula(idx);
+            }
+        } catch (e) {}
     }
-    document.addEventListener('DOMContentLoaded', restaurarRespostas);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        lerCache();
+        CAMPOS.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.addEventListener('input', gravarCache);
+            if (el) el.addEventListener('change', gravarCache);
+        });
+    });
 </script>
 
 </body>
