@@ -99,18 +99,6 @@
             border-color: #664661;
             outline: none;
         }
-        .matching-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-        .matching-row select {
-            width: 70px;
-            margin-top: 0;
-            padding: 6px;
-            text-align: center;
-        }
         .radio-group {
             display: flex;
             gap: 20px;
@@ -152,23 +140,11 @@
             transition: background-color 0.3s ease;
         }
         .btn-submit:hover {
-            background-color: #4e354a;
+            background-color: #4d3349;
         }
         .btn-submit.sent {
             background-color: #202224 !important;
             cursor: default;
-        }
-        .final-note {
-            text-align: center;
-            font-weight: bold;
-            color: #664661;
-            background-color: #f0f4f6;
-            padding: 15px;
-            border-radius: 6px;
-            border: 1px solid #e0e0e0;
-            margin-top: 25px;
-            font-size: 11pt;
-            line-height: 1.5;
         }
     </style>
 </head>
@@ -184,7 +160,7 @@
     <div class="subtitle">CRIAÇÃO E QUEDA</div>
     
     <div class="intro">
-        A partir desta nova série de estudos, veremos os 4 pilares de cosmovisão cristã, que são: criação, queda, redenção e consumação. Quando falamos de cosmovisão queremos dizer a maneira como enxergamos as coisas que estão ao nosso redor dentro de uma ótica de dentro do nosso coração. Exemplo prático: um óculos. Vejamos a Criação e a Queda, primeiramente:
+        Cosmovisão é o conjunto de pressupostos ou visões que alguém tem sobre a realidade do mundo. A Cosmovisão Cristã fundamenta-se em 4 pilares: Criação, Queda, Redenção e Consumação. Nesta lição veremos as duas primeiras.
     </div>
 
     <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
@@ -193,163 +169,44 @@
         <div class="section-title">A – CRIAÇÃO</div>
 
         <div class="question-group">
-            <label for="q1">1) Quem criou os céus e a terra? (Gn 1.1)</label>
-            <textarea id="q1" name="1. Quem criou os ceus e a terra (Gn 1.1)" rows="2" required></textarea>
+            <label for="q1">1) O que Deus criou, conforme Gn 1.1 e Sl 24.1?</label>
+            <textarea id="q1" name="1. O que Deus criou (Gn 1.1 e Sl 24.1)" rows="2" required></textarea>
         </div>
 
         <div class="question-group">
-            <label>2) Relacione as colunas quanto a criação do homem:</label>
-            <div style="margin-top: 10px;">
-                <div class="matching-row">
-                    <select name="Relacione Criacao - Do po da terra" required>
-                        <option value="">--</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                    </select>
-                    <span>Do pó da terra e fôlego da vida</span>
-                </div>
-                <div class="matching-row">
-                    <select name="Relacione Criacao - Imagem e semelhanca" required>
-                        <option value="">--</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                    </select>
-                    <span>Imagem e semelhança de Deus</span>
-                </div>
-                <div class="matching-row">
-                    <select name="Relacione Criacao - Homem e mulher uma so carne" required>
-                        <option value="">--</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                    </select>
-                    <span>Homem e mulher uma só carne</span>
-                </div>
-                <div class="matching-row">
-                    <select name="Relacione Criacao - Mulher foi formada da costela" required>
-                        <option value="">--</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                    </select>
-                    <span>Mulher foi formada da costela do homem</span>
-                </div>
-            </div>
-            <div style="font-size: 10pt; color: #666; margin-top: 8px;">
-                (A) Gn 1.26a &nbsp;&nbsp; (B) Gn 2.7 &nbsp;&nbsp; (C) Gn 2.21,22 &nbsp;&nbsp; (D) Gn 2.24
-            </div>
+            <label for="q2">2) Como Deus criou o homem e a mulher em Gn 1.26,27?</label>
+            <input type="text" id="q2" name="2. Como Deus criou o homem e a mulher (Gn 1.26,27)" required>
         </div>
 
         <div class="question-group">
-            <label>3) Qual deve ser nossa atitude diante do Deus Criador?</label>
-            <div style="margin-top: 8px;">
-                <label for="q3_hb" style="font-weight: normal; margin-bottom: 2px;">a) Hb 11.3:</label>
-                <input type="text" id="q3_hb" name="3a. Atitude diante do Criador - Hb 11.3" required>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="q3_ne" style="font-weight: normal; margin-bottom: 2px;">b) Ne 9.6:</label>
-                <input type="text" id="q3_ne" name="3b. Atitude diante do Criador - Ne 9.6" required>
-            </div>
-        </div>
-
-        <div class="question-group">
-            <label for="q4">4) Além de criar, o que mais Deus fez/faz? (Is 40.25,26)</label>
-            <textarea id="q4" name="4. Arem de criar o que mais Deus fez/faz (Is 40.25,26)" rows="2" required></textarea>
+            <label for="q3">3) De acordo com Gn 1.31, como era tudo o que Deus criou?</label>
+            <input type="text" id="q3" name="3. Como era tudo o que Deus criou (Gn 1.31)" required>
         </div>
 
         <!-- SEÇÃO B -->
         <div class="section-title">B – QUEDA</div>
 
-        <div class="intro" style="border-left-color: #555; background-color: #f9f9f9; margin-bottom: 15px;">
-            Antes de tudo vamos definir pecado? Pecado é qualquer falta de conformidade com a lei de Deus, ou qualquer transgressão desta lei. (Tg 2.10; 4.17; 1Jo 3.4)
+        <div class="question-group">
+            <label for="q4">4) Qual foi a ordem dada por Deus ao homem em Gn 2.16,17?</label>
+            <textarea id="q4" name="4. Ordem dada ao homem (Gn 2.16,17)" rows="2" required></textarea>
         </div>
 
         <div class="question-group">
-            <label>5) Relacione as colunas quanto a queda do homem:</label>
-            <div style="margin-top: 10px;">
-                <div class="matching-row">
-                    <select name="Relacione Queda - Diabo" required>
-                        <option value="">--</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                    </select>
-                    <span>Diabo</span>
-                </div>
-                <div class="matching-row">
-                    <select name="Relacione Queda - Adao era responsavel" required>
-                        <option value="">--</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                    </select>
-                    <span>Adão era responsável</span>
-                </div>
-                <div class="matching-row">
-                    <select name="Relacione Queda - Expulsao do Jardim" required>
-                        <option value="">--</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                    </select>
-                    <span>Expulsão do Jardim (Separação)</span>
-                </div>
-                <div class="matching-row">
-                    <select name="Relacione Queda - Obedecer a Deus" required>
-                        <option value="">--</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                    </select>
-                    <span>Obedecer a Deus</span>
-                </div>
-            </div>
-            <div style="font-size: 10pt; color: #666; margin-top: 8px;">
-                (A) Gn 2.16,17 &nbsp;&nbsp; (B) Gn 3.1 &nbsp;&nbsp; (C) Gn 3.6 &nbsp;&nbsp; (D) Gn 3.23,24
-            </div>
+            <label for="q5">5) O que aconteceu quando Adão e Eva desobedeceram? (Gn 3.6,7)</label>
+            <textarea id="q5" name="5. O que aconteceu na desobediencia (Gn 3.6,7)" rows="2" required></textarea>
         </div>
 
         <div class="question-group">
-            <label for="q6">6) Com o que todo homem já nasce? (Sl 51.5)</label>
-            <textarea id="q6" name="6. Com o que todo homem ja nasce (Sl 51.5)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label>7) Além de Jesus, tem alguém que nunca pecou? (Rm 3.23)</label>
+            <label>6) O pecado entrou no mundo por meio de um só homem, e a morte passou a todos? (Rm 5.12)</label>
             <div class="radio-group">
-                <label><input type="radio" name="7. Alguem nunca pecou (Rm 3.23)" value="SIM" required> SIM</label>
-                <label><input type="radio" name="7. Alguem nunca pecou (Rm 3.23)" value="NÃO" required> NÃO</label>
+                <label><input type="radio" name="6. Pecado e morte para todos (Rm 5.12)" value="SIM" required> SIM</label>
+                <label><input type="radio" name="6. Pecado e morte para todos (Rm 5.12)" value="NÃO" required> NÃO</label>
             </div>
         </div>
 
         <div class="question-group">
-            <label>8) Há alguém justo e que busque a Deus por si só? (Rm 3.10,11)</label>
-            <div class="radio-group">
-                <label><input type="radio" name="8. Ha alguem justo e que busque a Deus (Rm 3.10,11)" value="SIM" required> SIM</label>
-                <label><input type="radio" name="8. Ha alguem justo e que busque a Deus (Rm 3.10,11)" value="NÃO" required> NÃO</label>
-            </div>
-        </div>
-
-        <div class="question-group">
-            <label>9) O homem consegue mudar seu estado? (Jr 13.23)</label>
-            <div class="radio-group">
-                <label><input type="radio" name="9. O homem consegue mudar seu estado (Jr 13.23)" value="SIM" required> SIM</label>
-                <label><input type="radio" name="9. O homem consegue mudar seu estado (Jr 13.23)" value="NÃO" required> NÃO</label>
-            </div>
-        </div>
-
-        <div class="final-note">
-            Como vimos, o Senhor criou o ser humano, homem e mulher, conforme a sua imagem e semelhança, sem pecado. Mas o homem resolveu desobedecer contaminando a todos com o pecado original levando-o a separação de Deus (morte). Porém, Deus tem algo amoroso para os seus. Veremos adiante!
+            <label for="q7">7) Qual é o estado de todos os seres humanos por natureza? (Rm 3.10-12,23)</label>
+            <textarea id="q7" name="7. Estado dos seres humanos por natureza (Rm 3.10-12,23)" rows="2" required></textarea>
         </div>
 
         <!-- DADOS FINAIS -->
