@@ -3,8 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discipulado Lição 1 - Boas Novas</title>
+    <title>Discipulado Lição 01 - Boas Novas</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
+        @media print {
+            body {
+                background: #ffffff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .container {
+                box-shadow: none !important;
+                margin: 0 !important;
+                max-width: none !important;
+                width: 100% !important;
+            }
+            #btnPdf, #btnCorrigir, #resultado {
+                display: none !important;
+            }
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f7f6;
@@ -12,7 +30,7 @@
             line-height: 1.6;
             margin: 0;
             padding: 20px;
-            font-size: 12pt; /* Tamanho da letra definido em 12pt */
+            font-size: 12pt;
         }
         .container {
             max-width: 750px;
@@ -21,24 +39,37 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #3C594D;
+            border-top: 6px solid #CFD3A0;
         }
-        .header-title {
+        .header-container {
+            position: relative;
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* Alinha o conteúdo à esquerda */
-            gap: 15px;
+            justify-content: center;
             margin-bottom: 10px;
+            min-height: 60px;
         }
-        .header-title img {
+        .header-container img {
+            position: absolute;
+            left: 0;
             height: 60px;
             width: auto;
         }
-        h1 {
-            color: #3C594D;
-            margin: 0;
-            font-size: 32px; /* Título maior */
+        .main-category {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            color: #CFD3A0;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        h1 {
+            color: #CFD3A0;
+            margin: 0;
+            font-size: 32px;
+            text-transform: uppercase;
+            text-align: center;
         }
         .subtitle {
             text-align: center;
@@ -48,14 +79,14 @@
             font-size: 14pt;
         }
         .intro {
-            background-color: #eef3f1;
-            border-left: 4px solid #3C594D;
+            background-color: #f0f4f6;
+            border-left: 4px solid #CFD3A0;
             padding: 12px 15px;
             margin-bottom: 25px;
             font-size: 11pt;
         }
         .section-title {
-            background-color: #3C594D;
+            background-color: #CFD3A0;
             color: white;
             padding: 6px 12px;
             font-size: 13pt;
@@ -63,22 +94,6 @@
             border-radius: 4px;
             margin-top: 25px;
             margin-bottom: 15px;
-        }
-        .verse-box {
-            background-color: #f9f9f9;
-            border: 1px solid #e0e0e0;
-            border-left: 3px solid #3C594D;
-            padding: 10px 15px;
-            margin-bottom: 10px;
-            font-style: italic;
-            font-size: 11pt;
-            color: #444;
-        }
-        .verse-title {
-            font-weight: bold;
-            font-style: normal;
-            color: #3C594D;
-            margin-bottom: 4px;
         }
         .question-group {
             margin-bottom: 20px;
@@ -89,7 +104,7 @@
             margin-bottom: 6px;
             color: #222;
         }
-        input[type="text"], input[type="date"], textarea {
+        input[type="text"], input[type="date"], textarea, select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -98,39 +113,9 @@
             font-size: 11pt;
             margin-top: 4px;
         }
-        input[type="text"]:focus, textarea:focus {
-            border-color: #3C594D;
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #CFD3A0;
             outline: none;
-        }
-        .checkbox-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 6px;
-        }
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            font-weight: normal;
-            cursor: pointer;
-        }
-        .checkbox-item input {
-            margin-right: 10px;
-            accent-color: #3C594D;
-        }
-        .table-names {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 8px;
-        }
-        .table-names th, .table-names td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        .table-names th {
-            background-color: #f2f2f2;
-            color: #3C594D;
         }
         .footer-info {
             display: flex;
@@ -142,9 +127,46 @@
         .footer-info .field {
             flex: 1;
         }
-        .btn-submit {
+        .btn-pdf {
             width: 100%;
-            background-color: #3C594D;
+            background-color: #3d6b7a;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .alternativas {
+            margin-top: 8px;
+        }
+        .alternativas label {
+            display: block;
+            padding: 8px 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .alternativas label input {
+            margin-right: 8px;
+        }
+        .alternativas label.certa {
+            background-color: #d9f2df !important;
+            border-color: #28a745 !important;
+            color: #176b2c !important;
+        }
+        .alternativas label.errada {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #842029 !important;
+        }
+        .btn-corrigir {
+            width: 100%;
+            background-color: #2e7d32;
             color: white;
             padding: 14px;
             border: none;
@@ -153,31 +175,42 @@
             font-weight: bold;
             cursor: pointer;
             margin-top: 25px;
-            transition: background-color 0.3s ease;
         }
-        .btn-submit:hover {
-            background-color: #2d4238;
+        .btn-corrigir:hover {
+            background-color: #256628;
         }
-        .btn-submit.sent {
-            background-color: #24352e !important;
-            cursor: default;
+        .resultado {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            text-align: center;
+            font-size: 14pt;
+            font-weight: bold;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            background: #f7f7f7;
         }
         .final-note {
             text-align: center;
-            font-style: italic;
-            color: #666;
-            margin-top: 20px;
-            font-size: 11pt;
+            font-weight: bold;
+            color: #CFD3A0;
+            background-color: #f0f4f6;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            margin-top: 25px;
+            font-size: 12pt;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header-title">
-        <!-- Logo alinhada à esquerda do título -->
+<div class="container" id="licaoImpressao">
+    <div class="main-category">DISCIPULADO</div>
+    
+    <div class="header-container">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
-        <h1>Lição 1</h1>
+        <h1>Lição 01</h1>
     </div>
     <div class="subtitle">BOAS NOVAS</div>
     
@@ -185,147 +218,108 @@
         As Boas Novas é o anúncio do evangelho em que Jesus veio para salvar a todo aquele que crê em Jesus Cristo. Vejamos:
     </div>
 
-    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
+    <form id="discipuladoForm">
         
-        <!-- SEÇÃO A -->
         <div class="section-title">A – A HISTÓRIA E MOTIVO</div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Isaías 9:6-7 (ARA)</div>
-                "Porque um menino nos nasceu, um filho se nos deu; o governo está sobre os seus ombros; e o seu nome será: Maravilhoso Conselheiro, Deus Forte, Pai da Eternidade, Príncipe da Paz. Do aumento do seu governo e da paz não haverá fim..."
-            </div>
-            <label for="q1">Em Isaías 9:6-7, qual era a promessa do Senhor?</label>
-            <textarea id="q1" name="1. Promessa do Senhor (Is 9.6-7)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Mateus 1:21-23 (ARA)</div>
-                "Ela dará à luz um filho e lhe porás o nome de JESUS, porque ele salvará o seu povo dos pecados deles. Tudo isto aconteceu para que se cumprisse o que foi dito da parte do Senhor pelo profeta: Eis que a virgem conceberá e dará à luz um filho, e ele será chamado pelo nome de EMANUEL (que traduzido é: Deus conosco)."
-            </div>
-            <label>Em Mateus 1:21-23, cumpriu-se a profecia da vinda do Senhor. Dê os nomes desta criança e seu significado:</label>
-            <table class="table-names">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Significado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="text" name="Nome 1" value="1. JESUS" readonly style="background:#eee;"></td>
-                        <td><input type="text" name="Significado 1" required></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="Nome 2" value="2. EMANUEL" readonly style="background:#eee;"></td>
-                        <td><input type="text" name="Significado 2" required></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Atos 2:22-24 (ARA)</div>
-                "Varões israelitas, atendei a estas palavras: Jesus, o Nazareno, varão aprovado por Deus diante de vós com milagres, prodígios e sinais [...] sendo este entregue pelo determinado desígnio e presciência de Deus, vós o matastes, crucificando-o por mãos de iníquos; ao qual Deus ressuscitou..."
-            </div>
-            <label>Como foi a vida de Jesus conosco, de acordo com At 2.22-24? Assinale com as respostas afirmativas:</label>
-            <div class="checkbox-group">
-                <label class="checkbox-item"><input type="checkbox" name="At 2.22-24" value="Fez milagres, prodígios e sinais"> Fez milagres, prodígios e sinais</label>
-                <label class="checkbox-item"><input type="checkbox" name="At 2.22-24" value="Foi entregue à morte"> Foi entregue à morte</label>
-                <label class="checkbox-item"><input type="checkbox" name="At 2.22-24" value="Foi crucificado"> Foi crucificado</label>
-                <label class="checkbox-item"><input type="checkbox" name="At 2.22-24" value="Foi ressuscitado"> Foi ressuscitado</label>
+            <label for="q1">1) Em Isaías 9.6,7, qual era a promessa do Senhor?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q1" value="A" required> A) A restauração do templo físico em Jerusalém.</label>
+                <label><input type="radio" name="q1" value="B"> B) O nascimento de um Menino, um Filho cujo principado está sobre os seus ombros.</label>
+                <label><input type="radio" name="q1" value="C"> C) A vitória militar imediata contra os reis vizinhos.</label>
+                <label><input type="radio" name="q1" value="D"> D) A promessa de riquezas materiais para a nação.</label>
             </div>
         </div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">João 3:16 (ARA)</div>
-                "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna."
+            <label for="q2">2) Em Mateus 1.21-23, cumpriu-se a profecia. Quais os nomes dados à criança e seus respectivos significados?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q2" value="A" required> A) JESUS (Salvação) e EMANUEL (Deus conosco).</label>
+                <label><input type="radio" name="q2" value="B"> B) JESUS (Rei da Glória) e EMANUEL (O Senhor é Justiça).</label>
+                <label><input type="radio" name="q2" value="C"> C) CRISTO (Messias) e EMANUEL (Príncipe da Paz).</label>
+                <label><input type="radio" name="q2" value="D"> D) JESUS (Salvação) e MESSIAS (Deus é forte).</label>
             </div>
-            <label for="q4">Em Jo 3.16, qual é o motivo da vinda de Jesus Cristo?</label>
-            <textarea id="q4" name="4. Motivo da vinda (Jo 3.16)" rows="2" required></textarea>
         </div>
 
-        <!-- SEÇÃO B -->
+        <div class="question-group">
+            <label for="q3">3) Como foi a vida de Jesus conosco, de acordo com At 2.22-24? Marque a opção completa e correta:</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q3" value="A" required> A) Apenas fez milagres e ensinou as multidões.</label>
+                <label><input type="radio" name="q3" value="B"> B) Foi crucificado, mas permaneceu retido na morte.</label>
+                <label><input type="radio" name="q3" value="C"> C) Fez milagres/sinais, foi entregue à morte, crucificado e ressuscitado por Deus.</label>
+                <label><input type="radio" name="q3" value="D"> D) Viveu isolado dos homens sem realizar sinais públicos.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q4">4) Em Jo 3.16, qual é o motivo da vinda de Jesus Cristo?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q4" value="A" required> A) Julgar e condenar o mundo por seus pecados.</label>
+                <label><input type="radio" name="q4" value="B"> B) O amor de Deus pelo mundo, para que todo o que nele crê não perca, mas tenha a vida eterna.</label>
+                <label><input type="radio" name="q4" value="C"> C) Estabelecer um reino político terreno imediato.</label>
+                <label><input type="radio" name="q4" value="D"> D) Mostrar a superioridade de um povo específico.</label>
+            </div>
+        </div>
+
         <div class="section-title">B – CREIA EM JESUS</div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Marcos 1:14-15 (ARA)</div>
-                "Depois de João ter sido preso, foi Jesus para a Galileia, pregando o evangelho de Deus e dizendo: O tempo está cumprido, e o reino de Deus está próximo; arrependei-vos e crede no evangelho."
-            </div>
-            <label>Em Mc 1.14,15, o que se deve fazer diante do Evangelho? Assinale as alternativas corretas:</label>
-            <div class="checkbox-group">
-                <label class="checkbox-item"><input type="checkbox" name="Mc 1.14-15" value="Crer"> Crer</label>
-                <label class="checkbox-item"><input type="checkbox" name="Mc 1.14-15" value="Arrepender-se"> Arrepender-se</label>
-                <label class="checkbox-item"><input type="checkbox" name="Mc 1.14-15" value="Obedecer a Lei"> Obedecer a Lei</label>
+            <label for="q5">5) Em Mc 1.14,15, o que se deve fazer diante do Evangelho?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q5" value="A" required> A) Apenas cumprir os rituais da Lei.</label>
+                <label><input type="radio" name="q5" value="B"> B) Arrepender-se e crer no Evangelho.</label>
+                <label><input type="radio" name="q5" value="C"> C) Aguardar novos sinais no céu.</label>
+                <label><input type="radio" name="q5" value="D"> D) Fazer boas obras sem mudar de conduta.</label>
             </div>
         </div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Lucas 8:48 (ARA)</div>
-                "Então, lhe disse: Filha, a tua fé te salvou; vai-te em paz."
+            <label for="q6">6) O que a mulher enferma fez que a salvou? (Lc 8.48)</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q6" value="A" required> A) Ofereceu uma grande oferta ao templo.</label>
+                <label><input type="radio" name="q6" value="B"> B) Tocou com fé na orla do vestido de Jesus.</label>
+                <label><input type="radio" name="q6" value="C"> C) Pediu ajuda aos discípulos.</label>
+                <label><input type="radio" name="q6" value="D"> D) Seguiu a Lei de Moisés rigorosamente.</label>
             </div>
-            <label for="q6">O que a mulher enferma fez que a salvou? (Lc 8.48)</label>
-            <textarea id="q6" name="6. O que salvou a mulher (Lc 8.48)" rows="2" required></textarea>
         </div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">João 10:9 (ARA)</div>
-                "Eu sou a porta. Se alguém entrar por mim, será salvo; entrará, e sairá, e achará pastagem."
+            <label for="q7">7) Em Jo 10.9, Jesus diz que é a porta. O que é necessário para obter a salvação?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q7" value="A" required> A) Entrar por Ele (Jesus).</label>
+                <label><input type="radio" name="q7" value="B"> B) Buscar vários caminhos espirituais.</label>
+                <label><input type="radio" name="q7" value="C"> C) Tentar salvar-se por esforço próprio.</label>
+                <label><input type="radio" name="q7" value="D"> D) Apenas pertencer a uma denominação religiosa.</label>
             </div>
-            <label for="q7">Em Jo 10.9, Jesus diz que é a porta para a salvação. O que se deve fazer para obter esta salvação?</label>
-            <textarea id="q7" name="7. Obter salvação (Jo 10.9)" rows="2" required></textarea>
         </div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">João 1:12 (ARA)</div>
-                "Mas, a todos quantos o receberam, deu-lhes o poder de serem feitos filhos de Deus, a saber, aos que creem no seu nome;"
+            <label for="q8">8) De acordo com Jo 1.12, o que é necessário fazer para ser feito filho de Deus?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q8" value="A" required> A) Receber a Jesus e crer no seu nome.</label>
+                <label><input type="radio" name="q8" value="B"> B) Ter nascido em uma família cristã.</label>
+                <label><input type="radio" name="q8" value="C"> C) Ser perfeito em todas as ações.</label>
+                <label><input type="radio" name="q8" value="D"> D) Realizar obras de caridade constantes.</label>
             </div>
-            <label for="q8">Ele veio para salvar, mas o que é necessário fazer? (Jo 1.12)</label>
-            <textarea id="q8" name="8. Necessario fazer (Jo 1.12)" rows="2" required></textarea>
         </div>
 
-        <!-- SEÇÃO C -->
-        <div class="section-title">C – PROMESSAS PARA AOS QUE CREEM</div>
+        <div class="section-title">C – PROMESSAS PARA OS QUE CREEM</div>
 
         <div class="question-group">
-            <label for="q9">Ainda em Jo 1.12, quem receber a Jesus o que acontece?</label>
-            <textarea id="q9" name="9. O que acontece a quem recebe (Jo 1.12)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label>O que o Senhor promete aos que creem em Jesus?</label>
-            
-            <div class="verse-box">
-                <div class="verse-title">João 3:36 (ARA)</div>
-                "Por isso, quem crê no Filho tem a vida eterna; o que, todavia, se mantém rebelde contra o Filho não verá a vida, mas sobre ele permanece a ira de Deus."
+            <label for="q9">9) Relacione os textos bíblicos com as promessas aos que creem em Jesus (Jo 3.36, Jo 6.35, Jo 11.25):</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q9" value="A" required> A) Ter a vida eterna; Nunca mais ter fome/sede espiritual; Ainda que esteja morto, viverá.</label>
+                <label><input type="radio" name="q9" value="B"> B) Prosperidade material; Cura de todas as doenças físicas; Ausência de problemas.</label>
+                <label><input type="radio" name="q9" value="C"> C) Sabedoria humana; Sucesso financeiro; Paz temporal.</label>
+                <label><input type="radio" name="q9" value="D"> D) Vida longa na terra; Autoridade política; Reconhecimento público.</label>
             </div>
-            <input type="text" name="Promessa Jo 3.36" placeholder="Resposta referente a Jo 3.36" required>
-
-            <div class="verse-box" style="margin-top: 10px;">
-                <div class="verse-title">João 6:35 (ARA)</div>
-                "Declarou-lhes, pois, Jesus: Eu sou o pão da vida; o que vem a mim jamais terá fome; e o que crê em mim jamais terá sede."
-            </div>
-            <input type="text" name="Promessa Jo 6.35" placeholder="Resposta referente a Jo 6.35" required>
-
-            <div class="verse-box" style="margin-top: 10px;">
-                <div class="verse-title">João 11:25 (ARA)</div>
-                "Disse-lhe Jesus: Eu sou a ressurreição e a vida. Quem crê em mim, ainda que morra, viverá;"
-            </div>
-            <input type="text" name="Promessa Jo 11.25" placeholder="Resposta referente a Jo 11.25" required>
         </div>
 
         <div class="final-note">
             Lembre-se: O evangelho é a boa nova de salvação em que Jesus Cristo veio para salvar a todos aqueles que nele creem. Portanto, creia somente em Jesus Cristo!
         </div>
 
-        <!-- DADOS FINAIS -->
         <div class="footer-info">
             <div class="field">
                 <label for="nomePessoa">Nome do Aluno:</label>
@@ -337,17 +331,150 @@
             </div>
         </div>
 
-        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO</button>
+        <button type="button" id="btnCorrigir" class="btn-corrigir" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS</button>
+        <div id="resultado" class="resultado"></div>
+        <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
 
     </form>
 </div>
 
 <script>
-    function enviarFormulario(event) {
-        var btn = document.getElementById("btnEnviar");
-        btn.classList.add("sent");
-        btn.innerText = "ENVIADO";
+    var CACHE = 'licao01_cache';
+    var CAMPOS = ['q1','q2','q3','q4','q5','q6','q7','q8','q9','nomePessoa','dataPreenchimento'];
+
+    function val(id) {
+        var el = document.getElementById(id);
+        return el ? el.value : '';
     }
+    function gravarCache() {
+        var dados = {};
+        CAMPOS.forEach(function(id) { dados[id] = val(id); });
+        localStorage.setItem(CACHE, JSON.stringify(dados));
+    }
+    function lerCache() {
+        try {
+            var dados = JSON.parse(localStorage.getItem(CACHE) || 'null');
+            if (!dados) return;
+            CAMPOS.forEach(function(id) {
+                if (dados[id] != null && document.getElementById(id)) {
+                    document.getElementById(id).value = dados[id];
+                }
+            });
+        } catch (e) {}
+    }
+
+    var GABARITO = {
+        q1: 'B',
+        q2: 'A',
+        q3: 'C',
+        q4: 'B',
+        q5: 'B',
+        q6: 'B',
+        q7: 'A',
+        q8: 'A',
+        q9: 'A'
+    };
+
+    function corrigirRespostas() {
+        var form = document.getElementById('discipuladoForm');
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        var acertos = 0;
+        var total = Object.keys(GABARITO).length;
+
+        Object.keys(GABARITO).forEach(function(nome) {
+            var opcoes = document.querySelectorAll('input[name="' + nome + '"]');
+            var resposta = document.querySelector('input[name="' + nome + '"]:checked');
+
+            opcoes.forEach(function(input) {
+                input.parentElement.classList.remove('certa', 'errada');
+                if (input.value === GABARITO[nome]) {
+                    input.parentElement.classList.add('certa');
+                } else if (resposta && input.value === resposta.value) {
+                    input.parentElement.classList.add('errada');
+                }
+            });
+
+            if (resposta && resposta.value === GABARITO[nome]) {
+                acertos++;
+            }
+        });
+
+        var percentual = Math.round((acertos / total) * 100);
+        var resultado = document.getElementById('resultado');
+        resultado.style.display = 'block';
+        resultado.innerHTML = 'RESULTADO: ' + acertos + ' de ' + total +
+            ' questões corretas (' + percentual + '%).';
+
+        gravarCache();
+    }
+
+    function baixarPdf() {
+        gravarCache();
+        var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
+        if (typeof html2pdf === 'undefined') {
+            alert('Não foi possível carregar o gerador de PDF. Verifique a internet.');
+            return;
+        }
+        var elemento = document.getElementById('licaoImpressao');
+
+        var btnPdf = document.getElementById('btnPdf');
+        var displayPdf = btnPdf.style.display;
+
+        btnPdf.style.display = 'none';
+        var btnCorrigir = document.getElementById('btnCorrigir');
+        var resultado = document.getElementById('resultado');
+        var displayCorrigir = btnCorrigir.style.display;
+        var displayResultado = resultado.style.display;
+        btnCorrigir.style.display = 'none';
+        resultado.style.display = 'none';
+
+        html2pdf().set({
+            margin: [8, 8, 8, 8],
+            filename: 'Licao01-' + nome + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                scrollX: 0,
+                scrollY: 0,
+                windowWidth: elemento.scrollWidth,
+                windowHeight: elemento.scrollHeight
+            },
+            pagebreak: {
+                mode: ['css', 'legacy'],
+                avoid: ['.question-group', '.section-title', '.final-note']
+            },
+            jsPDF: {
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait'
+            }
+        }).from(elemento).save().then(function() {
+            btnPdf.style.display = displayPdf;
+            btnCorrigir.style.display = displayCorrigir;
+            resultado.style.display = displayResultado;
+        }).catch(function(erro) {
+            btnPdf.style.display = displayPdf;
+            btnCorrigir.style.display = displayCorrigir;
+            resultado.style.display = displayResultado;
+            console.error(erro);
+            alert('Não foi possível gerar o PDF. Tente novamente.');
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        lerCache();
+        CAMPOS.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.addEventListener('input', gravarCache);
+            if (el) el.addEventListener('change', gravarCache);
+        });
+    });
 </script>
 
 </body>
