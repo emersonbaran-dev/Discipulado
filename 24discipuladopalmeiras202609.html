@@ -283,9 +283,66 @@
       const texto = ((btn.innerText || btn.value || '') + ' ' + (btn.id || '') + ' ' + (btn.name || '') + ' ' + (btn.className || '')).toUpperCase();
       return texto.includes('CORRIGIR RESPOSTAS') || btn.id === 'btnCorrigir';
     }
+    function corrigirGeracaoPdf(iframe) {
+      try {
+        const win = iframe.contentWindow;
+        const doc = iframe.contentDocument || (win && win.document);
+        if (!win || !doc || win.__pdfCorrigido) return;
+        if (typeof win.baixarPdf !== 'function') return;
+        win.__pdfCorrigido = true;
+        const original = win.baixarPdf.bind(win);
+        win.baixarPdf = function () {
+          const el = doc.getElementById('licaoImpressao');
+          const img = doc.querySelector('.header-container img');
+          const prevEl = el ? {
+            maxWidth: el.style.maxWidth,
+            width: el.style.width,
+            padding: el.style.padding,
+            margin: el.style.margin,
+            boxSizing: el.style.boxSizing,
+            boxShadow: el.style.boxShadow,
+            overflow: el.style.overflow
+          } : null;
+          const prevImg = img ? { position: img.style.position, left: img.style.left } : null;
+          if (el) {
+            el.style.boxSizing = 'border-box';
+            el.style.maxWidth = '640px';
+            el.style.width = '640px';
+            el.style.padding = '12px';
+            el.style.margin = '0 auto';
+            el.style.boxShadow = 'none';
+            el.style.overflow = 'visible';
+          }
+          if (img) {
+            img.style.position = 'relative';
+            img.style.left = 'auto';
+          }
+          try {
+            original();
+          } finally {
+            setTimeout(function () {
+              if (el && prevEl) {
+                el.style.maxWidth = prevEl.maxWidth;
+                el.style.width = prevEl.width;
+                el.style.padding = prevEl.padding;
+                el.style.margin = prevEl.margin;
+                el.style.boxSizing = prevEl.boxSizing;
+                el.style.boxShadow = prevEl.boxShadow;
+                el.style.overflow = prevEl.overflow;
+              }
+              if (img && prevImg) {
+                img.style.position = prevImg.position;
+                img.style.left = prevImg.left;
+              }
+            }, 4000);
+          }
+        };
+      } catch (e) {}
+    }
     function conectarFormularioLicao(mIndex, lIndex, iframe) {
       try {
         const doc = iframe.contentDocument || iframe.contentWindow.document;
+        corrigirGeracaoPdf(iframe);
         const tentar = function (ev) {
           if (!licaoEstaCompleta(iframe)) {
             if (ev) { ev.preventDefault(); ev.stopPropagation(); }
