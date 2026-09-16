@@ -58,12 +58,7 @@
     .doc-footer { padding: 10px 15px; background: #f4f6ef; border-top: 1px solid #d7dfc6; text-align: right; }
     .btn-link-general { display: inline-flex; align-items: center; gap: 8px; background: #556b2f; color: #fff; padding: 10px 18px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
     .video-wrap { display: flex; flex-direction: column; align-items: center; }
-    .btn-video {
-      display: inline-flex; align-items: center; justify-content: center; width: 50%; margin: 0 auto;
-      border: 2px solid #F57F17; outline: 2px solid #FBC02D; outline-offset: 2px;
-      border-radius: 8px; padding: 10px 16px; font-size: 0.95rem; font-weight: 700;
-      background: #eab308; color: #422006; cursor: pointer; pointer-events: auto;
-    }
+    .materiais-bloqueados { width: 100%; margin-top: 12px; background: #efe9c8; color: #6b5b16; border: 1px dashed #c9b86a; border-radius: 8px; padding: 14px 16px; font-size: 0.92rem; font-weight: 600; text-align: center; }
     .empty-state { text-align: center; padding: 40px; background: #fff; border-radius: 8px; color: #6b7a52; }
     .lesson-title { font-size: 1.05rem; color: #3d4f21; margin-bottom: 8px; }
     @media (max-width: 768px) { .app-layout { flex-direction: column; } .sidebar { width: 100%; height: auto; position: relative; } }
@@ -142,6 +137,10 @@
     }
     function isAudioUrl(url) { return /\.(mp3|wav|ogg|m4a|aac)(\?|#|$)/i.test(url || '') || /audio|sound/i.test(url || ''); }
 
+    function avisoMateriaisBloqueados() {
+      return '<div class="materiais-bloqueados">🔒 Vídeo e documentos liberam somente depois de clicar em <strong>Corrigir Respostas</strong> na lição.</div>';
+    }
+
     function htmlDoVideoLiberado(lesson, mIndex, lIndex) {
       const ytMain = formatYouTubeUrl(lesson.videoUrl);
       return '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-video" style="width:100%;">' +
@@ -185,40 +184,43 @@
         '<div class="doc-body-inner"><a href="' + (item.url || '#') + '" target="_blank" class="btn-link-general">Abrir material</a></div></div></div>';
     }
 
+    function htmlDosLinks(lesson, mIndex, lIndex) {
+      if (!lesson.links || !lesson.links.length) return '';
+      return '<div class="materiais-liberados">' + lesson.links.map((item, i) => renderMaterialItem(item, mIndex, lIndex, i)).join('') + '</div>';
+    }
+
     function liberarMateriaisNaTela(mIndex, lIndex) {
       const modules = JSON.parse(localStorage.getItem(LS_MODULES) || '[]');
       const lesson = (((modules[mIndex] || {}).lessons) || [])[lIndex];
       if (!lesson) return;
       const wrap = document.getElementById('video-wrap-' + mIndex + '-' + lIndex);
-      if (wrap) wrap.innerHTML = lesson.videoUrl ? htmlDoVideoLiberado(lesson, mIndex, lIndex) : '';
-      const lessonBox = document.getElementById('lesson-' + mIndex + '-' + lIndex);
-      if (lessonBox) {
-        if (!lessonBox.querySelector('.materiais-liberados') && lesson.links && lesson.links.length) {
-          const bloco = document.createElement('div');
-          bloco.className = 'materiais-liberados';
-          bloco.innerHTML = lesson.links.map((item, linkIndex) => renderMaterialItem(item, mIndex, lIndex, linkIndex)).join('');
-          lessonBox.appendChild(bloco);
-        }
+      if (wrap) {
+        wrap.innerHTML = (lesson.videoUrl ? htmlDoVideoLiberado(lesson, mIndex, lIndex) : '') + htmlDosLinks(lesson, mIndex, lIndex);
       }
       const item = document.getElementById('item-' + mIndex);
       const body = document.getElementById('body-' + mIndex);
       if (item && body) { item.classList.add('active'); body.style.maxHeight = (body.scrollHeight + 2500) + 'px'; }
     }
+
+    function ehBotaoCorrigir(btn) {
+      const texto = ((btn.innerText || btn.value || '') + ' ' + (btn.id || '') + ' ' + (btn.name || '') + ' ' + (btn.className || '')).toUpperCase();
+      return texto.includes('CORRIGIR RESPOSTAS') || btn.id === 'btnCorrigir';
+    }
+
     function conectarFormularioLicao(mIndex, lIndex, iframe) {
       try {
         const doc = iframe.contentDocument || iframe.contentWindow.document;
         const liberar = function (ev) { if (ev) ev.preventDefault(); marcarMateriaisLiberados(mIndex, lIndex); };
         doc.querySelectorAll('button, input[type="button"], input[type="submit"], a').forEach(btn => {
-          const texto = ((btn.innerText || btn.value || '') + ' ' + (btn.id || '')).toUpperCase();
-          if (texto.includes('CORRIGIR RESPOSTAS') || texto.includes('DESBLOQUEAR') || btn.id === 'btnCorrigir') {
-            if (btn.dataset.unlockBound === '1') return;
-            btn.dataset.unlockBound = '1';
-            btn.addEventListener('click', liberar);
-          }
+          if (!ehBotaoCorrigir(btn)) return;
+          if (btn.dataset.unlockBound === '1') return;
+          btn.dataset.unlockBound = '1';
+          btn.addEventListener('click', liberar);
         });
         iframe.contentWindow.liberarVideoAula = function () { marcarMateriaisLiberados(mIndex, lIndex); };
       } catch (e) {}
     }
+
     async function loadCursoFromCloud() {
       try {
         const res = await fetch(FIREBASE_URL + '?t=' + Date.now());
@@ -291,16 +293,16 @@
       const licaoHTML = lesson.firstHtmlPage
         ? ('<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-html"><button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'html\')"><span>📋 ' + (lesson.firstHtmlTitle || lesson.firstHtmlPage.replace('.html','')) + '</span><span class="toggle-icon">+</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-html"><div class="doc-body-inner"><iframe class="licao-frame" src="' + licaoSrc + '" onload="conectarFormularioLicao(' + mIndex + ',' + lIndex + ', this)"></iframe></div></div></div>')
         : '';
-      let videoHTML = '';
-      if (!liberado && precisaDesbloquear && (lesson.videoUrl || (lesson.links && lesson.links.length))) {
-        videoHTML = '<div class="section-block video-wrap" id="video-wrap-' + mIndex + '-' + lIndex + '"><button type="button" class="btn-video" onclick="marcarMateriaisLiberados(' + mIndex + ',' + lIndex + ')">Desbloquear</button></div>';
-      } else if (lesson.videoUrl && liberado) {
-        videoHTML = '<div class="section-block video-wrap" id="video-wrap-' + mIndex + '-' + lIndex + '">' + htmlDoVideoLiberado(lesson, mIndex, lIndex) + '</div>';
+      let extrasHTML = '';
+      if (precisaDesbloquear && !liberado && (lesson.videoUrl || (lesson.links && lesson.links.length))) {
+        extrasHTML = '<div class="section-block video-wrap" id="video-wrap-' + mIndex + '-' + lIndex + '">' + avisoMateriaisBloqueados() + '</div>';
+      } else {
+        extrasHTML = '<div class="section-block video-wrap" id="video-wrap-' + mIndex + '-' + lIndex + '">' +
+          (lesson.videoUrl && (!precisaDesbloquear || liberado) ? htmlDoVideoLiberado(lesson, mIndex, lIndex) : '') +
+          ((!precisaDesbloquear || liberado) ? htmlDosLinks(lesson, mIndex, lIndex) : '') +
+        '</div>';
       }
-      const linksHTML = (liberado && lesson.links && lesson.links.length)
-        ? '<div class="materiais-liberados">' + lesson.links.map((item, i) => renderMaterialItem(item, mIndex, lIndex, i)).join('') + '</div>'
-        : '';
-      return '<div class="section-block lesson-block" id="lesson-' + mIndex + '-' + lIndex + '"><h3 class="lesson-title">' + lesson.title + '</h3>' + (lesson.description ? '<p class="lesson-text">' + lesson.description + '</p>' : '') + licaoHTML + videoHTML + linksHTML + '</div>';
+      return '<div class="section-block lesson-block" id="lesson-' + mIndex + '-' + lIndex + '"><h3 class="lesson-title">' + lesson.title + '</h3>' + (lesson.description ? '<p class="lesson-text">' + lesson.description + '</p>' : '') + licaoHTML + extrasHTML + '</div>';
     }
     function collapseAllModules() {
       document.querySelectorAll('.doc-accordion.active, .accordion-item.active').forEach(item => {
