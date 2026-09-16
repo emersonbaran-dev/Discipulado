@@ -1,233 +1,86 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plano de Lições - Documento PDF</title>
-  
-  <!-- Biblioteca html2pdf.js para exportação direta em PDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+function gerarPdfDaLicao(iframe) {
+  var win = iframe.contentWindow;
+  var doc = iframe.contentDocument || (win && win.document);
+  var src = doc && doc.getElementById('licaoImpressao');
+  if (!src) {
+    alert('Não foi possível gerar o PDF. Tente novamente.');
+    return;
+  }
+  if (typeof html2pdf !== 'function') {
+    alert('Não foi possível carregar o gerador de PDF. Verifique a internet.');
+    return;
+  }
+  try { if (typeof win.gravarCache === 'function') win.gravarCache(); } catch (e) {}
 
-  <style>
-    /* Configurações Globais de Impressão e PDF */
-    @page {
-      size: A4 portrait;
-      margin: 15mm;
+  var antigo = document.getElementById('__pdfCloneWrap');
+  if (antigo) antigo.remove();
+
+  var wrap = document.createElement('div');
+  wrap.id = '__pdfCloneWrap';
+  wrap.style.cssText = 'position:fixed;left:0;top:0;width:794px;background:#fff;z-index:2147483646;pointer-events:none;';
+
+  var clone = src.cloneNode(true);
+  clone.id = 'licaoImpressaoClone';
+  clone.style.cssText = 'width:794px;max-width:794px;margin:0;box-shadow:none;border-radius:0;background:#fff;';
+
+  clone.querySelectorAll('#btnPdf, #btnCorrigir, .btn-pdf, .btn-corrigir').forEach(function (el) { el.remove(); });
+
+  clone.querySelectorAll('img').forEach(function (img) {
+    img.removeAttribute('crossorigin');
+    img.src = 'logo-ipb.png';
+    img.style.position = 'relative';
+    img.style.left = 'auto';
+    img.style.height = '52px';
+  });
+
+  var origCampos = src.querySelectorAll('input, textarea, select');
+  var cloneCampos = clone.querySelectorAll('input, textarea, select');
+  origCampos.forEach(function (inp, i) {
+    var c = cloneCampos[i];
+    if (!c) return;
+    if (inp.type === 'checkbox' || inp.type === 'radio') c.checked = inp.checked;
+    else c.value = inp.value;
+    if (inp.parentElement && c.parentElement) {
+      c.parentElement.className = inp.parentElement.className;
     }
+  });
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  wrap.appendChild(clone);
+  document.body.appendChild(wrap);
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #f4f6f8;
-      color: #333333;
-      padding: 20px;
-      line-height: 1.5;
-    }
+  var nome = 'Aluno';
+  try { if (typeof win.val === 'function') nome = String(win.val('nomePessoa') || 'Aluno'); } catch (e) {}
+  nome = String(nome).replace(/\s+/g, '_');
+  var nLicao = '01';
+  try {
+    var m = String((win.location && win.location.pathname) || '').match(/Licao(\d+)/i);
+    if (m) nLicao = m[1];
+  } catch (e) {}
 
-    /* Container Principal (Ajustado às margens do PDF) */
-    .pdf-container {
-      width: 100%;
-      max-width: 800px;
-      margin: 0 auto;
-      background-color: #ffffff;
-      padding: 20px;
-      border-radius: 8px;
-    }
-
-    /* Barra de Ações (Escondida no PDF final) */
-    .actions {
-      text-align: right;
-      margin-bottom: 20px;
-    }
-
-    .btn-pdf {
-      background-color: #0066cc;
-      color: #ffffff;
-      border: none;
-      padding: 10px 18px;
-      font-size: 14px;
-      font-weight: bold;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    .btn-pdf:hover {
-      background-color: #004b99;
-    }
-
-    /* Cabeçalho do Documento */
-    .header {
-      border-bottom: 2px solid #0066cc;
-      padding-bottom: 15px;
-      margin-bottom: 25px;
-    }
-
-    .header h1 {
-      color: #0066cc;
-      font-size: 24px;
-    }
-
-    /* Regras das Lições (Garantia de ajuste estrito às margens) */
-    .lista-licoes {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      width: 100%;
-    }
-
-    .licao {
-      width: 100%;
-      max-width: 100%;
-      background-color: #f9fafb;
-      border: 1px solid #e5e7eb;
-      border-left: 5px solid #0066cc;
-      border-radius: 6px;
-      padding: 18px;
-
-      /* Previne vazamentos laterais de texto e quebras de página no meio do bloco */
-      overflow-wrap: break-word;
-      word-break: break-word;
-      page-break-inside: avoid;
-      break-inside: avoid;
-    }
-
-    .licao-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-      border-bottom: 1px dashed #d1d5db;
-      padding-bottom: 8px;
-    }
-
-    .licao-titulo {
-      font-size: 18px;
-      color: #111827;
-      font-weight: bold;
-    }
-
-    .licao-tag {
-      background-color: #e0f2fe;
-      color: #0369a1;
-      font-size: 12px;
-      padding: 3px 8px;
-      border-radius: 12px;
-      font-weight: 600;
-    }
-
-    .licao-conteudo {
-      font-size: 14px;
-      color: #4b5563;
-    }
-
-    .licao-conteudo p {
-      margin-bottom: 8px;
-    }
-
-    .licao-conteudo p:last-child {
-      margin-bottom: 0;
-    }
-
-    /* Ocultar elementos desnecessários na geração de PDF ou Impressão */
-    @media print {
-      body {
-        background-color: #ffffff;
-        padding: 0;
-      }
-
-      .actions {
-        display: none;
-      }
-
-      .pdf-container {
-        padding: 0;
-        box-shadow: none;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <div class="pdf-container" id="conteudo-pdf">
-    
-    <div class="actions">
-      <button class="btn-pdf" onclick="gerarPDF()">Baixar em PDF</button>
-    </div>
-
-    <div class="header">
-      <h1>Programa de Treinamento e Lições</h1>
-      <p>Cronograma Completo de Conteúdos</p>
-    </div>
-
-    <div class="lista-licoes">
-      
-      <!-- Lição 1 -->
-      <div class="licao">
-        <div class="licao-header">
-          <span class="licao-titulo">Lição 1: Introdução aos Conceitos Fundamentais</span>
-          <span class="licao-tag">Módulo 1</span>
-        </div>
-        <div class="licao-conteudo">
-          <p>Nesta lição, você aprenderá as bases essenciais da disciplina, compreendendo os objetivos gerais e a estrutura do curso.</p>
-          <p><strong>Recursos:</strong> Documentação oficial e exemplos práticos interativos.</p>
-        </div>
-      </div>
-
-      <!-- Lição 2 -->
-      <div class="licao">
-        <div class="licao-header">
-          <span class="licao-titulo">Lição 2: Estruturação e Organização Prática</span>
-          <span class="licao-tag">Módulo 1</span>
-        </div>
-        <div class="licao-conteudo">
-          <p>Abordagem detalhada sobre o alinhamento de componentes, gerenciamento de layouts responsivos e adaptações às margens de impressão.</p>
-          <p><strong>Atividade:</strong> Exercício prático de montagem e validação do fluxo de trabalho.</p>
-        </div>
-      </div>
-
-      <!-- Lição 3 -->
-      <div class="licao">
-        <div class="licao-header">
-          <span class="licao-titulo">Lição 3: Otimização de Arquivos e Exportação</span>
-          <span class="licao-tag">Módulo 2</span>
-        </div>
-        <div class="licao-conteudo">
-          <p>Boas práticas na geração de documentos PDF sem perdas de formatação ou vazamento nas margens laterais.</p>
-          <p><strong>Links úteis:</strong> https://exemplo.com/recursos-de-estudo-e-referencia-tecnica-completa</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <script>
-    function gerarPDF() {
-      // Oculta os botões temporariamente
-      const acoes = document.querySelector('.actions');
-      acoes.style.display = 'none';
-
-      const elemento = document.getElementById('conteudo-pdf');
-      
-      const opcoes = {
-        margin:       [15, 15, 15, 15], // Margens [topo, esquerda, baixo, direita] em mm
-        filename:     'licoes-documento.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      };
-
-      html2pdf().set(opcoes).from(elemento).save().then(() => {
-        // Restaura a exibição dos botões após a geração
-        acoes.style.display = 'block';
-      });
-    }
-  </script>
-
-</body>
-</html>
+  html2pdf().set({
+    margin: [8, 10, 8, 10],
+    filename: 'Licao' + nLicao + '-' + nome + '.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: {
+      scale: 2,
+      useCORS: false,
+      allowTaint: false,
+      backgroundColor: '#ffffff',
+      logging: false,
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: 794,
+      imageTimeout: 0
+    },
+    pagebreak: {
+      mode: ['avoid-all', 'css', 'legacy'],
+      avoid: ['.question-group', '.section-title', '.final-note', '.alternativas', '.intro', '.header-container']
+    },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  }).from(clone).save().then(function () {
+    wrap.remove();
+  }).catch(function () {
+    wrap.remove();
+    alert('Não foi possível gerar o PDF. Tente novamente.');
+  });
+}
