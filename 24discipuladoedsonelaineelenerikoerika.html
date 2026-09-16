@@ -142,21 +142,41 @@
           (ytMain ? '<div class="video-responsive"><iframe src="' + ytMain + '" allowfullscreen></iframe></div>' : '<a class="btn-link-general" href="' + lesson.videoUrl + '" target="_blank">Abrir vídeo</a>') +
         '</div></div></div>';
     }
+
     function renderMaterialItem(item, mIndex, lIndex, linkIndex) {
-      if (isLocked(item.releaseDate)) {
-        return '<div class="doc-accordion"><div class="doc-header" style="cursor:not-allowed;color:#6b7a52;"><span>🔒 ' + (item.subtitle || 'Material') + '</span><div class="lock-notice">Disponível em: ' + new Date(item.releaseDate).toLocaleString('pt-BR') + '</div></div></div>';
-      }
+      const titulo = item.subtitle || item.title || 'Material';
       const key = 'link' + linkIndex;
+      if (isLocked(item.releaseDate)) {
+        return '<div class="doc-accordion"><div class="doc-header" style="cursor:not-allowed;color:#6b7a52;"><span>🔒 ' + titulo + '</span><div class="lock-notice">Disponível em: ' + new Date(item.releaseDate).toLocaleString('pt-BR') + '</div></div></div>';
+      }
       const yt = formatYouTubeUrl(item.url);
       const docs = formatGoogleDocsEmbedUrl(item.url);
       const audio = isAudioUrl(item.url);
       const pdf = ehPdf(item.url);
-      if (pdf) return '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-' + key + '"><button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'' + key + '\')"><span>📄 ' + (item.subtitle || 'PDF') + '</span><span class="toggle-icon">+</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-' + key + '"><div class="doc-frame-container"><iframe src="' + item.url + '"></iframe></div><div class="doc-footer"><a href="' + item.url + '" target="_blank" class="btn-link-general" style="font-size:0.8rem;padding:6px 12px;">↗ Abrir PDF</a></div></div></div>';
-      if (yt) return '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-' + key + '"><button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'' + key + '\')"><span>🎬 ' + (item.subtitle || 'Vídeo') + '</span><span class="toggle-icon">+</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-' + key + '"><div class="doc-body-inner"><div class="video-responsive"><iframe src="' + yt + '" allowfullscreen></iframe></div></div></div></div>';
-      if (audio) return '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-' + key + '"><button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'' + key + '\')"><span>🎧 ' + (item.subtitle || 'Áudio') + '</span><span class="toggle-icon">+</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-' + key + '"><div class="audio-container"><audio class="audio-player" controls src="' + item.url + '"></audio></div></div></div>';
-      if (docs) return '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-' + key + '"><button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'' + key + '\')"><span>📄 ' + (item.subtitle || 'Documento') + '</span><span class="toggle-icon">+</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-' + key + '"><div class="doc-frame-container"><iframe src="' + docs + '"></iframe></div><div class="doc-footer"><a href="' + item.url + '" target="_blank" class="btn-link-general" style="font-size:0.8rem;padding:6px 12px;">↗ Abrir original</a></div></div></div>';
-      return '<div class="section-block"><a href="' + item.url + '" target="_blank" class="btn-link-general">🔗 ' + (item.subtitle || 'Material') + '</a></div>';
+      const cabeca = '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-' + key + '"><button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'' + key + '\')">';
+      const fechaCabeca = '<span class="toggle-icon">+</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-' + key + '">';
+      if (pdf) {
+        return cabeca + '<span>📄 ' + titulo + '</span>' + fechaCabeca +
+          '<div class="doc-frame-container"><iframe src="' + item.url + '"></iframe></div>' +
+          '<div class="doc-footer"><a href="' + item.url + '" target="_blank" class="btn-link-general" style="font-size:0.8rem;padding:6px 12px;">↗ Abrir PDF</a></div></div></div>';
+      }
+      if (yt) {
+        return cabeca + '<span>🎬 ' + titulo + '</span>' + fechaCabeca +
+          '<div class="doc-body-inner"><div class="video-responsive"><iframe src="' + yt + '" allowfullscreen></iframe></div></div></div></div>';
+      }
+      if (audio) {
+        return cabeca + '<span>🎧 ' + titulo + '</span>' + fechaCabeca +
+          '<div class="audio-container"><audio class="audio-player" controls src="' + item.url + '"></audio></div></div></div>';
+      }
+      if (docs) {
+        return cabeca + '<span>📄 ' + titulo + '</span>' + fechaCabeca +
+          '<div class="doc-frame-container"><iframe src="' + docs + '"></iframe></div>' +
+          '<div class="doc-footer"><a href="' + item.url + '" target="_blank" class="btn-link-general" style="font-size:0.8rem;padding:6px 12px;">↗ Abrir original</a></div></div></div>';
+      }
+      return cabeca + '<span>🔗 ' + titulo + '</span>' + fechaCabeca +
+        '<div class="doc-body-inner"><a href="' + (item.url || '#') + '" target="_blank" class="btn-link-general">Abrir material</a></div></div></div>';
     }
+
     function liberarMateriaisNaTela(mIndex, lIndex) {
       const modules = JSON.parse(localStorage.getItem(LS_MODULES) || '[]');
       const lesson = (((modules[mIndex] || {}).lessons) || [])[lIndex];
@@ -232,6 +252,12 @@
           let extra = '';
           if (lesson.firstHtmlPage) extra += '<li><button class="sidebar-subitem" onclick="handleSidebarSubitemClick(' + mIndex + ',' + lIndex + ',\'html\')">📋 ' + (lesson.firstHtmlTitle || lesson.firstHtmlPage.replace('.html','')) + '</button></li>';
           if (lesson.videoUrl && materiaisLiberados(lesson, mIndex, lIndex)) extra += '<li><button class="sidebar-subitem" onclick="abrirVideo(' + mIndex + ',' + lIndex + ')">🎬 ' + (lesson.videoTitle || 'Vídeo da aula') + '</button></li>';
+          if (materiaisLiberados(lesson, mIndex, lIndex) && lesson.links) {
+            extra += lesson.links.map(function(item, linkIndex) {
+              if (isLocked(item.releaseDate)) return '';
+              return '<li><button class="sidebar-subitem" onclick="handleSidebarSubitemClick(' + mIndex + ',' + lIndex + ',\'link' + linkIndex + '\')">🔗 ' + (item.subtitle || item.title || 'Material') + '</button></li>';
+            }).join('');
+          }
           return '<li><button class="sidebar-subitem" onclick="handleSidebarLessonClick(' + mIndex + ',' + lIndex + ')">' + lesson.title + '</button></li>' + extra;
         }).join('');
         return '<li class="sidebar-module" id="sidebar-mod-' + mIndex + '"><button class="sidebar-module-title" onclick="toggleSidebarModule(' + mIndex + ')"><span>' + module.title + '</span><span>▾</span></button><ul class="sidebar-sublist">' + sub + '</ul></li>';
