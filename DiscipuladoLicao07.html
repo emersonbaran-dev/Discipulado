@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discipulado Lição 7 - Comunhão na Palavra</title>
+    <title>Discipulado Lição 07 - Comunhão na Palavra</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -77,32 +77,43 @@
             margin-top: 25px;
             margin-bottom: 15px;
         }
-        .verse-box {
-            background-color: #f9f9f9;
-            border: 1px solid #e0e0e0;
-            border-left: 3px solid #A88237;
-            padding: 10px 15px;
-            margin-bottom: 10px;
-            font-style: italic;
-            font-size: 11pt;
-            color: #444;
-        }
-        .verse-title {
-            font-weight: bold;
-            font-style: normal;
-            color: #A88237;
-            margin-bottom: 4px;
-        }
         .question-group {
             margin-bottom: 20px;
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #eee;
         }
-        label {
+        label.q-title {
             display: block;
             font-weight: bold;
-            margin-bottom: 6px;
+            margin-bottom: 10px;
             color: #222;
         }
-        input[type="text"], input[type="date"], textarea {
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: normal;
+            cursor: pointer;
+            background: #fff;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .option-label:hover {
+            background-color: #f0f0f0;
+        }
+        .option-label input[type="radio"] {
+            margin: 0;
+        }
+        input[type="text"], input[type="date"] {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -110,14 +121,6 @@
             box-sizing: border-box;
             font-size: 11pt;
             margin-top: 4px;
-        }
-        input[type="text"]:focus, textarea:focus {
-            border-color: #A88237;
-            outline: none;
-        }
-        .sub-question {
-            margin-top: 10px;
-            margin-bottom: 10px;
         }
         .footer-info {
             display: flex;
@@ -153,7 +156,7 @@
             text-align: justify;
             font-style: italic;
             color: #555;
-            background-color: #f9f9f9;
+            background-color: #fcf9f0;
             padding: 15px;
             border-radius: 6px;
             border: 1px solid #e0e0e0;
@@ -167,7 +170,6 @@
 <div class="container">
     <div class="main-category">III - COMUNHÃO</div>
     
-    <!-- Cabeçalho com Logo à esquerda e Título Centralizado -->
     <div class="header-container">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
         <h1>Lição 7</h1>
@@ -185,110 +187,75 @@
         <div class="section-title">A - DEVOCIONAL: AGENDE DIARIAMENTE</div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Lucas 5:15-16</div>
-                "Porem a sua fama se espalhava mais e mais, e concorriam grandes multidões para o ouvir e serem por ele curadas das suas enfermidades. Ele, porem, se retirava para os lugares solitários e orava."
+            <label class="q-title">1) Que evidências vemos em Lc 5.15,16 de que Jesus considerava o tempo a sós com Deus prioritário?</label>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q1" value="A" required> A) Ele se retirava para lugares solitários e orava.</label>
+                <label class="option-label"><input type="radio" name="q1" value="B"> B) Ele evitava ensinar no templo.</label>
+                <label class="option-label"><input type="radio" name="q1" value="C"> C) Ele orava apenas quando estava doente.</label>
+                <label class="option-label"><input type="radio" name="q1" value="D"> D) Ele buscava a glória das multidões.</label>
             </div>
-            <label for="q1">1) Que evidências você vê em Lucas 5.15,16 em que Jesus considera que um tempo a sós com Deus é muito importante?</label>
-            <textarea id="q1" name="1. Evidencias em Lc 5.15-16" rows="2" required></textarea>
         </div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Lucas 6:12-13</div>
-                "Naqueles dias, retirou-se para o monte, a fim de orar, e passou a noite orando a Deus. E, quando deu o dia, chamou a si os seus discípulos e escolheu doze dentre eles, aos quais deu também o nome de apóstolos;"
+            <label class="q-title">2) O que Jesus fez antes de chamar os 12 apóstolos? (Lc 6.12,13)</label>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q2" value="A" required> A) Jejuou no deserto durante quarenta dias.</label>
+                <label class="option-label"><input type="radio" name="q2" value="B"> B) Passou a noite orando a Deus.</label>
+                <label class="option-label"><input type="radio" name="q2" value="C"> C) Consultou os líderes religiosos de Jerusalém.</label>
+                <label class="option-label"><input type="radio" name="q2" value="D"> D) Escreveu uma carta de convocação a cada um.</label>
             </div>
-            <label for="q2">2) O que Jesus fez antes de chamar os 12 apóstolos? (Lc 6.12,13)</label>
-            <textarea id="q2" name="2. Acao de Jesus antes de chamar os doze (Lc 6.12-13)" rows="2" required></textarea>
         </div>
 
         <!-- SEÇÃO B -->
         <div class="section-title">B - BÍBLIA: DEUS FALANDO</div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Salmo 1:2</div>
-                "Antes, o seu prazer está na lei do Senhor, e na sua lei medita de dia e de noite."
-            </div>
-            <label>3) Veja o Salmo 1.2 e responda:</label>
-            
-            <div class="sub-question">
-                <label for="q3a">Qual o prazer do justo?</label>
-                <input type="text" id="q3a" name="3a. Prazer do justo (Sl 1.2)" required>
-            </div>
-
-            <div class="sub-question">
-                <label for="q3b">O que ele faz?</label>
-                <input type="text" id="q3b" name="3b. O que ele faz (Sl 1.2)" required>
-            </div>
-
-            <div class="sub-question">
-                <label for="q3c">Quando ele medita na lei?</label>
-                <input type="text" id="q3c" name="3c. Quando ele medita (Sl 1.2)" required>
+            <label class="q-title">3) De acordo com o Salmo 1.2, onde está o prazer do justo e o que ele faz?</label>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q3" value="A" required> A) Na riqueza do mundo; ele ajunta bens de dia e de noite.</label>
+                <label class="option-label"><input type="radio" name="q3" value="B"> B) Na lei do Senhor; nela medita de dia e de noite.</label>
+                <label class="option-label"><input type="radio" name="q3" value="C"> C) No conselho dos ímpios; ele o segue continuamente.</label>
+                <label class="option-label"><input type="radio" name="q3" value="D"> D) Na sabedoria humana; ele a estuda aos sábados.</label>
             </div>
         </div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Salmo 119:97</div>
-                "Quanto amo a tua lei! É a minha meditação todo o dia."
-            </div>
-            <label for="q4">4) Cite o sentimento que o salmista tem diariamente pela Bíblia (Sl 119.97):</label>
-            <textarea id="q4" name="4. Sentimento do salmista pela Biblia (Sl 119.97)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">João 5:39</div>
-                "Examinais as Escrituras, porque vós cuidais ter nelas a vida eterna, e são elas mesmas que testificam de mim."
-            </div>
-            <label for="q5">5) A quem a Bíblia testifica? (Jo 5.39)</label>
-            <textarea id="q5" name="5. A quem a Biblia testifica (Jo 5.39)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">2 Timóteo 3:16</div>
-                "Toda a Escritura é inspirada por Deus e útil para o ensino, para a repreensão, para a correção, para a educação na justiça,"
-            </div>
-            <label>6) Em 2 Tm 3.16 diz que a Bíblia foi inspirada por Deus e é útil para:</label>
-            
-            <div class="sub-question">
-                <label for="q6_1">1)</label>
-                <input type="text" id="q6_1" name="6.1 Utilidade da Biblia (2Tm 3.16)" required>
-            </div>
-
-            <div class="sub-question">
-                <label for="q6_2">2)</label>
-                <input type="text" id="q6_2" name="6.2 Utilidade da Biblia (2Tm 3.16)" required>
-            </div>
-
-            <div class="sub-question">
-                <label for="q6_3">3)</label>
-                <input type="text" id="q6_3" name="6.3 Utilidade da Biblia (2Tm 3.16)" required>
-            </div>
-
-            <div class="sub-question">
-                <label for="q6_4">4)</label>
-                <input type="text" id="q6_4" name="6.4 Utilidade da Biblia (2Tm 3.16)" required>
+            <label class="q-title">4) Qual o sentimento do salmista pela lei de Deus em Sl 119.97?</label>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q4" value="A" required> A) Amor profundo, sendo sua meditação todo o dia.</label>
+                <label class="option-label"><input type="radio" name="q4" value="B"> B) Temor excessivo, evitando lê-la constantemente.</label>
+                <label class="option-label"><input type="radio" name="q4" value="C"> C) Indiferença, cumprindo-a apenas por obrigação.</label>
+                <label class="option-label"><input type="radio" name="q4" value="D"> D) Dúvida, meditando nela ocasionalmente.</label>
             </div>
         </div>
 
         <div class="question-group">
-            <div class="verse-box">
-                <div class="verse-title">Salmo 119:11</div>
-                "Guardo no meu coração as tuas palavras, para não pecar contra ti."
+            <label class="q-title">5) A quem as Escrituras testificam, segundo Jo 5.39?</label>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q5" value="A" required> A) Aos reis da terra.</label>
+                <label class="option-label"><input type="radio" name="q5" value="B"> B) A Jesus Cristo.</label>
+                <label class="option-label"><input type="radio" name="q5" value="C"> C) Aos profetas do Antigo Testamento.</label>
+                <label class="option-label"><input type="radio" name="q5" value="D"> D) À história de Israel.</label>
             </div>
-            <label>7) O que o crente no Senhor deve fazer quanto à Palavra de Deus, conforme em Sl 119.11?</label>
-            
-            <div class="sub-question">
-                <label for="q7a">a) Guarda a Palavra no:</label>
-                <input type="text" id="q7a" name="7a. Guarda a Palavra no (Sl 119.11)" required>
-            </div>
+        </div>
 
-            <div class="sub-question">
-                <label for="q7b">b) Para não:</label>
-                <input type="text" id="q7b" name="7b. Para nao (Sl 119.11)" required>
+        <div class="question-group">
+            <label class="q-title">6) Conforme 2 Tm 3.16, a Escritura é inspirada por Deus e útil para:</label>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q6" value="A" required> A) Ensino, repreensão, correção e educação na justiça.</label>
+                <label class="option-label"><input type="radio" name="q6" value="B"> B) Riqueza, prosperidade, saúde e sucesso pessoal.</label>
+                <label class="option-label"><input type="radio" name="q6" value="C"> C) Filosofia, política, ciência e história antiga.</label>
+                <label class="option-label"><input type="radio" name="q6" value="D"> D) Julgamento dos pecadores, condenação e castigo.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label class="q-title">7) O que o crente faz com a Palavra e qual a finalidade disso segundo Sl 119.11?</label>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q7" value="A" required> A) Guarda no coração para não pecar contra Deus.</label>
+                <label class="option-label"><input type="radio" name="q7" value="B"> B) Escreve em tábuas para ensinar aos reis.</label>
+                <label class="option-label"><input type="radio" name="q7" value="C"> C) Decora o texto para debater com os outros.</label>
+                <label class="option-label"><input type="radio" name="q7" value="D"> D) Lê em público para receber louvor dos homens.</label>
             </div>
         </div>
 
