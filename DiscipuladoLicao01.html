@@ -17,6 +17,8 @@
                 margin: 0 !important;
                 max-width: none !important;
                 width: 100% !important;
+                box-sizing: border-box !important;
+                overflow: visible !important;
             }
             #btnPdf, #btnCorrigir, #resultado {
                 display: none !important;
@@ -39,7 +41,7 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #CFD3A0;
+            border-top: 6px solid #2D4F5C;
         }
         .header-container {
             position: relative;
@@ -59,13 +61,13 @@
             text-align: center;
             font-size: 16pt;
             font-weight: bold;
-            color: #CFD3A0;
+            color: #2D4F5C;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 5px;
         }
         h1 {
-            color: #CFD3A0;
+            color: #2D4F5C;
             margin: 0;
             font-size: 32px;
             text-transform: uppercase;
@@ -80,13 +82,13 @@
         }
         .intro {
             background-color: #f0f4f6;
-            border-left: 4px solid #CFD3A0;
+            border-left: 4px solid #2D4F5C;
             padding: 12px 15px;
             margin-bottom: 25px;
             font-size: 11pt;
         }
         .section-title {
-            background-color: #CFD3A0;
+            background-color: #2D4F5C;
             color: white;
             padding: 6px 12px;
             font-size: 13pt;
@@ -114,7 +116,7 @@
             margin-top: 4px;
         }
         input[type="text"]:focus, textarea:focus, select:focus {
-            border-color: #CFD3A0;
+            border-color: #2D4F5C;
             outline: none;
         }
         .footer-info {
@@ -193,7 +195,7 @@
         .final-note {
             text-align: center;
             font-weight: bold;
-            color: #CFD3A0;
+            color: #2D4F5C;
             background-color: #f0f4f6;
             padding: 15px;
             border-radius: 6px;
@@ -433,7 +435,7 @@
         resultado.style.display = 'none';
 
         html2pdf().set({
-            margin: [8, 8, 8, 8],
+            margin: [10, 10, 10, 10],
             filename: 'Licao01-' + nome + '.pdf',
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: {
@@ -442,8 +444,24 @@
                 backgroundColor: '#ffffff',
                 scrollX: 0,
                 scrollY: 0,
-                windowWidth: elemento.scrollWidth,
-                windowHeight: elemento.scrollHeight
+                windowWidth: 794,
+                onclone: function(clonedDoc) {
+                    var el = clonedDoc.getElementById('licaoImpressao');
+                    if (el) {
+                        el.style.boxSizing = 'border-box';
+                        el.style.maxWidth = '100%';
+                        el.style.width = '100%';
+                        el.style.margin = '0';
+                        el.style.boxShadow = 'none';
+                        el.style.padding = '16px';
+                        el.style.overflow = 'visible';
+                    }
+                    var img = clonedDoc.querySelector('.header-container img');
+                    if (img) {
+                        img.style.position = 'relative';
+                        img.style.left = 'auto';
+                    }
+                }
             },
             pagebreak: {
                 mode: ['css', 'legacy'],
