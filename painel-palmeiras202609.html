@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Área do Aluno - IPB</title>
+  <title>Painel do Professor - IPB</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6ef; color: #2f3b22; display: flex; min-height: 100vh; }
@@ -17,56 +17,63 @@
     .btn-toggle-sidebar:hover { background-color: #556b2f; color: #fff; }
     .sidebar.collapsed .sidebar-header { border-bottom: none; margin-bottom: 0; padding-bottom: 0; justify-content: center; }
     .sidebar-menu { list-style: none; }
-    .sidebar-module { margin-bottom: 10px; }
-    .sidebar-module-title { width: 100%; background: none; border: none; color: #eef3e4; font-size: 0.95rem; font-weight: 600; text-align: left; padding: 10px 12px; border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .sidebar-module { margin-bottom: 12px; }
+    .sidebar-module-title { width: 100%; background: none; border: none; color: #eef3e4; font-size: 0.95rem; font-weight: 600; text-align: left; padding: 10px 12px; border-radius: 6px; cursor: pointer; }
     .sidebar-module-title:hover { background-color: #556b2f; color: #fff; }
-    .sidebar-module-title.locked { color: #9aaa7a; cursor: not-allowed; opacity: 0.7; }
-    .sidebar-sublist { list-style: none; padding-left: 15px; margin-top: 5px; display: none; }
-    .sidebar-module.active .sidebar-sublist { display: block; }
-    .sidebar-subitem { width: 100%; background: none; border: none; color: #c5d4a1; font-size: 0.85rem; text-align: left; padding: 8px 10px; border-radius: 4px; cursor: pointer; display: block; }
-    .sidebar-subitem:hover { color: #e8f0c8; background-color: rgba(255,255,255,0.05); }
+    .sidebar-sublist { list-style: none; padding-left: 14px; margin-top: 4px; }
+    .sidebar-subitem { color: #c5d4a1; font-size: 0.82rem; padding: 6px 8px; }
     .main-content { flex: 1; padding: 30px 25px; max-width: 980px; margin: 0 auto; }
-    .header-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; margin-bottom: 25px; }
-    .brand { display: flex; align-items: center; gap: 14px; }
-    .brand img { width: 64px; height: 64px; object-fit: contain; }
-    .header-title h1 { color: #3d4f21; font-size: 2rem; margin-bottom: 8px; }
-    .header-title p { color: #6b7a52; }
-    .btn-collapse-all { background: transparent; color: #556b2f; border: 1px solid #c5d0a8; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
-    .accordion-item { background: #fff; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(61,79,33,0.08); overflow: hidden; border: 3px solid transparent; }
-    .accordion-item.is-locked { background: #f4f6ef; }
-    .accordion-header { width: 100%; background: transparent; border: none; padding: 20px 25px; font-size: 1.15rem; font-weight: 600; color: #1b1b1b; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-    .accordion-item.is-locked .accordion-header { cursor: not-allowed; }
-    .lock-notice { font-size: 0.85rem; background: #efe9c8; color: #6b5b16; padding: 6px 12px; border-radius: 6px; font-weight: 600; }
-    .toggle-icon { width: 32px; height: 32px; background: #efe3c8; color: #6b5b16; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: bold; margin-left: 15px; }
-    .accordion-item.active > .accordion-header .toggle-icon,
-    .doc-accordion.active > .doc-header .toggle-icon { transform: rotate(45deg); background: #efe3c8; color: #6b5b16; }
-    .accordion-body, .doc-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-    .accordion-content { padding: 0 25px 25px; border-top: 1px solid #e8eedc; }
-    .section-block { margin-top: 18px; }
-    .lesson-block + .lesson-block { border-top: 2px solid #A0A0A0; padding-top: 18px; margin-top: 22px; }
-    .lesson-text { line-height: 1.6; color: #4a5a32; white-space: pre-wrap; }
-    .video-responsive { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; }
-    .video-responsive iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-    .audio-container { padding: 12px 16px; max-width: 450px; }
-    audio.audio-player { width: 100%; height: 40px; }
-    .doc-accordion { border: 1px solid #c5d0a8; border-radius: 8px; overflow: hidden; background: #f4f6ef; margin-top: 10px; }
-    .doc-header { width: 100%; background: #e8eedc; border: none; padding: 14px 18px; font-size: 0.95rem; font-weight: 600; color: #3d4f21; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-    .doc-body-inner { padding: 15px; }
-    .doc-frame-container { width: 100%; height: 550px; background: #fff; }
-    .doc-frame-container iframe { width: 100%; height: 100%; border: none; }
-    .licao-frame { width: 100%; min-height: 980px; height: 80vh; border: 1px solid #d7dfc6; border-radius: 8px; background: #fff; }
-    .doc-footer { padding: 10px 15px; background: #f4f6ef; border-top: 1px solid #d7dfc6; text-align: right; }
-    .btn-link-general { display: inline-flex; align-items: center; gap: 8px; background: #556b2f; color: #fff; padding: 10px 18px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
-    .video-wrap { display: flex; flex-direction: column; align-items: center; }
-    .btn-video {
-      display: inline-flex; align-items: center; justify-content: center; width: 50%; margin: 0 auto;
-      border: 2px solid #F57F17; outline: 2px solid #FBC02D; outline-offset: 2px;
-      border-radius: 8px; padding: 10px 16px; font-size: 0.95rem; font-weight: 700;
-      background: #eab308; color: #422006; cursor: pointer; pointer-events: auto;
+    .brand { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 16px; }
+    .brand img { width: 72px; height: 72px; object-fit: contain; }
+    header { text-align: center; margin-bottom: 30px; }
+    header h1 { color: #3d4f21; font-size: 2rem; margin-bottom: 6px; }
+    header p { color: #6b7a52; }
+    .card { background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 12px rgba(61,79,33,0.08); border: 1px solid #d7dfc6; margin-bottom: 25px; }
+    .card h2 { font-size: 1.25rem; margin-bottom: 15px; color: #556b2f; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .form-group { margin-bottom: 18px; }
+    label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: #3d4f21; }
+    input[type="text"], input[type="datetime-local"], input[type="email"], input[type="url"], textarea, select {
+      width: 100%; padding: 10px 14px; border: 1px solid #c5d0a8; border-radius: 6px; font-size: 0.95rem; font-family: inherit; outline: none; background: #fff;
     }
-    .empty-state { text-align: center; padding: 40px; background: #fff; border-radius: 8px; color: #6b7a52; }
-    .lesson-title { font-size: 1.05rem; color: #3d4f21; margin-bottom: 8px; }
-    @media (max-width: 768px) { .app-layout { flex-direction: column; } .sidebar { width: 100%; height: auto; position: relative; } }
+    input:focus, textarea:focus, select:focus { border-color: #6b8e23; box-shadow: 0 0 0 3px rgba(107,142,35,0.15); }
+    textarea { resize: vertical; min-height: 90px; }
+    .checkbox-group { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 0.9rem; color: #556b2f; }
+    .checkbox-group input { width: 16px; height: 16px; }
+    .links-section, .html-embed-box, .video-box {
+      background-color: #f4f6ef; padding: 15px; border-radius: 8px; border: 1px dashed #b7c394; margin-bottom: 20px;
+    }
+    .html-embed-box { background: #eef3e4; border: 1px dashed #8aa05a; }
+    .video-box { background: #f7f8f1; }
+    .link-row { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; padding: 10px; background: #fff; border: 1px solid #c5d0a8; border-radius: 6px; }
+    .link-row-top, .link-row-schedule { display: flex; gap: 10px; align-items: center; }
+    .btn { padding: 10px 18px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-primary { background-color: #556b2f; color: white; }
+    .btn-primary:hover { background-color: #3d4f21; }
+    .btn-secondary { background-color: #d7dfc6; color: #3d4f21; }
+    .btn-danger { background-color: #a34a3a; color: white; padding: 8px 12px; }
+    .btn-move { background-color: #6b7a52; color: white; padding: 8px 10px; }
+    .btn-edit { background-color: #808000; color: white; }
+    .btn-cancel { background-color: #6b7a52; color: white; }
+    .form-actions { display: flex; gap: 10px; justify-content: flex-end; }
+    .item-card { background: #fff; border-radius: 8px; border: 1px solid #d7dfc6; padding: 16px; margin-bottom: 12px; }
+    .item-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .item-title { font-size: 1.05rem; font-weight: 700; color: #2f3b22; }
+    .item-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+    .badge { display: inline-block; font-size: 0.78rem; font-weight: 600; padding: 4px 8px; border-radius: 4px; margin-right: 6px; margin-bottom: 8px; }
+    .badge-released { background: #e4edcf; color: #3d4f21; }
+    .badge-scheduled { background: #efe9c8; color: #6b5b16; }
+    .badge-html { background: #dce8c4; color: #3d4f21; }
+    .badge-video { background: #e8edd4; color: #4a5c28; }
+    .badge-lock { background: #efe9c8; color: #6b5b16; }
+    .badge-editing { font-size: 0.75rem; background: #efe9c8; color: #6b5b16; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+    .hint { font-size: 0.85rem; color: #6b7a52; margin-bottom: 12px; }
+    .save-alert { display: none; padding: 10px; background-color: #e4edcf; color: #3d4f21; border-radius: 6px; margin-top: 10px; font-size: 0.85rem; font-weight: 600; }
+    .lesson-group-title { font-size: 0.95rem; color: #556b2f; font-weight: 700; margin: 16px 0 8px; }
+    @media (max-width: 768px) {
+      .app-layout { flex-direction: column; }
+      .sidebar { width: 100%; height: auto; position: relative; }
+      .link-row-top, .link-row-schedule { flex-wrap: wrap; }
+    }
   </style>
 </head>
 <body>
@@ -78,289 +85,582 @@
       </div>
       <ul class="sidebar-menu" id="sidebar-menu"></ul>
     </aside>
+
     <main class="main-content">
       <header>
-        <div class="header-top">
-          <div class="brand">
-            <img src="logo-ipb.png" alt="IPB" onerror="this.onerror=null;this.src='https://commons.wikimedia.org/wiki/Special:FilePath/Ipb_logo.png'">
-            <div class="header-title">
-              <h1 id="course-title-display">Discipulado IPB</h1>
-              <p id="course-subtitle-display">Acesse os módulos e aulas abaixo</p>
-            </div>
+        <div class="brand">
+          <img src="logo-ipb.png" alt="IPB" onerror="this.onerror=null;this.src='https://commons.wikimedia.org/wiki/Special:FilePath/Ipb_logo.png'">
+          <div>
+            <h1>Painel do Professor</h1>
+            <p>Igreja Presbiteriana do Brasil</p>
           </div>
-          <button class="btn-collapse-all" onclick="collapseAllModules()">▲ Fechar todos</button>
         </div>
       </header>
-      <div id="course-modules"></div>
+
+      <div class="card">
+        <h2>1. Informações Gerais</h2>
+        <div class="form-group">
+          <label for="course-title-input">Título Geral do Curso</label>
+          <input type="text" id="course-title-input" placeholder="Ex: Discipulado IPB">
+        </div>
+        <div class="form-group">
+          <label for="course-subtitle-input">Subtítulo Geral do Curso</label>
+          <input type="text" id="course-subtitle-input" placeholder="Ex: Acesse os módulos e aulas abaixo">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="saveCourseHeaderInfo()">💾 Salvar Título e Subtítulo</button>
+        <div class="save-alert" id="header-save-alert">Informações salvas com sucesso!</div>
+      </div>
+
+      <div class="card" id="module-form-card">
+        <h2>
+          <span id="module-form-title">2. Módulos</span>
+          <span id="module-editing-badge" class="badge-editing" style="display:none;">MODO DE EDIÇÃO</span>
+        </h2>
+        <p class="hint">Cada módulo deve ter até 3 lições. Cadastre o módulo e depois preencha as lições na seção abaixo.</p>
+        <form id="module-form">
+          <input type="hidden" id="module-edit-index" value="-1">
+          <div class="form-group">
+            <label for="module-title">Título do Módulo</label>
+            <input type="text" id="module-title" placeholder="Ex: Módulo 1 - Introdução" required>
+          </div>
+          <div class="form-group">
+            <label for="module-release-date">Data e Hora de Liberação do Módulo</label>
+            <input type="datetime-local" id="module-release-date">
+            <div class="checkbox-group">
+              <input type="checkbox" id="module-immediate-release" onchange="toggleImmediateRelease('module-release-date', this)">
+              <label for="module-immediate-release" style="margin:0;font-weight:normal;">Liberar imediatamente</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="module-description">Descrição do Módulo</label>
+            <textarea id="module-description" placeholder="Orientação geral do módulo..."></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="button" id="btn-cancel-module" class="btn btn-cancel" style="display:none;" onclick="resetModuleForm()">Cancelar Edição</button>
+            <button type="submit" id="btn-submit-module" class="btn btn-primary">💾 Salvar Módulo</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Módulos Cadastrados</h2>
+        <div id="modules-list"></div>
+      </div>
+
+      <div class="card" id="lesson-form-card">
+        <h2>
+          <span id="lesson-form-title">3. Lições</span>
+          <span id="lesson-editing-badge" class="badge-editing" style="display:none;">MODO DE EDIÇÃO</span>
+        </h2>
+        <p class="hint">Cada módulo aceita no máximo 3 lições. Inclua a página da lição (01 a 24) no bloco abaixo.</p>
+        <form id="lesson-form">
+          <input type="hidden" id="lesson-edit-module" value="-1">
+          <input type="hidden" id="lesson-edit-index" value="-1">
+          <div class="form-group">
+            <label for="lesson-module">Módulo da Lição</label>
+            <select id="lesson-module" required></select>
+          </div>
+          <div class="form-group">
+            <label for="lesson-title">Título da Lição</label>
+            <input type="text" id="lesson-title" placeholder="Ex: Lição 1 - Conceitos iniciais" required>
+          </div>
+          <div class="form-group">
+            <label for="lesson-release-date">Data e Hora de Liberação para o Aluno</label>
+            <input type="datetime-local" id="lesson-release-date">
+            <div class="checkbox-group">
+              <input type="checkbox" id="immediate-release" onchange="toggleImmediateRelease('lesson-release-date', this)">
+              <label for="immediate-release" style="margin:0;font-weight:normal;">Liberar imediatamente (sem agendamento)</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lesson-description">Descrição / Orientação</label>
+            <textarea id="lesson-description" placeholder="Escreva aqui os detalhes da lição..."></textarea>
+          </div>
+
+          <div class="html-embed-box">
+            <div class="form-group">
+              <label for="licao-arquivo">Incluir página da lição</label>
+              <select id="licao-arquivo" onchange="aoEscolherLicao()"></select>
+            </div>
+            <div class="form-group">
+              <label for="first-html-title">Título que o aluno verá</label>
+              <input type="text" id="first-html-title" placeholder="">
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="lesson-email">E-mail do relatório</label>
+              <input type="email" id="lesson-email" value="emersonbaran@gmail.com">
+            </div>
+          </div>
+
+          <div class="video-box">
+            <label>🎬 Vídeo da aula</label>
+            <p class="hint">O botão do aluno nasce amarelo. No ENVIAR da lição, fica verde e libera o vídeo.</p>
+            <div class="form-group">
+              <label for="video-title">Título do vídeo</label>
+              <input type="text" id="video-title">
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="video-url">URL do vídeo (YouTube)</label>
+              <input type="url" id="video-url" placeholder="https://www.youtube.com/watch?v=...">
+            </div>
+          </div>
+
+          <div class="links-section">
+            <label>Materiais, Recursos e Links</label>
+            <div id="links-container"></div>
+            <button type="button" class="btn btn-secondary" onclick="addLinkRow()">➕ Adicionar Outro Link</button>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" id="btn-cancel-lesson" class="btn btn-cancel" style="display:none;" onclick="resetLessonForm()">Cancelar Edição</button>
+            <button type="submit" id="btn-submit-lesson" class="btn btn-primary">💾 Salvar Lição</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Lições Cadastradas</h2>
+        <div id="lessons-list"></div>
+      </div>
     </main>
   </div>
-  <script>
-    const CORES_TITULO_MODULO = ['#C8E6C9','#E3F2FD','#FFFDE7','#FFF3E0','#FFEBEE','#FCE4EC','#F3E5F5','#EFEBE9'];
-    function corTituloModulo(i) { return CORES_TITULO_MODULO[i % 8]; }
 
+  <script>
+    let modules = [];
+    const MAX_LESSONS = 3;
+    const DEFAULT_EMAIL = 'emersonbaran@gmail.com';
     const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso_ipb_palmeiras202609.json';
     const LS_TITLE = 'ipb_course_title_palmeiras202609';
     const LS_SUBTITLE = 'ipb_course_subtitle_palmeiras202609';
     const LS_MODULES = 'ipb_course_modules_palmeiras202609';
-    const DEFAULT_EMAIL = 'emersonbaran@gmail.com';
-    const videosLiberados = new Set();
-    let lastCourseSnapshot = '';
 
-    function chaveLiberacao(mIndex, lIndex) { return 'ipb_materiais_liberados_palmeiras202609_' + mIndex + '_' + lIndex; }
-    function materiaisLiberados(lesson, mIndex, lIndex) {
-      if (!lesson.firstHtmlPage && !lesson.lockLinksUntilLessonSubmit) return true;
-      return videosLiberados.has(mIndex + '-' + lIndex) || localStorage.getItem(chaveLiberacao(mIndex, lIndex)) === '1';
-    }
-    function marcarMateriaisLiberados(mIndex, lIndex) {
-      videosLiberados.add(mIndex + '-' + lIndex);
-      localStorage.setItem(chaveLiberacao(mIndex, lIndex), '1');
-      liberarMateriaisNaTela(mIndex, lIndex);
-      const iframe = document.querySelector('#doc-item-' + mIndex + '-' + lIndex + '-html iframe.licao-frame');
-      if (iframe && iframe.contentWindow) iframe.contentWindow.postMessage({ type: 'LIBERAR_PDF' }, '*');
-    }
-    window.liberarVideoAula = function(mIndex, lIndex) { marcarMateriaisLiberados(mIndex, lIndex); };
-    function ehPdf(url) { return /\.pdf(\?|#|$)/i.test(url || ''); }
-    function isLocked(dateStr) { return dateStr ? new Date() < new Date(dateStr) : false; }
-    function formatYouTubeUrl(url) {
-      const match = (url || '').match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
-      return (match && match[2].length === 11) ? 'https://www.youtube.com/embed/' + match[2] : null;
-    }
-    function formatGoogleDocsEmbedUrl(url) {
-      if (!url) return null;
-      const fileId = (url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || [])[1];
-      if (fileId) return 'https://drive.google.com/file/d/' + fileId + '/preview';
-      const docId = (url.match(/\/document\/d\/([a-zA-Z0-9_-]+)/) || [])[1];
-      if (docId) return 'https://docs.google.com/document/d/' + docId + '/preview';
-      const presId = (url.match(/\/presentation\/d\/([a-zA-Z0-9_-]+)/) || [])[1];
-      if (presId) return 'https://docs.google.com/presentation/d/' + presId + '/embed?start=false&loop=false';
-      const sheetId = (url.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/) || [])[1];
-      if (sheetId) return 'https://docs.google.com/spreadsheets/d/' + sheetId + '/preview';
-      if (url.includes('docs.google.com') || url.includes('drive.google.com')) {
-        return url.replace(/\/pub(\?.*)?$/, '/preview').replace(/\/edit(\?.*)?$/, '/preview').replace(/\/view(\?.*)?$/, '/preview');
-      }
-      return null;
-    }
-    function isAudioUrl(url) { return /\.(mp3|wav|ogg|m4a|aac)(\?|#|$)/i.test(url || '') || /audio|sound/i.test(url || ''); }
-
-    function htmlDoVideoLiberado(lesson, mIndex, lIndex) {
-      const ytMain = formatYouTubeUrl(lesson.videoUrl);
-      return '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-video" style="width:100%;">' +
-        '<button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'video\')"><span>🎬 ' + (lesson.videoTitle || 'Vídeo da aula') + '</span><span class="toggle-icon">+</span></button>' +
-        '<div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-video"><div class="doc-body-inner">' +
-          (ytMain ? '<div class="video-responsive"><iframe src="' + ytMain + '" allowfullscreen></iframe></div>' : '<a class="btn-link-general" href="' + lesson.videoUrl + '" target="_blank">Abrir vídeo</a>') +
-        '</div></div></div>';
+    function nomeArquivoLicao(n) {
+      return 'DiscipuladoLicao' + String(n).padStart(2, '0') + '.html';
     }
 
-    function renderMaterialItem(item, mIndex, lIndex, linkIndex) {
-      const titulo = item.subtitle || item.title || 'Material';
-      const key = 'link' + linkIndex;
-      if (isLocked(item.releaseDate)) {
-        return '<div class="doc-accordion"><div class="doc-header" style="cursor:not-allowed;color:#6b7a52;"><span>🔒 ' + titulo + '</span><div class="lock-notice">Disponível em: ' + new Date(item.releaseDate).toLocaleString('pt-BR') + '</div></div></div>';
+    function montarSelectLicoes(selecionado) {
+      const sel = document.getElementById('licao-arquivo');
+      let html = '<option value="">Nenhuma lição</option>';
+      for (let i = 1; i <= 24; i++) {
+        const arquivo = nomeArquivoLicao(i);
+        html += `<option value="${arquivo}" ${selecionado === arquivo ? 'selected' : ''}>Lição ${String(i).padStart(2, '0')} (${arquivo})</option>`;
       }
-      const yt = formatYouTubeUrl(item.url);
-      const docs = formatGoogleDocsEmbedUrl(item.url);
-      const audio = isAudioUrl(item.url);
-      const pdf = ehPdf(item.url);
-      const cabeca = '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-' + key + '"><button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'' + key + '\')">';
-      const fechaCabeca = '<span class="toggle-icon">+</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-' + key + '">';
-      if (docs) {
-        return cabeca + '<span>📄 ' + titulo + '</span>' + fechaCabeca +
-          '<div class="doc-frame-container"><iframe src="' + docs + '" allow="autoplay"></iframe></div>' +
-          '<div class="doc-footer"><a href="' + item.url + '" target="_blank" class="btn-link-general" style="font-size:0.8rem;padding:6px 12px;">↗ Abrir original</a></div></div></div>';
-      }
-      if (pdf) {
-        return cabeca + '<span>📄 ' + titulo + '</span>' + fechaCabeca +
-          '<div class="doc-frame-container"><iframe src="' + item.url + '"></iframe></div>' +
-          '<div class="doc-footer"><a href="' + item.url + '" target="_blank" class="btn-link-general" style="font-size:0.8rem;padding:6px 12px;">↗ Abrir PDF</a></div></div></div>';
-      }
-      if (yt) {
-        return cabeca + '<span>🎬 ' + titulo + '</span>' + fechaCabeca +
-          '<div class="doc-body-inner"><div class="video-responsive"><iframe src="' + yt + '" allowfullscreen></iframe></div></div></div></div>';
-      }
-      if (audio) {
-        return cabeca + '<span>🎧 ' + titulo + '</span>' + fechaCabeca +
-          '<div class="audio-container"><audio class="audio-player" controls src="' + item.url + '"></audio></div></div></div>';
-      }
-      return cabeca + '<span>🔗 ' + titulo + '</span>' + fechaCabeca +
-        '<div class="doc-body-inner"><a href="' + (item.url || '#') + '" target="_blank" class="btn-link-general">Abrir material</a></div></div></div>';
+      sel.innerHTML = html;
     }
 
-    function liberarMateriaisNaTela(mIndex, lIndex) {
-      const modules = JSON.parse(localStorage.getItem(LS_MODULES) || '[]');
-      const lesson = (((modules[mIndex] || {}).lessons) || [])[lIndex];
-      if (!lesson) return;
-      const wrap = document.getElementById('video-wrap-' + mIndex + '-' + lIndex);
-      if (wrap) wrap.innerHTML = lesson.videoUrl ? htmlDoVideoLiberado(lesson, mIndex, lIndex) : '';
-      const lessonBox = document.getElementById('lesson-' + mIndex + '-' + lIndex);
-      if (lessonBox) {
-        if (!lessonBox.querySelector('.materiais-liberados') && lesson.links && lesson.links.length) {
-          const bloco = document.createElement('div');
-          bloco.className = 'materiais-liberados';
-          bloco.innerHTML = lesson.links.map((item, linkIndex) => renderMaterialItem(item, mIndex, lIndex, linkIndex)).join('');
-          lessonBox.appendChild(bloco);
-        }
-      }
-      const item = document.getElementById('item-' + mIndex);
-      const body = document.getElementById('body-' + mIndex);
-      if (item && body) { item.classList.add('active'); body.style.maxHeight = (body.scrollHeight + 2500) + 'px'; }
+    function aoEscolherLicao() {
+      const arquivo = document.getElementById('licao-arquivo').value;
+      const titulo = document.getElementById('first-html-title');
+      if (!arquivo) return;
+      const num = arquivo.replace('DiscipuladoLicao', '').replace('.html', '');
+      if (!titulo.value || titulo.value.indexOf('Lição ') === 0) titulo.value = 'Lição ' + num;
     }
-    function conectarFormularioLicao(mIndex, lIndex, iframe) {
+
+    async function syncCursoToCloud() {
+      const payload = {
+        title: localStorage.getItem(LS_TITLE) || 'Discipulado IPB',
+        subtitle: localStorage.getItem(LS_SUBTITLE) || 'Acesse os módulos e aulas abaixo',
+        modules: JSON.parse(localStorage.getItem(LS_MODULES) || '[]')
+      };
       try {
-        const doc = iframe.contentDocument || iframe.contentWindow.document;
-        const liberar = function (ev) { if (ev) ev.preventDefault(); marcarMateriaisLiberados(mIndex, lIndex); };
-        doc.querySelectorAll('button, input[type="button"], input[type="submit"], a').forEach(btn => {
-          const texto = ((btn.innerText || btn.value || '') + ' ' + (btn.id || '')).toUpperCase();
-          if (texto.includes('CORRIGIR RESPOSTAS') || texto.includes('DESBLOQUEAR') || btn.id === 'btnCorrigir') {
-            if (btn.dataset.unlockBound === '1') return;
-            btn.dataset.unlockBound = '1';
-            btn.addEventListener('click', liberar);
-          }
+        const res = await fetch(FIREBASE_URL, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
         });
-        iframe.contentWindow.liberarVideoAula = function () { marcarMateriaisLiberados(mIndex, lIndex); };
-      } catch (e) {}
+        if (!res.ok) throw new Error('Falha ao salvar na nuvem');
+      } catch (e) {
+        alert('Não foi possível salvar na nuvem. Verifique a internet.');
+        console.error(e);
+      }
     }
+
     async function loadCursoFromCloud() {
       try {
         const res = await fetch(FIREBASE_URL + '?t=' + Date.now());
         const data = await res.json();
-        if (!data) return false;
-        const snapshot = JSON.stringify({ title: data.title || '', subtitle: data.subtitle || '', modules: data.modules || [] });
-        if (snapshot === lastCourseSnapshot) return false;
-        lastCourseSnapshot = snapshot;
+        if (!data) return;
         if (data.title) localStorage.setItem(LS_TITLE, data.title);
         if (data.subtitle) localStorage.setItem(LS_SUBTITLE, data.subtitle);
         if (data.modules) localStorage.setItem(LS_MODULES, JSON.stringify(data.modules));
-        return true;
-      } catch (e) { return false; }
+      } catch (e) { console.error(e); }
     }
-    async function refreshStudentView() {
-      const changed = await loadCursoFromCloud();
-      if (!changed && document.getElementById('course-modules').innerHTML.trim()) return;
-      loadCourseHeaderInfo();
-      renderCourse();
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('collapsed');
     }
-    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('collapsed'); }
+
+    function toggleImmediateRelease(inputId, checkbox) {
+      const dateInput = document.getElementById(inputId);
+      if (checkbox.checked) {
+        dateInput.value = '';
+        dateInput.disabled = true;
+      } else {
+        dateInput.disabled = false;
+      }
+    }
+
     function loadCourseHeaderInfo() {
-      document.getElementById('course-title-display').innerText = localStorage.getItem(LS_TITLE) || 'Discipulado IPB';
-      document.getElementById('course-subtitle-display').innerText = localStorage.getItem(LS_SUBTITLE) || 'Acesse os módulos e aulas abaixo';
+      document.getElementById('course-title-input').value = localStorage.getItem(LS_TITLE) || 'Discipulado IPB';
+      document.getElementById('course-subtitle-input').value = localStorage.getItem(LS_SUBTITLE) || 'Acesse os módulos e aulas abaixo';
     }
-    function renderCourse() {
-      const container = document.getElementById('course-modules');
-      const sidebarMenu = document.getElementById('sidebar-menu');
-      const modules = JSON.parse(localStorage.getItem(LS_MODULES) || '[]');
+
+    async function saveCourseHeaderInfo() {
+      localStorage.setItem(LS_TITLE, document.getElementById('course-title-input').value.trim() || 'Discipulado IPB');
+      localStorage.setItem(LS_SUBTITLE, document.getElementById('course-subtitle-input').value.trim() || 'Acesse os módulos e aulas abaixo');
+      await syncCursoToCloud();
+      const alertBox = document.getElementById('header-save-alert');
+      alertBox.style.display = 'block';
+      setTimeout(() => { alertBox.style.display = 'none'; }, 3000);
+    }
+
+    function loadModules() {
+      modules = JSON.parse(localStorage.getItem(LS_MODULES) || '[]');
+      renderAll();
+    }
+
+    async function saveModulesToStorage() {
+      localStorage.setItem(LS_MODULES, JSON.stringify(modules));
+      renderAll();
+      await syncCursoToCloud();
+    }
+
+    function renderAll() {
+      renderSidebarMenu();
+      renderModulesList();
+      renderLessonModuleSelect();
+      renderLessonsList();
+    }
+
+    function moveLinkRowUp(btn) {
+      const row = btn.closest('.link-row');
+      if (row && row.previousElementSibling) row.parentNode.insertBefore(row, row.previousElementSibling);
+    }
+    function moveLinkRowDown(btn) {
+      const row = btn.closest('.link-row');
+      if (row && row.nextElementSibling) row.parentNode.insertBefore(row.nextElementSibling, row);
+    }
+
+    function addLinkRow(subtitle = '', url = '', releaseDate = '') {
+      const container = document.getElementById('links-container');
+      const rowDiv = document.createElement('div');
+      rowDiv.className = 'link-row';
+      rowDiv.innerHTML = `
+        <div class="link-row-top">
+          <input type="text" class="link-subtitle" placeholder="Legenda do recurso" value="${subtitle}" style="flex:1;">
+          <input type="text" class="link-url" placeholder="https://..." value="${url}" style="flex:2;">
+          <button type="button" class="btn btn-move" onclick="moveLinkRowUp(this)">▲</button>
+          <button type="button" class="btn btn-move" onclick="moveLinkRowDown(this)">▼</button>
+          <button type="button" class="btn btn-danger" onclick="this.closest('.link-row').remove()">✕</button>
+        </div>
+        <div class="link-row-schedule">
+          <label style="font-size:0.8rem;margin:0;min-width:140px;">📅 Agendamento do Link:</label>
+          <input type="datetime-local" class="link-release-date" value="${releaseDate}" style="font-size:0.85rem;padding:6px 10px;">
+        </div>`;
+      container.appendChild(rowDiv);
+    }
+
+    function resetModuleForm() {
+      document.getElementById('module-edit-index').value = '-1';
+      document.getElementById('module-title').value = '';
+      document.getElementById('module-description').value = '';
+      const dateInput = document.getElementById('module-release-date');
+      dateInput.value = '';
+      dateInput.disabled = false;
+      document.getElementById('module-immediate-release').checked = false;
+      document.getElementById('module-form-title').innerText = '2. Módulos';
+      document.getElementById('module-editing-badge').style.display = 'none';
+      document.getElementById('btn-cancel-module').style.display = 'none';
+      document.getElementById('btn-submit-module').innerText = '💾 Salvar Módulo';
+    }
+
+    function resetLessonForm() {
+      document.getElementById('lesson-edit-module').value = '-1';
+      document.getElementById('lesson-edit-index').value = '-1';
+      document.getElementById('lesson-title').value = '';
+      document.getElementById('lesson-description').value = '';
+      const dateInput = document.getElementById('lesson-release-date');
+      dateInput.value = '';
+      dateInput.disabled = false;
+      document.getElementById('immediate-release').checked = false;
+      montarSelectLicoes('');
+      document.getElementById('first-html-title').value = '';
+      document.getElementById('lesson-email').value = DEFAULT_EMAIL;
+      document.getElementById('video-title').value = '';
+      document.getElementById('video-url').value = '';
+      document.getElementById('links-container').innerHTML = '';
+      document.getElementById('lesson-form-title').innerText = '3. Lições';
+      document.getElementById('lesson-editing-badge').style.display = 'none';
+      document.getElementById('btn-cancel-lesson').style.display = 'none';
+      document.getElementById('btn-submit-lesson').innerText = '💾 Salvar Lição';
+      addLinkRow();
+      renderLessonModuleSelect();
+    }
+
+    function editModule(index) {
+      const module = modules[index];
+      if (!module) return;
+      document.getElementById('module-edit-index').value = index;
+      document.getElementById('module-title').value = module.title || '';
+      document.getElementById('module-description').value = module.description || '';
+      const dateInput = document.getElementById('module-release-date');
+      const imm = document.getElementById('module-immediate-release');
+      if (module.releaseDate) {
+        dateInput.value = module.releaseDate;
+        dateInput.disabled = false;
+        imm.checked = false;
+      } else {
+        dateInput.value = '';
+        dateInput.disabled = true;
+        imm.checked = true;
+      }
+      document.getElementById('module-form-title').innerText = `Editando módulo: ${module.title}`;
+      document.getElementById('module-editing-badge').style.display = 'inline-block';
+      document.getElementById('btn-cancel-module').style.display = 'inline-block';
+      document.getElementById('btn-submit-module').innerText = '🔄 Atualizar Módulo';
+      document.getElementById('module-form-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function deleteModule(index) {
+      if (confirm(`Excluir o módulo "${modules[index].title}" e suas lições?`)) {
+        modules.splice(index, 1);
+        saveModulesToStorage();
+        resetModuleForm();
+        resetLessonForm();
+      }
+    }
+
+    function moveModule(index, direction) {
+      const target = index + direction;
+      if (target < 0 || target >= modules.length) return;
+      const item = modules.splice(index, 1)[0];
+      modules.splice(target, 0, item);
+      saveModulesToStorage();
+    }
+
+    function editLesson(moduleIndex, lessonIndex) {
+      const lesson = modules[moduleIndex].lessons[lessonIndex];
+      if (!lesson) return;
+      document.getElementById('lesson-edit-module').value = moduleIndex;
+      document.getElementById('lesson-edit-index').value = lessonIndex;
+      renderLessonModuleSelect();
+      document.getElementById('lesson-module').value = String(moduleIndex);
+      document.getElementById('lesson-title').value = lesson.title || '';
+      document.getElementById('lesson-description').value = lesson.description || '';
+      const dateInput = document.getElementById('lesson-release-date');
+      const imm = document.getElementById('immediate-release');
+      if (lesson.releaseDate) {
+        dateInput.value = lesson.releaseDate;
+        dateInput.disabled = false;
+        imm.checked = false;
+      } else {
+        dateInput.value = '';
+        dateInput.disabled = true;
+        imm.checked = true;
+      }
+      montarSelectLicoes(lesson.firstHtmlPage || '');
+      document.getElementById('first-html-title').value = lesson.firstHtmlTitle || '';
+      document.getElementById('lesson-email').value = lesson.lessonEmail || DEFAULT_EMAIL;
+      document.getElementById('video-title').value = lesson.videoTitle || '';
+      document.getElementById('video-url').value = lesson.videoUrl || '';
+      const container = document.getElementById('links-container');
+      container.innerHTML = '';
+      if (lesson.links && lesson.links.length) lesson.links.forEach(l => addLinkRow(l.subtitle, l.url, l.releaseDate || ''));
+      else addLinkRow();
+      document.getElementById('lesson-form-title').innerText = `Editando lição: ${lesson.title}`;
+      document.getElementById('lesson-editing-badge').style.display = 'inline-block';
+      document.getElementById('btn-cancel-lesson').style.display = 'inline-block';
+      document.getElementById('btn-submit-lesson').innerText = '🔄 Atualizar Lição';
+      document.getElementById('lesson-form-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function deleteLesson(moduleIndex, lessonIndex) {
+      if (confirm(`Excluir a lição "${modules[moduleIndex].lessons[lessonIndex].title}"?`)) {
+        modules[moduleIndex].lessons.splice(lessonIndex, 1);
+        saveModulesToStorage();
+        resetLessonForm();
+      }
+    }
+
+    function moveLesson(moduleIndex, lessonIndex, direction) {
+      const list = modules[moduleIndex].lessons;
+      const target = lessonIndex + direction;
+      if (target < 0 || target >= list.length) return;
+      const item = list.splice(lessonIndex, 1)[0];
+      list.splice(target, 0, item);
+      saveModulesToStorage();
+    }
+
+    function renderLessonModuleSelect() {
+      const select = document.getElementById('lesson-module');
+      const current = select.value;
       if (!modules.length) {
-        container.innerHTML = '<div class="empty-state"><h3>Nenhum módulo cadastrado ainda.</h3></div>';
-        sidebarMenu.innerHTML = '<li style="color:#c5d4a1;font-size:0.85rem;padding:10px;">Sem conteúdo.</li>';
+        select.innerHTML = `<option value="">Cadastre um módulo primeiro</option>`;
         return;
       }
-      sidebarMenu.innerHTML = modules.map((module, mIndex) => {
-        if (isLocked(module.releaseDate)) return '<li class="sidebar-module"><button class="sidebar-module-title locked" disabled>🔒 ' + module.title + '</button></li>';
-        const sub = (module.lessons || []).map((lesson, lIndex) => {
-          if (isLocked(lesson.releaseDate)) return '<li><button class="sidebar-subitem" disabled>🔒 ' + lesson.title + '</button></li>';
-          let extra = '';
-          if (lesson.firstHtmlPage) extra += '<li><button class="sidebar-subitem" onclick="handleSidebarSubitemClick(' + mIndex + ',' + lIndex + ',\'html\')">📋 ' + (lesson.firstHtmlTitle || lesson.firstHtmlPage.replace('.html','')) + '</button></li>';
-          if (lesson.videoUrl && materiaisLiberados(lesson, mIndex, lIndex)) extra += '<li><button class="sidebar-subitem" onclick="abrirVideo(' + mIndex + ',' + lIndex + ')">🎬 ' + (lesson.videoTitle || 'Vídeo da aula') + '</button></li>';
-          if (materiaisLiberados(lesson, mIndex, lIndex) && lesson.links) {
-            extra += lesson.links.map(function(item, linkIndex) {
-              if (isLocked(item.releaseDate)) return '';
-              return '<li><button class="sidebar-subitem" onclick="handleSidebarSubitemClick(' + mIndex + ',' + lIndex + ',\'link' + linkIndex + '\')">🔗 ' + (item.subtitle || item.title || 'Material') + '</button></li>';
-            }).join('');
-          }
-          return '<li><button class="sidebar-subitem" onclick="handleSidebarLessonClick(' + mIndex + ',' + lIndex + ')">' + lesson.title + '</button></li>' + extra;
-        }).join('');
-        return '<li class="sidebar-module" id="sidebar-mod-' + mIndex + '"><button class="sidebar-module-title" onclick="toggleSidebarModule(' + mIndex + ')"><span>' + module.title + '</span><span>▾</span></button><ul class="sidebar-sublist">' + sub + '</ul></li>';
-      }).join('');
+      select.innerHTML = modules.map((m, i) => `<option value="${i}">${i + 1}. ${m.title || 'Módulo sem título'}</option>`).join('');
+      if (current !== '') select.value = current;
+    }
+
+    function renderSidebarMenu() {
+      const sidebarMenu = document.getElementById('sidebar-menu');
+      if (!modules.length) {
+        sidebarMenu.innerHTML = `<li style="color:#c5d4a1;font-size:0.85rem;padding:10px;">Sem conteúdo.</li>`;
+        return;
+      }
+      sidebarMenu.innerHTML = modules.map((module, mIndex) => `
+        <li class="sidebar-module">
+          <button class="sidebar-module-title" onclick="editModule(${mIndex})">${mIndex + 1}. ${module.title || 'Módulo sem título'}</button>
+          <ul class="sidebar-sublist">
+            ${(module.lessons || []).map((lesson, lIndex) => `<li class="sidebar-subitem">L${lIndex + 1}. ${lesson.title || 'Lição sem título'}</li>`).join('')}
+          </ul>
+        </li>`).join('');
+    }
+
+    function releaseBadge(date) {
+      if (date) return `<span class="badge badge-scheduled">📅 ${new Date(date).toLocaleString('pt-BR')}</span>`;
+      return `<span class="badge badge-released">⚡ Liberado imediatamente</span>`;
+    }
+
+    function renderModulesList() {
+      const container = document.getElementById('modules-list');
+      if (!modules.length) {
+        container.innerHTML = `<p style="color:#6b7a52;text-align:center;padding:20px;">Nenhum módulo cadastrado.</p>`;
+        return;
+      }
+      container.innerHTML = modules.map((m, index) => `
+        <div class="item-card">
+          <div class="item-header">
+            <span class="item-title">${index + 1}. ${m.title}</span>
+            <div class="item-actions">
+              <button class="btn btn-move" onclick="moveModule(${index}, -1)">▲</button>
+              <button class="btn btn-move" onclick="moveModule(${index}, 1)">▼</button>
+              <button class="btn btn-edit" onclick="editModule(${index})">✏️ Editar</button>
+              <button class="btn btn-danger" onclick="deleteModule(${index})">🗑️ Excluir</button>
+            </div>
+          </div>
+          ${releaseBadge(m.releaseDate)}
+          <span class="badge badge-released">${(m.lessons || []).length}/3 lições</span>
+          ${m.description ? `<p class="hint">${m.description}</p>` : ''}
+        </div>`).join('');
+    }
+
+    function renderLessonsList() {
+      const container = document.getElementById('lessons-list');
+      if (!modules.length) {
+        container.innerHTML = `<p style="color:#6b7a52;text-align:center;padding:20px;">Cadastre um módulo para adicionar lições.</p>`;
+        return;
+      }
       container.innerHTML = modules.map((module, mIndex) => {
-        const corTitulo = corTituloModulo(mIndex);
-        const bordaModulo = 'border:3px solid ' + corTitulo + ';';
-        if (isLocked(module.releaseDate)) {
-          return '<div class="accordion-item is-locked" id="item-' + mIndex + '" style="' + bordaModulo + '"><div class="accordion-header" style="background:' + corTitulo + ';"><span>🔒 ' + module.title + '</span><div class="lock-notice">Disponível em: ' + new Date(module.releaseDate).toLocaleString('pt-BR') + '</div></div></div>';
-        }
-        const lessonsHTML = (module.lessons || []).map((lesson, lIndex) => renderLessonBlock(module, mIndex, lesson, lIndex)).join('');
-        return '<div class="accordion-item" id="item-' + mIndex + '" style="' + bordaModulo + '"><button class="accordion-header" style="background:' + corTitulo + ';" onclick="toggleAccordion(' + mIndex + ')"><span>' + module.title + '</span><span class="toggle-icon">+</span></button><div class="accordion-body" id="body-' + mIndex + '"><div class="accordion-content">' + (module.description ? '<p class="lesson-text">' + module.description + '</p>' : '') + (lessonsHTML || '<p class="lesson-text">Nenhuma lição neste módulo.</p>') + '</div></div></div>';
+        const lessons = module.lessons || [];
+        const lessonsHTML = lessons.length ? lessons.map((lesson, lIndex) => `
+          <div class="item-card">
+            <div class="item-header">
+              <span class="item-title">Lição ${lIndex + 1}. ${lesson.title}</span>
+              <div class="item-actions">
+                <button class="btn btn-move" onclick="moveLesson(${mIndex}, ${lIndex}, -1)">▲</button>
+                <button class="btn btn-move" onclick="moveLesson(${mIndex}, ${lIndex}, 1)">▼</button>
+                <button class="btn btn-edit" onclick="editLesson(${mIndex}, ${lIndex})">✏️ Editar</button>
+                <button class="btn btn-danger" onclick="deleteLesson(${mIndex}, ${lIndex})">🗑️ Excluir</button>
+              </div>
+            </div>
+            ${releaseBadge(lesson.releaseDate)}
+            ${lesson.firstHtmlPage ? `<span class="badge badge-html">📋 ${lesson.firstHtmlTitle || lesson.firstHtmlPage}</span>` : ''}
+            ${lesson.videoUrl ? `<span class="badge badge-video">🎬 ${lesson.videoTitle || 'Vídeo'}</span>` : ''}
+            ${lesson.firstHtmlPage && lesson.videoUrl ? `<span class="badge badge-lock">🟡 Vídeo bloqueado até ENVIAR</span>` : ''}
+            ${lesson.description ? `<p class="hint">${lesson.description}</p>` : ''}
+          </div>`).join('') : `<p class="hint">Nenhuma lição neste módulo.</p>`;
+        return `<div class="lesson-group-title">${mIndex + 1}. ${module.title} — ${lessons.length}/3</div>${lessonsHTML}`;
       }).join('');
     }
-    function renderLessonBlock(module, mIndex, lesson, lIndex) {
-      if (isLocked(lesson.releaseDate)) {
-        return '<div class="section-block lesson-block" id="lesson-' + mIndex + '-' + lIndex + '"><div class="doc-accordion"><div class="doc-header" style="cursor:not-allowed;color:#6b7a52;"><span>🔒 ' + lesson.title + '</span><div class="lock-notice">Disponível em: ' + new Date(lesson.releaseDate).toLocaleString('pt-BR') + '</div></div></div></div>';
+
+    document.getElementById('module-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const editIndex = parseInt(document.getElementById('module-edit-index').value);
+      const title = document.getElementById('module-title').value.trim();
+      const description = document.getElementById('module-description').value.trim();
+      const isImmediate = document.getElementById('module-immediate-release').checked;
+      const releaseDate = isImmediate ? null : document.getElementById('module-release-date').value;
+      if (editIndex >= 0) {
+        modules[editIndex] = {
+          ...modules[editIndex],
+          title,
+          description,
+          releaseDate,
+          lessons: modules[editIndex].lessons || []
+        };
+      } else {
+        modules.push({ title, description, releaseDate, lessons: [] });
       }
-      const liberado = materiaisLiberados(lesson, mIndex, lIndex);
-      const precisaDesbloquear = !!(lesson.firstHtmlPage || lesson.lockLinksUntilLessonSubmit);
-      const email = encodeURIComponent(lesson.lessonEmail || DEFAULT_EMAIL);
-      const licaoSrc = lesson.firstHtmlPage ? (lesson.firstHtmlPage + '?lessonIndex=' + mIndex + '-' + lIndex + '&email=' + email) : '';
-      const licaoHTML = lesson.firstHtmlPage
-        ? ('<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-html"><button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'html\')"><span>📋 ' + (lesson.firstHtmlTitle || lesson.firstHtmlPage.replace('.html','')) + '</span><span class="toggle-icon">+</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-html"><div class="doc-body-inner"><iframe class="licao-frame" src="' + licaoSrc + '" onload="conectarFormularioLicao(' + mIndex + ',' + lIndex + ', this)"></iframe></div></div></div>')
-        : '';
-      let videoHTML = '';
-      if (!liberado && precisaDesbloquear && (lesson.videoUrl || (lesson.links && lesson.links.length))) {
-        videoHTML = '<div class="section-block video-wrap" id="video-wrap-' + mIndex + '-' + lIndex + '"><button type="button" class="btn-video" onclick="marcarMateriaisLiberados(' + mIndex + ',' + lIndex + ')">Desbloquear</button></div>';
-      } else if (lesson.videoUrl && liberado) {
-        videoHTML = '<div class="section-block video-wrap" id="video-wrap-' + mIndex + '-' + lIndex + '">' + htmlDoVideoLiberado(lesson, mIndex, lIndex) + '</div>';
-      }
-      const linksHTML = (liberado && lesson.links && lesson.links.length)
-        ? '<div class="materiais-liberados">' + lesson.links.map((item, i) => renderMaterialItem(item, mIndex, lIndex, i)).join('') + '</div>'
-        : '';
-      return '<div class="section-block lesson-block" id="lesson-' + mIndex + '-' + lIndex + '"><h3 class="lesson-title">' + lesson.title + '</h3>' + (lesson.description ? '<p class="lesson-text">' + lesson.description + '</p>' : '') + licaoHTML + videoHTML + linksHTML + '</div>';
-    }
-    function collapseAllModules() {
-      document.querySelectorAll('.doc-accordion.active, .accordion-item.active').forEach(item => {
-        item.classList.remove('active');
-        const body = item.querySelector('.doc-body, .accordion-body');
-        if (body) body.style.maxHeight = null;
-      });
-    }
-    function toggleSidebarModule(index) {
-      const el = document.getElementById('sidebar-mod-' + index);
-      if (el) el.classList.toggle('active');
-      openAccordion(index);
-      scrollToElement('item-' + index);
-    }
-    function handleSidebarLessonClick(mIndex, lIndex) { openAccordion(mIndex); scrollToElement('lesson-' + mIndex + '-' + lIndex); }
-    function handleSidebarSubitemClick(mIndex, lIndex, key) { openAccordion(mIndex); setTimeout(() => toggleDocAccordion(mIndex, lIndex, key), 120); }
-    function abrirVideo(mIndex, lIndex) {
-      const modules = JSON.parse(localStorage.getItem(LS_MODULES) || '[]');
-      const lesson = (((modules[mIndex] || {}).lessons) || [])[lIndex] || {};
-      if (!materiaisLiberados(lesson, mIndex, lIndex)) return;
-      openAccordion(mIndex);
-      setTimeout(() => toggleDocAccordion(mIndex, lIndex, 'video'), 150);
-    }
-    function scrollToElement(id) { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
-    function openAccordion(index) {
-      const item = document.getElementById('item-' + index);
-      const body = document.getElementById('body-' + index);
-      if (item && body && !item.classList.contains('is-locked') && !item.classList.contains('active')) {
-        item.classList.add('active');
-        body.style.maxHeight = (body.scrollHeight + 2500) + 'px';
-      }
-    }
-    function toggleAccordion(index) {
-      const item = document.getElementById('item-' + index);
-      const body = document.getElementById('body-' + index);
-      if (!item || item.classList.contains('is-locked')) return;
-      if (item.classList.contains('active')) { item.classList.remove('active'); body.style.maxHeight = null; }
-      else { item.classList.add('active'); body.style.maxHeight = (body.scrollHeight + 2500) + 'px'; }
-    }
-    function toggleDocAccordion(mIndex, lIndex, key) {
-      const docItem = document.getElementById('doc-item-' + mIndex + '-' + lIndex + '-' + key);
-      const docBody = document.getElementById('doc-body-' + mIndex + '-' + lIndex + '-' + key);
-      const mainBody = document.getElementById('body-' + mIndex);
-      if (!docItem || !docBody) return;
-      if (docItem.classList.contains('active')) { docItem.classList.remove('active'); docBody.style.maxHeight = null; }
-      else {
-        docItem.classList.add('active');
-        docBody.style.maxHeight = (docBody.scrollHeight + 80) + 'px';
-        if (mainBody) mainBody.style.maxHeight = (mainBody.scrollHeight + docBody.scrollHeight + 120) + 'px';
-      }
-    }
-    window.addEventListener('message', function(event) {
-      if (!event.data || event.data.type !== 'CORRIGIR_RESPOSTAS') return;
-      const parts = String(event.data.lessonIndex || '').split('-');
-      const mIndex = Number(parts[0]);
-      const lIndex = Number(parts[1]);
-      if (!Number.isNaN(mIndex) && !Number.isNaN(lIndex)) marcarMateriaisLiberados(mIndex, lIndex);
+      saveModulesToStorage();
+      resetModuleForm();
     });
-    document.addEventListener('DOMContentLoaded', () => { refreshStudentView(); setInterval(refreshStudentView, 15000); });
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshStudentView(); });
+
+    document.getElementById('lesson-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const moduleIndex = parseInt(document.getElementById('lesson-module').value);
+      const editModuleIndex = parseInt(document.getElementById('lesson-edit-module').value);
+      const editIndex = parseInt(document.getElementById('lesson-edit-index').value);
+      if (isNaN(moduleIndex) || !modules[moduleIndex]) {
+        alert('Selecione um módulo.');
+        return;
+      }
+      if (editIndex < 0 && (modules[moduleIndex].lessons || []).length >= MAX_LESSONS) {
+        alert('Este módulo já possui 3 lições.');
+        return;
+      }
+      const title = document.getElementById('lesson-title').value.trim();
+      const description = document.getElementById('lesson-description').value.trim();
+      const isImmediate = document.getElementById('immediate-release').checked;
+      const releaseDate = isImmediate ? null : document.getElementById('lesson-release-date').value;
+      const arquivo = document.getElementById('licao-arquivo').value.trim();
+      const links = [];
+      document.querySelectorAll('.link-row').forEach(row => {
+        const subtitle = row.querySelector('.link-subtitle').value.trim();
+        const url = row.querySelector('.link-url').value.trim();
+        const linkReleaseDate = row.querySelector('.link-release-date').value;
+        if (url) links.push({ subtitle: subtitle || 'Material', url, releaseDate: linkReleaseDate || null });
+      });
+      const lessonData = {
+        title,
+        description,
+        releaseDate,
+        firstHtmlPage: arquivo || null,
+        firstHtmlTitle: arquivo ? (document.getElementById('first-html-title').value.trim() || arquivo.replace('.html', '')) : null,
+        lessonEmail: arquivo ? (document.getElementById('lesson-email').value.trim() || DEFAULT_EMAIL) : DEFAULT_EMAIL,
+        lockLinksUntilLessonSubmit: !!arquivo,
+        videoTitle: document.getElementById('video-title').value.trim() || 'Vídeo da aula',
+        videoUrl: document.getElementById('video-url').value.trim() || null,
+        links
+      };
+      if (editIndex >= 0) {
+        if (editModuleIndex !== moduleIndex) {
+          if ((modules[moduleIndex].lessons || []).length >= MAX_LESSONS) {
+            alert('O módulo de destino já possui 3 lições.');
+            return;
+          }
+          modules[editModuleIndex].lessons.splice(editIndex, 1);
+          modules[moduleIndex].lessons.push(lessonData);
+        } else {
+          modules[moduleIndex].lessons[editIndex] = lessonData;
+        }
+      } else {
+        if (!modules[moduleIndex].lessons) modules[moduleIndex].lessons = [];
+        modules[moduleIndex].lessons.push(lessonData);
+      }
+      saveModulesToStorage();
+      resetLessonForm();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      montarSelectLicoes('');
+      loadCursoFromCloud().then(() => {
+        loadCourseHeaderInfo();
+        loadModules();
+      });
+      resetModuleForm();
+      resetLessonForm();
+    });
   </script>
 </body>
 </html>
