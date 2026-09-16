@@ -119,18 +119,26 @@
       if (iframe && iframe.contentWindow) iframe.contentWindow.postMessage({ type: 'LIBERAR_PDF' }, '*');
     }
     window.liberarVideoAula = function(mIndex, lIndex) { marcarMateriaisLiberados(mIndex, lIndex); };
-    function ehPdf(url) { return /\.pdf(\?|#|$)/i.test(url || '') || /\/file\/d\//.test(url || '') || /application\/pdf/i.test(url || ''); }
+    function ehPdf(url) { return /\.pdf(\?|#|$)/i.test(url || ''); }
     function isLocked(dateStr) { return dateStr ? new Date() < new Date(dateStr) : false; }
     function formatYouTubeUrl(url) {
       const match = (url || '').match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
       return (match && match[2].length === 11) ? 'https://www.youtube.com/embed/' + match[2] : null;
     }
     function formatGoogleDocsEmbedUrl(url) {
-      if (!url || (!url.includes('docs.google.com') && !url.includes('drive.google.com'))) return null;
-      if (url.includes('/document/d/')) return url.replace(/\/edit(\?.*)?$/, '/pub?embedded=true').replace(/\/view(\?.*)?$/, '/preview');
-      if (url.includes('/presentation/d/')) return url.replace(/\/edit(\?.*)?$/, '/embed?start=false&loop=false');
-      if (url.includes('/preview')) return url;
-      return url.replace(/\/view(\?.*)?$/, '/preview').replace(/\/edit(\?.*)?$/, '/preview');
+      if (!url) return null;
+      const fileId = (url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || [])[1];
+      if (fileId) return 'https://drive.google.com/file/d/' + fileId + '/preview';
+      const docId = (url.match(/\/document\/d\/([a-zA-Z0-9_-]+)/) || [])[1];
+      if (docId) return 'https://docs.google.com/document/d/' + docId + '/preview';
+      const presId = (url.match(/\/presentation\/d\/([a-zA-Z0-9_-]+)/) || [])[1];
+      if (presId) return 'https://docs.google.com/presentation/d/' + presId + '/embed?start=false&loop=false';
+      const sheetId = (url.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/) || [])[1];
+      if (sheetId) return 'https://docs.google.com/spreadsheets/d/' + sheetId + '/preview';
+      if (url.includes('docs.google.com') || url.includes('drive.google.com')) {
+        return url.replace(/\/pub(\?.*)?$/, '/preview').replace(/\/edit(\?.*)?$/, '/preview').replace(/\/view(\?.*)?$/, '/preview');
+      }
+      return null;
     }
     function isAudioUrl(url) { return /\.(mp3|wav|ogg|m4a|aac)(\?|#|$)/i.test(url || '') || /audio|sound/i.test(url || ''); }
 
@@ -155,6 +163,11 @@
       const pdf = ehPdf(item.url);
       const cabeca = '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-' + key + '"><button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'' + key + '\')">';
       const fechaCabeca = '<span class="toggle-icon">+</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-' + key + '">';
+      if (docs) {
+        return cabeca + '<span>📄 ' + titulo + '</span>' + fechaCabeca +
+          '<div class="doc-frame-container"><iframe src="' + docs + '" allow="autoplay"></iframe></div>' +
+          '<div class="doc-footer"><a href="' + item.url + '" target="_blank" class="btn-link-general" style="font-size:0.8rem;padding:6px 12px;">↗ Abrir original</a></div></div></div>';
+      }
       if (pdf) {
         return cabeca + '<span>📄 ' + titulo + '</span>' + fechaCabeca +
           '<div class="doc-frame-container"><iframe src="' + item.url + '"></iframe></div>' +
@@ -167,11 +180,6 @@
       if (audio) {
         return cabeca + '<span>🎧 ' + titulo + '</span>' + fechaCabeca +
           '<div class="audio-container"><audio class="audio-player" controls src="' + item.url + '"></audio></div></div></div>';
-      }
-      if (docs) {
-        return cabeca + '<span>📄 ' + titulo + '</span>' + fechaCabeca +
-          '<div class="doc-frame-container"><iframe src="' + docs + '"></iframe></div>' +
-          '<div class="doc-footer"><a href="' + item.url + '" target="_blank" class="btn-link-general" style="font-size:0.8rem;padding:6px 12px;">↗ Abrir original</a></div></div></div>';
       }
       return cabeca + '<span>🔗 ' + titulo + '</span>' + fechaCabeca +
         '<div class="doc-body-inner"><a href="' + (item.url || '#') + '" target="_blank" class="btn-link-general">Abrir material</a></div></div></div>';
