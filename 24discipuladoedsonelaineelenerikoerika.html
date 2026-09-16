@@ -44,6 +44,11 @@
     .accordion-body, .doc-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
     .accordion-content { padding: 0 25px 25px; border-top: 1px solid #e8eedc; }
     .section-block { margin-top: 18px; }
+    .section-block.lesson-block + .section-block.lesson-block {
+      border-top: 1px solid #d5d8dc;
+      padding-top: 18px;
+      margin-top: 22px;
+    }
     .lesson-text { line-height: 1.6; color: #4a5a32; white-space: pre-wrap; }
     .video-responsive { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; }
     .video-responsive iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
@@ -304,7 +309,7 @@
         }
         const sub = (module.lessons || []).map((lesson, lIndex) => {
           if (isLocked(lesson.releaseDate)) {
-            return '<li><button class="sidebar-subitem" disabled>🔒 Lição ' + (lIndex + 1) + '. ' + lesson.title + '</button></li>';
+            return '<li><button class="sidebar-subitem" disabled>🔒 ' + lesson.title + '</button></li>';
           }
           let extra = '';
           if (lesson.firstHtmlPage) {
@@ -315,8 +320,8 @@
             extra += '<li><button class="sidebar-subitem" onclick="abrirVideo(' + mIndex + ',' + lIndex + ')">🎬 ' +
               (lesson.videoTitle || 'Vídeo da aula') + '</button></li>';
           }
-          return '<li><button class="sidebar-subitem" onclick="handleSidebarLessonClick(' + mIndex + ',' + lIndex + ')">Lição ' +
-            (lIndex + 1) + '. ' + lesson.title + '</button></li>' + extra;
+          return '<li><button class="sidebar-subitem" onclick="handleSidebarLessonClick(' + mIndex + ',' + lIndex + ')">' +
+            lesson.title + '</button></li>' + extra;
         }).join('');
         return '<li class="sidebar-module" id="sidebar-mod-' + mIndex + '">' +
           '<button class="sidebar-module-title" onclick="toggleSidebarModule(' + mIndex + ')"><span>' + module.title +
@@ -342,8 +347,8 @@
 
     function renderLessonBlock(module, mIndex, lesson, lIndex) {
       if (isLocked(lesson.releaseDate)) {
-        return '<div class="section-block" id="lesson-' + mIndex + '-' + lIndex + '"><div class="doc-accordion">' +
-          '<div class="doc-header" style="cursor:not-allowed;color:#6b7a52;"><span>🔒 Lição ' + (lIndex + 1) + '. ' +
+        return '<div class="section-block lesson-block" id="lesson-' + mIndex + '-' + lIndex + '"><div class="doc-accordion">' +
+          '<div class="doc-header" style="cursor:not-allowed;color:#6b7a52;"><span>🔒 ' +
           lesson.title + '</span><div class="lock-notice">Disponível em: ' +
           new Date(lesson.releaseDate).toLocaleString('pt-BR') + '</div></div></div></div>';
       }
@@ -378,8 +383,8 @@
             ? '<p class="lesson-text aguardando-correcao">Clique em <strong>CORRIGIR RESPOSTAS</strong> para liberar o PDF e os demais links.</p>'
             : '');
 
-      return '<div class="section-block" id="lesson-' + mIndex + '-' + lIndex + '">' +
-        '<h3 class="lesson-title">Lição ' + (lIndex + 1) + '. ' + lesson.title + '</h3>' +
+      return '<div class="section-block lesson-block" id="lesson-' + mIndex + '-' + lIndex + '">' +
+        '<h3 class="lesson-title">' + lesson.title + '</h3>' +
         (lesson.description ? '<p class="lesson-text">' + lesson.description + '</p>' : '') +
         licaoHTML + videoHTML + linksHTML +
         '</div>';
