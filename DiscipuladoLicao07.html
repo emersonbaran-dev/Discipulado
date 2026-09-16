@@ -3,8 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discipulado Lição 07 - Comunhão na Palavra</title>
+    <title>Discipulado Lição 07 - A Oração</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
+        @media print {
+            body {
+                background: #ffffff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .container {
+                box-shadow: none !important;
+                margin: 0 !important;
+                max-width: none !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                overflow: visible !important;
+            }
+            #btnPdf, #btnCorrigir, #resultado, .alerta-liberacao {
+                display: none !important;
+            }
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f7f6;
@@ -21,7 +41,7 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #A88237;
+            border-top: 6px solid #2D4F5C;
         }
         .header-container {
             position: relative;
@@ -41,13 +61,13 @@
             text-align: center;
             font-size: 16pt;
             font-weight: bold;
-            color: #A88237;
+            color: #2D4F5C;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 5px;
         }
         h1 {
-            color: #A88237;
+            color: #2D4F5C;
             margin: 0;
             font-size: 32px;
             text-transform: uppercase;
@@ -61,14 +81,14 @@
             font-size: 14pt;
         }
         .intro {
-            background-color: #fcf9f0;
-            border-left: 4px solid #A88237;
+            background-color: #f0f4f6;
+            border-left: 4px solid #2D4F5C;
             padding: 12px 15px;
             margin-bottom: 25px;
             font-size: 11pt;
         }
         .section-title {
-            background-color: #A88237;
+            background-color: #2D4F5C;
             color: white;
             padding: 6px 12px;
             font-size: 13pt;
@@ -79,41 +99,14 @@
         }
         .question-group {
             margin-bottom: 20px;
-            background: #fafafa;
-            padding: 15px;
-            border-radius: 6px;
-            border: 1px solid #eee;
         }
-        label.q-title {
+        label {
             display: block;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
             color: #222;
         }
-        .options-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .option-label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: normal;
-            cursor: pointer;
-            background: #fff;
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            transition: background 0.2s;
-        }
-        .option-label:hover {
-            background-color: #f0f0f0;
-        }
-        .option-label input[type="radio"] {
-            margin: 0;
-        }
-        input[type="text"], input[type="date"] {
+        input[type="text"], input[type="date"], textarea, select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -121,6 +114,10 @@
             box-sizing: border-box;
             font-size: 11pt;
             margin-top: 4px;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #2D4F5C;
+            outline: none;
         }
         .footer-info {
             display: flex;
@@ -132,9 +129,46 @@
         .footer-info .field {
             flex: 1;
         }
-        .btn-submit {
+        .btn-pdf {
             width: 100%;
-            background-color: #A88237;
+            background-color: #3d6b7a;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .alternativas {
+            margin-top: 8px;
+        }
+        .alternativas label {
+            display: block;
+            padding: 8px 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .alternativas label input {
+            margin-right: 8px;
+        }
+        .alternativas label.certa {
+            background-color: #d9f2df !important;
+            border-color: #28a745 !important;
+            color: #176b2c !important;
+        }
+        .alternativas label.errada {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #842029 !important;
+        }
+        .btn-corrigir {
+            width: 100%;
+            background-color: #2e7d32;
             color: white;
             padding: 14px;
             border: none;
@@ -143,128 +177,135 @@
             font-weight: bold;
             cursor: pointer;
             margin-top: 25px;
-            transition: background-color 0.3s ease;
         }
-        .btn-submit:hover {
-            background-color: #8c6a2b;
+        .btn-corrigir:hover {
+            background-color: #256628;
         }
-        .btn-submit.sent {
-            background-color: #6d5220 !important;
-            cursor: default;
+        .resultado {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            text-align: center;
+            font-size: 14pt;
+            font-weight: bold;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            background: #f7f7f7;
         }
         .final-note {
-            text-align: justify;
-            font-style: italic;
-            color: #555;
-            background-color: #fcf9f0;
+            text-align: center;
+            font-weight: bold;
+            color: #2D4F5C;
+            background-color: #f0f4f6;
             padding: 15px;
             border-radius: 6px;
             border: 1px solid #e0e0e0;
-            margin-top: 20px;
-            font-size: 10.5pt;
+            margin-top: 25px;
+            font-size: 12pt;
+        }
+        .alerta-liberacao {
+            background-color: #f6f1d5;
+            border: 1px dashed #c9b06b;
+            color: #5c4b1a;
+            padding: 14px 20px;
+            border-radius: 6px;
+            margin-top: 25px;
+            text-align: center;
+            font-size: 11pt;
+            font-weight: normal;
+        }
+        .alerta-liberacao strong {
+            color: #3b2d07;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="main-category">III - COMUNHÃO</div>
+<div class="container" id="licaoImpressao">
+    <div class="main-category">DISCIPULADO</div>
     
     <div class="header-container">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
-        <h1>Lição 7</h1>
+        <h1>Lição 07</h1>
     </div>
-    <div class="subtitle">COMUNHÃO NA PALAVRA</div>
+    <div class="subtitle">A ORAÇÃO</div>
     
     <div class="intro">
-        <strong>O QUE É VIDA DEVOCIONAL:</strong><br>
-        Vida devocional é o momento do dia em que você se dedica para usufruir de uma comunhão com Deus por meio da meditação da Palavra e oração. Exige-se tempo, disciplina e prazer em estar na presença do Senhor. Agende-se diariamente com Deus e viva esta comunhão com o Senhor! Vejamos os itens de uma devocional:
+        A oração é o meio de comunicação com Deus e elemento essencial na vida do discípulo de Jesus Cristo.
     </div>
 
-    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
+    <form id="discipuladoForm">
         
-        <!-- SEÇÃO A -->
-        <div class="section-title">A - DEVOCIONAL: AGENDE DIARIAMENTE</div>
+        <div class="section-title">A – CONCEITO DE ORAÇÃO</div>
 
         <div class="question-group">
-            <label class="q-title">1) Que evidências vemos em Lc 5.15,16 de que Jesus considerava o tempo a sós com Deus prioritário?</label>
-            <div class="options-group">
-                <label class="option-label"><input type="radio" name="q1" value="A" required> A) Ele se retirava para lugares solitários e orava.</label>
-                <label class="option-label"><input type="radio" name="q1" value="B"> B) Ele evitava ensinar no templo.</label>
-                <label class="option-label"><input type="radio" name="q1" value="C"> C) Ele orava apenas quando estava doente.</label>
-                <label class="option-label"><input type="radio" name="q1" value="D"> D) Ele buscava a glória das multidões.</label>
+            <label for="q1">1) De acordo com Salmos 62.8, o que significa orar?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q1" value="A" required> A) Repetir palavras decoradas em público.</label>
+                <label><input type="radio" name="q1" value="B"> B) Derramar o coração perante Deus.</label>
+                <label><input type="radio" name="q1" value="C"> C) Exigir bênçãos materiais imediatamente.</label>
+                <label><input type="radio" name="q1" value="D"> D) Fazer pedidos sem necessidade de fé.</label>
             </div>
         </div>
 
         <div class="question-group">
-            <label class="q-title">2) O que Jesus fez antes de chamar os 12 apóstolos? (Lc 6.12,13)</label>
-            <div class="options-group">
-                <label class="option-label"><input type="radio" name="q2" value="A" required> A) Jejuou no deserto durante quarenta dias.</label>
-                <label class="option-label"><input type="radio" name="q2" value="B"> B) Passou a noite orando a Deus.</label>
-                <label class="option-label"><input type="radio" name="q2" value="C"> C) Consultou os líderes religiosos de Jerusalém.</label>
-                <label class="option-label"><input type="radio" name="q2" value="D"> D) Escreveu uma carta de convocação a cada um.</label>
+            <label for="q2">2) Em Jeremias 29.12,13, como devemos buscar a Deus em oração?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q2" value="A" required> A) Com todo o nosso coração.</label>
+                <label><input type="radio" name="q2" value="B"> B) Somente através de intermediários humanos.</label>
+                <label><input type="radio" name="q2" value="C"> C) Apenas quando estivermos sem problemas.</label>
+                <label><input type="radio" name="q2" value="D"> D) De forma apressada e automática.</label>
             </div>
         </div>
 
-        <!-- SEÇÃO B -->
-        <div class="section-title">B - BÍBLIA: DEUS FALANDO</div>
+        <div class="section-title">B – COMO DEVEMOS ORAR</div>
 
         <div class="question-group">
-            <label class="q-title">3) De acordo com o Salmo 1.2, onde está o prazer do justo e o que ele faz?</label>
-            <div class="options-group">
-                <label class="option-label"><input type="radio" name="q3" value="A" required> A) Na riqueza do mundo; ele ajunta bens de dia e de noite.</label>
-                <label class="option-label"><input type="radio" name="q3" value="B"> B) Na lei do Senhor; nela medita de dia e de noite.</label>
-                <label class="option-label"><input type="radio" name="q3" value="C"> C) No conselho dos ímpios; ele o segue continuamente.</label>
-                <label class="option-label"><input type="radio" name="q3" value="D"> D) Na sabedoria humana; ele a estuda aos sábados.</label>
-            </div>
-        </div>
-
-        <div class="question-group">
-            <label class="q-title">4) Qual o sentimento do salmista pela lei de Deus em Sl 119.97?</label>
-            <div class="options-group">
-                <label class="option-label"><input type="radio" name="q4" value="A" required> A) Amor profundo, sendo sua meditação todo o dia.</label>
-                <label class="option-label"><input type="radio" name="q4" value="B"> B) Temor excessivo, evitando lê-la constantemente.</label>
-                <label class="option-label"><input type="radio" name="q4" value="C"> C) Indiferença, cumprindo-a apenas por obrigação.</label>
-                <label class="option-label"><input type="radio" name="q4" value="D"> D) Dúvida, meditando nela ocasionalmente.</label>
+            <label for="q3">3) Conforme Mateus 6.6, qual é a instrução de Jesus sobre a oração secreta?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q3" value="A" required> A) Orar nas esquinas para ser visto pelos homens.</label>
+                <label><input type="radio" name="q3" value="B"> B) Entrar no quarto, fechar a porta e orar ao Pai em segredo.</label>
+                <label><input type="radio" name="q3" value="C"> C) Usar vãs repetições como os gentios.</label>
+                <label><input type="radio" name="q3" value="D"> D) Orar alto para demonstrar religiosidade.</label>
             </div>
         </div>
 
         <div class="question-group">
-            <label class="q-title">5) A quem as Escrituras testificam, segundo Jo 5.39?</label>
-            <div class="options-group">
-                <label class="option-label"><input type="radio" name="q5" value="A" required> A) Aos reis da terra.</label>
-                <label class="option-label"><input type="radio" name="q5" value="B"> B) A Jesus Cristo.</label>
-                <label class="option-label"><input type="radio" name="q5" value="C"> C) Aos profetas do Antigo Testamento.</label>
-                <label class="option-label"><input type="radio" name="q5" value="D"> D) À história de Israel.</label>
+            <label for="q4">4) Segundo João 14.13,14, em nome de quem devemos apresentar Nossos pedidos a Deus?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q4" value="A" required> A) Em nome dos anjos.</label>
+                <label><input type="radio" name="q4" value="B"> B) Em nosso próprio nome e méritos.</label>
+                <label><input type="radio" name="q4" value="C"> C) Em nome de Jesus Cristo.</label>
+                <label><input type="radio" name="q4" value="D"> D) Em nome dos patriarcas.</label>
+            </div>
+        </div>
+
+        <div class="section-title">C – PROMESSAS E EFICÁCIA DA ORAÇÃO</div>
+
+        <div class="question-group">
+            <label for="q5">5) O que Filipenses 4.6,7 nos ensina a fazer em vez de andarmos ansiosos?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q5" value="A" required> A) Apresentar nossas petições a Deus pela oração e súplica com ação de graças.</label>
+                <label><input type="radio" name="q5" value="B"> B) Ignorar os problemas até que eles desapareçam.</label>
+                <label><input type="radio" name="q5" value="C"> C) Reclamar e lamentar constantemente.</label>
+                <label><input type="radio" name="q5" value="D"> D) Confiar no próprio entendimento.</label>
             </div>
         </div>
 
         <div class="question-group">
-            <label class="q-title">6) Conforme 2 Tm 3.16, a Escritura é inspirada por Deus e útil para:</label>
-            <div class="options-group">
-                <label class="option-label"><input type="radio" name="q6" value="A" required> A) Ensino, repreensão, correção e educação na justiça.</label>
-                <label class="option-label"><input type="radio" name="q6" value="B"> B) Riqueza, prosperidade, saúde e sucesso pessoal.</label>
-                <label class="option-label"><input type="radio" name="q6" value="C"> C) Filosofia, política, ciência e história antiga.</label>
-                <label class="option-label"><input type="radio" name="q6" value="D"> D) Julgamento dos pecadores, condenação e castigo.</label>
-            </div>
-        </div>
-
-        <div class="question-group">
-            <label class="q-title">7) O que o crente faz com a Palavra e qual a finalidade disso segundo Sl 119.11?</label>
-            <div class="options-group">
-                <label class="option-label"><input type="radio" name="q7" value="A" required> A) Guarda no coração para não pecar contra Deus.</label>
-                <label class="option-label"><input type="radio" name="q7" value="B"> B) Escreve em tábuas para ensinar aos reis.</label>
-                <label class="option-label"><input type="radio" name="q7" value="C"> C) Decora o texto para debater com os outros.</label>
-                <label class="option-label"><input type="radio" name="q7" value="D"> D) Lê em público para receber louvor dos homens.</label>
+            <label for="q6">6) Segundo Tiago 5.16, qual é o poder da oração de um justo?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q6" value="A" required> A) É ineficaz diante das provações da vida.</label>
+                <label><input type="radio" name="q6" value="B"> B) Serve apenas para conforto psicológico.</label>
+                <label><input type="radio" name="q6" value="C"> C) Muito pode por sua eficácia.</label>
+                <label><input type="radio" name="q6" value="D"> D) Só funciona se for feita no templo.</label>
             </div>
         </div>
 
         <div class="final-note">
-            <strong>Dica:</strong> Escolha um livro da Bíblia. Todos os dias, num horário marcado, ore antes, leia o capítulo do dia da Bíblia e responda ao Senhor, em oração, o que Ele falar ao seu coração. Depois ore por você, por outras pessoas, pela igreja, país, outros.<br>
-            Uma outra forma é seguir um plano anual de leitura bíblica.
+            Lembre-se: A oração constante e sincera fortalece a nossa comunhão com Deus e transforma o nosso coração.
         </div>
 
-        <!-- DADOS FINAIS -->
         <div class="footer-info">
             <div class="field">
                 <label for="nomePessoa">Nome do Aluno:</label>
@@ -276,22 +317,167 @@
             </div>
         </div>
 
-        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 07</button>
+        <button type="button" id="btnCorrigir" class="btn-corrigir" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS</button>
+        <div id="resultado" class="resultado"></div>
+        <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
 
     </form>
+
+    <div class="alerta-liberacao">
+        🔒 Vídeo e documentos só liberam depois de responder <strong>todas as alternativas</strong> e clicar em <strong>Corrigir Respostas</strong>.
+    </div>
 </div>
 
 <script>
-    function enviarFormulario(event) {
-        var btn = document.getElementById("btnEnviar");
-        btn.classList.add("sent");
-        btn.innerText = "ENVIANDO PELO EMAIL...";
-        
-        setTimeout(function(){
-            // O formulário continuará seu curso natural de envio
-        }, 500);
-    }
-</script>
+    var CACHE = 'licao07_cache';
+    var CAMPOS = ['q1','q2','q3','q4','q5','q6','nomePessoa','dataPreenchimento'];
 
+    function val(id) {
+        var el = document.getElementById(id);
+        return el ? el.value : '';
+    }
+    function gravarCache() {
+        var dados = {};
+        CAMPOS.forEach(function(id) { dados[id] = val(id); });
+        localStorage.setItem(CACHE, JSON.stringify(dados));
+    }
+    function lerCache() {
+        try {
+            var dados = JSON.parse(localStorage.getItem(CACHE) || 'null');
+            if (!dados) return;
+            CAMPOS.forEach(function(id) {
+                if (dados[id] != null && document.getElementById(id)) {
+                    document.getElementById(id).value = dados[id];
+                }
+            });
+        } catch (e) {}
+    }
+
+    var GABARITO = {
+        q1: 'B',
+        q2: 'A',
+        q3: 'B',
+        q4: 'C',
+        q5: 'A',
+        q6: 'C'
+    };
+
+    function corrigirRespostas() {
+        var form = document.getElementById('discipuladoForm');
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        var acertos = 0;
+        var total = Object.keys(GABARITO).length;
+
+        Object.keys(GABARITO).forEach(function(nome) {
+            var opcoes = document.querySelectorAll('input[name="' + nome + '"]');
+            var resposta = document.querySelector('input[name="' + nome + '"]:checked');
+
+            opcoes.forEach(function(input) {
+                input.parentElement.classList.remove('certa', 'errada');
+                if (input.value === GABARITO[nome]) {
+                    input.parentElement.classList.add('certa');
+                } else if (resposta && input.value === resposta.value) {
+                    input.parentElement.classList.add('errada');
+                }
+            });
+
+            if (resposta && resposta.value === GABARITO[nome]) {
+                acertos++;
+            }
+        });
+
+        var percentual = Math.round((acertos / total) * 100);
+        var resultado = document.getElementById('resultado');
+        resultado.style.display = 'block';
+        resultado.innerHTML = 'RESULTADO: ' + acertos + ' de ' + total +
+            ' questões corretas (' + percentual + '%).';
+
+        gravarCache();
+    }
+
+    function baixarPdf() {
+        gravarCache();
+        var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
+        if (typeof html2pdf === 'undefined') {
+            alert('Não foi possível carregar o gerador de PDF. Verifique a internet.');
+            return;
+        }
+        var elemento = document.getElementById('licaoImpressao');
+
+        var btnPdf = document.getElementById('btnPdf');
+        var displayPdf = btnPdf.style.display;
+
+        btnPdf.style.display = 'none';
+        var btnCorrigir = document.getElementById('btnCorrigir');
+        var resultado = document.getElementById('resultado');
+        var displayCorrigir = btnCorrigir.style.display;
+        var displayResultado = resultado.style.display;
+        btnCorrigir.style.display = 'none';
+        resultado.style.display = 'none';
+
+        html2pdf().set({
+            margin: [10, 10, 10, 10],
+            filename: 'Licao07-' + nome + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                scrollX: 0,
+                scrollY: 0,
+                windowWidth: 794,
+                onclone: function(clonedDoc) {
+                    var el = clonedDoc.getElementById('licaoImpressao');
+                    if (el) {
+                        el.style.boxSizing = 'border-box';
+                        el.style.maxWidth = '100%';
+                        el.style.width = '100%';
+                        el.style.margin = '0';
+                        el.style.boxShadow = 'none';
+                        el.style.padding = '16px';
+                        el.style.overflow = 'visible';
+                    }
+                    var img = clonedDoc.querySelector('.header-container img');
+                    if (img) {
+                        img.style.position = 'relative';
+                        img.style.left = 'auto';
+                    }
+                }
+            },
+            pagebreak: {
+                mode: ['css', 'legacy'],
+                avoid: ['.question-group', '.section-title', '.final-note', '.alerta-liberacao']
+            },
+            jsPDF: {
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait'
+            }
+        }).from(elemento).save().then(function() {
+            btnPdf.style.display = displayPdf;
+            btnCorrigir.style.display = displayCorrigir;
+            resultado.style.display = displayResultado;
+        }).catch(function(erro) {
+            btnPdf.style.display = displayPdf;
+            btnCorrigir.style.display = displayCorrigir;
+            resultado.style.display = displayResultado;
+            console.error(erro);
+            alert('Não foi possível gerar o PDF. Tente novamente.');
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        lerCache();
+        CAMPOS.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.addEventListener('input', gravarCache);
+            if (el) el.addEventListener('change', gravarCache);
+        });
+    });
+</script>
 </body>
 </html>
