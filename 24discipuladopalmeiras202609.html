@@ -223,100 +223,10 @@
     }
     function ehBotaoCorrigir(btn){return(((btn.innerText||btn.value||'')+' '+(btn.id||'')+' '+(btn.name||'')+' '+(btn.className||'')).toUpperCase().includes('CORRIGIR RESPOSTAS')||btn.id==='btnCorrigir')}
 
-    function obterRaizImpressaoLicao(doc){
-      if(!doc)return null;
-      return doc.getElementById('licaoImpressao')
-        || doc.getElementById('licao')
-        || doc.querySelector('[data-licao-impressao], .folha-licao, .licao-impressao, main, .container, .conteudo')
-        || doc.body;
-    }
-    function copiarEstilosDaLicao(docOrigem, destino){
-      if(!docOrigem||!destino)return;
-      Array.from(docOrigem.querySelectorAll('style, link[rel="stylesheet"]')).forEach(function(n){
-        destino.appendChild(n.cloneNode(true));
-      });
-    }
-    function expandirElementoParaPdf(el){
-      if(!el||!el.style)return;
-      el.style.height='auto';
-      el.style.maxHeight='none';
-      el.style.minHeight='0';
-      el.style.overflow='visible';
-      el.style.overflowX='visible';
-      el.style.overflowY='visible';
-    }
-    function criarBlocoRespostaPdf(texto, minH){
-      var box=document.createElement('div');
-      box.className='pdf-resposta-preenchida';
-      box.style.cssText='white-space:pre-wrap;word-break:break-word;border:1px solid #b7c29a;background:#fff;padding:6px 8px;min-height:'+Math.max(minH||24,24)+'px;line-height:1.45;color:#1b1b1b;';
-      box.textContent=texto||'';
-      return box;
-    }
-    function materializarLicaoPreenchida(origem, clone, win){
-      var origCampos=origem.querySelectorAll('input,textarea,select');
-      var cloneCampos=clone.querySelectorAll('input,textarea,select');
-      origCampos.forEach(function(inp,i){
-        var c=cloneCampos[i];
-        if(!c)return;
-        if(inp.type==='checkbox'||inp.type==='radio'){
-          c.checked=!!inp.checked;
-          if(inp.checked)c.setAttribute('checked','checked');
-          else c.removeAttribute('checked');
-        }else{
-          var val=inp.value;
-          try{if((!val||!String(val).trim())&&win&&typeof win.val==='function'&&inp.id)val=win.val(inp.id)||val;}catch(e){}
-          c.value=val||'';
-          c.setAttribute('value',c.value);
-        }
-        if(inp.parentElement&&c.parentElement)c.parentElement.className=inp.parentElement.className;
-      });
-
-      Array.from(clone.querySelectorAll('textarea, input[type="text"], input[type="number"], input[type="email"], input[type="tel"], input:not([type])')).forEach(function(campo){
-        if(campo.disabled&&!String(campo.value||'').trim())return;
-        var bloco=criarBlocoRespostaPdf(String(campo.value||''), campo.offsetHeight||campo.scrollHeight||28);
-        if(campo.parentNode)campo.parentNode.replaceChild(bloco,campo);
-      });
-
-      Array.from(clone.querySelectorAll('select')).forEach(function(sel){
-        var txt='';
-        if(sel.selectedOptions&&sel.selectedOptions.length)txt=sel.selectedOptions[0].text;
-        else if(sel.options&&sel.selectedIndex>=0)txt=sel.options[sel.selectedIndex].text;
-        else txt=sel.value||'';
-        var bloco=criarBlocoRespostaPdf(txt, sel.offsetHeight||28);
-        if(sel.parentNode)sel.parentNode.replaceChild(bloco,sel);
-      });
-
-      Array.from(clone.querySelectorAll('input[type="radio"], input[type="checkbox"]')).forEach(function(inp){
-        inp.style.transform='scale(1.15)';
-        inp.style.accentColor='#3d4f21';
-        if(inp.checked){
-          var marca=document.createElement('span');
-          marca.style.cssText='display:inline-block;margin-right:4px;font-weight:700;color:#3d4f21;';
-          marca.textContent=inp.type==='checkbox'?'☑':'●';
-          if(inp.parentNode)inp.parentNode.insertBefore(marca,inp);
-        }
-      });
-    }
-    function limparCloneParaPdf(clone){
-      clone.querySelectorAll('#btnPdf,#btnCorrigir,.btn-pdf,.btn-corrigir,button,input[type="button"],input[type="submit"],.no-print,[data-no-print]').forEach(function(el){el.remove()});
-      clone.querySelectorAll('img').forEach(function(img){
-        var src=(img.getAttribute('src')||'').toLowerCase();
-        img.removeAttribute('crossorigin');
-        img.style.maxWidth='100%';
-        img.style.height='auto';
-        if(/logo/.test(src)||/ipb/.test(src)||!src){
-          img.src='logo-ipb.png';
-          img.style.height='52px';
-          img.style.width='auto';
-          img.style.position='relative';
-          img.style.left='auto';
-        }
-      });
-    }
     function gerarPdfDaLicao(iframe){
       var win=iframe.contentWindow;
       var doc=iframe.contentDocument||(win&&win.document);
-      var src=obterRaizImpressaoLicao(doc);
+      var src=doc&&doc.getElementById('licaoImpressao');
       if(!src){alert('Não foi possível gerar o PDF. Tente novamente.');return}
       if(typeof html2pdf!=='function'){alert('Não foi possível carregar o gerador de PDF. Verifique a internet.');return}
       try{if(typeof win.gravarCache==='function')win.gravarCache()}catch(e){}
@@ -326,38 +236,46 @@
 
       var wrap=document.createElement('div');
       wrap.id='__pdfCloneWrap';
-      wrap.style.cssText='position:fixed;left:-10000px;top:0;width:794px;background:#fff;z-index:2147483646;pointer-events:none;overflow:visible;';
+      wrap.style.cssText='position:fixed;left:0;top:0;width:794px;background:#fff;z-index:2147483646;pointer-events:none;';
 
-      copiarEstilosDaLicao(doc,wrap);
+      var cssLicao=document.createElement('style');
+      cssLicao.textContent='#__pdfCloneWrap,#__pdfCloneWrap *{box-sizing:border-box}#__pdfCloneWrap{font-family:Arial,sans-serif;color:#333;line-height:1.6;font-size:12pt;background:#fff}#__pdfCloneWrap .container{max-width:794px;width:794px;margin:0;background:#fff;padding:18px 22px;border-radius:0;box-shadow:none;border-top:6px solid #2D4F5C}#__pdfCloneWrap .header-container{position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:10px;min-height:60px}#__pdfCloneWrap .header-container img{position:absolute;left:0;height:52px;width:auto}#__pdfCloneWrap .main-category{text-align:center;font-size:16pt;font-weight:bold;color:#2D4F5C;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}#__pdfCloneWrap h1{color:#2D4F5C;margin:0;font-size:32px;text-transform:uppercase;text-align:center}#__pdfCloneWrap .subtitle{text-align:center;font-weight:bold;color:#555;margin-bottom:20px;font-size:14pt}#__pdfCloneWrap .intro{background:#f0f4f6;border-left:4px solid #2D4F5C;padding:12px 15px;margin-bottom:25px;font-size:11pt}#__pdfCloneWrap .section-title{background:#2D4F5C;color:#fff;padding:6px 12px;font-size:13pt;font-weight:bold;border-radius:4px;margin-top:25px;margin-bottom:15px}#__pdfCloneWrap .question-group{margin-bottom:20px;page-break-inside:avoid;break-inside:avoid}#__pdfCloneWrap label{display:block;font-weight:bold;margin-bottom:6px;color:#222}#__pdfCloneWrap .alternativas{margin-top:8px}#__pdfCloneWrap .alternativas label{display:block;padding:8px 10px;margin:5px 0;border:1px solid #ddd;border-radius:4px;font-weight:normal}#__pdfCloneWrap .alternativas label input{margin-right:8px}#__pdfCloneWrap .alternativas label.certa{background:#d9f2df!important;border-color:#28a745!important;color:#176b2c!important}#__pdfCloneWrap .alternativas label.errada{background:#f8d7da!important;border-color:#dc3545!important;color:#842029!important}#__pdfCloneWrap .final-note{text-align:center;font-weight:bold;color:#2D4F5C;background:#f0f4f6;padding:15px;border-radius:6px;border:1px solid #e0e0e0;margin-top:25px;font-size:12pt}#__pdfCloneWrap .footer-info{display:flex;gap:15px;margin-top:30px;padding-top:20px;border-top:2px solid #eee}#__pdfCloneWrap .resultado{margin-top:15px;padding:15px;text-align:center;font-size:14pt;font-weight:bold;border-radius:6px;border:1px solid #ddd;background:#f7f7f7}';
+      wrap.appendChild(cssLicao);
 
       var clone=src.cloneNode(true);
       clone.id='licaoImpressaoClone';
-      clone.style.cssText='width:794px;max-width:794px;margin:0;padding:16px 18px 24px;box-shadow:none;border-radius:0;background:#fff;height:auto;max-height:none;overflow:visible;';
-      expandirElementoParaPdf(clone);
-      Array.from(clone.querySelectorAll('*')).forEach(expandirElementoParaPdf);
+      clone.style.cssText='width:794px;max-width:794px;margin:0;box-shadow:none;border-radius:0;background:#fff;';
+      clone.querySelectorAll('#btnPdf,#btnCorrigir,.btn-pdf,.btn-corrigir').forEach(function(el){el.remove()});
+      clone.querySelectorAll('img').forEach(function(img){
+        img.removeAttribute('crossorigin');
+        img.src='logo-ipb.png';
+        img.alt='Logo IPB';
+      });
 
-      materializarLicaoPreenchida(src,clone,win);
-      limparCloneParaPdf(clone);
+      var origLabs=src.querySelectorAll('.alternativas label');
+      var cloneLabs=clone.querySelectorAll('.alternativas label');
+      origLabs.forEach(function(lab,i){if(cloneLabs[i])cloneLabs[i].className=lab.className});
+
+      var origCampos=src.querySelectorAll('input,textarea,select');
+      var cloneCampos=clone.querySelectorAll('input,textarea,select');
+      origCampos.forEach(function(inp,i){
+        var c=cloneCampos[i];
+        if(!c)return;
+        if(inp.type==='checkbox'||inp.type==='radio')c.checked=inp.checked;
+        else c.value=inp.value;
+      });
 
       wrap.appendChild(clone);
       document.body.appendChild(wrap);
 
       var nome='Aluno';
       try{if(typeof win.val==='function')nome=String(win.val('nomePessoa')||'Aluno')}catch(e){}
-      if(!nome||nome==='Aluno'){
-        try{
-          var campoNome=doc.querySelector('#nomePessoa, [name="nomePessoa"], input[name="nome"], #nome');
-          if(campoNome&&campoNome.value)nome=String(campoNome.value);
-        }catch(e){}
-      }
-      nome=String(nome).replace(/\s+/g,'_')||'Aluno';
+      nome=String(nome).replace(/\s+/g,'_');
       var nLicao='01';
       try{
-        var m=String((win.location&&win.location.pathname)||'').match(/Licao(\d+)/i);
-        if(m)nLicao=m[1];
+        var mx=String((win.location&&win.location.pathname)||'').match(/Licao(\d+)/i);
+        if(mx)nLicao=mx[1];
       }catch(e){}
-
-      var altura=Math.max(clone.scrollHeight,clone.offsetHeight,src.scrollHeight||0)+40;
 
       html2pdf().set({
         margin:[8,10,8,10],
@@ -365,24 +283,16 @@
         image:{type:'jpeg',quality:0.98},
         html2canvas:{
           scale:2,
-          useCORS:true,
-          allowTaint:true,
+          useCORS:false,
+          allowTaint:false,
           backgroundColor:'#ffffff',
           logging:false,
           scrollX:0,
           scrollY:0,
           windowWidth:794,
-          windowHeight:altura,
-          height:altura,
-          imageTimeout:2000,
-          onclone:function(clonedDoc){
-            var alvo=clonedDoc.getElementById('licaoImpressaoClone')||clonedDoc.getElementById('__pdfCloneWrap');
-            if(!alvo)return;
-            expandirElementoParaPdf(alvo);
-            Array.from(alvo.querySelectorAll('*')).forEach(expandirElementoParaPdf);
-          }
+          imageTimeout:0
         },
-        pagebreak:{mode:['css','legacy'],avoid:['.question-group','.section-title','.final-note','.alternativas','.intro','.header-container']},
+        pagebreak:{mode:['css','legacy'],avoid:['.question-group','.section-title','.final-note','.header-container']},
         jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
       }).from(clone).save().then(function(){
         wrap.remove();
