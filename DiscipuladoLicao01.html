@@ -18,7 +18,7 @@
                 max-width: none !important;
                 width: 100% !important;
             }
-            #btnPdf, #btnCorrigir, #resultado {
+            #btnPdf, #btnCorrigir {
                 display: none !important;
             }
         }
@@ -344,7 +344,9 @@
 
     function val(id) {
         var el = document.getElementById(id);
-        return el ? el.value : '';
+        if (el) return el.value;
+        var checked = document.querySelector('input[name="' + id + '"]:checked');
+        return checked ? checked.value : '';
     }
     function gravarCache() {
         var dados = {};
@@ -356,9 +358,14 @@
             var dados = JSON.parse(localStorage.getItem(CACHE) || 'null');
             if (!dados) return;
             CAMPOS.forEach(function(id) {
-                if (dados[id] != null && document.getElementById(id)) {
-                    document.getElementById(id).value = dados[id];
+                if (dados[id] == null) return;
+                var el = document.getElementById(id);
+                if (el) {
+                    el.value = dados[id];
+                    return;
                 }
+                var radio = document.querySelector('input[name="' + id + '"][value="' + dados[id] + '"]');
+                if (radio) radio.checked = true;
             });
         } catch (e) {}
     }
@@ -415,35 +422,46 @@
     function baixarPdf() {
         gravarCache();
         var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
-        if (typeof html2pdf === 'undefined') {
-            alert('Não foi possível carregar o gerador de PDF. Verifique a internet.');
-            return;
-        }
         var elemento = document.getElementById('licaoImpressao');
-
         var btnPdf = document.getElementById('btnPdf');
-        var displayPdf = btnPdf.style.display;
-
-        btnPdf.style.display = 'none';
         var btnCorrigir = document.getElementById('btnCorrigir');
         var resultado = document.getElementById('resultado');
+        var logo = document.querySelector('.header-container img');
+
+        var displayPdf = btnPdf.style.display;
         var displayCorrigir = btnCorrigir.style.display;
         var displayResultado = resultado.style.display;
-        btnCorrigir.style.display = 'none';
-        resultado.style.display = 'none';
+        var displayLogo = logo ? logo.style.display : '';
 
-        html2pdf().set({
-            margin: [8, 8, 8, 8],
+        function restaurar() {
+            btnPdf.style.display = displayPdf;
+            btnCorrigir.style.display = displayCorrigir;
+            resultado.style.display = displayResultado;
+            if (logo) logo.style.display = displayLogo;
+        }
+
+        btnPdf.style.display = 'none';
+        btnCorrigir.style.display = 'none';
+        if (logo) logo.style.display = 'none';
+
+        if (typeof html2pdf === 'undefined') {
+            restaurar();
+            window.print();
+            return;
+        }
+
+        var opcoes = {
+            margin: [8, 10, 8, 10],
             filename: 'Licao01-' + nome + '.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
+            image: { type: 'jpeg', quality: 0.95 },
             html2canvas: {
-                scale: 2,
-                useCORS: true,
+                scale: 1.5,
+                useCORS: false,
+                allowTaint: true,
                 backgroundColor: '#ffffff',
+                logging: false,
                 scrollX: 0,
-                scrollY: 0,
-                windowWidth: elemento.scrollWidth,
-                windowHeight: elemento.scrollHeight
+                scrollY: 0
             },
             pagebreak: {
                 mode: ['css', 'legacy'],
@@ -454,16 +472,11 @@
                 format: 'a4',
                 orientation: 'portrait'
             }
-        }).from(elemento).save().then(function() {
-            btnPdf.style.display = displayPdf;
-            btnCorrigir.style.display = displayCorrigir;
-            resultado.style.display = displayResultado;
-        }).catch(function(erro) {
-            btnPdf.style.display = displayPdf;
-            btnCorrigir.style.display = displayCorrigir;
-            resultado.style.display = displayResultado;
-            console.error(erro);
-            alert('Não foi possível gerar o PDF. Tente novamente.');
+        };
+
+        html2pdf().set(opcoes).from(elemento).save().then(restaurar).catch(function () {
+            restaurar();
+            window.print();
         });
     }
 
@@ -471,8 +484,13 @@
         lerCache();
         CAMPOS.forEach(function(id) {
             var el = document.getElementById(id);
-            if (el) el.addEventListener('input', gravarCache);
-            if (el) el.addEventListener('change', gravarCache);
+            if (el) {
+                el.addEventListener('input', gravarCache);
+                el.addEventListener('change', gravarCache);
+            }
+            document.querySelectorAll('input[name="' + id + '"]').forEach(function(radio) {
+                radio.addEventListener('change', gravarCache);
+            });
         });
     });
 </script>
