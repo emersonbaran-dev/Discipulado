@@ -223,290 +223,100 @@
     }
     function ehBotaoCorrigir(btn){return(((btn.innerText||btn.value||'')+' '+(btn.id||'')+' '+(btn.name||'')+' '+(btn.className||'')).toUpperCase().includes('CORRIGIR RESPOSTAS')||btn.id==='btnCorrigir')}
 
-    async function gerarPdfDaLicao(iframe){
-      var win=iframe&&iframe.contentWindow;
-      var doc=iframe&&(iframe.contentDocument||(win&&win.document));
+    function gerarPdfDaLicao(iframe){
+      var win=iframe.contentWindow;
+      var doc=iframe.contentDocument||(win&&win.document);
       var src=doc&&doc.getElementById('licaoImpressao');
-
-      if(!src){
-        alert('Não foi possível gerar o PDF. Tente novamente.');
-        return;
-      }
-      if(typeof html2pdf!=='function'){
-        alert('Não foi possível carregar o gerador de PDF. Verifique a internet.');
-        return;
-      }
-
+      if(!src) src = doc&&doc.body;
+      if(!src){alert('Não foi possível gerar o PDF. Tente novamente.');return}
+      if(typeof html2pdf!=='function'){alert('Não foi possível carregar o gerador de PDF. Verifique a internet.');return}
       try{if(typeof win.gravarCache==='function')win.gravarCache()}catch(e){}
 
-      /*
-       * O PDF é montado em um iframe temporário.
-       * Assim, o CSS, fontes, imagens e dimensões da própria lição
-       * permanecem iguais aos da tela. A versão anterior clonava apenas
-       * #licaoImpressao no documento principal e, por isso, perdia o CSS
-       * da lição, podia cortar conteúdo e gerar uma primeira página vazia.
-       */
-      var antigo=document.getElementById('__pdfRenderFrame');
+      var antigo=document.getElementById('__pdfCloneWrap');
       if(antigo)antigo.remove();
 
-      var pdfFrame=document.createElement('iframe');
-      pdfFrame.id='__pdfRenderFrame';
-      pdfFrame.setAttribute('aria-hidden','true');
-      pdfFrame.style.cssText=[
-        'position:fixed',
-        'left:-10000px',
-        'top:0',
-        'width:794px',
-        'height:1123px',
-        'border:0',
-        'visibility:visible',
-        'opacity:1',
-        'pointer-events:none',
-        'z-index:-1',
-        'background:#fff'
-      ].join(';');
+      var wrap=document.createElement('div');
+      wrap.id='__pdfCloneWrap';
+      wrap.style.cssText='position:fixed;left:-9999px;top:0;width:794px;background:#fff;z-index:2147483646;';
 
-      document.body.appendChild(pdfFrame);
-
-      var pdoc=pdfFrame.contentDocument;
-      var pwin=pdfFrame.contentWindow;
-      var baseHref;
-      try{baseHref=new URL('./',win.location.href).href}catch(e){baseHref=win.location.href}
-
-      pdoc.open();
-      pdoc.write('<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=794, initial-scale=1.0"><base href="'+baseHref.replace(/"/g,'&quot;')+'">');
-
-      /* Copia exatamente os estilos usados pela lição */
-      Array.from(doc.head.querySelectorAll('style,link[rel="stylesheet"]')).forEach(function(node){
-        try{
-          if(node.tagName.toLowerCase()==='style'){
-            var s=pdoc.createElement('style');
-            s.textContent=node.textContent||'';
-            pdoc.head.appendChild(s);
-          }else{
-            var link=pdoc.createElement('link');
-            link.rel='stylesheet';
-            link.href=new URL(node.getAttribute('href'),win.location.href).href;
-            pdoc.head.appendChild(link);
-          }
-        }catch(e){}
-      });
-
-      /* Regras somente para a renderização A4.
-         Não alteram a aparência dos demais elementos da página principal. */
-      var pdfStyle=pdoc.createElement('style');
-      pdfStyle.textContent=[
-        'html,body{',
-          'margin:0 !important;',
-          'padding:0 !important;',
-          'background:#fff !important;',
-        '}',
-        'body{',
-          'width:794px !important;',
-          'min-width:794px !important;',
-        '}',
-        '#licaoImpressao{',
-          'width:794px !important;',
-          'max-width:794px !important;',
-          'min-width:794px !important;',
-          'margin:0 auto !important;',
-          'box-shadow:none !important;',
-        '}',
-        '#licaoImpressao .pdf-no-break,',
-        '#licaoImpressao .alternativa,',
-        '#licaoImpressao .questao,',
-        '#licaoImpressao .question,',
-        '#licaoImpressao .question-group,',
-        '#licaoImpressao .item-questao,',
-        '#licaoImpressao .q-item{',
-          'break-inside:avoid;',
-          'page-break-inside:avoid;',
-        '}',
-        '#licaoImpressao .section-title,',
-        '#licaoImpressao .intro,',
-        '#licaoImpressao .header-container{',
-          'break-after:avoid;',
-          'page-break-after:avoid;',
-        '}',
-        '#licaoImpressao img{max-width:100%;}',
-        '@media print{',
-          'html,body{width:794px !important;}',
-          '#licaoImpressao{width:794px !important;max-width:794px !important;}',
-        '}'
-      ].join('');
-      pdoc.head.appendChild(pdfStyle);
-      pdoc.write('</head><body></body></html>');
-      pdoc.close();
-
-      /* Copia o conteúdo já respondido para o documento isolado */
       var clone=src.cloneNode(true);
-      clone.id='licaoImpressao';
-
-      /* Botões de ação não entram no PDF */
-      clone.querySelectorAll('#btnPdf,#btnCorrigir,.btn-pdf,.btn-corrigir').forEach(function(el){
-        el.remove();
+      clone.id='licaoImpressaoClone';
+      
+      // Preservar exatamente os estilos e folhas de estilo do documento da lição
+      var styleSheets = doc.querySelectorAll('style, link[rel="stylesheet"]');
+      styleSheets.forEach(function(st){
+        wrap.appendChild(st.cloneNode(true));
       });
 
-      /* Mantém as imagens da própria lição e transforma seus caminhos
-         relativos em absolutos, evitando imagens quebradas. */
-      var origImgs=src.querySelectorAll('img');
-      var cloneImgs=clone.querySelectorAll('img');
-      cloneImgs.forEach(function(img,i){
-        try{
-          var original=origImgs[i];
-          var url=(original&&(original.currentSrc||original.src||original.getAttribute('src')))||
-                  img.getAttribute('src');
-          if(url)img.src=new URL(url,win.location.href).href;
-        }catch(e){}
+      clone.style.cssText='width:794px;max-width:794px;margin:0 auto;padding:20px;box-shadow:none;border-radius:0;background:#fff;box-sizing:border-box;';
+      
+      // Remover botões de ação na impressão
+      clone.querySelectorAll('#btnPdf,#btnCorrigir,.btn-pdf,.btn-corrigir,button,input[type="button"],input[type="submit"]').forEach(function(el){el.remove()});
+      
+      // Corrigir imagens e logos
+      clone.querySelectorAll('img').forEach(function(img){
         img.removeAttribute('crossorigin');
+        if(!img.src || img.src.includes('logo-ipb')) {
+          img.src='logo-ipb.png';
+        }
       });
 
-      /* Mantém os estados atuais dos campos */
+      // Copiar os valores exatos de inputs/radios/textareas e replicar o estilo visual de correção
       var origCampos=src.querySelectorAll('input,textarea,select');
       var cloneCampos=clone.querySelectorAll('input,textarea,select');
-
       origCampos.forEach(function(inp,i){
         var c=cloneCampos[i];
         if(!c)return;
-
-        if(inp.type==='checkbox'||inp.type==='radio'){
-          c.checked=!!inp.checked;
-          if(inp.checked)c.setAttribute('checked','checked');
-          else c.removeAttribute('checked');
-        }else if(inp.tagName.toLowerCase()==='select'){
-          Array.from(c.options).forEach(function(op,j){
-            var selected=!!(inp.options[j]&&inp.options[j].selected);
-            op.selected=selected;
-            if(selected)op.setAttribute('selected','selected');
-            else op.removeAttribute('selected');
-          });
-        }else{
+        if(inp.type==='checkbox'||inp.type==='radio') {
+          c.checked=inp.checked;
+          if(inp.checked) c.setAttribute('checked', 'checked');
+        } else {
           c.value=inp.value;
-          c.setAttribute('value',inp.value);
-          if(c.tagName.toLowerCase()==='textarea')c.textContent=inp.value;
+          c.setAttribute('value', inp.value);
         }
-
+        
+        // Replicar classes CSS de acertou/errou do elemento pai
         if(inp.parentElement&&c.parentElement){
           c.parentElement.className=inp.parentElement.className;
+          c.parentElement.style.cssText=window.getComputedStyle(inp.parentElement).cssText;
         }
       });
 
-      pdoc.body.appendChild(clone);
-
-      /* Aguarda as folhas de estilo externas */
-      await Promise.all(Array.from(pdoc.querySelectorAll('link[rel="stylesheet"]')).map(function(link){
-        return new Promise(function(resolve){
-          if(link.sheet){resolve();return}
-          link.addEventListener('load',resolve,{once:true});
-          link.addEventListener('error',resolve,{once:true});
-          setTimeout(resolve,8000);
-        });
-      }));
-
-      /* Aguarda fontes e imagens */
-      try{
-        if(pdoc.fonts&&pdoc.fonts.ready)await pdoc.fonts.ready;
-      }catch(e){}
-
-      await Promise.all(Array.from(clone.querySelectorAll('img')).map(function(img){
-        return new Promise(function(resolve){
-          if(img.complete){resolve();return}
-          img.addEventListener('load',resolve,{once:true});
-          img.addEventListener('error',resolve,{once:true});
-          setTimeout(resolve,5000);
-        });
-      }));
-
-      await new Promise(function(resolve){
-        requestAnimationFrame(function(){
-          requestAnimationFrame(resolve);
-        });
-      });
+      wrap.appendChild(clone);
+      document.body.appendChild(wrap);
 
       var nome='Aluno';
-      try{
-        if(typeof win.val==='function')nome=String(win.val('nomePessoa')||'Aluno');
-      }catch(e){}
-      nome=String(nome).replace(/[\\\/:*?"<>|]+/g,'_').replace(/\s+/g,'_');
-
+      try{if(typeof win.val==='function')nome=String(win.val('nomePessoa')||'Aluno')}catch(e){}
+      nome=String(nome).replace(/\s+/g,'_');
       var nLicao='01';
       try{
-        var path=String((win.location&&win.location.pathname)||'');
-        var match=path.match(/Licao(\d+)/i);
-        if(match)nLicao=match[1];
+        var m=String((win.location&&win.location.pathname)||'').match(/Licao(\d+)/i);
+        if(m)nLicao=m[1];
       }catch(e){}
 
-      /*
-       * Carrega o html2pdf dentro do documento isolado.
-       * Dessa forma html2canvas trabalha sobre o mesmo documento que
-       * contém o CSS da lição, preservando o layout completo.
-       */
-      await new Promise(function(resolve,reject){
-        var script=pdoc.createElement('script');
-        script.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
-        script.onload=resolve;
-        script.onerror=reject;
-        pdoc.head.appendChild(script);
-      });
-
-      try{
-        if(typeof pwin.html2pdf!=='function')throw new Error('html2pdf não carregado');
-
-        await pwin.html2pdf().set({
-          margin:[8,10,8,10],
-          filename:'Licao'+nLicao+'-'+nome+'.pdf',
-          image:{type:'jpeg',quality:0.98},
-          html2canvas:{
-            scale:2,
-            useCORS:true,
-            allowTaint:false,
-            backgroundColor:'#ffffff',
-            logging:false,
-            scrollX:0,
-            scrollY:0,
-            windowWidth:794,
-            windowHeight:1123,
-            imageTimeout:15000
-          },
-          /*
-           * Não usar "avoid-all": ele pode empurrar um bloco grande
-           * para a página seguinte e deixar a primeira página vazia.
-           * A quebra passa a ser natural, mantendo a lição inteira.
-           */
-          pagebreak:{
-            mode:['css','legacy'],
-            avoid:[
-              'img',
-              'table',
-              'tr',
-              '.alternativa',
-              '.questao',
-              '.question',
-              '.question-group',
-              '.item-questao',
-              '.q-item',
-              '.section-title',
-              '.intro',
-              '.header-container'
-            ]
-          },
-          jsPDF:{
-            unit:'mm',
-            format:'a4',
-            orientation:'portrait',
-            compress:true
-          }
-        }).from(clone).save();
-      }catch(err){
-        console.error('Erro ao gerar PDF:',err);
+      html2pdf().set({
+        margin:[10,10,10,10],
+        filename:'Licao'+nLicao+'-'+nome+'.pdf',
+        image:{type:'jpeg',quality:0.98},
+        html2canvas:{
+          scale:2,
+          useCORS:true,
+          allowTaint:true,
+          backgroundColor:'#ffffff',
+          logging:false,
+          scrollX:0,
+          scrollY:0,
+          windowWidth:794
+        },
+        pagebreak:{mode:['avoid-all','css','legacy'],avoid:['.question-group','.section-title','.final-note','.alternativas','.intro','.header-container','.questao','.bloco-questao','fieldset']},
+        jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
+      }).from(clone).save().then(function(){
+        wrap.remove();
+      }).catch(function(){
+        wrap.remove();
         alert('Não foi possível gerar o PDF. Tente novamente.');
-      }finally{
-        setTimeout(function(){
-          if(pdfFrame&&pdfFrame.parentNode)pdfFrame.remove();
-        },300);
-      }
+      });
     }
-
 
     function corrigirGeracaoPdf(iframe){
       try{
