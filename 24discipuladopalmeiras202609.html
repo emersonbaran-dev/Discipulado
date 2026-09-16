@@ -292,45 +292,79 @@
         if (typeof win.baixarPdf !== 'function') return;
 
         win.__pdfCorrigido = true;
-        var original = win.baixarPdf.bind(win);
 
         win.baixarPdf = function () {
           if (!licaoEstaCompleta(iframe)) {
             alert('Responda todas as alternativas da lição antes de baixar o PDF.');
             return false;
           }
+          if (typeof win.html2pdf !== 'function') {
+            alert('Não foi possível carregar o gerador de PDF. Verifique a internet.');
+            return false;
+          }
+
+          var el = doc.getElementById('licaoImpressao');
+          if (!el) return false;
 
           var logo = doc.querySelector('.header-container img');
-          var displayLogo = logo ? logo.style.display : '';
+          var btnPdf = doc.getElementById('btnPdf');
+          var btnCorrigir = doc.getElementById('btnCorrigir');
+          var resultado = doc.getElementById('resultado');
+          var prevLogo = logo ? logo.style.display : '';
+          var prevPdf = btnPdf ? btnPdf.style.display : '';
+          var prevCorrigir = btnCorrigir ? btnCorrigir.style.display : '';
+
           if (logo) logo.style.display = 'none';
+          if (btnPdf) btnPdf.style.display = 'none';
+          if (btnCorrigir) btnCorrigir.style.display = 'none';
 
-          var html2pdfOrig = win.html2pdf;
-          if (typeof html2pdfOrig === 'function') {
-            win.html2pdf = function () {
-              var worker = html2pdfOrig.apply(win, arguments);
-              var origSet = worker.set.bind(worker);
-              worker.set = function (opts) {
-                if (opts) {
-                  opts.margin = [8, 10, 8, 10];
-                  opts.html2canvas = opts.html2canvas || {};
-                  opts.html2canvas.useCORS = false;
-                  opts.html2canvas.allowTaint = true;
-                  opts.html2canvas.backgroundColor = '#ffffff';
-                }
-                return origSet(opts);
-              };
-              return worker;
-            };
-          }
-
+          var nome = 'Aluno';
           try {
-            return original();
-          } finally {
-            win.html2pdf = html2pdfOrig;
-            setTimeout(function () {
-              if (logo) logo.style.display = displayLogo;
-            }, 8000);
+            if (typeof win.val === 'function') nome = String(win.val('nomePessoa') || 'Aluno');
+          } catch (e) {}
+          nome = nome.replace(/\s+/g, '_');
+          var nLicao = '01';
+          try {
+            var m = String((win.location && win.location.pathname) || '').match(/Licao(\d+)/i);
+            if (m) nLicao = m[1];
+          } catch (e) {}
+
+          if (typeof win.gravarCache === 'function') {
+            try { win.gravarCache(); } catch (e) {}
           }
+
+          function restaurar() {
+            if (logo) logo.style.display = prevLogo;
+            if (btnPdf) btnPdf.style.display = prevPdf;
+            if (btnCorrigir) btnCorrigir.style.display = prevCorrigir;
+          }
+
+          return win.html2pdf().set({
+            margin: [8, 10, 8, 10],
+            filename: 'Licao' + nLicao + '-' + nome + '.pdf',
+            image: { type: 'jpeg', quality: 0.95 },
+            html2canvas: {
+              scale: 1.5,
+              useCORS: false,
+              allowTaint: true,
+              backgroundColor: '#ffffff',
+              logging: false,
+              scrollX: 0,
+              scrollY: 0
+            },
+            pagebreak: {
+              mode: ['css', 'legacy'],
+              avoid: ['.question-group', '.section-title', '.final-note']
+            },
+            jsPDF: {
+              unit: 'mm',
+              format: 'a4',
+              orientation: 'portrait'
+            }
+          }).from(el).save().then(restaurar).catch(function () {
+            restaurar();
+            alert('Não foi possível gerar o PDF. Tente novamente.');
+          });
         };
       } catch (e) {}
     }
