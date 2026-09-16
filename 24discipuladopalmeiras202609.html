@@ -283,85 +283,9 @@
       const texto = ((btn.innerText || btn.value || '') + ' ' + (btn.id || '') + ' ' + (btn.name || '') + ' ' + (btn.className || '')).toUpperCase();
       return texto.includes('CORRIGIR RESPOSTAS') || btn.id === 'btnCorrigir';
     }
-    function corrigirGeracaoPdf(iframe) {
-      try {
-        const win = iframe.contentWindow;
-        const doc = iframe.contentDocument || (win && win.document);
-        if (!win || !doc || win.__pdfCorrigido) return;
-        win.__pdfCorrigido = true;
-        win.baixarPdf = function () {
-          if (typeof win.gravarCache === 'function') win.gravarCache();
-          var nomeEl = doc.getElementById('nomePessoa');
-          var nome = ((nomeEl && nomeEl.value) || 'Aluno').replace(/\s+/g, '_');
-          if (typeof win.html2pdf === 'undefined') {
-            alert('Não foi possível carregar o gerador de PDF. Verifique a internet.');
-            return;
-          }
-          var elemento = doc.getElementById('licaoImpressao') || doc.body;
-          var btnPdf = doc.getElementById('btnPdf');
-          var btnCorrigir = doc.getElementById('btnCorrigir');
-          var resultado = doc.getElementById('resultado');
-          var displayPdf = btnPdf ? btnPdf.style.display : '';
-          var displayCorrigir = btnCorrigir ? btnCorrigir.style.display : '';
-          var displayResultado = resultado ? resultado.style.display : '';
-          if (btnPdf) btnPdf.style.display = 'none';
-          if (btnCorrigir) btnCorrigir.style.display = 'none';
-          if (resultado) resultado.style.display = 'none';
-          var restaurar = function () {
-            if (btnPdf) btnPdf.style.display = displayPdf;
-            if (btnCorrigir) btnCorrigir.style.display = displayCorrigir;
-            if (resultado) resultado.style.display = displayResultado;
-          };
-          win.html2pdf().set({
-            margin: [10, 10, 10, 10],
-            filename: 'Licao-' + nome + '.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: {
-              scale: 2,
-              useCORS: true,
-              backgroundColor: '#ffffff',
-              scrollX: 0,
-              scrollY: 0,
-              windowWidth: 794,
-              onclone: function (clonedDoc) {
-                var el = clonedDoc.getElementById('licaoImpressao') || clonedDoc.body;
-                if (el) {
-                  el.style.boxSizing = 'border-box';
-                  el.style.maxWidth = '100%';
-                  el.style.width = '100%';
-                  el.style.margin = '0';
-                  el.style.boxShadow = 'none';
-                  el.style.padding = '16px';
-                  el.style.overflow = 'visible';
-                }
-                var img = clonedDoc.querySelector('.header-container img');
-                if (img) {
-                  img.style.position = 'relative';
-                  img.style.left = 'auto';
-                }
-              }
-            },
-            pagebreak: {
-              mode: ['css', 'legacy'],
-              avoid: ['.question-group', '.section-title', '.final-note']
-            },
-            jsPDF: {
-              unit: 'mm',
-              format: 'a4',
-              orientation: 'portrait'
-            }
-          }).from(elemento).save().then(restaurar).catch(function (erro) {
-            restaurar();
-            console.error(erro);
-            alert('Não foi possível gerar o PDF. Tente novamente.');
-          });
-        };
-      } catch (e) {}
-    }
     function conectarFormularioLicao(mIndex, lIndex, iframe) {
       try {
         const doc = iframe.contentDocument || iframe.contentWindow.document;
-        corrigirGeracaoPdf(iframe);
         const tentar = function (ev) {
           if (!licaoEstaCompleta(iframe)) {
             if (ev) { ev.preventDefault(); ev.stopPropagation(); }
