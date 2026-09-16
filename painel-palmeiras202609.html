@@ -194,7 +194,7 @@
 
           <div class="video-box">
             <label>🎬 Vídeo da aula</label>
-            <p class="hint">O botão do aluno nasce amarelo. No ENVIAR da lição, fica verde e libera o vídeo.</p>
+            <p class="hint">O vídeo e os documentos só aparecem para o aluno depois que ele clicar em CORRIGIR RESPOSTAS na lição.</p>
             <div class="form-group">
               <label for="video-title">Título do vídeo</label>
               <input type="text" id="video-title">
@@ -207,6 +207,7 @@
 
           <div class="links-section">
             <label>Materiais, Recursos e Links</label>
+            <p class="hint">Também ficam bloqueados até o aluno clicar em CORRIGIR RESPOSTAS.</p>
             <div id="links-container"></div>
             <button type="button" class="btn btn-secondary" onclick="addLinkRow()">➕ Adicionar Outro Link</button>
           </div>
@@ -567,7 +568,7 @@
             ${releaseBadge(lesson.releaseDate)}
             ${lesson.firstHtmlPage ? `<span class="badge badge-html">📋 ${lesson.firstHtmlTitle || lesson.firstHtmlPage}</span>` : ''}
             ${lesson.videoUrl ? `<span class="badge badge-video">🎬 ${lesson.videoTitle || 'Vídeo'}</span>` : ''}
-            ${lesson.firstHtmlPage && lesson.videoUrl ? `<span class="badge badge-lock">🟡 Vídeo bloqueado até ENVIAR</span>` : ''}
+            ${lesson.firstHtmlPage && (lesson.videoUrl || (lesson.links && lesson.links.length)) ? `<span class="badge badge-lock">🟡 Bloqueado até CORRIGIR RESPOSTAS</span>` : ''}
             ${lesson.description ? `<p class="hint">${lesson.description}</p>` : ''}
           </div>`).join('') : `<p class="hint">Nenhuma lição neste módulo.</p>`;
         return `<div class="lesson-group-title">${mIndex + 1}. ${module.title} — ${lessons.length}/3</div>${lessonsHTML}`;
