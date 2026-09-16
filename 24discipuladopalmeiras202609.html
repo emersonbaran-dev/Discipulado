@@ -223,77 +223,101 @@
     }
     function ehBotaoCorrigir(btn){return(((btn.innerText||btn.value||'')+' '+(btn.id||'')+' '+(btn.name||'')+' '+(btn.className||'')).toUpperCase().includes('CORRIGIR RESPOSTAS')||btn.id==='btnCorrigir')}
 
+    /* --- FUNÇÃO DE GERAÇÃO DE PDF OTIMIZADA E CORRIGIDA --- */
     function gerarPdfDaLicao(iframe){
-      var win=iframe.contentWindow;
-      var doc=iframe.contentDocument||(win&&win.document);
-      var src=doc&&doc.getElementById('licaoImpressao');
-      if(!src){alert('Não foi possível gerar o PDF. Tente novamente.');return}
-      if(typeof html2pdf!=='function'){alert('Não foi possível carregar o gerador de PDF. Verifique a internet.');return}
-      try{if(typeof win.gravarCache==='function')win.gravarCache()}catch(e){}
+      var win = iframe.contentWindow;
+      var doc = iframe.contentDocument || (win && win.document);
+      var src = doc && doc.getElementById('licaoImpressao');
+      if (!src) { alert('Não foi possível localizar o conteúdo para PDF.'); return; }
+      if (typeof html2pdf !== 'function') { alert('Biblioteca de PDF indisponível.'); return; }
+      
+      try { if (typeof win.gravarCache === 'function') win.gravarCache(); } catch(e){}
 
-      var antigo=document.getElementById('__pdfCloneWrap');
-      if(antigo)antigo.remove();
+      // Remover clone anterior, se houver
+      var antigo = document.getElementById('__pdfCloneWrap');
+      if (antigo) antigo.remove();
 
-      var wrap=document.createElement('div');
-      wrap.id='__pdfCloneWrap';
-      wrap.style.cssText='position:fixed;left:0;top:0;width:794px;background:#fff;z-index:2147483646;pointer-events:none;';
+      // Wrapper com largura A4 padronizada (794px aprox 210mm)
+      var wrap = document.createElement('div');
+      wrap.id = '__pdfCloneWrap';
+      wrap.style.cssText = 'position:absolute;left:-9999px;top:0;width:794px;background:#ffffff;z-index:-1;';
 
-      var clone=src.cloneNode(true);
-      clone.id='licaoImpressaoClone';
-      clone.style.cssText='width:794px;max-width:794px;margin:0;box-shadow:none;border-radius:0;background:#fff;';
-      clone.querySelectorAll('#btnPdf,#btnCorrigir,.btn-pdf,.btn-corrigir').forEach(function(el){el.remove()});
+      // Copiar os Estilos CSS do Iframe para garantir que o PDF mantenha o design
+      var stylesHtml = '';
+      Array.from(doc.querySelectorAll('style, link[rel="stylesheet"]')).forEach(function(st){
+        stylesHtml += st.outerHTML;
+      });
+
+      var clone = src.cloneNode(true);
+      clone.id = 'licaoImpressaoClone';
+      clone.style.cssText = 'width:794px;max-width:794px;margin:0;padding:20px;box-shadow:none;border-radius:0;background:#ffffff;box-sizing:border-box;';
+
+      // Esconder botões e elementos indesejados no PDF
+      clone.querySelectorAll('#btnPdf,#btnCorrigir,.btn-pdf,.btn-corrigir,button,input[type="button"],input[type="submit"]').forEach(function(el){
+        el.style.display = 'none';
+      });
+
+      // Garantir renderização das imagens
       clone.querySelectorAll('img').forEach(function(img){
-        img.removeAttribute('crossorigin');
-        img.src='logo-ipb.png';
-        img.style.position='relative';
-        img.style.left='auto';
-        img.style.height='52px';
+        img.style.maxHeight = '60px';
+        img.style.width = 'auto';
       });
 
-      var origCampos=src.querySelectorAll('input,textarea,select');
-      var cloneCampos=clone.querySelectorAll('input,textarea,select');
-      origCampos.forEach(function(inp,i){
-        var c=cloneCampos[i];
-        if(!c)return;
-        if(inp.type==='checkbox'||inp.type==='radio')c.checked=inp.checked;
-        else c.value=inp.value;
-        if(inp.parentElement&&c.parentElement)c.parentElement.className=inp.parentElement.className;
+      // Preservar valores digitados/selecionados pelo aluno
+      var origCampos = src.querySelectorAll('input,textarea,select');
+      var cloneCampos = clone.querySelectorAll('input,textarea,select');
+      origCampos.forEach(function(inp, i){
+        var c = cloneCampos[i];
+        if (!c) return;
+        if (inp.type === 'checkbox' || inp.type === 'radio') {
+          c.checked = inp.checked;
+          if(inp.checked) c.setAttribute('checked', 'checked');
+        } else {
+          c.value = inp.value;
+          c.innerText = inp.value;
+        }
       });
 
+      // Montar a estrutura com o CSS e o Conteúdo
+      wrap.innerHTML = stylesHtml;
       wrap.appendChild(clone);
       document.body.appendChild(wrap);
 
-      var nome='Aluno';
-      try{if(typeof win.val==='function')nome=String(win.val('nomePessoa')||'Aluno')}catch(e){}
-      nome=String(nome).replace(/\s+/g,'_');
-      var nLicao='01';
-      try{
-        var m=String((win.location&&win.location.pathname)||'').match(/Licao(\\d+)/i);
-        if(m)nLicao=m[1];
-      }catch(e){}
+      // Nome do Arquivo
+      var nome = 'Aluno';
+      try { if (typeof win.val === 'function') nome = String(win.val('nomePessoa') || 'Aluno'); } catch(e){}
+      nome = String(nome).trim().replace(/\s+/g, '_');
+      var nLicao = '01';
+      try {
+        var m = String((win.location && win.location.pathname) || '').match(/Licao(\d+)/i);
+        if (m) nLicao = m[1];
+      } catch(e){}
 
-      html2pdf().set({
-        margin:[8,10,8,10],
-        filename:'Licao'+nLicao+'-'+nome+'.pdf',
-        image:{type:'jpeg',quality:0.98},
-        html2canvas:{
-          scale:2,
-          useCORS:false,
-          allowTaint:false,
-          backgroundColor:'#ffffff',
-          logging:false,
-          scrollX:0,
-          scrollY:0,
-          windowWidth:794,
-          imageTimeout:0
+      // Configurações do html2pdf ajustadas para evitar quebras incorretas
+      var opt = {
+        margin: [10, 10, 10, 10],
+        filename: 'Licao' + nLicao + '-' + nome + '.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#ffffff',
+          windowWidth: 794
         },
-        pagebreak:{mode:['avoid-all','css','legacy'],avoid:['.question-group','.section-title','.final-note','.alternativas','.intro','.header-container']},
-        jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
-      }).from(clone).save().then(function(){
+        pagebreak: { 
+          mode: ['avoid-all', 'css', 'legacy'],
+          avoid: ['.question-group', '.questao', '.bloco-questao', '.section-title', 'fieldset', '.header-container']
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(clone).save().then(function(){
         wrap.remove();
-      }).catch(function(){
+      }).catch(function(err){
+        console.error(err);
         wrap.remove();
-        alert('Não foi possível gerar o PDF. Tente novamente.');
+        alert('Ocorreu um erro ao gerar o PDF. Tente novamente.');
       });
     }
 
@@ -436,7 +460,7 @@
     }
     function toggleDocAccordion(m,l,key){
       const item=document.getElementById('doc-item-'+m+'-'+l+'-'+key);
-      const body=document.getElementById('doc-body-'+m+'-'+l+'-'+key);
+      const body=document.getElementById('doc-body-'+m+'-'+l+'-key');
       const main=document.getElementById('body-'+m);
       if(!item||!body)return;
       if(item.classList.contains('active')){item.classList.remove('active');body.style.maxHeight=null}
