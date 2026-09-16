@@ -289,60 +289,174 @@
         const doc = iframe.contentDocument || (win && win.document);
         if (!win || !doc || win.__pdfCorrigido) return;
         if (typeof win.baixarPdf !== 'function') return;
+
         win.__pdfCorrigido = true;
         const original = win.baixarPdf.bind(win);
+
+        // Corrige o PDF sem alterar o restante da lição:
+        // - só permite baixar depois que TODAS as questões estiverem respondidas;
+        // - usa uma área A4 estável (794px) para evitar corte lateral;
+        // - remove posicionamentos que costumam deslocar o conteúdo para fora da página;
+        // - evita página inicial em branco causada por margem/page-break.
         win.baixarPdf = function () {
+          if (!licaoEstaCompleta(iframe)) {
+            alert('Responda todas as alternativas da lição antes de baixar o PDF.');
+            return false;
+          }
+
           const el = doc.getElementById('licaoImpressao');
           const img = doc.querySelector('.header-container img');
-          const prevEl = el ? {
+
+          if (!el) {
+            return original();
+          }
+
+          const style = doc.createElement('style');
+          style.id = '__correcaoPdfDefinitiva';
+          style.textContent = `
+            html, body {
+              margin: 0 !important;
+              padding: 0 !important;
+              overflow: visible !important;
+              width: 100% !important;
+              min-width: 0 !important;
+            }
+
+            @page {
+              size: A4 portrait;
+              margin: 0;
+            }
+
+            #licaoImpressao {
+              box-sizing: border-box !important;
+              width: 794px !important;
+              min-width: 794px !important;
+              max-width: 794px !important;
+              margin: 0 auto !important;
+              padding: 12px !important;
+              overflow: visible !important;
+              position: relative !important;
+              left: auto !important;
+              right: auto !important;
+              transform: none !important;
+              box-shadow: none !important;
+            }
+
+            #licaoImpressao > *:first-child {
+              page-break-before: auto !important;
+              break-before: auto !important;
+            }
+          `;
+          doc.head.appendChild(style);
+
+          const prevEl = {
             maxWidth: el.style.maxWidth,
+            minWidth: el.style.minWidth,
             width: el.style.width,
             padding: el.style.padding,
             margin: el.style.margin,
             boxSizing: el.style.boxSizing,
             boxShadow: el.style.boxShadow,
-            overflow: el.style.overflow
+            overflow: el.style.overflow,
+            position: el.style.position,
+            left: el.style.left,
+            right: el.style.right,
+            transform: el.style.transform
+          };
+
+          const prevImg = img ? {
+            position: img.style.position,
+            left: img.style.left,
+            right: img.style.right,
+            transform: img.style.transform
           } : null;
-          const prevImg = img ? { position: img.style.position, left: img.style.left } : null;
-          if (el) {
-            el.style.boxSizing = 'border-box';
-            el.style.maxWidth = '640px';
-            el.style.width = '640px';
-            el.style.padding = '12px';
-            el.style.margin = '0 auto';
-            el.style.boxShadow = 'none';
-            el.style.overflow = 'visible';
-          }
+
+          el.style.boxSizing = 'border-box';
+          el.style.maxWidth = '794px';
+          el.style.minWidth = '794px';
+          el.style.width = '794px';
+          el.style.padding = '12px';
+          el.style.margin = '0 auto';
+          el.style.boxShadow = 'none';
+          el.style.overflow = 'visible';
+          el.style.position = 'relative';
+          el.style.left = 'auto';
+          el.style.right = 'auto';
+          el.style.transform = 'none';
+
           if (img) {
             img.style.position = 'relative';
             img.style.left = 'auto';
+            img.style.right = 'auto';
+            img.style.transform = 'none';
           }
+
           try {
-            original();
+            const resultado = original();
+            return resultado;
           } finally {
+            // Mantém a correção durante a geração assíncrona do PDF e
+            // restaura a aparência normal da página depois.
             setTimeout(function () {
-              if (el && prevEl) {
-                el.style.maxWidth = prevEl.maxWidth;
-                el.style.width = prevEl.width;
-                el.style.padding = prevEl.padding;
-                el.style.margin = prevEl.margin;
-                el.style.boxSizing = prevEl.boxSizing;
-                el.style.boxShadow = prevEl.boxShadow;
-                el.style.overflow = prevEl.overflow;
-              }
+              if (style && style.parentNode) style.parentNode.removeChild(style);
+
+              el.style.maxWidth = prevEl.maxWidth;
+              el.style.minWidth = prevEl.minWidth;
+              el.style.width = prevEl.width;
+              el.style.padding = prevEl.padding;
+              el.style.margin = prevEl.margin;
+              el.style.boxSizing = prevEl.boxSizing;
+              el.style.boxShadow = prevEl.boxShadow;
+              el.style.overflow = prevEl.overflow;
+              el.style.position = prevEl.position;
+              el.style.left = prevEl.left;
+              el.style.right = prevEl.right;
+              el.style.transform = prevEl.transform;
+
               if (img && prevImg) {
                 img.style.position = prevImg.position;
                 img.style.left = prevImg.left;
+                img.style.right = prevImg.right;
+                img.style.transform = prevImg.transform;
               }
-            }, 4000);
+            }, 8000);
           }
         };
+      } catch (e) {}
+    }
+
+    function bloquearDownloadPdfAteCompletar(iframe) {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const bloquear = function (ev) {
+          const btn = ev.currentTarget;
+          const texto = ((btn.innerText || btn.value || '') + ' ' + (btn.id || '') + ' ' + (btn.className || '')).toUpperCase();
+          const parecePdf = texto.includes('PDF') || texto.includes('BAIXAR') || texto.includes('DOWNLOAD');
+          if (!parecePdf) return;
+
+          if (!licaoEstaCompleta(iframe)) {
+            ev.preventDefault();
+            ev.stopImmediatePropagation();
+            alert('Responda todas as alternativas da lição antes de baixar o PDF.');
+            return false;
+          }
+        };
+
+        doc.querySelectorAll('button, input[type="button"], input[type="submit"], a').forEach(function (btn) {
+          if (btn.dataset.pdfGateBound === '1') return;
+          const texto = ((btn.innerText || btn.value || '') + ' ' + (btn.id || '') + ' ' + (btn.className || '')).toUpperCase();
+          const parecePdf = texto.includes('PDF') || texto.includes('BAIXAR') || texto.includes('DOWNLOAD');
+          if (!parecePdf) return;
+          btn.dataset.pdfGateBound = '1';
+          btn.addEventListener('click', bloquear, true);
+        });
       } catch (e) {}
     }
     function conectarFormularioLicao(mIndex, lIndex, iframe) {
       try {
         const doc = iframe.contentDocument || iframe.contentWindow.document;
         corrigirGeracaoPdf(iframe);
+        bloquearDownloadPdfAteCompletar(iframe);
         const tentar = function (ev) {
           if (!licaoEstaCompleta(iframe)) {
             if (ev) { ev.preventDefault(); ev.stopPropagation(); }
