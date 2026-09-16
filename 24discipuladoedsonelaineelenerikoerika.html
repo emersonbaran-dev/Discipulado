@@ -44,11 +44,7 @@
     .accordion-body, .doc-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
     .accordion-content { padding: 0 25px 25px; border-top: 1px solid #e8eedc; }
     .section-block { margin-top: 18px; }
-    .section-block.lesson-block + .section-block.lesson-block {
-      border-top: 1px solid #d5d8dc;
-      padding-top: 18px;
-      margin-top: 22px;
-    }
+    .lesson-block + .lesson-block { border-top: 2px solid #A0A0A0; padding-top: 18px; margin-top: 22px; }
     .lesson-text { line-height: 1.6; color: #4a5a32; white-space: pre-wrap; }
     .video-responsive { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; }
     .video-responsive iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
@@ -62,13 +58,14 @@
     .licao-frame { width: 100%; min-height: 980px; height: 80vh; border: 1px solid #d7dfc6; border-radius: 8px; background: #fff; }
     .doc-footer { padding: 10px 15px; background: #f4f6ef; border-top: 1px solid #d7dfc6; text-align: right; }
     .btn-link-general { display: inline-flex; align-items: center; gap: 8px; background: #556b2f; color: #fff; padding: 10px 18px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
-    .btn-video { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; border: none; border-radius: 8px; padding: 14px 22px; font-size: 1rem; font-weight: 700; background: #eab308; color: #422006; cursor: not-allowed; pointer-events: none; }
+    .btn-video { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 50%; border: none; border-radius: 8px; padding: 10px 16px; font-size: 0.95rem; font-weight: 700; background: #eab308; color: #422006; cursor: not-allowed; pointer-events: none; }
     .btn-video.liberado { background: #228B22; color: #fff; cursor: pointer; pointer-events: auto; }
     .empty-state { text-align: center; padding: 40px; background: #fff; border-radius: 8px; color: #6b7a52; }
     .lesson-title { font-size: 1.05rem; color: #3d4f21; margin-bottom: 8px; }
     @media (max-width: 768px) {
       .app-layout { flex-direction: column; }
       .sidebar { width: 100%; height: auto; position: relative; }
+      .btn-video { width: 50%; }
     }
   </style>
 </head>
