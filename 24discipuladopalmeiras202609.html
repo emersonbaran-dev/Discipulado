@@ -106,14 +106,88 @@
       if (!lesson.firstHtmlPage && !lesson.lockLinksUntilLessonSubmit) return true;
       return videosLiberados.has(mIndex + '-' + lIndex) || localStorage.getItem(chaveLiberacao(mIndex, lIndex)) === '1';
     }
+    function iframeDaLicao(mIndex, lIndex) {
+      return document.querySelector('#doc-item-' + mIndex + '-' + lIndex + '-html iframe.licao-frame');
+    }
+    function todasAlternativasFeitas(doc) {
+      if (!doc) return false;
+      const radios = Array.from(doc.querySelectorAll('input[type="radio"]'));
+      if (radios.length) {
+        const grupos = new Map();
+        radios.forEach((r, idx) => {
+          let key = r.name;
+          if (!key) {
+            const bloco = r.closest('[data-questao], .questao, .pergunta, .question, fieldset, .item-questao, .q-item, .bloco-questao');
+            key = bloco ? 'bloco-' + (bloco.id || bloco.getAttribute('data-questao') || Array.prototype.indexOf.call(bloco.parentNode.children, bloco)) : 'radio-' + idx;
+          }
+          if (!grupos.has(key)) grupos.set(key, []);
+          grupos.get(key).push(r);
+        });
+        for (const grupo of grupos.values()) {
+          if (!grupo.some(r => r.checked)) return false;
+        }
+      }
+      const selects = Array.from(doc.querySelectorAll('select'));
+      for (const s of selects) {
+        if (s.disabled) continue;
+        if (!String(s.value || '').trim()) return false;
+      }
+      const textos = Array.from(doc.querySelectorAll('textarea, input[type="text"], input[type="number"], input:not([type])'));
+      for (const t of textos) {
+        if (t.disabled || t.readOnly) continue;
+        const exige = t.required || t.getAttribute('data-obrigatorio') === '1' || t.classList.contains('resposta') || t.closest('.questao, .pergunta, [data-questao]');
+        if (exige && !String(t.value || '').trim()) return false;
+      }
+      if (!radios.length && !selects.length) {
+        const clicaveis = Array.from(doc.querySelectorAll('[data-alternativa], .alternativa, .alt, .opcao'));
+        if (clicaveis.length) {
+          const blocos = new Map();
+          clicaveis.forEach((el, idx) => {
+            const bloco = el.closest('[data-questao], .questao, .pergunta, fieldset') || el.parentElement || el;
+            const key = bloco.id || bloco.getAttribute('data-questao') || 'b' + idx;
+            if (!blocos.has(key)) blocos.set(key, []);
+            blocos.get(key).push(el);
+          });
+          for (const grupo of blocos.values()) {
+            const marcado = grupo.some(el => el.classList.contains('selecionada') || el.classList.contains('selected') || el.classList.contains('ativa') || el.getAttribute('aria-checked') === 'true' || (el.querySelector && el.querySelector('input:checked')));
+            if (!marcado) return false;
+          }
+        } else {
+          return false;
+        }
+      }
+      return true;
+    }
+    function licaoEstaCompleta(iframe) {
+      try {
+        if (!iframe) return false;
+        const win = iframe.contentWindow;
+        const doc = iframe.contentDocument || (win && win.document);
+        if (win && typeof win.todasRespostasPreenchidas === 'function') return !!win.todasRespostasPreenchidas();
+        if (win && typeof win.verificarRespostasCompletas === 'function') return !!win.verificarRespostasCompletas();
+        if (win && win.LICAO_COMPLETA === true) return true;
+        return todasAlternativasFeitas(doc);
+      } catch (e) {
+        return false;
+      }
+    }
+    function tentarLiberarMateriais(mIndex, lIndex, silencioso) {
+      const iframe = iframeDaLicao(mIndex, lIndex);
+      if (!licaoEstaCompleta(iframe)) {
+        if (!silencioso) alert('Responda todas as alternativas da lição antes de clicar em Corrigir Respostas.');
+        return false;
+      }
+      marcarMateriaisLiberados(mIndex, lIndex);
+      return true;
+    }
     function marcarMateriaisLiberados(mIndex, lIndex) {
       videosLiberados.add(mIndex + '-' + lIndex);
       localStorage.setItem(chaveLiberacao(mIndex, lIndex), '1');
       liberarMateriaisNaTela(mIndex, lIndex);
-      const iframe = document.querySelector('#doc-item-' + mIndex + '-' + lIndex + '-html iframe.licao-frame');
+      const iframe = iframeDaLicao(mIndex, lIndex);
       if (iframe && iframe.contentWindow) iframe.contentWindow.postMessage({ type: 'LIBERAR_PDF' }, '*');
     }
-    window.liberarVideoAula = function(mIndex, lIndex) { marcarMateriaisLiberados(mIndex, lIndex); };
+    window.liberarVideoAula = function(mIndex, lIndex) { tentarLiberarMateriais(mIndex, lIndex, false); };
     function ehPdf(url) { return /\.pdf(\?|#|$)/i.test(url || ''); }
     function isLocked(dateStr) { return dateStr ? new Date() < new Date(dateStr) : false; }
     function formatYouTubeUrl(url) {
@@ -136,11 +210,9 @@
       return null;
     }
     function isAudioUrl(url) { return /\.(mp3|wav|ogg|m4a|aac)(\?|#|$)/i.test(url || '') || /audio|sound/i.test(url || ''); }
-
     function avisoMateriaisBloqueados() {
-      return '<div class="materiais-bloqueados">🔒 Vídeo e documentos liberam somente depois de clicar em <strong>Corrigir Respostas</strong> na lição.</div>';
+      return '<div class="materiais-bloqueados">🔒 Vídeo e documentos só liberam depois de responder <strong>todas as alternativas</strong> e clicar em <strong>Corrigir Respostas</strong>.</div>';
     }
-
     function htmlDoVideoLiberado(lesson, mIndex, lIndex) {
       const ytMain = formatYouTubeUrl(lesson.videoUrl);
       return '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-video" style="width:100%;">' +
@@ -149,7 +221,6 @@
           (ytMain ? '<div class="video-responsive"><iframe src="' + ytMain + '" allowfullscreen></iframe></div>' : '<a class="btn-link-general" href="' + lesson.videoUrl + '" target="_blank">Abrir vídeo</a>') +
         '</div></div></div>';
     }
-
     function renderMaterialItem(item, mIndex, lIndex, linkIndex) {
       const titulo = item.subtitle || item.title || 'Material';
       const key = 'link' + linkIndex;
@@ -183,44 +254,45 @@
       return cabeca + '<span>🔗 ' + titulo + '</span>' + fechaCabeca +
         '<div class="doc-body-inner"><a href="' + (item.url || '#') + '" target="_blank" class="btn-link-general">Abrir material</a></div></div></div>';
     }
-
     function htmlDosLinks(lesson, mIndex, lIndex) {
       if (!lesson.links || !lesson.links.length) return '';
       return '<div class="materiais-liberados">' + lesson.links.map((item, i) => renderMaterialItem(item, mIndex, lIndex, i)).join('') + '</div>';
     }
-
     function liberarMateriaisNaTela(mIndex, lIndex) {
       const modules = JSON.parse(localStorage.getItem(LS_MODULES) || '[]');
       const lesson = (((modules[mIndex] || {}).lessons) || [])[lIndex];
       if (!lesson) return;
       const wrap = document.getElementById('video-wrap-' + mIndex + '-' + lIndex);
-      if (wrap) {
-        wrap.innerHTML = (lesson.videoUrl ? htmlDoVideoLiberado(lesson, mIndex, lIndex) : '') + htmlDosLinks(lesson, mIndex, lIndex);
-      }
+      if (wrap) wrap.innerHTML = (lesson.videoUrl ? htmlDoVideoLiberado(lesson, mIndex, lIndex) : '') + htmlDosLinks(lesson, mIndex, lIndex);
       const item = document.getElementById('item-' + mIndex);
       const body = document.getElementById('body-' + mIndex);
       if (item && body) { item.classList.add('active'); body.style.maxHeight = (body.scrollHeight + 2500) + 'px'; }
     }
-
     function ehBotaoCorrigir(btn) {
       const texto = ((btn.innerText || btn.value || '') + ' ' + (btn.id || '') + ' ' + (btn.name || '') + ' ' + (btn.className || '')).toUpperCase();
       return texto.includes('CORRIGIR RESPOSTAS') || btn.id === 'btnCorrigir';
     }
-
     function conectarFormularioLicao(mIndex, lIndex, iframe) {
       try {
         const doc = iframe.contentDocument || iframe.contentWindow.document;
-        const liberar = function (ev) { if (ev) ev.preventDefault(); marcarMateriaisLiberados(mIndex, lIndex); };
+        const tentar = function (ev) {
+          if (!licaoEstaCompleta(iframe)) {
+            if (ev) ev.preventDefault();
+            if (ev) ev.stopPropagation();
+            alert('Responda todas as alternativas da lição antes de clicar em Corrigir Respostas.');
+            return;
+          }
+          marcarMateriaisLiberados(mIndex, lIndex);
+        };
         doc.querySelectorAll('button, input[type="button"], input[type="submit"], a').forEach(btn => {
           if (!ehBotaoCorrigir(btn)) return;
           if (btn.dataset.unlockBound === '1') return;
           btn.dataset.unlockBound = '1';
-          btn.addEventListener('click', liberar);
+          btn.addEventListener('click', tentar, true);
         });
-        iframe.contentWindow.liberarVideoAula = function () { marcarMateriaisLiberados(mIndex, lIndex); };
+        iframe.contentWindow.liberarVideoAula = function () { tentarLiberarMateriais(mIndex, lIndex, false); };
       } catch (e) {}
     }
-
     async function loadCursoFromCloud() {
       try {
         const res = await fetch(FIREBASE_URL + '?t=' + Date.now());
@@ -359,7 +431,12 @@
       const parts = String(event.data.lessonIndex || '').split('-');
       const mIndex = Number(parts[0]);
       const lIndex = Number(parts[1]);
-      if (!Number.isNaN(mIndex) && !Number.isNaN(lIndex)) marcarMateriaisLiberados(mIndex, lIndex);
+      if (Number.isNaN(mIndex) || Number.isNaN(lIndex)) return;
+      if (event.data.completo === false || event.data.todasFeitas === false) {
+        alert('Responda todas as alternativas da lição antes de clicar em Corrigir Respostas.');
+        return;
+      }
+      tentarLiberarMateriais(mIndex, lIndex, false);
     });
     document.addEventListener('DOMContentLoaded', () => { refreshStudentView(); setInterval(refreshStudentView, 15000); });
     document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshStudentView(); });
