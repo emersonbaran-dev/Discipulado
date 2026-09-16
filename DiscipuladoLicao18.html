@@ -21,7 +21,7 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #7E5A7B;
+            border-top: 6px solid #7e5a7b;
         }
         .header-container {
             position: relative;
@@ -41,13 +41,13 @@
             text-align: center;
             font-size: 16pt;
             font-weight: bold;
-            color: #7E5A7B;
+            color: #7e5a7b;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 5px;
         }
         h1 {
-            color: #7E5A7B;
+            color: #7e5a7b;
             margin: 0;
             font-size: 32px;
             text-transform: uppercase;
@@ -62,13 +62,13 @@
         }
         .intro {
             background-color: #f0f4f6;
-            border-left: 4px solid #7E5A7B;
+            border-left: 4px solid #7e5a7b;
             padding: 12px 15px;
             margin-bottom: 25px;
             font-size: 11pt;
         }
         .section-title {
-            background-color: #7E5A7B;
+            background-color: #7e5a7b;
             color: white;
             padding: 6px 12px;
             font-size: 13pt;
@@ -96,20 +96,8 @@
             margin-top: 4px;
         }
         input[type="text"]:focus, textarea:focus, select:focus {
-            border-color: #7E5A7B;
+            border-color: #7e5a7b;
             outline: none;
-        }
-        .matching-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-        .matching-row select {
-            width: 70px;
-            margin-top: 0;
-            padding: 6px;
-            text-align: center;
         }
         .radio-group {
             display: flex;
@@ -128,12 +116,6 @@
             width: 16px;
             height: 16px;
         }
-        .grid-2col {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 8px;
-        }
         .footer-info {
             display: flex;
             gap: 15px;
@@ -146,7 +128,7 @@
         }
         .btn-submit {
             width: 100%;
-            background-color: #7E5A7B;
+            background-color: #7e5a7b;
             color: white;
             padding: 14px;
             border: none;
@@ -158,7 +140,7 @@
             transition: background-color 0.3s ease;
         }
         .btn-submit:hover {
-            background-color: #5d425b;
+            background-color: #5e415b;
         }
         .btn-submit.sent {
             background-color: #202224 !important;
@@ -178,131 +160,53 @@
     <div class="subtitle">5 PRINCÍPIOS DA FÉ REFORMADA</div>
     
     <div class="intro">
-        Em 31 de outubro de 1517, um monge chamado Martinho Lutero afixou as 95 teses na Abadia de Wittenberg, com o fim de promover um debate sobre a salvação, autoridade bíblica e igreja que estavam totalmente erradas naquela época. Mas a igreja não aceitou e, com isso, iniciou a Reforma Protestante que, de acordo com os estudiosos, teve 5 temas que foram levantados. Vejamos:
+        A Reforma Protestante do século XVI resgatou pilares fundamentais do Evangelho, conhecidos como os "Cinco Solas" (Somente). Estes princípios sintetizam a fé teocêntrica e bíblica que professamos.
     </div>
 
     <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
         
         <!-- SEÇÃO A -->
-        <div class="section-title">A – SOMENTE A ESCRITURA</div>
+        <div class="section-title">A – OS CINCO SOLAS</div>
 
         <div class="question-group">
-            <label>1) Leia Jo 5.39 e associe as colunas:</label>
-            <div style="margin-top: 10px;">
-                <div class="matching-row">
-                    <select name="1a. O que devemos fazer com a Biblia (Jo 5.39)" required>
-                        <option value="">--</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                    </select>
-                    <span>O que devemos fazer com a Bíblia?</span>
-                </div>
-                <div class="matching-row">
-                    <select name="1b. O que a Biblia testifica (Jo 5.39)" required>
-                        <option value="">--</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                    </select>
-                    <span>O que a Bíblia testifica?</span>
-                </div>
-            </div>
-            <div style="font-size: 10pt; color: #666; margin-top: 8px;">
-                (A) Examiná-la &nbsp;&nbsp; (B) Jesus Cristo
-            </div>
+            <label for="q1">1) SOLA SCRIPTURA (Somente a Escritura): Por que a Bíblia é a nossa única regra de fé e prática? (2Tm 3.16,17; Salmo 119.105)</label>
+            <textarea id="q1" name="1. Sola Scriptura (2Tm 3.16,17; Sl 119.105)" rows="2" required></textarea>
         </div>
 
         <div class="question-group">
-            <label>2) Leia 2Tm 3.16,17 e responda:</label>
-            
-            <div style="margin-top: 8px;">
-                <label for="q2_inspiradas" style="font-weight: normal; margin-bottom: 2px;">• Quais partes da Bíblia são inspiradas?</label>
-                <input type="text" id="q2_inspiradas" name="2a. Partes da Biblia inspiradas (2Tm 3.16)" required>
-            </div>
+            <label for="q2">2) SOLUS CHRISTUS (Somente Cristo): Qual é o único mediador entre Deus e os homens? (1Tm 2.5; Jo 14.6)</label>
+            <input type="text" id="q2" name="2. Solus Christus (1Tm 2.5; Jo 14.6)" required>
+        </div>
 
-            <div style="margin-top: 12px;">
-                <label style="font-weight: normal; margin-bottom: 2px;">• Quais suas 4 finalidades?</label>
-                <div class="grid-2col">
-                    <input type="text" name="2b. Finalidade 1 (2Tm 3.16)" placeholder="1)" required>
-                    <input type="text" name="2b. Finalidade 2 (2Tm 3.16)" placeholder="2)" required>
-                    <input type="text" name="2b. Finalidade 3 (2Tm 3.16)" placeholder="3)" required>
-                    <input type="text" name="2b. Finalidade 4 (2Tm 3.16)" placeholder="4)" required>
-                </div>
-            </div>
+        <div class="question-group">
+            <label for="q3">3) SOLA GRATIA (Somente a Graça): O que significa dizer que fomos salvos exclusivamente pela graça de Deus? (Ef 2.8,9)</label>
+            <textarea id="q3" name="3. Sola Gratia (Ef 2.8,9)" rows="2" required></textarea>
+        </div>
 
-            <div style="margin-top: 12px;">
-                <label for="q2_objetivo" style="font-weight: normal; margin-bottom: 2px;">• Qual o objetivo da Bíblia no servo de Deus?</label>
-                <textarea id="q2_objetivo" name="2c. Objetivo no servo de Deus (2Tm 3.17)" rows="2" required></textarea>
-            </div>
+        <div class="question-group">
+            <label for="q4">4) SOLA FIDE (Somente a Fé): Como o ser humano é justificado diante de Deus? (Rm 3.28; Rm 5.1)</label>
+            <textarea id="q4" name="4. Sola Fide (Rm 3.28; Rm 5.1)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label for="q5">5) SOLI DEO GLORIA (Glória Somente a Deus): Qual é o fim principal do homem e o propósito de tudo o que fazemos? (1Co 10.31; Rm 11.36)</label>
+            <textarea id="q5" name="5. Soli Deo Gloria (1Co 10.31; Rm 11.36)" rows="2" required></textarea>
         </div>
 
         <!-- SEÇÃO B -->
-        <div class="section-title">B – SOMENTE A CRISTO</div>
+        <div class="section-title">B – APLICAÇÃO PRÁTICA</div>
 
         <div class="question-group">
-            <label for="q3">3) Em 1Tm 2.5, existe mais de um mediador? Qual(is)?</label>
-            <textarea id="q3" name="3. Existe mais de um mediador? Qual(is)? (1Tm 2.5)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label>4) Em At 4.12, existe salvação além de Jesus Cristo?</label>
+            <label>6) Você reconhece que a salvação depende unicamente da obra de Cristo e não dos seus méritos pessoais?</label>
             <div class="radio-group">
-                <label><input type="radio" name="4. Salvação além de Jesus Cristo (At 4.12)" value="SIM" required> SIM</label>
-                <label><input type="radio" name="4. Salvação além de Jesus Cristo (At 4.12)" value="NÃO" required> NÃO</label>
-            </div>
-        </div>
-
-        <!-- SEÇÃO C -->
-        <div class="section-title">C – SOMENTE A GRAÇA</div>
-
-        <div class="question-group">
-            <label>5) Leia Ef 2.8,9 e responda:</label>
-            <div style="margin-top: 8px;">
-                <label for="q5_como" style="font-weight: normal; margin-bottom: 2px;">• Como somos salvos?</label>
-                <input type="text" id="q5_como" name="5a. Como somos salvos (Ef 2.8)" required>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="q5_através" style="font-weight: normal; margin-bottom: 2px;">• Através do quê?</label>
-                <input type="text" id="q5_através" name="5b. Através do que (Ef 2.8)" required>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="q5_fé" style="font-weight: normal; margin-bottom: 2px;">• A fé é dada por quem?</label>
-                <input type="text" id="q5_fé" name="5c. A fé é dada por quem (Ef 2.8)" required>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="q5_obras" style="font-weight: normal; margin-bottom: 2px;">• Não é de obras para quê?</label>
-                <input type="text" id="q5_obras" name="5d. Não é de obras para que (Ef 2.9)" required>
+                <label><input type="radio" name="6. Reconhece salvacao somente em Cristo" value="SIM" required> SIM</label>
+                <label><input type="radio" name="6. Reconhece salvacao somente em Cristo" value="NÃO" required> NÃO</label>
             </div>
         </div>
 
         <div class="question-group">
-            <label for="q6">6) Em Rm 3.24 quais os resultados da obra graciosa de Deus?</label>
-            <textarea id="q6" name="6. Resultados da obra graciosa de Deus (Rm 3.24)" rows="2" required></textarea>
-        </div>
-
-        <!-- SEÇÃO D -->
-        <div class="section-title">D – SOMENTE A FÉ</div>
-
-        <div class="question-group">
-            <label for="q7">7) Em que o Evangelho se revela e como deve viver o crente resgatado pelo Senhor? (Rm 1.17)</label>
-            <textarea id="q7" name="7. Em que o Evangelho se revela e como deve viver o crente (Rm 1.17)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q8">8) Além do arrependimento, o que deve ser feito? (Mc 1.14,15)</label>
-            <textarea id="q8" name="8. Além do arrependimento, o que deve ser feito (Mc 1.14,15)" rows="2" required></textarea>
-        </div>
-
-        <!-- SEÇÃO E -->
-        <div class="section-title">E – SOMENTE GLÓRIAS A DEUS</div>
-
-        <div class="question-group">
-            <label for="q9">9) Em Rm 11.33-36, qual o objetivo do salvo em Cristo?</label>
-            <textarea id="q9" name="9. Qual o objetivo do salvo em Cristo (Rm 11.33-36)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q10">10) A partir das coisas mais básicas o que se deve fazer? (1Co 10.31)</label>
-            <textarea id="q10" name="10. A partir das coisas mais basicas o que fazer (1Co 10.31)" rows="2" required></textarea>
+            <label for="q7">7) Como a centralidade da glória de Deus deve mudar as suas decisões diárias?</label>
+            <textarea id="q7" name="7. Aplicacao da gloria de Deus nas decisoes" rows="3" required></textarea>
         </div>
 
         <!-- DADOS FINAIS -->
@@ -329,7 +233,7 @@
         btn.innerText = "ENVIANDO PELO EMAIL...";
         
         setTimeout(function(){
-            // O formulário continuará seu curso natural de envio
+            // O formulário seguirá com o envio via mailto
         }, 500);
     }
 </script>
