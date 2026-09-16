@@ -236,105 +236,27 @@
 
       var wrap=document.createElement('div');
       wrap.id='__pdfCloneWrap';
-      wrap.style.cssText='position:fixed;left:-9999px;top:0;width:794px;background:#fff;z-index:2147483646;pointer-events:none;';
+      wrap.style.cssText='position:fixed;left:0;top:0;width:794px;background:#fff;z-index:2147483646;pointer-events:none;';
 
       var clone=src.cloneNode(true);
       clone.id='licaoImpressaoClone';
-
-      // Injeta estilos especificos de formatacao para o PDF no clone
-      var pdfStyle=document.createElement('style');
-      pdfStyle.innerHTML=`
-        #licaoImpressaoClone {
-          width: 794px !important;
-          max-width: 794px !important;
-          margin: 0 !important;
-          padding: 25px 30px !important;
-          box-shadow: none !important;
-          border-radius: 0 !important;
-          background: #ffffff !important;
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
-          color: #2f3b22 !important;
-          box-sizing: border-box !important;
-        }
-        #licaoImpressaoClone *, #licaoImpressaoClone *:before, #licaoImpressaoClone *:after {
-          box-sizing: border-box !important;
-        }
-        #licaoImpressaoClone .question, 
-        #licaoImpressaoClone .questao, 
-        #licaoImpressaoClone .pergunta, 
-        #licaoImpressaoClone .question-group, 
-        #licaoImpressaoClone .bloco-questao, 
-        #licaoImpressaoClone table, 
-        #licaoImpressaoClone .tabela {
-          page-break-inside: avoid !important;
-          break-inside: avoid !important;
-          margin-bottom: 15px !important;
-        }
-        #licaoImpressaoClone table {
-          width: 100% !important;
-          border-collapse: collapse !important;
-        }
-        #licaoImpressaoClone th, #licaoImpressaoClone td {
-          border: 1px solid #c5d0a8 !important;
-          padding: 8px 10px !important;
-          vertical-align: top !important;
-          font-size: 0.9rem !important;
-        }
-        #licaoImpressaoClone input[type="text"], 
-        #licaoImpressaoClone textarea, 
-        #licaoImpressaoClone select {
-          width: 100% !important;
-          border: 1px solid #a0a0a0 !important;
-          background: #fafafa !important;
-          padding: 6px 8px !important;
-          font-size: 0.9rem !important;
-          border-radius: 4px !important;
-        }
-        #licaoImpressaoClone textarea {
-          resize: none !important;
-        }
-        #licaoImpressaoClone .btn, 
-        #licaoImpressaoClone button, 
-        #licaoImpressaoClone #btnPdf, 
-        #licaoImpressaoClone #btnCorrigir, 
-        #licaoImpressaoClone .btn-pdf, 
-        #licaoImpressaoClone .btn-corrigir {
-          display: none !important;
-        }
-        #licaoImpressaoClone img {
-          max-width: 100% !important;
-          height: auto !important;
-        }
-      `;
-      wrap.appendChild(pdfStyle);
-
+      clone.style.cssText='width:794px;max-width:794px;margin:0;box-shadow:none;border-radius:0;background:#fff;';
       clone.querySelectorAll('#btnPdf,#btnCorrigir,.btn-pdf,.btn-corrigir').forEach(function(el){el.remove()});
       clone.querySelectorAll('img').forEach(function(img){
         img.removeAttribute('crossorigin');
-        if(!img.src||img.src.includes('logo-ipb'))img.src='logo-ipb.png';
+        img.src='logo-ipb.png';
+        img.style.position='relative';
+        img.style.left='auto';
+        img.style.height='52px';
       });
 
-      // Transfere os valores preenchidos nos campos do iframe original para o clone
       var origCampos=src.querySelectorAll('input,textarea,select');
       var cloneCampos=clone.querySelectorAll('input,textarea,select');
       origCampos.forEach(function(inp,i){
         var c=cloneCampos[i];
         if(!c)return;
-        if(inp.type==='checkbox'||inp.type==='radio') {
-          c.checked=inp.checked;
-          if(inp.checked) c.setAttribute('checked', 'checked');
-        } else if(inp.tagName.toLowerCase()==='textarea') {
-          c.value=inp.value;
-          c.textContent=inp.value;
-        } else if(inp.tagName.toLowerCase()==='select') {
-          c.value=inp.value;
-          Array.from(c.options).forEach(opt => {
-            if(opt.value===inp.value) opt.setAttribute('selected', 'selected');
-          });
-        } else {
-          c.value=inp.value;
-          c.setAttribute('value', inp.value);
-        }
+        if(inp.type==='checkbox'||inp.type==='radio')c.checked=inp.checked;
+        else c.value=inp.value;
         if(inp.parentElement&&c.parentElement)c.parentElement.className=inp.parentElement.className;
       });
 
@@ -346,30 +268,30 @@
       nome=String(nome).replace(/\s+/g,'_');
       var nLicao='01';
       try{
-        var m=String((win.location&&win.location.pathname)||'').match(/Licao(\d+)/i);
+        var m=String((win.location&&win.location.pathname)||'').match(/Licao(\\d+)/i);
         if(m)nLicao=m[1];
       }catch(e){}
 
       html2pdf().set({
-        margin: [10, 10, 10, 10],
-        filename: 'Licao'+nLicao+'-'+nome+'.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: {
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: '#ffffff',
-          logging: false,
-          scrollX: 0,
-          scrollY: 0,
-          windowWidth: 794
+        margin:[8,10,8,10],
+        filename:'Licao'+nLicao+'-'+nome+'.pdf',
+        image:{type:'jpeg',quality:0.98},
+        html2canvas:{
+          scale:2,
+          useCORS:false,
+          allowTaint:false,
+          backgroundColor:'#ffffff',
+          logging:false,
+          scrollX:0,
+          scrollY:0,
+          windowWidth:794,
+          imageTimeout:0
         },
-        pagebreak: { mode: ['avoid-all', 'css', 'legacy'], avoid: ['.question', '.questao', '.pergunta', '.question-group', '.bloco-questao', 'table', 'tr'] },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        pagebreak:{mode:['avoid-all','css','legacy'],avoid:['.question-group','.section-title','.final-note','.alternativas','.intro','.header-container']},
+        jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
       }).from(clone).save().then(function(){
         wrap.remove();
-      }).catch(function(err){
-        console.error(err);
+      }).catch(function(){
         wrap.remove();
         alert('Não foi possível gerar o PDF. Tente novamente.');
       });
