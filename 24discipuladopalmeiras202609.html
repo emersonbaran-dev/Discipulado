@@ -1,150 +1,538 @@
-function corrigirGeracaoPdf(iframe) {
-  try {
-    const win = iframe.contentWindow;
-    const doc = iframe.contentDocument || (win && win.document);
-    if (!win || !doc || win.__pdfCorrigido) return;
-    if (typeof win.baixarPdf !== 'function') return;
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Área do Aluno - IPB</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6ef; color: #2f3b22; display: flex; min-height: 100vh; }
+    .app-layout { display: flex; width: 100%; }
+    .sidebar { width: 280px; background-color: #3d4f21; color: #f8fafc; padding: 20px 15px; height: 100vh; position: sticky; top: 0; overflow-y: auto; flex-shrink: 0; border-right: 1px solid #556b2f; }
+    .sidebar.collapsed { width: 60px; padding: 15px 10px; overflow-x: hidden; }
+    .sidebar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #556b2f; }
+    .sidebar-header h2 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.8px; color: #c5d4a1; white-space: nowrap; }
+    .sidebar.collapsed .sidebar-header h2, .sidebar.collapsed .sidebar-menu { display: none; }
+    .btn-toggle-sidebar { background: none; border: none; color: #c5d4a1; font-size: 1.4rem; cursor: pointer; width: 36px; height: 36px; border-radius: 6px; }
+    .btn-toggle-sidebar:hover { background-color: #556b2f; color: #fff; }
+    .sidebar.collapsed .sidebar-header { border-bottom: none; margin-bottom: 0; padding-bottom: 0; justify-content: center; }
+    .sidebar-menu { list-style: none; }
+    .sidebar-module { margin-bottom: 10px; }
+    .sidebar-module-title { width: 100%; background: none; border: none; color: #eef3e4; font-size: 0.95rem; font-weight: 600; text-align: left; padding: 10px 12px; border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .sidebar-module-title:hover { background-color: #556b2f; color: #fff; }
+    .sidebar-module-title.locked { color: #9aaa7a; cursor: not-allowed; opacity: 0.7; }
+    .sidebar-sublist { list-style: none; padding-left: 15px; margin-top: 5px; display: none; }
+    .sidebar-module.active .sidebar-sublist { display: block; }
+    .sidebar-subitem { width: 100%; background: none; border: none; color: #c5d4a1; font-size: 0.85rem; text-align: left; padding: 8px 10px; border-radius: 4px; cursor: pointer; display: block; }
+    .sidebar-subitem:hover { color: #e8f0c8; background-color: rgba(255,255,255,0.05); }
+    .main-content { flex: 1; padding: 30px 25px; max-width: 1100px; width: 100%; margin: 0 auto; }
+    .header-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; margin-bottom: 25px; }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand img { width: 64px; height: 64px; object-fit: contain; }
+    .header-title h1 { color: #3d4f21; font-size: 2rem; margin-bottom: 8px; }
+    .header-title p { color: #6b7a52; }
+    .btn-collapse-all { background: transparent; color: #556b2f; border: 1px solid #c5d0a8; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+    .accordion-item { background: #fff; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(61,79,33,0.08); overflow: hidden; border: 3px solid transparent; }
+    .accordion-item.is-locked { background: #f4f6ef; }
+    .accordion-header { width: 100%; background: transparent; border: none; padding: 20px 25px; font-size: 1.15rem; font-weight: 600; color: #1b1b1b; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .accordion-item.is-locked .accordion-header { cursor: not-allowed; }
+    .lock-notice { font-size: 0.85rem; background: #efe9c8; color: #6b5b16; padding: 6px 12px; border-radius: 6px; font-weight: 600; }
+    .toggle-icon { width: 32px; height: 32px; background: #efe3c8; color: #6b5b16; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: bold; margin-left: 15px; }
+    .accordion-item.active > .accordion-header .toggle-icon,
+    .doc-accordion.active > .doc-header .toggle-icon { transform: rotate(45deg); }
+    .accordion-body, .doc-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .accordion-content { padding: 0 18px 25px; border-top: 1px solid #e8eedc; }
+    .section-block { margin-top: 18px; width: 100%; }
+    .lesson-block + .lesson-block { border-top: 2px solid #A0A0A0; padding-top: 18px; margin-top: 22px; }
+    .lesson-text { line-height: 1.6; color: #4a5a32; white-space: pre-wrap; }
+    .video-responsive { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; width: 100%; }
+    .video-responsive iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .audio-container { padding: 12px 16px; width: 100%; max-width: 100%; }
+    audio.audio-player { width: 100%; height: 40px; }
+    .materiais-liberados { width: 100%; display: block; }
+    .doc-accordion { width: 100%; border: 1px solid #c5d0a8; border-radius: 10px; overflow: hidden; background: #f4f6ef; margin-top: 12px; }
+    .doc-header { width: 100%; background: #e8eedc; border: none; padding: 12px 16px; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: #3d4f21; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+    .doc-header .toggle-icon { width: 28px; height: 28px; font-size: 1.1rem; margin-left: 8px; }
+    .doc-body-inner { padding: 0; width: 100%; }
+    .doc-frame-container { width: 100%; height: min(80vh, 920px); min-height: 640px; background: #fff; border-top: 1px solid #d7dfc6; }
+    .doc-frame-container iframe { width: 100%; height: 100%; border: none; display: block; }
+    .licao-frame { width: 100%; min-height: 980px; height: 80vh; border: 1px solid #d7dfc6; border-radius: 8px; background: #fff; }
+    .doc-footer { padding: 10px 16px; background: #f4f6ef; border-top: 1px solid #d7dfc6; text-align: right; width: 100%; }
+    .btn-link-general { display: inline-flex; align-items: center; gap: 8px; background: #556b2f; color: #fff; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.82rem; }
+    .video-wrap { display: flex; flex-direction: column; align-items: stretch; width: 100%; }
+    .materiais-bloqueados { width: 100%; margin-top: 12px; background: #efe9c8; color: #6b5b16; border: 1px dashed #c9b86a; border-radius: 8px; padding: 14px 16px; font-size: 0.92rem; font-weight: 600; text-align: center; }
+    .empty-state { text-align: center; padding: 40px; background: #fff; border-radius: 8px; color: #6b7a52; }
+    .lesson-title { font-size: 1.05rem; color: #3d4f21; margin-bottom: 8px; }
+    @media (max-width: 768px) {
+      .app-layout { flex-direction: column; }
+      .sidebar { width: 100%; height: auto; position: relative; }
+      .main-content { max-width: 100%; padding: 16px 10px; }
+      .doc-frame-container { min-height: 480px; height: 70vh; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h2>📚 Módulos</h2>
+        <button class="btn-toggle-sidebar" onclick="toggleSidebar()">☰</button>
+      </div>
+      <ul class="sidebar-menu" id="sidebar-menu"></ul>
+    </aside>
+    <main class="main-content">
+      <header>
+        <div class="header-top">
+          <div class="brand">
+            <img src="logo-ipb.png" alt="IPB" onerror="this.onerror=null;this.src='https://commons.wikimedia.org/wiki/Special:FilePath/Ipb_logo.png'">
+            <div class="header-title">
+              <h1 id="course-title-display">Discipulado IPB</h1>
+              <p id="course-subtitle-display">Acesse os módulos e aulas abaixo</p>
+            </div>
+          </div>
+          <button class="btn-collapse-all" onclick="collapseAllModules()">▲ Fechar todos</button>
+        </div>
+      </header>
+      <div id="course-modules"></div>
+    </main>
+  </div>
+  <script>
+    const CORES_TITULO_MODULO = ['#C8E6C9','#E3F2FD','#FFFDE7','#FFF3E0','#FFEBEE','#FCE4EC','#F3E5F5','#EFEBE9'];
+    function corTituloModulo(i) { return CORES_TITULO_MODULO[i % 8]; }
+    const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso_ipb_palmeiras202609.json';
+    const LS_TITLE = 'ipb_course_title_palmeiras202609';
+    const LS_SUBTITLE = 'ipb_course_subtitle_palmeiras202609';
+    const LS_MODULES = 'ipb_course_modules_palmeiras202609';
+    const DEFAULT_EMAIL = 'emersonbaran@gmail.com';
+    const videosLiberados = new Set();
+    let lastCourseSnapshot = '';
 
-    win.__pdfCorrigido = true;
-    const original = win.baixarPdf.bind(win);
-
-    win.baixarPdf = function () {
+    function chaveLiberacao(mIndex, lIndex) { return 'ipb_materiais_liberados_palmeiras202609_' + mIndex + '_' + lIndex; }
+    function materiaisLiberados(lesson, mIndex, lIndex) {
+      if (!lesson.firstHtmlPage && !lesson.lockLinksUntilLessonSubmit) return true;
+      return videosLiberados.has(mIndex + '-' + lIndex) || localStorage.getItem(chaveLiberacao(mIndex, lIndex)) === '1';
+    }
+    function iframeDaLicao(mIndex, lIndex) {
+      return document.querySelector('#doc-item-' + mIndex + '-' + lIndex + '-html iframe.licao-frame');
+    }
+    function todasAlternativasFeitas(doc) {
+      if (!doc) return false;
+      const radios = Array.from(doc.querySelectorAll('input[type="radio"]'));
+      if (radios.length) {
+        const grupos = new Map();
+        radios.forEach((r, idx) => {
+          let key = r.name;
+          if (!key) {
+            const bloco = r.closest('[data-questao], .questao, .pergunta, .question, fieldset, .item-questao, .q-item, .bloco-questao');
+            key = bloco ? 'bloco-' + (bloco.id || bloco.getAttribute('data-questao') || Array.prototype.indexOf.call(bloco.parentNode.children, bloco)) : 'radio-' + idx;
+          }
+          if (!grupos.has(key)) grupos.set(key, []);
+          grupos.get(key).push(r);
+        });
+        for (const grupo of grupos.values()) {
+          if (!grupo.some(r => r.checked)) return false;
+        }
+      }
+      const selects = Array.from(doc.querySelectorAll('select'));
+      for (const s of selects) {
+        if (s.disabled) continue;
+        if (!String(s.value || '').trim()) return false;
+      }
+      const textos = Array.from(doc.querySelectorAll('textarea, input[type="text"], input[type="number"], input:not([type])'));
+      for (const t of textos) {
+        if (t.disabled || t.readOnly) continue;
+        const exige = t.required || t.getAttribute('data-obrigatorio') === '1' || t.classList.contains('resposta') || t.closest('.questao, .pergunta, [data-questao]');
+        if (exige && !String(t.value || '').trim()) return false;
+      }
+      if (!radios.length && !selects.length) {
+        const clicaveis = Array.from(doc.querySelectorAll('[data-alternativa], .alternativa, .alt, .opcao'));
+        if (clicaveis.length) {
+          const blocos = new Map();
+          clicaveis.forEach((el, idx) => {
+            const bloco = el.closest('[data-questao], .questao, .pergunta, fieldset') || el.parentElement || el;
+            const key = bloco.id || bloco.getAttribute('data-questao') || 'b' + idx;
+            if (!blocos.has(key)) blocos.set(key, []);
+            blocos.get(key).push(el);
+          });
+          for (const grupo of blocos.values()) {
+            const marcado = grupo.some(el => el.classList.contains('selecionada') || el.classList.contains('selected') || el.classList.contains('ativa') || el.getAttribute('aria-checked') === 'true' || (el.querySelector && el.querySelector('input:checked')));
+            if (!marcado) return false;
+          }
+        } else {
+          return false;
+        }
+      }
+      return true;
+    }
+    function licaoEstaCompleta(iframe) {
+      try {
+        if (!iframe) return false;
+        const win = iframe.contentWindow;
+        const doc = iframe.contentDocument || (win && win.document);
+        if (win && typeof win.todasRespostasPreenchidas === 'function') return !!win.todasRespostasPreenchidas();
+        if (win && typeof win.verificarRespostasCompletas === 'function') return !!win.verificarRespostasCompletas();
+        if (win && win.LICAO_COMPLETA === true) return true;
+        return todasAlternativasFeitas(doc);
+      } catch (e) { return false; }
+    }
+    function tentarLiberarMateriais(mIndex, lIndex) {
+      const iframe = iframeDaLicao(mIndex, lIndex);
       if (!licaoEstaCompleta(iframe)) {
-        alert('Responda todas as alternativas da lição antes de baixar o PDF.');
+        alert('Responda todas as alternativas da lição antes de clicar em Corrigir Respostas.');
         return false;
       }
-
-      const el = doc.getElementById('licaoImpressao');
-      const img = doc.querySelector('.header-container img');
-      if (!el) return original();
-
-      const style = doc.createElement('style');
-      style.id = '__correcaoPdfDefinitiva';
-      style.textContent = `
-        html, body {
-          margin: 0 !important;
-          padding: 0 !important;
-          overflow: visible !important;
-          background: #ffffff !important;
-        }
-        #licaoImpressao {
-          box-sizing: border-box !important;
-          width: 794px !important;
-          min-width: 794px !important;
-          max-width: 794px !important;
-          margin: 0 !important;
-          padding: 12px 16px !important;
-          overflow: visible !important;
-          position: relative !important;
-          left: 0 !important;
-          right: auto !important;
-          transform: none !important;
-          box-shadow: none !important;
-        }
-        #licaoImpressao, #licaoImpressao * {
-          box-sizing: border-box !important;
-          max-width: 100% !important;
-        }
-        #licaoImpressao .header-container img {
-          position: relative !important;
-          left: auto !important;
-          right: auto !important;
-          transform: none !important;
-        }
-        #licaoImpressao > *:first-child {
-          page-break-before: auto !important;
-          break-before: auto !important;
-        }
-      `;
-      doc.head.appendChild(style);
-
-      const prevEl = {
-        maxWidth: el.style.maxWidth,
-        minWidth: el.style.minWidth,
-        width: el.style.width,
-        padding: el.style.padding,
-        margin: el.style.margin,
-        boxSizing: el.style.boxSizing,
-        boxShadow: el.style.boxShadow,
-        overflow: el.style.overflow,
-        position: el.style.position,
-        left: el.style.left,
-        right: el.style.right,
-        transform: el.style.transform
-      };
-      const prevImg = img ? {
-        position: img.style.position,
-        left: img.style.left,
-        right: img.style.right,
-        transform: img.style.transform
-      } : null;
-
-      el.style.boxSizing = 'border-box';
-      el.style.maxWidth = '794px';
-      el.style.minWidth = '794px';
-      el.style.width = '794px';
-      el.style.padding = '12px 16px';
-      el.style.margin = '0';
-      el.style.boxShadow = 'none';
-      el.style.overflow = 'visible';
-      el.style.position = 'relative';
-      el.style.left = '0';
-      el.style.right = 'auto';
-      el.style.transform = 'none';
-      if (img) {
-        img.style.position = 'relative';
-        img.style.left = 'auto';
-        img.style.right = 'auto';
-        img.style.transform = 'none';
+      marcarMateriaisLiberados(mIndex, lIndex);
+      return true;
+    }
+    function marcarMateriaisLiberados(mIndex, lIndex) {
+      videosLiberados.add(mIndex + '-' + lIndex);
+      localStorage.setItem(chaveLiberacao(mIndex, lIndex), '1');
+      liberarMateriaisNaTela(mIndex, lIndex);
+      const iframe = iframeDaLicao(mIndex, lIndex);
+      if (iframe && iframe.contentWindow) iframe.contentWindow.postMessage({ type: 'LIBERAR_PDF' }, '*');
+    }
+    window.liberarVideoAula = function(mIndex, lIndex) { tentarLiberarMateriais(mIndex, lIndex); };
+    function ehPdf(url) { return /\.pdf(\?|#|$)/i.test(url || ''); }
+    function isLocked(dateStr) { return dateStr ? new Date() < new Date(dateStr) : false; }
+    function formatYouTubeUrl(url) {
+      const match = (url || '').match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
+      return (match && match[2].length === 11) ? 'https://www.youtube.com/embed/' + match[2] : null;
+    }
+    function formatGoogleDocsEmbedUrl(url) {
+      if (!url) return null;
+      const fileId = (url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || [])[1];
+      if (fileId) return 'https://drive.google.com/file/d/' + fileId + '/preview';
+      const docId = (url.match(/\/document\/d\/([a-zA-Z0-9_-]+)/) || [])[1];
+      if (docId) return 'https://docs.google.com/document/d/' + docId + '/preview';
+      const presId = (url.match(/\/presentation\/d\/([a-zA-Z0-9_-]+)/) || [])[1];
+      if (presId) return 'https://docs.google.com/presentation/d/' + presId + '/embed?start=false&loop=false';
+      const sheetId = (url.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/) || [])[1];
+      if (sheetId) return 'https://docs.google.com/spreadsheets/d/' + sheetId + '/preview';
+      if (url.includes('docs.google.com') || url.includes('drive.google.com')) {
+        return url.replace(/\/pub(\?.*)?$/, '/preview').replace(/\/edit(\?.*)?$/, '/preview').replace(/\/view(\?.*)?$/, '/preview');
       }
-
-      const html2pdfOrig = win.html2pdf;
-      if (typeof html2pdfOrig === 'function') {
-        win.html2pdf = function () {
-          const worker = html2pdfOrig.apply(win, arguments);
-          const origSet = worker.set.bind(worker);
-          worker.set = function (opts) {
-            if (opts) {
-              opts.margin = [8, 10, 8, 10];
-              opts.html2canvas = opts.html2canvas || {};
-              opts.html2canvas.scale = 2;
-              opts.html2canvas.useCORS = true;
-              opts.html2canvas.backgroundColor = '#ffffff';
-              opts.html2canvas.scrollX = 0;
-              opts.html2canvas.scrollY = 0;
-            }
-            return origSet(opts);
-          };
-          return worker;
-        };
+      return null;
+    }
+    function isAudioUrl(url) { return /\.(mp3|wav|ogg|m4a|aac)(\?|#|$)/i.test(url || '') || /audio|sound/i.test(url || ''); }
+    function avisoMateriaisBloqueados() {
+      return '<div class="materiais-bloqueados">🔒 Vídeo e documentos só liberam depois de responder <strong>todas as alternativas</strong> e clicar em <strong>Corrigir Respostas</strong>.</div>';
+    }
+    function estiloBarraModulo(corTitulo) {
+      return 'background:' + corTitulo + ';';
+    }
+    function htmlDoVideoLiberado(lesson, mIndex, lIndex, corTitulo) {
+      const ytMain = formatYouTubeUrl(lesson.videoUrl);
+      const cor = corTitulo || corTituloModulo(mIndex);
+      return '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-video" style="width:100%;">' +
+        '<button class="doc-header" style="' + estiloBarraModulo(cor) + '" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'video\')"><span>🎬 ' + (lesson.videoTitle || 'Vídeo da aula') + '</span><span class="toggle-icon">×</span></button>' +
+        '<div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-video"><div class="doc-body-inner">' +
+          (ytMain ? '<div class="video-responsive"><iframe src="' + ytMain + '" allowfullscreen></iframe></div>' : '<a class="btn-link-general" href="' + lesson.videoUrl + '" target="_blank">Abrir vídeo</a>') +
+        '</div></div></div>';
+    }
+    function renderMaterialItem(item, mIndex, lIndex, linkIndex, corTitulo) {
+      const titulo = item.subtitle || item.title || 'Material';
+      const key = 'link' + linkIndex;
+      const cor = corTitulo || corTituloModulo(mIndex);
+      if (isLocked(item.releaseDate)) {
+        return '<div class="doc-accordion"><div class="doc-header" style="cursor:not-allowed;color:#6b7a52;' + estiloBarraModulo(cor) + '"><span>🔒 ' + titulo + '</span><div class="lock-notice">Disponível em: ' + new Date(item.releaseDate).toLocaleString('pt-BR') + '</div></div></div>';
       }
+      const yt = formatYouTubeUrl(item.url);
+      const docs = formatGoogleDocsEmbedUrl(item.url);
+      const audio = isAudioUrl(item.url);
+      const pdf = ehPdf(item.url);
+      const cabeca = '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-' + key + '"><button class="doc-header" style="' + estiloBarraModulo(cor) + '" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'' + key + '\')">';
+      const fechaCabeca = '<span class="toggle-icon">×</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-' + key + '">';
+      if (docs) {
+        return cabeca + '<span>📄 ' + titulo + '</span>' + fechaCabeca +
+          '<div class="doc-frame-container"><iframe src="' + docs + '" allow="autoplay"></iframe></div>' +
+          '<div class="doc-footer"><a href="' + item.url + '" target="_blank" class="btn-link-general">↗ Abrir original</a></div></div></div>';
+      }
+      if (pdf) {
+        const pdfSrc = item.url + (item.url.indexOf('#') >= 0 ? '' : '#view=FitH');
+        return cabeca + '<span>📄 ' + titulo + '</span>' + fechaCabeca +
+          '<div class="doc-frame-container"><iframe src="' + pdfSrc + '"></iframe></div>' +
+          '<div class="doc-footer"><a href="' + item.url + '" target="_blank" class="btn-link-general">↗ Abrir original</a></div></div></div>';
+      }
+      if (yt) {
+        return cabeca + '<span>🎬 ' + titulo + '</span>' + fechaCabeca +
+          '<div class="doc-body-inner"><div class="video-responsive"><iframe src="' + yt + '" allowfullscreen></iframe></div></div></div></div>';
+      }
+      if (audio) {
+        return cabeca + '<span>🎧 ' + titulo + '</span>' + fechaCabeca +
+          '<div class="audio-container"><audio class="audio-player" controls src="' + item.url + '"></audio></div></div></div>';
+      }
+      return cabeca + '<span>🔗 ' + titulo + '</span>' + fechaCabeca +
+        '<div class="doc-body-inner" style="padding:15px;"><a href="' + (item.url || '#') + '" target="_blank" class="btn-link-general">Abrir material</a></div></div></div>';
+    }
+    function htmlDosLinks(lesson, mIndex, lIndex, corTitulo) {
+      if (!lesson.links || !lesson.links.length) return '';
+      return '<div class="materiais-liberados">' + lesson.links.map((item, i) => renderMaterialItem(item, mIndex, lIndex, i, corTitulo)).join('') + '</div>';
+    }
+    function liberarMateriaisNaTela(mIndex, lIndex) {
+      const modules = JSON.parse(localStorage.getItem(LS_MODULES) || '[]');
+      const lesson = (((modules[mIndex] || {}).lessons) || [])[lIndex];
+      if (!lesson) return;
+      const corTitulo = corTituloModulo(mIndex);
+      const wrap = document.getElementById('video-wrap-' + mIndex + '-' + lIndex);
+      if (wrap) wrap.innerHTML = (lesson.videoUrl ? htmlDoVideoLiberado(lesson, mIndex, lIndex, corTitulo) : '') + htmlDosLinks(lesson, mIndex, lIndex, corTitulo);
+      const item = document.getElementById('item-' + mIndex);
+      const body = document.getElementById('body-' + mIndex);
+      if (item && body) { item.classList.add('active'); body.style.maxHeight = (body.scrollHeight + 4000) + 'px'; }
+    }
+    function ehBotaoCorrigir(btn) {
+      const texto = ((btn.innerText || btn.value || '') + ' ' + (btn.id || '') + ' ' + (btn.name || '') + ' ' + (btn.className || '')).toUpperCase();
+      return texto.includes('CORRIGIR RESPOSTAS') || btn.id === 'btnCorrigir';
+    }
 
+    function corrigirGeracaoPdf(iframe) {
       try {
-        return original();
-      } finally {
-        win.html2pdf = html2pdfOrig;
-        setTimeout(function () {
-          if (style && style.parentNode) style.parentNode.removeChild(style);
-          el.style.maxWidth = prevEl.maxWidth;
-          el.style.minWidth = prevEl.minWidth;
-          el.style.width = prevEl.width;
-          el.style.padding = prevEl.padding;
-          el.style.margin = prevEl.margin;
-          el.style.boxSizing = prevEl.boxSizing;
-          el.style.boxShadow = prevEl.boxShadow;
-          el.style.overflow = prevEl.overflow;
-          el.style.position = prevEl.position;
-          el.style.left = prevEl.left;
-          el.style.right = prevEl.right;
-          el.style.transform = prevEl.transform;
-          if (img && prevImg) {
-            img.style.position = prevImg.position;
-            img.style.left = prevImg.left;
-            img.style.right = prevImg.right;
-            img.style.transform = prevImg.transform;
+        var win = iframe.contentWindow;
+        var doc = iframe.contentDocument || (win && win.document);
+        if (!win || !doc || win.__pdfCorrigido) return;
+        if (typeof win.baixarPdf !== 'function') return;
+
+        win.__pdfCorrigido = true;
+        var original = win.baixarPdf.bind(win);
+
+        win.baixarPdf = function () {
+          if (!licaoEstaCompleta(iframe)) {
+            alert('Responda todas as alternativas da lição antes de baixar o PDF.');
+            return false;
           }
-        }, 8000);
+
+          var logo = doc.querySelector('.header-container img');
+          var displayLogo = logo ? logo.style.display : '';
+          if (logo) logo.style.display = 'none';
+
+          var html2pdfOrig = win.html2pdf;
+          if (typeof html2pdfOrig === 'function') {
+            win.html2pdf = function () {
+              var worker = html2pdfOrig.apply(win, arguments);
+              var origSet = worker.set.bind(worker);
+              worker.set = function (opts) {
+                if (opts) {
+                  opts.margin = [8, 10, 8, 10];
+                  opts.html2canvas = opts.html2canvas || {};
+                  opts.html2canvas.useCORS = false;
+                  opts.html2canvas.allowTaint = true;
+                  opts.html2canvas.backgroundColor = '#ffffff';
+                }
+                return origSet(opts);
+              };
+              return worker;
+            };
+          }
+
+          try {
+            return original();
+          } finally {
+            win.html2pdf = html2pdfOrig;
+            setTimeout(function () {
+              if (logo) logo.style.display = displayLogo;
+            }, 8000);
+          }
+        };
+      } catch (e) {}
+    }
+
+    function bloquearDownloadPdfAteCompletar(iframe) {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const bloquear = function (ev) {
+          const btn = ev.currentTarget;
+          const texto = ((btn.innerText || btn.value || '') + ' ' + (btn.id || '') + ' ' + (btn.className || '')).toUpperCase();
+          const parecePdf = texto.includes('PDF') || texto.includes('BAIXAR') || texto.includes('DOWNLOAD');
+          if (!parecePdf) return;
+
+          if (!licaoEstaCompleta(iframe)) {
+            ev.preventDefault();
+            ev.stopImmediatePropagation();
+            alert('Responda todas as alternativas da lição antes de baixar o PDF.');
+            return false;
+          }
+        };
+
+        doc.querySelectorAll('button, input[type="button"], input[type="submit"], a').forEach(function (btn) {
+          if (btn.dataset.pdfGateBound === '1') return;
+          const texto = ((btn.innerText || btn.value || '') + ' ' + (btn.id || '') + ' ' + (btn.className || '')).toUpperCase();
+          const parecePdf = texto.includes('PDF') || texto.includes('BAIXAR') || texto.includes('DOWNLOAD');
+          if (!parecePdf) return;
+          btn.dataset.pdfGateBound = '1';
+          btn.addEventListener('click', bloquear, true);
+        });
+      } catch (e) {}
+    }
+    function conectarFormularioLicao(mIndex, lIndex, iframe) {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        corrigirGeracaoPdf(iframe);
+        bloquearDownloadPdfAteCompletar(iframe);
+        const tentar = function (ev) {
+          if (!licaoEstaCompleta(iframe)) {
+            if (ev) { ev.preventDefault(); ev.stopPropagation(); }
+            alert('Responda todas as alternativas da lição antes de clicar em Corrigir Respostas.');
+            return;
+          }
+          marcarMateriaisLiberados(mIndex, lIndex);
+        };
+        doc.querySelectorAll('button, input[type="button"], input[type="submit"], a').forEach(btn => {
+          if (!ehBotaoCorrigir(btn)) return;
+          if (btn.dataset.unlockBound === '1') return;
+          btn.dataset.unlockBound = '1';
+          btn.addEventListener('click', tentar, true);
+        });
+        iframe.contentWindow.liberarVideoAula = function () { tentarLiberarMateriais(mIndex, lIndex); };
+      } catch (e) {}
+    }
+    async function loadCursoFromCloud() {
+      try {
+        const res = await fetch(FIREBASE_URL + '?t=' + Date.now());
+        const data = await res.json();
+        if (!data) return false;
+        const snapshot = JSON.stringify({ title: data.title || '', subtitle: data.subtitle || '', modules: data.modules || [] });
+        if (snapshot === lastCourseSnapshot) return false;
+        lastCourseSnapshot = snapshot;
+        if (data.title) localStorage.setItem(LS_TITLE, data.title);
+        if (data.subtitle) localStorage.setItem(LS_SUBTITLE, data.subtitle);
+        if (data.modules) localStorage.setItem(LS_MODULES, JSON.stringify(data.modules));
+        return true;
+      } catch (e) { return false; }
+    }
+    async function refreshStudentView() {
+      const changed = await loadCursoFromCloud();
+      if (!changed && document.getElementById('course-modules').innerHTML.trim()) return;
+      loadCourseHeaderInfo();
+      renderCourse();
+    }
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('collapsed'); }
+    function loadCourseHeaderInfo() {
+      document.getElementById('course-title-display').innerText = localStorage.getItem(LS_TITLE) || 'Discipulado IPB';
+      document.getElementById('course-subtitle-display').innerText = localStorage.getItem(LS_SUBTITLE) || 'Acesse os módulos e aulas abaixo';
+    }
+    function renderCourse() {
+      const container = document.getElementById('course-modules');
+      const sidebarMenu = document.getElementById('sidebar-menu');
+      const modules = JSON.parse(localStorage.getItem(LS_MODULES) || '[]');
+      if (!modules.length) {
+        container.innerHTML = '<div class="empty-state"><h3>Nenhum módulo cadastrado ainda.</h3></div>';
+        sidebarMenu.innerHTML = '<li style="color:#c5d4a1;font-size:0.85rem;padding:10px;">Sem conteúdo.</li>';
+        return;
       }
-    };
-  } catch (e) {}
-}
+      sidebarMenu.innerHTML = modules.map((module, mIndex) => {
+        if (isLocked(module.releaseDate)) return '<li class="sidebar-module"><button class="sidebar-module-title locked" disabled>🔒 ' + module.title + '</button></li>';
+        const sub = (module.lessons || []).map((lesson, lIndex) => {
+          if (isLocked(lesson.releaseDate)) return '<li><button class="sidebar-subitem" disabled>🔒 ' + lesson.title + '</button></li>';
+          let extra = '';
+          if (lesson.firstHtmlPage) extra += '<li><button class="sidebar-subitem" onclick="handleSidebarSubitemClick(' + mIndex + ',' + lIndex + ',\'html\')">📋 ' + (lesson.firstHtmlTitle || lesson.firstHtmlPage.replace('.html','')) + '</button></li>';
+          if (lesson.videoUrl && materiaisLiberados(lesson, mIndex, lIndex)) extra += '<li><button class="sidebar-subitem" onclick="abrirVideo(' + mIndex + ',' + lIndex + ')">🎬 ' + (lesson.videoTitle || 'Vídeo da aula') + '</button></li>';
+          if (materiaisLiberados(lesson, mIndex, lIndex) && lesson.links) {
+            extra += lesson.links.map(function(item, linkIndex) {
+              if (isLocked(item.releaseDate)) return '';
+              return '<li><button class="sidebar-subitem" onclick="handleSidebarSubitemClick(' + mIndex + ',' + lIndex + ',\'link' + linkIndex + '\')">🔗 ' + (item.subtitle || item.title || 'Material') + '</button></li>';
+            }).join('');
+          }
+          return '<li><button class="sidebar-subitem" onclick="handleSidebarLessonClick(' + mIndex + ',' + lIndex + ')">' + lesson.title + '</button></li>' + extra;
+        }).join('');
+        return '<li class="sidebar-module" id="sidebar-mod-' + mIndex + '"><button class="sidebar-module-title" onclick="toggleSidebarModule(' + mIndex + ')"><span>' + module.title + '</span><span>▾</span></button><ul class="sidebar-sublist">' + sub + '</ul></li>';
+      }).join('');
+      container.innerHTML = modules.map((module, mIndex) => {
+        const corTitulo = corTituloModulo(mIndex);
+        const bordaModulo = 'border:3px solid ' + corTitulo + ';';
+        if (isLocked(module.releaseDate)) {
+          return '<div class="accordion-item is-locked" id="item-' + mIndex + '" style="' + bordaModulo + '"><div class="accordion-header" style="background:' + corTitulo + ';"><span>🔒 ' + module.title + '</span><div class="lock-notice">Disponível em: ' + new Date(module.releaseDate).toLocaleString('pt-BR') + '</div></div></div>';
+        }
+        const lessonsHTML = (module.lessons || []).map((lesson, lIndex) => renderLessonBlock(module, mIndex, lesson, lIndex, corTitulo)).join('');
+        return '<div class="accordion-item" id="item-' + mIndex + '" style="' + bordaModulo + '"><button class="accordion-header" style="background:' + corTitulo + ';" onclick="toggleAccordion(' + mIndex + ')"><span>' + module.title + '</span><span class="toggle-icon">+</span></button><div class="accordion-body" id="body-' + mIndex + '"><div class="accordion-content">' + (module.description ? '<p class="lesson-text">' + module.description + '</p>' : '') + (lessonsHTML || '<p class="lesson-text">Nenhuma lição neste módulo.</p>') + '</div></div></div>';
+      }).join('');
+    }
+    function renderLessonBlock(module, mIndex, lesson, lIndex, corTitulo) {
+      const cor = corTitulo || corTituloModulo(mIndex);
+      if (isLocked(lesson.releaseDate)) {
+        return '<div class="section-block lesson-block" id="lesson-' + mIndex + '-' + lIndex + '"><div class="doc-accordion"><div class="doc-header" style="cursor:not-allowed;color:#6b7a52;' + estiloBarraModulo(cor) + '"><span>🔒 ' + lesson.title + '</span><div class="lock-notice">Disponível em: ' + new Date(lesson.releaseDate).toLocaleString('pt-BR') + '</div></div></div></div>';
+      }
+      const liberado = materiaisLiberados(lesson, mIndex, lIndex);
+      const precisaDesbloquear = !!(lesson.firstHtmlPage || lesson.lockLinksUntilLessonSubmit);
+      const email = encodeURIComponent(lesson.lessonEmail || DEFAULT_EMAIL);
+      const licaoSrc = lesson.firstHtmlPage ? (lesson.firstHtmlPage + '?lessonIndex=' + mIndex + '-' + lIndex + '&email=' + email) : '';
+      const licaoHTML = lesson.firstHtmlPage
+        ? ('<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-html"><button class="doc-header" style="' + estiloBarraModulo(cor) + '" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'html\')"><span>📋 ' + (lesson.firstHtmlTitle || lesson.firstHtmlPage.replace('.html','')) + '</span><span class="toggle-icon">×</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-html"><div class="doc-body-inner"><iframe class="licao-frame" src="' + licaoSrc + '" onload="conectarFormularioLicao(' + mIndex + ',' + lIndex + ', this)"></iframe></div></div></div>')
+        : '';
+      let extrasHTML = '';
+      if (precisaDesbloquear && !liberado && (lesson.videoUrl || (lesson.links && lesson.links.length))) {
+        extrasHTML = '<div class="section-block video-wrap" id="video-wrap-' + mIndex + '-' + lIndex + '">' + avisoMateriaisBloqueados() + '</div>';
+      } else {
+        extrasHTML = '<div class="section-block video-wrap" id="video-wrap-' + mIndex + '-' + lIndex + '">' +
+          (lesson.videoUrl && (!precisaDesbloquear || liberado) ? htmlDoVideoLiberado(lesson, mIndex, lIndex, cor) : '') +
+          ((!precisaDesbloquear || liberado) ? htmlDosLinks(lesson, mIndex, lIndex, cor) : '') +
+        '</div>';
+      }
+      return '<div class="section-block lesson-block" id="lesson-' + mIndex + '-' + lIndex + '"><h3 class="lesson-title">' + lesson.title + '</h3>' + (lesson.description ? '<p class="lesson-text">' + lesson.description + '</p>' : '') + licaoHTML + extrasHTML + '</div>';
+    }
+    function collapseAllModules() {
+      document.querySelectorAll('.doc-accordion.active, .accordion-item.active').forEach(item => {
+        item.classList.remove('active');
+        const body = item.querySelector('.doc-body, .accordion-body');
+        if (body) body.style.maxHeight = null;
+      });
+    }
+    function toggleSidebarModule(index) {
+      const el = document.getElementById('sidebar-mod-' + index);
+      if (el) el.classList.toggle('active');
+      openAccordion(index);
+      scrollToElement('item-' + index);
+    }
+    function handleSidebarLessonClick(mIndex, lIndex) { openAccordion(mIndex); scrollToElement('lesson-' + mIndex + '-' + lIndex); }
+    function handleSidebarSubitemClick(mIndex, lIndex, key) { openAccordion(mIndex); setTimeout(() => toggleDocAccordion(mIndex, lIndex, key), 120); }
+    function abrirVideo(mIndex, lIndex) {
+      const modules = JSON.parse(localStorage.getItem(LS_MODULES) || '[]');
+      const lesson = (((modules[mIndex] || {}).lessons) || [])[lIndex] || {};
+      if (!materiaisLiberados(lesson, mIndex, lIndex)) return;
+      openAccordion(mIndex);
+      setTimeout(() => toggleDocAccordion(mIndex, lIndex, 'video'), 150);
+    }
+    function scrollToElement(id) { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    function openAccordion(index) {
+      const item = document.getElementById('item-' + index);
+      const body = document.getElementById('body-' + index);
+      if (item && body && !item.classList.contains('is-locked') && !item.classList.contains('active')) {
+        item.classList.add('active');
+        body.style.maxHeight = (body.scrollHeight + 4000) + 'px';
+      }
+    }
+    function toggleAccordion(index) {
+      const item = document.getElementById('item-' + index);
+      const body = document.getElementById('body-' + index);
+      if (!item || item.classList.contains('is-locked')) return;
+      if (item.classList.contains('active')) { item.classList.remove('active'); body.style.maxHeight = null; }
+      else { item.classList.add('active'); body.style.maxHeight = (body.scrollHeight + 4000) + 'px'; }
+    }
+    function toggleDocAccordion(mIndex, lIndex, key) {
+      const docItem = document.getElementById('doc-item-' + mIndex + '-' + lIndex + '-' + key);
+      const docBody = document.getElementById('doc-body-' + mIndex + '-' + lIndex + '-' + key);
+      const mainBody = document.getElementById('body-' + mIndex);
+      if (!docItem || !docBody) return;
+      if (docItem.classList.contains('active')) { docItem.classList.remove('active'); docBody.style.maxHeight = null; }
+      else {
+        docItem.classList.add('active');
+        const extra = docBody.querySelector('.doc-frame-container') ? 980 : 120;
+        docBody.style.maxHeight = (docBody.scrollHeight + extra) + 'px';
+        if (mainBody) mainBody.style.maxHeight = (mainBody.scrollHeight + docBody.scrollHeight + extra + 200) + 'px';
+      }
+    }
+    window.addEventListener('message', function(event) {
+      if (!event.data || event.data.type !== 'CORRIGIR_RESPOSTAS') return;
+      const parts = String(event.data.lessonIndex || '').split('-');
+      const mIndex = Number(parts[0]);
+      const lIndex = Number(parts[1]);
+      if (Number.isNaN(mIndex) || Number.isNaN(lIndex)) return;
+      if (event.data.completo === false || event.data.todasFeitas === false) {
+        alert('Responda todas as alternativas da lição antes de clicar em Corrigir Respostas.');
+        return;
+      }
+      tentarLiberarMateriais(mIndex, lIndex);
+    });
+    document.addEventListener('DOMContentLoaded', () => { refreshStudentView(); setInterval(refreshStudentView, 15000); });
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshStudentView(); });
+  </script>
+</body>
+</html>
