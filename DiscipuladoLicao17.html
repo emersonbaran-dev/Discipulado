@@ -21,7 +21,7 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #72506E;
+            border-top: 6px solid #72506e;
         }
         .header-container {
             position: relative;
@@ -41,13 +41,13 @@
             text-align: center;
             font-size: 16pt;
             font-weight: bold;
-            color: #72506E;
+            color: #72506e;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 5px;
         }
         h1 {
-            color: #72506E;
+            color: #72506e;
             margin: 0;
             font-size: 32px;
             text-transform: uppercase;
@@ -62,13 +62,13 @@
         }
         .intro {
             background-color: #f0f4f6;
-            border-left: 4px solid #72506E;
+            border-left: 4px solid #72506e;
             padding: 12px 15px;
             margin-bottom: 25px;
             font-size: 11pt;
         }
         .section-title {
-            background-color: #72506E;
+            background-color: #72506e;
             color: white;
             padding: 6px 12px;
             font-size: 13pt;
@@ -96,20 +96,8 @@
             margin-top: 4px;
         }
         input[type="text"]:focus, textarea:focus, select:focus {
-            border-color: #72506E;
+            border-color: #72506e;
             outline: none;
-        }
-        .matching-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-        .matching-row select {
-            width: 70px;
-            margin-top: 0;
-            padding: 6px;
-            text-align: center;
         }
         .radio-group {
             display: flex;
@@ -140,7 +128,7 @@
         }
         .btn-submit {
             width: 100%;
-            background-color: #72506E;
+            background-color: #72506e;
             color: white;
             padding: 14px;
             border: none;
@@ -152,7 +140,7 @@
             transition: background-color 0.3s ease;
         }
         .btn-submit:hover {
-            background-color: #583c55;
+            background-color: #553b52;
         }
         .btn-submit.sent {
             background-color: #202224 !important;
@@ -172,7 +160,7 @@
     <div class="subtitle">REDENÇÃO E CONSUMAÇÃO</div>
     
     <div class="intro">
-        Na lição anterior, iniciamos os 4 pilares de cosmovisão cristã. Vimos as duas primeiras: Criação e a Queda. Agora veremos as outras duas: Redenção e Consumação:
+        Continuando o estudo sobre a Cosmovisão Cristã, abordaremos os dois últimos pilares: Redenção e Consumação. Deus não abandonou a sua criação após a Queda, mas executou o Seu plano perfeito para resgatar o ser humano e restaurar todas as coisas.
     </div>
 
     <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
@@ -181,38 +169,20 @@
         <div class="section-title">A – REDENÇÃO</div>
 
         <div class="question-group">
-            <label for="q1">1) O que o pecado produz, de acordo com Rm 6.23?</label>
-            <textarea id="q1" name="1. O que o pecado produz (Rm 6.23)" rows="2" required></textarea>
+            <label for="q1">1) Quem Deus enviou ao mundo para realizar a nossa redenção? (Jo 3.16; Gl 4.4,5)</label>
+            <input type="text" id="q1" name="1. Quem Deus enviou para a redencao (Jo 3.16; Gl 4.4,5)" required>
         </div>
 
         <div class="question-group">
-            <label for="q2">2) O que era feito devido ao pecado, no altar? (Lv 17.11)</label>
-            <textarea id="q2" name="2. O que era feito no altar (Lv 17.11)" rows="2" required></textarea>
+            <label for="q2">2) O que Jesus realizou por nós na cruz do Calvário? (1Pe 2.24; Ef 1.7)</label>
+            <textarea id="q2" name="2. O que Jesus realizou na cruz (1Pe 2.24; Ef 1.7)" rows="2" required></textarea>
         </div>
 
         <div class="question-group">
-            <label>3) Sendo os sacrifícios sombras do real, era possível o perdão de pecados por meio de tais sacrifícios? (Hb 10.4)</label>
+            <label>3) A salvação é alcançada por nossas próprias obras de justiça? (Ef 2.8,9)</label>
             <div class="radio-group">
-                <label><input type="radio" name="3. Perdao por meio de sacrificios (Hb 10.4)" value="SIM" required> SIM</label>
-                <label><input type="radio" name="3. Perdao por meio de sacrificios (Hb 10.4)" value="NÃO" required> NÃO</label>
-            </div>
-        </div>
-
-        <div class="question-group">
-            <label for="q4">4) Quem é o sacrifício superior e perfeito, capaz de purificar do pecado, diante da Lei Cerimonial? (Hb 9.11-12)</label>
-            <textarea id="q4" name="4. Sacrificio superior e perfeito (Hb 9.11-12)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q5">5) Cristo veio para resgatar da maldição do quê? (Gl 4.4,5)</label>
-            <textarea id="q5" name="5. Resgatar da maldicao do que (Gl 4.4,5)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label>6) Por quem o Servo sofredor tomou o pecado? (Is 53.11-12)</label>
-            <div class="radio-group">
-                <label><input type="radio" name="6. Servo sofredor tomou o pecado (Is 53.11-12)" value="Todos" required> Todos</label>
-                <label><input type="radio" name="6. Servo sofredor tomou o pecado (Is 53.11-12)" value="Muitos" required> Muitos</label>
+                <label><input type="radio" name="3. Salvacao por obras (Ef 2.8,9)" value="SIM" required> SIM</label>
+                <label><input type="radio" name="3. Salvacao por obras (Ef 2.8,9)" value="NÃO" required> NÃO</label>
             </div>
         </div>
 
@@ -220,102 +190,18 @@
         <div class="section-title">B – CONSUMAÇÃO</div>
 
         <div class="question-group">
-            <label for="q7">7) Em Mt 24.5-13 fala de 9 sinais que acontecem antes da volta de Cristo, mas ainda não é o fim (Falsos Cristos, Guerras, Fome, Terremotos, Tribulação dos crentes, Escândalos, Falsos Profetas, Iniquidade, Sem amor). Qual o sinal em que após acontecer virá o fim (v. 14)?</label>
-            <textarea id="q7" name="7. Sinal apos o qual vira o fim (Mt 24.14)" rows="2" required></textarea>
+            <label for="q4">4) O que a Bíblia promete sobre a segunda vinda de Jesus Cristo? (At 1.11; Ap 22.12)</label>
+            <textarea id="q4" name="4. Promessa da segunda vinda (At 1.11; Ap 22.12)" rows="2" required></textarea>
         </div>
 
         <div class="question-group">
-            <label>8) Ainda em Mt 24, associe as colunas quanto à volta de Cristo:</label>
-            <div style="margin-top: 10px;">
-                <div class="matching-row">
-                    <select name="Volta de Cristo - Prepara-te para a vinda" required>
-                        <option value="">--</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                    </select>
-                    <span>Prepara-te para a vinda de Cristo</span>
-                </div>
-                <div class="matching-row">
-                    <select name="Volta de Cristo - Cristo vira com poder e gloria" required>
-                        <option value="">--</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                    </select>
-                    <span>Cristo virá com poder e glória</span>
-                </div>
-                <div class="matching-row">
-                    <select name="Volta de Cristo - Ninguem sabe a volta, so o Pai" required>
-                        <option value="">--</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                    </select>
-                    <span>Ninguém sabe a volta de Jesus, só o Pai</span>
-                </div>
-            </div>
-            <div style="font-size: 10pt; color: #666; margin-top: 8px;">
-                (A) v.30 &nbsp;&nbsp; (B) v.36 &nbsp;&nbsp; (C) v.44
-            </div>
+            <label for="q5">5) O que acontecerá com a criação e com os salvos na consumação de todas as coisas? (2Pe 3.13; Ap 21.1-4)</label>
+            <textarea id="q5" name="5. Criacao e salvos na consumacao (2Pe 3.13; Ap 21.1-4)" rows="3" required></textarea>
         </div>
 
         <div class="question-group">
-            <label>9) Quem será ressuscitado e transformado? (1Ts 4.16,17)</label>
-            <div style="margin-top: 8px;">
-                <label for="q9_ressuscitados" style="font-weight: normal; margin-bottom: 2px;">Ressuscitados:</label>
-                <input type="text" id="q9_ressuscitados" name="9a. Ressuscitados (1Ts 4.16,17)" required>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="q9_transformados" style="font-weight: normal; margin-bottom: 2px;">Transformados:</label>
-                <input type="text" id="q9_transformados" name="9b. Transformados (1Ts 4.16,17)" required>
-            </div>
-        </div>
-
-        <div class="question-group">
-            <label for="q10">10) Quem foram julgados de acordo com Ap 20.11,12?</label>
-            <textarea id="q10" name="10. Quem foram julgados (Ap 20.11,12)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q11">11) O que João viu em Ap 21.1,2?</label>
-            <textarea id="q11" name="11. O que Joao viu (Ap 21.1,2)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label>12) Associe as colunas quanto ao nosso preparo:</label>
-            <div style="margin-top: 10px;">
-                <div class="matching-row">
-                    <select name="Preparo - Vigiar" required>
-                        <option value="">--</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                    </select>
-                    <span>Vigiar</span>
-                </div>
-                <div class="matching-row">
-                    <select name="Preparo - Ate ao encontro tenho que servir" required>
-                        <option value="">--</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                    </select>
-                    <span>Até ao encontro de Jesus tenho que servir</span>
-                </div>
-                <div class="matching-row">
-                    <select name="Preparo - Ser fiel e prudente" required>
-                        <option value="">--</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                    </select>
-                    <span>Ser fiel e prudente</span>
-                </div>
-            </div>
-            <div style="font-size: 10pt; color: #666; margin-top: 8px;">
-                (A) Mt 24.42 &nbsp;&nbsp; (B) Mt 24.45,46 &nbsp;&nbsp; (C) 1Co 15.58
-            </div>
+            <label for="q6">6) Qual deve ser a nossa atitude enquanto aguardamos a consumação dos tempos? (Tt 2.11-13; 2Pe 3.11,14)</label>
+            <textarea id="q6" name="6. Atitude enquanto aguardamos (Tt 2.11-13; 2Pe 3.11,14)" rows="2" required></textarea>
         </div>
 
         <!-- DADOS FINAIS -->
@@ -342,7 +228,7 @@
         btn.innerText = "ENVIANDO PELO EMAIL...";
         
         setTimeout(function(){
-            // O formulário continuará seu curso natural de envio
+            // O formulário seguirá com o envio via mailto
         }, 500);
     }
 </script>
