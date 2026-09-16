@@ -25,7 +25,7 @@
     .sidebar-module.active .sidebar-sublist { display: block; }
     .sidebar-subitem { width: 100%; background: none; border: none; color: #c5d4a1; font-size: 0.85rem; text-align: left; padding: 8px 10px; border-radius: 4px; cursor: pointer; display: block; }
     .sidebar-subitem:hover { color: #e8f0c8; background-color: rgba(255,255,255,0.05); }
-    .main-content { flex: 1; padding: 30px 25px; max-width: 980px; margin: 0 auto; }
+    .main-content { flex: 1; padding: 30px 25px; max-width: 1100px; width: 100%; margin: 0 auto; }
     .header-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; margin-bottom: 25px; }
     .brand { display: flex; align-items: center; gap: 14px; }
     .brand img { width: 64px; height: 64px; object-fit: contain; }
@@ -39,29 +39,36 @@
     .lock-notice { font-size: 0.85rem; background: #efe9c8; color: #6b5b16; padding: 6px 12px; border-radius: 6px; font-weight: 600; }
     .toggle-icon { width: 32px; height: 32px; background: #efe3c8; color: #6b5b16; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: bold; margin-left: 15px; }
     .accordion-item.active > .accordion-header .toggle-icon,
-    .doc-accordion.active > .doc-header .toggle-icon { transform: rotate(45deg); background: #efe3c8; color: #6b5b16; }
+    .doc-accordion.active > .doc-header .toggle-icon { transform: rotate(45deg); }
     .accordion-body, .doc-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-    .accordion-content { padding: 0 25px 25px; border-top: 1px solid #e8eedc; }
-    .section-block { margin-top: 18px; }
+    .accordion-content { padding: 0 18px 25px; border-top: 1px solid #e8eedc; }
+    .section-block { margin-top: 18px; width: 100%; }
     .lesson-block + .lesson-block { border-top: 2px solid #A0A0A0; padding-top: 18px; margin-top: 22px; }
     .lesson-text { line-height: 1.6; color: #4a5a32; white-space: pre-wrap; }
-    .video-responsive { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; }
+    .video-responsive { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; width: 100%; }
     .video-responsive iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-    .audio-container { padding: 12px 16px; max-width: 450px; }
+    .audio-container { padding: 12px 16px; width: 100%; max-width: 100%; }
     audio.audio-player { width: 100%; height: 40px; }
-    .doc-accordion { border: 1px solid #c5d0a8; border-radius: 8px; overflow: hidden; background: #f4f6ef; margin-top: 10px; }
-    .doc-header { width: 100%; background: #e8eedc; border: none; padding: 14px 18px; font-size: 0.95rem; font-weight: 600; color: #3d4f21; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-    .doc-body-inner { padding: 15px; }
-    .doc-frame-container { width: 100%; height: 550px; background: #fff; }
-    .doc-frame-container iframe { width: 100%; height: 100%; border: none; }
+    .materiais-liberados { width: 100%; display: block; }
+    .doc-accordion { width: 100%; border: 1px solid #c5d0a8; border-radius: 10px; overflow: hidden; background: #f4f6ef; margin-top: 12px; }
+    .doc-header { width: 100%; background: #e8eedc; border: none; padding: 12px 16px; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: #3d4f21; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+    .doc-header .toggle-icon { width: 28px; height: 28px; font-size: 1.1rem; margin-left: 8px; }
+    .doc-body-inner { padding: 0; width: 100%; }
+    .doc-frame-container { width: 100%; height: min(80vh, 920px); min-height: 640px; background: #fff; border-top: 1px solid #d7dfc6; }
+    .doc-frame-container iframe { width: 100%; height: 100%; border: none; display: block; }
     .licao-frame { width: 100%; min-height: 980px; height: 80vh; border: 1px solid #d7dfc6; border-radius: 8px; background: #fff; }
-    .doc-footer { padding: 10px 15px; background: #f4f6ef; border-top: 1px solid #d7dfc6; text-align: right; }
-    .btn-link-general { display: inline-flex; align-items: center; gap: 8px; background: #556b2f; color: #fff; padding: 10px 18px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
-    .video-wrap { display: flex; flex-direction: column; align-items: center; }
+    .doc-footer { padding: 10px 16px; background: #f4f6ef; border-top: 1px solid #d7dfc6; text-align: right; width: 100%; }
+    .btn-link-general { display: inline-flex; align-items: center; gap: 8px; background: #556b2f; color: #fff; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.82rem; }
+    .video-wrap { display: flex; flex-direction: column; align-items: stretch; width: 100%; }
     .materiais-bloqueados { width: 100%; margin-top: 12px; background: #efe9c8; color: #6b5b16; border: 1px dashed #c9b86a; border-radius: 8px; padding: 14px 16px; font-size: 0.92rem; font-weight: 600; text-align: center; }
     .empty-state { text-align: center; padding: 40px; background: #fff; border-radius: 8px; color: #6b7a52; }
     .lesson-title { font-size: 1.05rem; color: #3d4f21; margin-bottom: 8px; }
-    @media (max-width: 768px) { .app-layout { flex-direction: column; } .sidebar { width: 100%; height: auto; position: relative; } }
+    @media (max-width: 768px) {
+      .app-layout { flex-direction: column; }
+      .sidebar { width: 100%; height: auto; position: relative; }
+      .main-content { max-width: 100%; padding: 16px 10px; }
+      .doc-frame-container { min-height: 480px; height: 70vh; }
+    }
   </style>
 </head>
 <body>
@@ -92,7 +99,6 @@
   <script>
     const CORES_TITULO_MODULO = ['#C8E6C9','#E3F2FD','#FFFDE7','#FFF3E0','#FFEBEE','#FCE4EC','#F3E5F5','#EFEBE9'];
     function corTituloModulo(i) { return CORES_TITULO_MODULO[i % 8]; }
-
     const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso_ipb_palmeiras202609.json';
     const LS_TITLE = 'ipb_course_title_palmeiras202609';
     const LS_SUBTITLE = 'ipb_course_subtitle_palmeiras202609';
@@ -167,14 +173,12 @@
         if (win && typeof win.verificarRespostasCompletas === 'function') return !!win.verificarRespostasCompletas();
         if (win && win.LICAO_COMPLETA === true) return true;
         return todasAlternativasFeitas(doc);
-      } catch (e) {
-        return false;
-      }
+      } catch (e) { return false; }
     }
-    function tentarLiberarMateriais(mIndex, lIndex, silencioso) {
+    function tentarLiberarMateriais(mIndex, lIndex) {
       const iframe = iframeDaLicao(mIndex, lIndex);
       if (!licaoEstaCompleta(iframe)) {
-        if (!silencioso) alert('Responda todas as alternativas da lição antes de clicar em Corrigir Respostas.');
+        alert('Responda todas as alternativas da lição antes de clicar em Corrigir Respostas.');
         return false;
       }
       marcarMateriaisLiberados(mIndex, lIndex);
@@ -187,7 +191,7 @@
       const iframe = iframeDaLicao(mIndex, lIndex);
       if (iframe && iframe.contentWindow) iframe.contentWindow.postMessage({ type: 'LIBERAR_PDF' }, '*');
     }
-    window.liberarVideoAula = function(mIndex, lIndex) { tentarLiberarMateriais(mIndex, lIndex, false); };
+    window.liberarVideoAula = function(mIndex, lIndex) { tentarLiberarMateriais(mIndex, lIndex); };
     function ehPdf(url) { return /\.pdf(\?|#|$)/i.test(url || ''); }
     function isLocked(dateStr) { return dateStr ? new Date() < new Date(dateStr) : false; }
     function formatYouTubeUrl(url) {
@@ -216,7 +220,7 @@
     function htmlDoVideoLiberado(lesson, mIndex, lIndex) {
       const ytMain = formatYouTubeUrl(lesson.videoUrl);
       return '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-video" style="width:100%;">' +
-        '<button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'video\')"><span>🎬 ' + (lesson.videoTitle || 'Vídeo da aula') + '</span><span class="toggle-icon">+</span></button>' +
+        '<button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'video\')"><span>🎬 ' + (lesson.videoTitle || 'Vídeo da aula') + '</span><span class="toggle-icon">×</span></button>' +
         '<div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-video"><div class="doc-body-inner">' +
           (ytMain ? '<div class="video-responsive"><iframe src="' + ytMain + '" allowfullscreen></iframe></div>' : '<a class="btn-link-general" href="' + lesson.videoUrl + '" target="_blank">Abrir vídeo</a>') +
         '</div></div></div>';
@@ -232,16 +236,16 @@
       const audio = isAudioUrl(item.url);
       const pdf = ehPdf(item.url);
       const cabeca = '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-' + key + '"><button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'' + key + '\')">';
-      const fechaCabeca = '<span class="toggle-icon">+</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-' + key + '">';
+      const fechaCabeca = '<span class="toggle-icon">×</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-' + key + '">';
       if (docs) {
         return cabeca + '<span>📄 ' + titulo + '</span>' + fechaCabeca +
           '<div class="doc-frame-container"><iframe src="' + docs + '" allow="autoplay"></iframe></div>' +
-          '<div class="doc-footer"><a href="' + item.url + '" target="_blank" class="btn-link-general" style="font-size:0.8rem;padding:6px 12px;">↗ Abrir original</a></div></div></div>';
+          '<div class="doc-footer"><a href="' + item.url + '" target="_blank" class="btn-link-general">↗ Abrir original</a></div></div></div>';
       }
       if (pdf) {
         return cabeca + '<span>📄 ' + titulo + '</span>' + fechaCabeca +
           '<div class="doc-frame-container"><iframe src="' + item.url + '"></iframe></div>' +
-          '<div class="doc-footer"><a href="' + item.url + '" target="_blank" class="btn-link-general" style="font-size:0.8rem;padding:6px 12px;">↗ Abrir PDF</a></div></div></div>';
+          '<div class="doc-footer"><a href="' + item.url + '" target="_blank" class="btn-link-general">↗ Abrir original</a></div></div></div>';
       }
       if (yt) {
         return cabeca + '<span>🎬 ' + titulo + '</span>' + fechaCabeca +
@@ -252,7 +256,7 @@
           '<div class="audio-container"><audio class="audio-player" controls src="' + item.url + '"></audio></div></div></div>';
       }
       return cabeca + '<span>🔗 ' + titulo + '</span>' + fechaCabeca +
-        '<div class="doc-body-inner"><a href="' + (item.url || '#') + '" target="_blank" class="btn-link-general">Abrir material</a></div></div></div>';
+        '<div class="doc-body-inner" style="padding:15px;"><a href="' + (item.url || '#') + '" target="_blank" class="btn-link-general">Abrir material</a></div></div></div>';
     }
     function htmlDosLinks(lesson, mIndex, lIndex) {
       if (!lesson.links || !lesson.links.length) return '';
@@ -266,7 +270,7 @@
       if (wrap) wrap.innerHTML = (lesson.videoUrl ? htmlDoVideoLiberado(lesson, mIndex, lIndex) : '') + htmlDosLinks(lesson, mIndex, lIndex);
       const item = document.getElementById('item-' + mIndex);
       const body = document.getElementById('body-' + mIndex);
-      if (item && body) { item.classList.add('active'); body.style.maxHeight = (body.scrollHeight + 2500) + 'px'; }
+      if (item && body) { item.classList.add('active'); body.style.maxHeight = (body.scrollHeight + 4000) + 'px'; }
     }
     function ehBotaoCorrigir(btn) {
       const texto = ((btn.innerText || btn.value || '') + ' ' + (btn.id || '') + ' ' + (btn.name || '') + ' ' + (btn.className || '')).toUpperCase();
@@ -277,8 +281,7 @@
         const doc = iframe.contentDocument || iframe.contentWindow.document;
         const tentar = function (ev) {
           if (!licaoEstaCompleta(iframe)) {
-            if (ev) ev.preventDefault();
-            if (ev) ev.stopPropagation();
+            if (ev) { ev.preventDefault(); ev.stopPropagation(); }
             alert('Responda todas as alternativas da lição antes de clicar em Corrigir Respostas.');
             return;
           }
@@ -290,7 +293,7 @@
           btn.dataset.unlockBound = '1';
           btn.addEventListener('click', tentar, true);
         });
-        iframe.contentWindow.liberarVideoAula = function () { tentarLiberarMateriais(mIndex, lIndex, false); };
+        iframe.contentWindow.liberarVideoAula = function () { tentarLiberarMateriais(mIndex, lIndex); };
       } catch (e) {}
     }
     async function loadCursoFromCloud() {
@@ -363,7 +366,7 @@
       const email = encodeURIComponent(lesson.lessonEmail || DEFAULT_EMAIL);
       const licaoSrc = lesson.firstHtmlPage ? (lesson.firstHtmlPage + '?lessonIndex=' + mIndex + '-' + lIndex + '&email=' + email) : '';
       const licaoHTML = lesson.firstHtmlPage
-        ? ('<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-html"><button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'html\')"><span>📋 ' + (lesson.firstHtmlTitle || lesson.firstHtmlPage.replace('.html','')) + '</span><span class="toggle-icon">+</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-html"><div class="doc-body-inner"><iframe class="licao-frame" src="' + licaoSrc + '" onload="conectarFormularioLicao(' + mIndex + ',' + lIndex + ', this)"></iframe></div></div></div>')
+        ? ('<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-html"><button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'html\')"><span>📋 ' + (lesson.firstHtmlTitle || lesson.firstHtmlPage.replace('.html','')) + '</span><span class="toggle-icon">×</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-html"><div class="doc-body-inner"><iframe class="licao-frame" src="' + licaoSrc + '" onload="conectarFormularioLicao(' + mIndex + ',' + lIndex + ', this)"></iframe></div></div></div>')
         : '';
       let extrasHTML = '';
       if (precisaDesbloquear && !liberado && (lesson.videoUrl || (lesson.links && lesson.links.length))) {
@@ -404,7 +407,7 @@
       const body = document.getElementById('body-' + index);
       if (item && body && !item.classList.contains('is-locked') && !item.classList.contains('active')) {
         item.classList.add('active');
-        body.style.maxHeight = (body.scrollHeight + 2500) + 'px';
+        body.style.maxHeight = (body.scrollHeight + 4000) + 'px';
       }
     }
     function toggleAccordion(index) {
@@ -412,7 +415,7 @@
       const body = document.getElementById('body-' + index);
       if (!item || item.classList.contains('is-locked')) return;
       if (item.classList.contains('active')) { item.classList.remove('active'); body.style.maxHeight = null; }
-      else { item.classList.add('active'); body.style.maxHeight = (body.scrollHeight + 2500) + 'px'; }
+      else { item.classList.add('active'); body.style.maxHeight = (body.scrollHeight + 4000) + 'px'; }
     }
     function toggleDocAccordion(mIndex, lIndex, key) {
       const docItem = document.getElementById('doc-item-' + mIndex + '-' + lIndex + '-' + key);
@@ -422,8 +425,9 @@
       if (docItem.classList.contains('active')) { docItem.classList.remove('active'); docBody.style.maxHeight = null; }
       else {
         docItem.classList.add('active');
-        docBody.style.maxHeight = (docBody.scrollHeight + 80) + 'px';
-        if (mainBody) mainBody.style.maxHeight = (mainBody.scrollHeight + docBody.scrollHeight + 120) + 'px';
+        const extra = docBody.querySelector('.doc-frame-container') ? 980 : 120;
+        docBody.style.maxHeight = (docBody.scrollHeight + extra) + 'px';
+        if (mainBody) mainBody.style.maxHeight = (mainBody.scrollHeight + docBody.scrollHeight + extra + 200) + 'px';
       }
     }
     window.addEventListener('message', function(event) {
@@ -436,7 +440,7 @@
         alert('Responda todas as alternativas da lição antes de clicar em Corrigir Respostas.');
         return;
       }
-      tentarLiberarMateriais(mIndex, lIndex, false);
+      tentarLiberarMateriais(mIndex, lIndex);
     });
     document.addEventListener('DOMContentLoaded', () => { refreshStudentView(); setInterval(refreshStudentView, 15000); });
     document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshStudentView(); });
