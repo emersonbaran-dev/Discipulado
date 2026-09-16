@@ -12,7 +12,8 @@
     .sidebar.collapsed { width: 60px; padding: 15px 10px; overflow-x: hidden; }
     .sidebar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #556b2f; }
     .sidebar-header h2 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.8px; color: #c5d4a1; white-space: nowrap; }
-    .sidebar.collapsed .sidebar-header h2, .sidebar.collapsed .sidebar-menu { display: none; }
+    .sidebar.collapsed .sidebar-header h2,
+    .sidebar.collapsed .sidebar-menu { display: none; }
     .btn-toggle-sidebar { background: none; border: none; color: #c5d4a1; font-size: 1.4rem; cursor: pointer; width: 36px; height: 36px; border-radius: 6px; }
     .btn-toggle-sidebar:hover { background-color: #556b2f; color: #fff; }
     .sidebar.collapsed .sidebar-header { border-bottom: none; margin-bottom: 0; padding-bottom: 0; justify-content: center; }
@@ -60,7 +61,10 @@
     .btn-video.liberado { background: #228B22; color: #fff; cursor: pointer; pointer-events: auto; }
     .empty-state { text-align: center; padding: 40px; background: #fff; border-radius: 8px; color: #6b7a52; }
     .lesson-title { font-size: 1.05rem; color: #3d4f21; margin-bottom: 8px; }
-    @media (max-width: 768px) { .app-layout { flex-direction: column; } .sidebar { width: 100%; height: auto; position: relative; } }
+    @media (max-width: 768px) {
+      .app-layout { flex-direction: column; }
+      .sidebar { width: 100%; height: auto; position: relative; }
+    }
   </style>
 </head>
 <body>
@@ -88,6 +92,7 @@
       <div id="course-modules"></div>
     </main>
   </div>
+
   <script>
     const FIREBASE_URL = 'https://discipulado-2026-default-rtdb.firebaseio.com/curso_ipb.json';
     const LS_TITLE = 'ipb_course_title';
@@ -97,7 +102,9 @@
     const videosLiberados = new Set();
     let lastCourseSnapshot = '';
 
-    function chaveLiberacao(mIndex, lIndex) { return 'ipb_materiais_liberados_' + mIndex + '_' + lIndex; }
+    function chaveLiberacao(mIndex, lIndex) {
+      return 'ipb_materiais_liberados_' + mIndex + '_' + lIndex;
+    }
     function materiaisLiberados(lesson, mIndex, lIndex) {
       if (!lesson.firstHtmlPage && !lesson.lockLinksUntilLessonSubmit) return true;
       return videosLiberados.has(mIndex + '-' + lIndex) || localStorage.getItem(chaveLiberacao(mIndex, lIndex)) === '1';
@@ -105,65 +112,22 @@
     function marcarMateriaisLiberados(mIndex, lIndex) {
       videosLiberados.add(mIndex + '-' + lIndex);
       localStorage.setItem(chaveLiberacao(mIndex, lIndex), '1');
-      renderCourse();
-      openAccordion(mIndex);
-      setTimeout(() => {
-        const iframe = document.querySelector('#doc-item-' + mIndex + '-' + lIndex + '-html iframe.licao-frame');
-        if (iframe && iframe.contentWindow) iframe.contentWindow.postMessage({ type: 'LIBERAR_PDF' }, '*');
-      }, 250);
+      liberarMateriaisNaTela(mIndex, lIndex);
+      const iframe = document.querySelector('#doc-item-' + mIndex + '-' + lIndex + '-html iframe.licao-frame');
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage({ type: 'LIBERAR_PDF' }, '*');
+      }
     }
-    window.liberarVideoAula = function(mIndex, lIndex) { marcarMateriaisLiberados(mIndex, lIndex); };
+    window.liberarVideoAula = function(mIndex, lIndex) {
+      marcarMateriaisLiberados(mIndex, lIndex);
+    };
 
     function ehPdf(url) {
       return /\.pdf(\?|#|$)/i.test(url || '') || /\/file\/d\//.test(url || '') || /application\/pdf/i.test(url || '');
     }
-    function conectarFormularioLicao(mIndex, lIndex, iframe) {
-      try {
-        const doc = iframe.contentDocument || iframe.contentWindow.document;
-        const liberar = function() { marcarMateriaisLiberados(mIndex, lIndex); };
-        doc.querySelectorAll('button, input[type="button"], input[type="submit"], a').forEach(btn => {
-          const texto = ((btn.innerText || btn.value || '') + ' ' + (btn.id || '') + ' ' + (btn.className || '')).toUpperCase();
-          if (texto.includes('CORRIGIR RESPOSTAS') || texto.includes('CORRIGIR') || btn.id === 'btnEnviar' || btn.id === 'btnCorrigir') {
-            if (btn.dataset.unlockBound === '1') return;
-            btn.dataset.unlockBound = '1';
-            btn.addEventListener('click', liberar);
-          }
-        });
-        const form = doc.querySelector('form');
-        if (form && form.dataset.unlockBound !== '1') {
-          form.dataset.unlockBound = '1';
-          form.addEventListener('submit', liberar);
-        }
-        iframe.contentWindow.liberarVideoAula = liberar;
-      } catch (e) {}
+    function isLocked(dateStr) {
+      return dateStr ? new Date() < new Date(dateStr) : false;
     }
-
-    async function loadCursoFromCloud() {
-      try {
-        const res = await fetch(FIREBASE_URL + '?t=' + Date.now());
-        const data = await res.json();
-        if (!data) return false;
-        const snapshot = JSON.stringify({ title: data.title || '', subtitle: data.subtitle || '', modules: data.modules || [] });
-        if (snapshot === lastCourseSnapshot) return false;
-        lastCourseSnapshot = snapshot;
-        if (data.title) localStorage.setItem(LS_TITLE, data.title);
-        if (data.subtitle) localStorage.setItem(LS_SUBTITLE, data.subtitle);
-        if (data.modules) localStorage.setItem(LS_MODULES, JSON.stringify(data.modules));
-        return true;
-      } catch (e) { console.error(e); return false; }
-    }
-    async function refreshStudentView() {
-      const changed = await loadCursoFromCloud();
-      if (!changed && document.getElementById('course-modules').innerHTML.trim()) return;
-      loadCourseHeaderInfo();
-      renderCourse();
-    }
-    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('collapsed'); }
-    function loadCourseHeaderInfo() {
-      document.getElementById('course-title-display').innerText = localStorage.getItem(LS_TITLE) || 'Discipulado IPB';
-      document.getElementById('course-subtitle-display').innerText = localStorage.getItem(LS_SUBTITLE) || 'Acesse os módulos e aulas abaixo';
-    }
-    function isLocked(dateStr) { return dateStr ? new Date() < new Date(dateStr) : false; }
     function formatYouTubeUrl(url) {
       const match = (url || '').match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
       return (match && match[2].length === 11) ? 'https://www.youtube.com/embed/' + match[2] : null;
@@ -175,7 +139,154 @@
       if (url.includes('/preview')) return url;
       return url.replace(/\/view(\?.*)?$/, '/preview').replace(/\/edit(\?.*)?$/, '/preview');
     }
-    function isAudioUrl(url) { return /\.(mp3|wav|ogg|m4a|aac)(\?|#|$)/i.test(url || '') || /audio|sound/i.test(url || ''); }
+    function isAudioUrl(url) {
+      return /\.(mp3|wav|ogg|m4a|aac)(\?|#|$)/i.test(url || '') || /audio|sound/i.test(url || '');
+    }
+
+    function htmlDoVideoLiberado(lesson, mIndex, lIndex) {
+      const ytMain = formatYouTubeUrl(lesson.videoUrl);
+      return '<button class="btn-video liberado" onclick="abrirVideo(' + mIndex + ',' + lIndex + ')">▶ Assistir vídeo</button>' +
+        '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-video" style="margin-top:12px;">' +
+          '<button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'video\')">' +
+            '<span>🎬 ' + (lesson.videoTitle || 'Vídeo da aula') + '</span><span class="toggle-icon">+</span>' +
+          '</button>' +
+          '<div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-video">' +
+            '<div class="doc-body-inner">' +
+              (ytMain
+                ? '<div class="video-responsive"><iframe src="' + ytMain + '" allowfullscreen></iframe></div>'
+                : '<a class="btn-link-general" href="' + lesson.videoUrl + '" target="_blank">Abrir vídeo</a>') +
+            '</div>' +
+          '</div>' +
+        '</div>';
+    }
+
+    function renderMaterialItem(item, mIndex, lIndex, linkIndex) {
+      if (isLocked(item.releaseDate)) {
+        return '<div class="doc-accordion"><div class="doc-header" style="cursor:not-allowed;color:#6b7a52;"><span>🔒 ' +
+          (item.subtitle || 'Material') + '</span><div class="lock-notice">Disponível em: ' +
+          new Date(item.releaseDate).toLocaleString('pt-BR') + '</div></div></div>';
+      }
+      const key = 'link' + linkIndex;
+      const yt = formatYouTubeUrl(item.url);
+      const docs = formatGoogleDocsEmbedUrl(item.url);
+      const audio = isAudioUrl(item.url);
+      const pdf = ehPdf(item.url);
+      if (pdf) {
+        return '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-' + key + '">' +
+          '<button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'' + key + '\')">' +
+          '<span>📄 ' + (item.subtitle || 'PDF') + '</span><span class="toggle-icon">+</span></button>' +
+          '<div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-' + key + '">' +
+          '<div class="doc-frame-container"><iframe src="' + item.url + '"></iframe></div>' +
+          '<div class="doc-footer"><a href="' + item.url + '" target="_blank" class="btn-link-general" style="font-size:0.8rem;padding:6px 12px;">↗ Abrir PDF</a></div></div></div>';
+      }
+      if (yt) {
+        return '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-' + key + '">' +
+          '<button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'' + key + '\')">' +
+          '<span>🎬 ' + (item.subtitle || 'Vídeo') + '</span><span class="toggle-icon">+</span></button>' +
+          '<div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-' + key + '"><div class="doc-body-inner">' +
+          '<div class="video-responsive"><iframe src="' + yt + '" allowfullscreen></iframe></div></div></div></div>';
+      }
+      if (audio) {
+        return '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-' + key + '">' +
+          '<button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'' + key + '\')">' +
+          '<span>🎧 ' + (item.subtitle || 'Áudio') + '</span><span class="toggle-icon">+</span></button>' +
+          '<div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-' + key + '">' +
+          '<div class="audio-container"><audio class="audio-player" controls src="' + item.url + '"></audio></div></div></div>';
+      }
+      if (docs) {
+        return '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-' + key + '">' +
+          '<button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'' + key + '\')">' +
+          '<span>📄 ' + (item.subtitle || 'Documento') + '</span><span class="toggle-icon">+</span></button>' +
+          '<div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-' + key + '">' +
+          '<div class="doc-frame-container"><iframe src="' + docs + '"></iframe></div>' +
+          '<div class="doc-footer"><a href="' + item.url + '" target="_blank" class="btn-link-general" style="font-size:0.8rem;padding:6px 12px;">↗ Abrir original</a></div></div></div>';
+      }
+      return '<div class="section-block"><a href="' + item.url + '" target="_blank" class="btn-link-general">🔗 ' +
+        (item.subtitle || 'Material') + '</a></div>';
+    }
+
+    function liberarMateriaisNaTela(mIndex, lIndex) {
+      const modules = JSON.parse(localStorage.getItem(LS_MODULES) || '[]');
+      const lesson = (((modules[mIndex] || {}).lessons) || [])[lIndex];
+      if (!lesson) return;
+
+      const wrap = document.getElementById('video-wrap-' + mIndex + '-' + lIndex);
+      if (wrap && lesson.videoUrl) wrap.innerHTML = htmlDoVideoLiberado(lesson, mIndex, lIndex);
+
+      const lessonBox = document.getElementById('lesson-' + mIndex + '-' + lIndex);
+      if (lessonBox) {
+        lessonBox.querySelectorAll('.aguardando-correcao').forEach(el => el.remove());
+        if (!lessonBox.querySelector('.materiais-liberados') && lesson.links && lesson.links.length) {
+          const bloco = document.createElement('div');
+          bloco.className = 'materiais-liberados';
+          bloco.innerHTML = lesson.links.map((item, linkIndex) => renderMaterialItem(item, mIndex, lIndex, linkIndex)).join('');
+          lessonBox.appendChild(bloco);
+        }
+      }
+
+      const item = document.getElementById('item-' + mIndex);
+      const body = document.getElementById('body-' + mIndex);
+      if (item && body) {
+        item.classList.add('active');
+        body.style.maxHeight = (body.scrollHeight + 2500) + 'px';
+      }
+    }
+
+    function conectarFormularioLicao(mIndex, lIndex, iframe) {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const liberar = function (ev) {
+          if (ev) ev.preventDefault();
+          marcarMateriaisLiberados(mIndex, lIndex);
+        };
+        doc.querySelectorAll('button, input[type="button"], input[type="submit"], a').forEach(btn => {
+          const texto = ((btn.innerText || btn.value || '') + ' ' + (btn.id || '')).toUpperCase();
+          if (texto.includes('CORRIGIR RESPOSTAS') || btn.id === 'btnCorrigir') {
+            if (btn.dataset.unlockBound === '1') return;
+            btn.dataset.unlockBound = '1';
+            btn.addEventListener('click', liberar);
+          }
+        });
+        iframe.contentWindow.liberarVideoAula = function () {
+          marcarMateriaisLiberados(mIndex, lIndex);
+        };
+      } catch (e) {}
+    }
+
+    async function loadCursoFromCloud() {
+      try {
+        const res = await fetch(FIREBASE_URL + '?t=' + Date.now());
+        const data = await res.json();
+        if (!data) return false;
+        const snapshot = JSON.stringify({
+          title: data.title || '',
+          subtitle: data.subtitle || '',
+          modules: data.modules || []
+        });
+        if (snapshot === lastCourseSnapshot) return false;
+        lastCourseSnapshot = snapshot;
+        if (data.title) localStorage.setItem(LS_TITLE, data.title);
+        if (data.subtitle) localStorage.setItem(LS_SUBTITLE, data.subtitle);
+        if (data.modules) localStorage.setItem(LS_MODULES, JSON.stringify(data.modules));
+        return true;
+      } catch (e) {
+        console.error(e);
+        return false;
+      }
+    }
+    async function refreshStudentView() {
+      const changed = await loadCursoFromCloud();
+      if (!changed && document.getElementById('course-modules').innerHTML.trim()) return;
+      loadCourseHeaderInfo();
+      renderCourse();
+    }
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('collapsed');
+    }
+    function loadCourseHeaderInfo() {
+      document.getElementById('course-title-display').innerText = localStorage.getItem(LS_TITLE) || 'Discipulado IPB';
+      document.getElementById('course-subtitle-display').innerText = localStorage.getItem(LS_SUBTITLE) || 'Acesse os módulos e aulas abaixo';
+    }
 
     function renderCourse() {
       const container = document.getElementById('course-modules');
@@ -186,63 +297,92 @@
         sidebarMenu.innerHTML = '<li style="color:#c5d4a1;font-size:0.85rem;padding:10px;">Sem conteúdo.</li>';
         return;
       }
+
       sidebarMenu.innerHTML = modules.map((module, mIndex) => {
         if (isLocked(module.releaseDate)) {
           return '<li class="sidebar-module"><button class="sidebar-module-title locked" disabled>🔒 ' + module.title + '</button></li>';
         }
         const sub = (module.lessons || []).map((lesson, lIndex) => {
-          if (isLocked(lesson.releaseDate)) return '<li><button class="sidebar-subitem" disabled>🔒 Lição ' + (lIndex + 1) + '. ' + lesson.title + '</button></li>';
+          if (isLocked(lesson.releaseDate)) {
+            return '<li><button class="sidebar-subitem" disabled>🔒 Lição ' + (lIndex + 1) + '. ' + lesson.title + '</button></li>';
+          }
           let extra = '';
-          if (lesson.firstHtmlPage) extra += '<li><button class="sidebar-subitem" onclick="handleSidebarSubitemClick(' + mIndex + ',' + lIndex + ',\'html\')">📋 ' + (lesson.firstHtmlTitle || lesson.firstHtmlPage.replace('.html','')) + '</button></li>';
-          if (lesson.videoUrl && materiaisLiberados(lesson, mIndex, lIndex)) extra += '<li><button class="sidebar-subitem" onclick="abrirVideo(' + mIndex + ',' + lIndex + ')">🎬 ' + (lesson.videoTitle || 'Vídeo da aula') + '</button></li>';
-          return '<li><button class="sidebar-subitem" onclick="handleSidebarLessonClick(' + mIndex + ',' + lIndex + ')">Lição ' + (lIndex + 1) + '. ' + lesson.title + '</button></li>' + extra;
+          if (lesson.firstHtmlPage) {
+            extra += '<li><button class="sidebar-subitem" onclick="handleSidebarSubitemClick(' + mIndex + ',' + lIndex + ',\'html\')">📋 ' +
+              (lesson.firstHtmlTitle || lesson.firstHtmlPage.replace('.html', '')) + '</button></li>';
+          }
+          if (lesson.videoUrl && materiaisLiberados(lesson, mIndex, lIndex)) {
+            extra += '<li><button class="sidebar-subitem" onclick="abrirVideo(' + mIndex + ',' + lIndex + ')">🎬 ' +
+              (lesson.videoTitle || 'Vídeo da aula') + '</button></li>';
+          }
+          return '<li><button class="sidebar-subitem" onclick="handleSidebarLessonClick(' + mIndex + ',' + lIndex + ')">Lição ' +
+            (lIndex + 1) + '. ' + lesson.title + '</button></li>' + extra;
         }).join('');
-        return '<li class="sidebar-module" id="sidebar-mod-' + mIndex + '"><button class="sidebar-module-title" onclick="toggleSidebarModule(' + mIndex + ')"><span>' + module.title + '</span><span>▾</span></button><ul class="sidebar-sublist">' + sub + '</ul></li>';
+        return '<li class="sidebar-module" id="sidebar-mod-' + mIndex + '">' +
+          '<button class="sidebar-module-title" onclick="toggleSidebarModule(' + mIndex + ')"><span>' + module.title +
+          '</span><span>▾</span></button><ul class="sidebar-sublist">' + sub + '</ul></li>';
       }).join('');
 
       container.innerHTML = modules.map((module, mIndex) => {
         if (isLocked(module.releaseDate)) {
-          return '<div class="accordion-item is-locked" id="item-' + mIndex + '"><div class="accordion-header"><span>🔒 ' + module.title + '</span><div class="lock-notice">Disponível em: ' + new Date(module.releaseDate).toLocaleString('pt-BR') + '</div></div></div>';
+          return '<div class="accordion-item is-locked" id="item-' + mIndex + '"><div class="accordion-header"><span>🔒 ' +
+            module.title + '</span><div class="lock-notice">Disponível em: ' +
+            new Date(module.releaseDate).toLocaleString('pt-BR') + '</div></div></div>';
         }
         const lessonsHTML = (module.lessons || []).map((lesson, lIndex) => renderLessonBlock(module, mIndex, lesson, lIndex)).join('');
-        return '<div class="accordion-item" id="item-' + mIndex + '"><button class="accordion-header" onclick="toggleAccordion(' + mIndex + ')"><span>' + module.title + '</span><span class="toggle-icon">+</span></button><div class="accordion-body" id="body-' + mIndex + '"><div class="accordion-content">' + (module.description ? '<p class="lesson-text">' + module.description + '</p>' : '') + (lessonsHTML || '<p class="lesson-text">Nenhuma lição neste módulo.</p>') + '</div></div></div>';
+        return '<div class="accordion-item" id="item-' + mIndex + '">' +
+          '<button class="accordion-header" onclick="toggleAccordion(' + mIndex + ')"><span>' + module.title +
+          '</span><span class="toggle-icon">+</span></button>' +
+          '<div class="accordion-body" id="body-' + mIndex + '"><div class="accordion-content">' +
+          (module.description ? '<p class="lesson-text">' + module.description + '</p>' : '') +
+          (lessonsHTML || '<p class="lesson-text">Nenhuma lição neste módulo.</p>') +
+          '</div></div></div>';
       }).join('');
-    }
-
-    function renderMaterialItem(item, mIndex, lIndex, linkIndex) {
-      if (isLocked(item.releaseDate)) {
-        return '<div class="doc-accordion"><div class="doc-header" style="cursor:not-allowed;color:#6b7a52;"><span>🔒 ' + (item.subtitle || 'Material') + '</span><div class="lock-notice">Disponível em: ' + new Date(item.releaseDate).toLocaleString('pt-BR') + '</div></div></div>';
-      }
-      const key = 'link' + linkIndex;
-      const yt = formatYouTubeUrl(item.url);
-      const docs = formatGoogleDocsEmbedUrl(item.url);
-      const audio = isAudioUrl(item.url);
-      const pdf = ehPdf(item.url);
-      if (pdf) return '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-' + key + '"><button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'' + key + '\')"><span>📄 ' + (item.subtitle || 'PDF') + '</span><span class="toggle-icon">+</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-' + key + '"><div class="doc-frame-container"><iframe src="' + item.url + '"></iframe></div><div class="doc-footer"><a href="' + item.url + '" target="_blank" class="btn-link-general" style="font-size:0.8rem;padding:6px 12px;">↗ Abrir PDF</a></div></div></div>';
-      if (yt) return '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-' + key + '"><button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'' + key + '\')"><span>🎬 ' + (item.subtitle || 'Vídeo') + '</span><span class="toggle-icon">+</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-' + key + '"><div class="doc-body-inner"><div class="video-responsive"><iframe src="' + yt + '" allowfullscreen></iframe></div></div></div></div>';
-      if (audio) return '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-' + key + '"><button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'' + key + '\')"><span>🎧 ' + (item.subtitle || 'Áudio') + '</span><span class="toggle-icon">+</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-' + key + '"><div class="audio-container"><audio class="audio-player" controls src="' + item.url + '"></audio></div></div></div>';
-      if (docs) return '<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-' + key + '"><button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'' + key + '\')"><span>📄 ' + (item.subtitle || 'Documento') + '</span><span class="toggle-icon">+</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-' + key + '"><div class="doc-frame-container"><iframe src="' + docs + '"></iframe></div><div class="doc-footer"><a href="' + item.url + '" target="_blank" class="btn-link-general" style="font-size:0.8rem;padding:6px 12px;">↗ Abrir original</a></div></div></div>';
-      return '<div class="section-block"><a href="' + item.url + '" target="_blank" class="btn-link-general">🔗 ' + (item.subtitle || 'Material') + '</a></div>';
     }
 
     function renderLessonBlock(module, mIndex, lesson, lIndex) {
       if (isLocked(lesson.releaseDate)) {
-        return '<div class="section-block" id="lesson-' + mIndex + '-' + lIndex + '"><div class="doc-accordion"><div class="doc-header" style="cursor:not-allowed;color:#6b7a52;"><span>🔒 Lição ' + (lIndex + 1) + '. ' + lesson.title + '</span><div class="lock-notice">Disponível em: ' + new Date(lesson.releaseDate).toLocaleString('pt-BR') + '</div></div></div></div>';
+        return '<div class="section-block" id="lesson-' + mIndex + '-' + lIndex + '"><div class="doc-accordion">' +
+          '<div class="doc-header" style="cursor:not-allowed;color:#6b7a52;"><span>🔒 Lição ' + (lIndex + 1) + '. ' +
+          lesson.title + '</span><div class="lock-notice">Disponível em: ' +
+          new Date(lesson.releaseDate).toLocaleString('pt-BR') + '</div></div></div></div>';
       }
+
       const liberado = materiaisLiberados(lesson, mIndex, lIndex);
       const email = encodeURIComponent(lesson.lessonEmail || DEFAULT_EMAIL);
-      const licaoSrc = lesson.firstHtmlPage ? (lesson.firstHtmlPage + '?lessonIndex=' + mIndex + '-' + lIndex + '&email=' + email) : '';
-      const licaoHTML = lesson.firstHtmlPage ? ('<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-html"><button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'html\')"><span>📋 ' + (lesson.firstHtmlTitle || lesson.firstHtmlPage.replace('.html','')) + '</span><span class="toggle-icon">+</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-html"><div class="doc-body-inner"><iframe class="licao-frame" src="' + licaoSrc + '" onload="conectarFormularioLicao(' + mIndex + ',' + lIndex + ', this)"></iframe></div></div></div>') : '';
-      const ytMain = formatYouTubeUrl(lesson.videoUrl);
+      const licaoSrc = lesson.firstHtmlPage
+        ? (lesson.firstHtmlPage + '?lessonIndex=' + mIndex + '-' + lIndex + '&email=' + email)
+        : '';
+      const licaoHTML = lesson.firstHtmlPage
+        ? ('<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-html">' +
+           '<button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'html\')">' +
+           '<span>📋 ' + (lesson.firstHtmlTitle || lesson.firstHtmlPage.replace('.html', '')) +
+           '</span><span class="toggle-icon">+</span></button>' +
+           '<div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-html"><div class="doc-body-inner">' +
+           '<iframe class="licao-frame" src="' + licaoSrc + '" onload="conectarFormularioLicao(' + mIndex + ',' + lIndex + ', this)"></iframe>' +
+           '</div></div></div>')
+        : '';
+
       let videoHTML = '';
       if (lesson.videoUrl) {
-        videoHTML = '<div class="section-block" id="video-wrap-' + mIndex + '-' + lIndex + '"><button class="btn-video ' + (liberado ? 'liberado' : '') + '" ' + (liberado ? 'onclick="abrirVideo(' + mIndex + ',' + lIndex + ')"' : 'disabled tabindex="-1"') + '>' + (liberado ? '▶ Assistir vídeo' : '▶ Vídeo bloqueado — clique em CORRIGIR RESPOSTAS') + '</button>' + (liberado ? ('<div class="doc-accordion" id="doc-item-' + mIndex + '-' + lIndex + '-video" style="margin-top:12px;"><button class="doc-header" onclick="toggleDocAccordion(' + mIndex + ',' + lIndex + ',\'video\')"><span>🎬 ' + (lesson.videoTitle || 'Vídeo da aula') + '</span><span class="toggle-icon">+</span></button><div class="doc-body" id="doc-body-' + mIndex + '-' + lIndex + '-video"><div class="doc-body-inner">' + (ytMain ? '<div class="video-responsive"><iframe src="' + ytMain + '" allowfullscreen></iframe></div>' : '<a class="btn-link-general" href="' + lesson.videoUrl + '" target="_blank">Abrir vídeo</a>') + '</div></div></div>') : '') + '</div>';
+        videoHTML = '<div class="section-block" id="video-wrap-' + mIndex + '-' + lIndex + '">' +
+          (liberado
+            ? htmlDoVideoLiberado(lesson, mIndex, lIndex)
+            : '<button class="btn-video" disabled tabindex="-1">VÍDEO BLOQUEADO</button>') +
+          '</div>';
       }
-      const linksHTML = liberado
-        ? (lesson.links || []).map((item, linkIndex) => renderMaterialItem(item, mIndex, lIndex, linkIndex)).join('')
-        : ((lesson.links && lesson.links.length) || lesson.videoUrl || lesson.firstHtmlPage ? '<p class="lesson-text">Clique em <strong>CORRIGIR RESPOSTAS</strong> na lição para liberar o PDF, os vídeos e os demais links.</p>' : '');
 
-      return '<div class="section-block" id="lesson-' + mIndex + '-' + lIndex + '"><h3 class="lesson-title">Lição ' + (lIndex + 1) + '. ' + lesson.title + '</h3>' + (lesson.description ? '<p class="lesson-text">' + lesson.description + '</p>' : '') + licaoHTML + videoHTML + linksHTML + '</div>';
+      const linksHTML = liberado
+        ? '<div class="materiais-liberados">' + (lesson.links || []).map((item, i) => renderMaterialItem(item, mIndex, lIndex, i)).join('') + '</div>'
+        : ((lesson.links && lesson.links.length)
+            ? '<p class="lesson-text aguardando-correcao">Clique em <strong>CORRIGIR RESPOSTAS</strong> para liberar o PDF e os demais links.</p>'
+            : '');
+
+      return '<div class="section-block" id="lesson-' + mIndex + '-' + lIndex + '">' +
+        '<h3 class="lesson-title">Lição ' + (lIndex + 1) + '. ' + lesson.title + '</h3>' +
+        (lesson.description ? '<p class="lesson-text">' + lesson.description + '</p>' : '') +
+        licaoHTML + videoHTML + linksHTML +
+        '</div>';
     }
 
     function collapseAllModules() {
@@ -258,8 +398,14 @@
       openAccordion(index);
       scrollToElement('item-' + index);
     }
-    function handleSidebarLessonClick(mIndex, lIndex) { openAccordion(mIndex); scrollToElement('lesson-' + mIndex + '-' + lIndex); }
-    function handleSidebarSubitemClick(mIndex, lIndex, key) { openAccordion(mIndex); setTimeout(() => toggleDocAccordion(mIndex, lIndex, key), 120); }
+    function handleSidebarLessonClick(mIndex, lIndex) {
+      openAccordion(mIndex);
+      scrollToElement('lesson-' + mIndex + '-' + lIndex);
+    }
+    function handleSidebarSubitemClick(mIndex, lIndex, key) {
+      openAccordion(mIndex);
+      setTimeout(() => toggleDocAccordion(mIndex, lIndex, key), 120);
+    }
     function abrirVideo(mIndex, lIndex) {
       const modules = JSON.parse(localStorage.getItem(LS_MODULES) || '[]');
       const lesson = (((modules[mIndex] || {}).lessons) || [])[lIndex] || {};
@@ -267,7 +413,10 @@
       openAccordion(mIndex);
       setTimeout(() => toggleDocAccordion(mIndex, lIndex, 'video'), 150);
     }
-    function scrollToElement(id) { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    function scrollToElement(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
     function openAccordion(index) {
       const item = document.getElementById('item-' + index);
       const body = document.getElementById('body-' + index);
@@ -280,24 +429,32 @@
       const item = document.getElementById('item-' + index);
       const body = document.getElementById('body-' + index);
       if (!item || item.classList.contains('is-locked')) return;
-      if (item.classList.contains('active')) { item.classList.remove('active'); body.style.maxHeight = null; }
-      else { item.classList.add('active'); body.style.maxHeight = (body.scrollHeight + 2500) + 'px'; }
+      if (item.classList.contains('active')) {
+        item.classList.remove('active');
+        body.style.maxHeight = null;
+      } else {
+        item.classList.add('active');
+        body.style.maxHeight = (body.scrollHeight + 2500) + 'px';
+      }
     }
     function toggleDocAccordion(mIndex, lIndex, key) {
       const docItem = document.getElementById('doc-item-' + mIndex + '-' + lIndex + '-' + key);
       const docBody = document.getElementById('doc-body-' + mIndex + '-' + lIndex + '-' + key);
       const mainBody = document.getElementById('body-' + mIndex);
       if (!docItem || !docBody) return;
-      if (docItem.classList.contains('active')) { docItem.classList.remove('active'); docBody.style.maxHeight = null; }
-      else {
+      if (docItem.classList.contains('active')) {
+        docItem.classList.remove('active');
+        docBody.style.maxHeight = null;
+      } else {
         docItem.classList.add('active');
         docBody.style.maxHeight = (docBody.scrollHeight + 80) + 'px';
         if (mainBody) mainBody.style.maxHeight = (mainBody.scrollHeight + docBody.scrollHeight + 120) + 'px';
       }
     }
+
     window.addEventListener('message', function(event) {
       if (!event.data) return;
-      if (event.data.type === 'LICAO_ENVIADA' || event.data.type === 'CORRIGIR_RESPOSTAS') {
+      if (event.data.type === 'CORRIGIR_RESPOSTAS') {
         const raw = String(event.data.lessonIndex || '');
         const parts = raw.split('-');
         const mIndex = Number(parts[0]);
@@ -305,8 +462,14 @@
         if (!Number.isNaN(mIndex) && !Number.isNaN(lIndex)) marcarMateriaisLiberados(mIndex, lIndex);
       }
     });
-    document.addEventListener('DOMContentLoaded', () => { refreshStudentView(); setInterval(refreshStudentView, 15000); });
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshStudentView(); });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      refreshStudentView();
+      setInterval(refreshStudentView, 15000);
+    });
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) refreshStudentView();
+    });
   </script>
 </body>
 </html>
