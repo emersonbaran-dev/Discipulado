@@ -227,59 +227,51 @@
       var win=iframe.contentWindow;
       var doc=iframe.contentDocument||(win&&win.document);
       var src=doc&&doc.getElementById('licaoImpressao');
-      if(!src){alert('Não foi possível gerar o PDF. Tente novamente.');return}
-      if(typeof html2pdf!=='function'){alert('Não foi possível carregar o gerador de PDF. Verifique a internet.');return}
+      if(!src||typeof html2pdf!=='function'){alert('Não foi possível gerar o PDF. Tente novamente.');return}
       try{if(typeof win.gravarCache==='function')win.gravarCache()}catch(e){}
 
       var antigo=document.getElementById('__pdfCloneWrap');
       if(antigo)antigo.remove();
 
-      var LARGURA=680;
+      var W=650;
       var wrap=document.createElement('div');
       wrap.id='__pdfCloneWrap';
-      wrap.style.cssText='position:fixed;left:0;top:0;width:'+LARGURA+'px;background:#fff;z-index:2147483646;pointer-events:none;overflow:visible;';
+      wrap.style.cssText='position:absolute;left:0;top:0;width:'+W+'px;background:#fff;z-index:2147483646;pointer-events:none;';
 
-      var cssLicao=document.createElement('style');
-      cssLicao.textContent='#__pdfCloneWrap,#__pdfCloneWrap *{box-sizing:border-box}#__pdfCloneWrap{font-family:Arial,sans-serif;color:#333;line-height:1.6;font-size:12pt;background:#fff}#__pdfCloneWrap .container{width:'+LARGURA+'px;max-width:'+LARGURA+'px;margin:0;background:#fff;padding:16px 18px;border-radius:0;box-shadow:none;border-top:6px solid #2D4F5C;overflow:visible}#__pdfCloneWrap .header-container{position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:10px;min-height:56px;padding-left:70px}#__pdfCloneWrap .header-container img{position:absolute;left:0;top:0;height:52px;width:auto}#__pdfCloneWrap .main-category{text-align:center;font-size:15pt;font-weight:bold;color:#2D4F5C;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}#__pdfCloneWrap h1{color:#2D4F5C;margin:0;font-size:28px;text-transform:uppercase;text-align:center}#__pdfCloneWrap .subtitle{text-align:center;font-weight:bold;color:#555;margin-bottom:16px;font-size:13pt}#__pdfCloneWrap .intro{background:#f0f4f6;border-left:4px solid #2D4F5C;padding:12px 14px;margin-bottom:18px;font-size:11pt}#__pdfCloneWrap .section-title{background:#2D4F5C;color:#fff;padding:6px 12px;font-size:12pt;font-weight:bold;border-radius:4px;margin-top:20px;margin-bottom:12px}#__pdfCloneWrap .question-group{margin-bottom:16px;page-break-inside:avoid;break-inside:avoid}#__pdfCloneWrap label{display:block;font-weight:bold;margin-bottom:6px;color:#222}#__pdfCloneWrap .alternativas{margin-top:8px}#__pdfCloneWrap .alternativas label{display:block;padding:8px 10px;margin:5px 0;border:1px solid #ddd;border-radius:4px;font-weight:normal}#__pdfCloneWrap .alternativas label input{margin-right:8px}#__pdfCloneWrap .alternativas label.certa{background:#d9f2df!important;border-color:#28a745!important;color:#176b2c!important}#__pdfCloneWrap .alternativas label.errada{background:#f8d7da!important;border-color:#dc3545!important;color:#842029!important}#__pdfCloneWrap .final-note{text-align:center;font-weight:bold;color:#2D4F5C;background:#f0f4f6;padding:14px;border-radius:6px;border:1px solid #e0e0e0;margin-top:20px;font-size:12pt}#__pdfCloneWrap .footer-info{display:flex;gap:12px;margin-top:24px;padding-top:16px;border-top:2px solid #eee}#__pdfCloneWrap .resultado{margin-top:12px;padding:12px;text-align:center;font-size:13pt;font-weight:bold;border-radius:6px;border:1px solid #ddd;background:#f7f7f7}';
-      wrap.appendChild(cssLicao);
+      doc.querySelectorAll('style').forEach(function(st){wrap.appendChild(st.cloneNode(true))});
+      var extra=document.createElement('style');
+      extra.textContent='#__pdfCloneWrap,#__pdfCloneWrap *{box-sizing:border-box}#__pdfCloneWrap .container{width:'+W+'px!important;max-width:'+W+'px!important;margin:0!important;padding:14px 16px!important;box-shadow:none!important;border-radius:0!important}#__pdfCloneWrap .header-container img{position:relative!important;left:auto!important;height:48px!important;display:block;margin:0 auto 8px}#__pdfCloneWrap #btnPdf,#__pdfCloneWrap #btnCorrigir,#__pdfCloneWrap .btn-pdf,#__pdfCloneWrap .btn-corrigir{display:none!important}#__pdfCloneWrap .question-group{page-break-inside:avoid;break-inside:avoid}';
+      wrap.appendChild(extra);
 
       var clone=src.cloneNode(true);
-      clone.id='licaoImpressaoClone';
-      clone.style.cssText='width:'+LARGURA+'px;max-width:'+LARGURA+'px;margin:0;box-shadow:none;border-radius:0;background:#fff;overflow:visible;';
+      clone.style.width=W+'px';
+      clone.style.maxWidth=W+'px';
+      clone.style.margin='0';
+      clone.style.boxShadow='none';
       clone.querySelectorAll('#btnPdf,#btnCorrigir,.btn-pdf,.btn-corrigir').forEach(function(el){el.remove()});
-      clone.querySelectorAll('img').forEach(function(img){
-        img.removeAttribute('crossorigin');
-        img.src='logo-ipb.png';
-        img.alt='Logo IPB';
-      });
+      clone.querySelectorAll('img').forEach(function(img){img.removeAttribute('crossorigin');img.src='logo-ipb.png'});
 
       var origLabs=src.querySelectorAll('.alternativas label');
       var cloneLabs=clone.querySelectorAll('.alternativas label');
       origLabs.forEach(function(lab,i){if(cloneLabs[i])cloneLabs[i].className=lab.className});
-
       var origCampos=src.querySelectorAll('input,textarea,select');
       var cloneCampos=clone.querySelectorAll('input,textarea,select');
       origCampos.forEach(function(inp,i){
-        var c=cloneCampos[i];
-        if(!c)return;
-        if(inp.type==='checkbox'||inp.type==='radio')c.checked=inp.checked;
-        else c.value=inp.value;
+        var c=cloneCampos[i];if(!c)return;
+        if(inp.type==='checkbox'||inp.type==='radio')c.checked=inp.checked;else c.value=inp.value;
       });
 
       wrap.appendChild(clone);
-      document.body.appendChild(wrap);
+      document.documentElement.appendChild(wrap);
 
       var nome='Aluno';
       try{if(typeof win.val==='function')nome=String(win.val('nomePessoa')||'Aluno')}catch(e){}
       nome=String(nome).replace(/\s+/g,'_');
       var nLicao='01';
-      try{
-        var mx=String((win.location&&win.location.pathname)||'').match(/Licao(\d+)/i);
-        if(mx)nLicao=mx[1];
-      }catch(e){}
+      try{var mx=String((win.location&&win.location.pathname)||'').match(/Licao(\d+)/i);if(mx)nLicao=mx[1]}catch(e){}
 
       html2pdf().set({
-        margin:[8,10,8,10],
+        margin:[10,10,10,10],
         filename:'Licao'+nLicao+'-'+nome+'.pdf',
         image:{type:'jpeg',quality:0.98},
         html2canvas:{
@@ -290,15 +282,14 @@
           logging:false,
           scrollX:0,
           scrollY:0,
-          windowWidth:LARGURA,
-          width:LARGURA,
-          imageTimeout:0
+          x:0,
+          y:0,
+          width:W,
+          windowWidth:W
         },
-        pagebreak:{mode:['css','legacy'],avoid:['.question-group','.section-title','.final-note','.header-container']},
+        pagebreak:{mode:['css','legacy'],avoid:['.question-group','.section-title','.final-note']},
         jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
-      }).from(clone).save().then(function(){
-        wrap.remove();
-      }).catch(function(){
+      }).from(clone).save().then(function(){wrap.remove()}).catch(function(){
         wrap.remove();
         alert('Não foi possível gerar o PDF. Tente novamente.');
       });
