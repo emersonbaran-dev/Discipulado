@@ -341,6 +341,7 @@
 <script>
     var CACHE = 'licao01_cache';
     var CAMPOS = ['q1','q2','q3','q4','q5','q6','q7','q8','q9','nomePessoa','dataPreenchimento'];
+    var CHAVE_LIBERACAO = 'licao01_liberado';
 
     function val(id) {
         var el = document.getElementById(id);
@@ -370,17 +371,27 @@
         } catch (e) {}
     }
 
-    var GABARITO = {
-        q1: 'B',
-        q2: 'A',
-        q3: 'C',
-        q4: 'B',
-        q5: 'B',
-        q6: 'B',
-        q7: 'A',
-        q8: 'A',
-        q9: 'A'
-    };
+    function obterGabarito() {
+        try {
+            return JSON.parse(atob('eyJxMSI6IkIiLCJxMiI6IkEiLCJxMyI6IkMiLCJxNCI6IkIiLCJxNSI6IkIiLCJxNiI6IkIiLCJxNyI6IkEiLCJxOCI6IkEiLCJxOSI6IkEifQ=='));
+        } catch (e) {
+            return {};
+        }
+    }
+
+    function gabaritoLiberado() {
+        return sessionStorage.getItem(CHAVE_LIBERACAO) === '1';
+    }
+
+    function pedirLiberacao() {
+        if (gabaritoLiberado()) return true;
+        var codigo = prompt('Para ver o gabarito, digite o código de liberação.\nDeixe em branco para ver somente a nota.');
+        if (codigo && codigo.trim().toUpperCase() === 'IPB') {
+            sessionStorage.setItem(CHAVE_LIBERACAO, '1');
+            return true;
+        }
+        return false;
+    }
 
     function corrigirRespostas() {
         var form = document.getElementById('discipuladoForm');
@@ -389,8 +400,10 @@
             return;
         }
 
+        var GABARITO = obterGabarito();
         var acertos = 0;
         var total = Object.keys(GABARITO).length;
+        var liberado = pedirLiberacao();
 
         Object.keys(GABARITO).forEach(function(nome) {
             var opcoes = document.querySelectorAll('input[name="' + nome + '"]');
@@ -398,6 +411,7 @@
 
             opcoes.forEach(function(input) {
                 input.parentElement.classList.remove('certa', 'errada');
+                if (!liberado) return;
                 if (input.value === GABARITO[nome]) {
                     input.parentElement.classList.add('certa');
                 } else if (resposta && input.value === resposta.value) {
