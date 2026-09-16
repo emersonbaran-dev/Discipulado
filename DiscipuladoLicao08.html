@@ -3,8 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discipulado Lição 8 - Comunhão pela Oração</title>
+    <title>Discipulado Lição 08 - Comunhão pela Oração</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
+        @media print {
+            body {
+                background: #ffffff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .container {
+                box-shadow: none !important;
+                margin: 0 !important;
+                max-width: none !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                overflow: visible !important;
+            }
+            #btnPdf, #btnCorrigir, #resultado, .alerta-liberacao {
+                display: none !important;
+            }
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f7f6;
@@ -119,10 +139,6 @@
             border-color: #B68E3E;
             outline: none;
         }
-        .sub-question {
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
         .match-row {
             display: flex;
             align-items: center;
@@ -132,6 +148,31 @@
         .match-row select {
             width: 80px;
             margin-top: 0;
+        }
+        .alternativas {
+            margin-top: 8px;
+        }
+        .alternativas label {
+            display: block;
+            padding: 8px 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .alternativas label input {
+            margin-right: 8px;
+        }
+        .alternativas label.certa, .match-row select.certa {
+            background-color: #d9f2df !important;
+            border-color: #28a745 !important;
+            color: #176b2c !important;
+        }
+        .alternativas label.errada, .match-row select.errada {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #842029 !important;
         }
         .footer-info {
             display: flex;
@@ -143,9 +184,9 @@
         .footer-info .field {
             flex: 1;
         }
-        .btn-submit {
+        .btn-corrigir {
             width: 100%;
-            background-color: #B68E3E;
+            background-color: #2e7d32;
             color: white;
             padding: 14px;
             border: none;
@@ -154,14 +195,32 @@
             font-weight: bold;
             cursor: pointer;
             margin-top: 25px;
-            transition: background-color 0.3s ease;
         }
-        .btn-submit:hover {
-            background-color: #96732f;
+        .btn-corrigir:hover {
+            background-color: #256628;
         }
-        .btn-submit.sent {
-            background-color: #735722 !important;
-            cursor: default;
+        .btn-pdf {
+            width: 100%;
+            background-color: #3d6b7a;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .resultado {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            text-align: center;
+            font-size: 14pt;
+            font-weight: bold;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            background: #f7f7f7;
         }
         .final-note {
             text-align: center;
@@ -174,16 +233,30 @@
             margin-top: 25px;
             font-size: 12pt;
         }
+        .alerta-liberacao {
+            background-color: #faf5eb;
+            border: 1px dashed #A88237;
+            color: #A88237;
+            padding: 14px 20px;
+            border-radius: 6px;
+            margin-top: 25px;
+            text-align: center;
+            font-size: 11pt;
+            font-weight: normal;
+        }
+        .alerta-liberacao strong {
+            color: #A88237;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="licaoImpressao">
     <div class="main-category">III - COMUNHÃO</div>
     
     <div class="header-container">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
-        <h1>Lição 8</h1>
+        <h1>Lição 08</h1>
     </div>
     <div class="subtitle">COMUNHÃO PELA ORAÇÃO</div>
     
@@ -191,15 +264,15 @@
         <strong>DEVOCIONAL:</strong><br>
         Na vida devocional é necessário seguir este simples roteiro:
         <ul>
-            <li>Orar antes pedindo iluminação</li>
-            <li>Meditar numa passagem sistematicamente</li>
+            <li>Orar antes pedindo iluminação;</li>
+            <li>Meditar numa passagem sistematicamente;</li>
             <li>Orar depois da meditação respondendo aquilo que o Senhor falou na meditação, como: rogar perdão, agradecer, louvar, pedir, interceder, etc.</li>
             <li>Só depois orar por você, família, outros, igreja, missões, país.</li>
         </ul>
         Perceba que a oração é muito importante neste processo de comunhão ao Pai através de Jesus Cristo.
     </div>
 
-    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
+    <form id="discipuladoForm">
         
         <!-- SEÇÃO A -->
         <div class="section-title">A - DEVOCIONAL: ORE ANTES E DEPOIS DA MEDITAÇÃO BÍBLICA</div>
@@ -210,7 +283,12 @@
                 "Ah! Senhor, estejam, pois, atentos os teus ouvidos à oração do teu servo e à dos teus servos que se agradam de temer o teu nome; concede hoje bom êxito ao teu servo e dá-lhe mercê perante este homem. Nesse tempo eu era copeiro do rei."
             </div>
             <label for="q1">1) O que Neemias fez antes de falar com o rei Artaxerxes conforme Ne 1.11?</label>
-            <textarea id="q1" name="1. O que Neemias fez antes de falar com o rei (Ne 1.11)" rows="2" required></textarea>
+            <div class="alternativas">
+                <label><input type="radio" name="q1" value="A" required> A) Elaborou um plano estratégico e militar de reconstrução.</label>
+                <label><input type="radio" name="q1" value="B"> B) Orou ao Senhor pedindo que estivesse atento à sua oração e lhe concedesse bom êxito.</label>
+                <label><input type="radio" name="q1" value="C"> C) Pediu permissão imediata sem buscar orientação divina.</label>
+                <label><input type="radio" name="q1" value="D"> D) Jejuou publicamente no palácio real perante todos.</label>
+            </div>
         </div>
 
         <div class="question-group">
@@ -219,39 +297,44 @@
                 "Depois disto, ouvi a voz do Senhor, que dizia: A quem enviarei, e quem há de ir por nós? Disse eu: eis-me aqui, envia-me a mim."
             </div>
             <label for="q2">2) O que o profeta respondeu após o Senhor tê-lo perdoado e perguntado: "A quem enviarei, e quem há de ir por nós"? (Is 6.8)</label>
-            <textarea id="q2" name="2. Resposta do profeta ao Senhor (Is 6.8)" rows="2" required></textarea>
+            <div class="alternativas">
+                <label><input type="radio" name="q2" value="A" required> A) Disse que não estava preparado para a missão.</label>
+                <label><input type="radio" name="q2" value="B"> B) Respondeu: "Eis-me aqui, envia-me a mim".</label>
+                <label><input type="radio" name="q2" value="C"> C) Sugeriu que outro profeta fosse enviado em seu lugar.</label>
+                <label><input type="radio" name="q2" value="D"> D) Pediu um sinal miraculoso antes de responder ao chamado.</label>
+            </div>
         </div>
 
         <!-- SEÇÃO B -->
         <div class="section-title">B - ORAÇÃO: NÓS RESPONDENDO</div>
 
         <div class="question-group">
-            <label>3) O que Jesus ensina quanto à oração em:</label>
+            <label>3) Associe o que Jesus ensina quanto à oração nos textos de Mateus 6:</label>
             <div class="verse-box">
-                <strong>(A) Mt 6.5,6:</strong> "E, quando orardes, não sereis como os hipócritas; porque gostam de orar em pé nas sinagogas e nas esquinas das ruas, para serem vistos dos homens. Em verdade vos digo que eles já receberam a sua recompensa. Tu, porém, quando orares, entra no teu quarto e, fechada a porta, orará a teu Pai, que está em oculto; e teu Pai, que vê em oculto, te recompensará."<br><br>
-                <strong>(B) Mt 6.7,8:</strong> "E, orando, não useis de van repetições, como os gentios; porque presumem que pelo seu muito falar serão ouvidos. Não vos assemelheis, pois, a eles; porque Deus, vosso Pai, sabe o que vos é necessário, antes que lho peçais."
+                <strong>(A) Mt 6.5,6:</strong> "E, quando orardes, não sereis como os hipócritas; porque gostam de orar em pé nas sinagogas e nas esquinas das ruas, para serem vistos dos homens... Tu, porém, quando orares, entra no teu quarto e, fechada a porta, orará a teu Pai, que está em oculto..."<br><br>
+                <strong>(B) Mt 6.7,8:</strong> "E, orando, não useis de vãs repetições, como os gentios; porque presumem que pelo seu muito falar serão ouvidos... porque Deus, vosso Pai, sabe o que vos é necessário, antes que lho peçais."
             </div>
             
             <div class="match-row">
-                <select name="3. Relacao Mt 6.5-6 (Sincera/Objetiva)" required>
+                <select id="m3_sincera" name="m3_sincera" required>
                     <option value="">--</option>
                     <option value="A">A</option>
                     <option value="B">B</option>
                 </select>
-                <span>Sincera</span>
+                <span>A oração deve ser <strong>Sincera</strong> (em segredo e sem exibicionismo).</span>
             </div>
             <div class="match-row">
-                <select name="3. Relacao Mt 6.7-8 (Sincera/Objetiva)" required>
+                <select id="m3_objetiva" name="m3_objetiva" required>
                     <option value="">--</option>
                     <option value="A">A</option>
                     <option value="B">B</option>
                 </select>
-                <span>Objetiva</span>
+                <span>A oração deve ser <strong>Objetiva</strong> (sem vãs repetições).</span>
             </div>
         </div>
 
         <div class="question-group">
-            <label>4) O que Jesus ensina quanto à oração no Pai Nosso (Mt 6.9-13):</label>
+            <label>4) Relacione os trechos da oração do Pai Nosso (Mt 6.9-13) aos seus respectivos significados:</label>
             <div class="verse-box">
                 (A) Mt 6.9b - "Pai nosso, que estás nos céus..."<br>
                 (B) Mt 6.9c - "...santificado seja o teu nome;"<br>
@@ -264,7 +347,7 @@
             </div>
 
             <div class="match-row">
-                <select name="4. Pai Nosso - Relacionar Pai nos Ceus" required>
+                <select id="m4_1" name="m4_1" required>
                     <option value="">--</option>
                     <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
                     <option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option>
@@ -272,7 +355,7 @@
                 <span>Que nos relacionemos com o Pai nos Céus</span>
             </div>
             <div class="match-row">
-                <select name="4. Pai Nosso - Glorificar pelo que e e faz" required>
+                <select id="m4_2" name="m4_2" required>
                     <option value="">--</option>
                     <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
                     <option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option>
@@ -280,7 +363,7 @@
                 <span>Que o glorifiquemos pelo que é e faz</span>
             </div>
             <div class="match-row">
-                <select name="4. Pai Nosso - Que o Reino avance" required>
+                <select id="m4_3" name="m4_3" required>
                     <option value="">--</option>
                     <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
                     <option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option>
@@ -288,7 +371,7 @@
                 <span>Que o Reino avance</span>
             </div>
             <div class="match-row">
-                <select name="4. Pai Nosso - Submeter a vontade" required>
+                <select id="m4_4" name="m4_4" required>
                     <option value="">--</option>
                     <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
                     <option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option>
@@ -296,15 +379,15 @@
                 <span>Que nos submetamos à sua vontade</span>
             </div>
             <div class="match-row">
-                <select name="4. Pai Nosso - Receber bençaos" required>
+                <select id="m4_5" name="m4_5" required>
                     <option value="">--</option>
                     <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
                     <option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option>
                 </select>
-                <span>Que recebamos suas bênçãos</span>
+                <span>Que recebamos suas bênçãos e provisão</span>
             </div>
             <div class="match-row">
-                <select name="4. Pai Nosso - Perdao" required>
+                <select id="m4_6" name="m4_6" required>
                     <option value="">--</option>
                     <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
                     <option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option>
@@ -312,54 +395,83 @@
                 <span>Que nos perdoe e perdoemos</span>
             </div>
             <div class="match-row">
-                <select name="4. Pai Nosso - Preservar na tentacao" required>
+                <select id="m4_7" name="m4_7" required>
                     <option value="">--</option>
                     <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
                     <option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option>
                 </select>
-                <span>Que nos preserve na tentação</span>
+                <span>Que nos preserve na tentação e livra-nos do mal</span>
             </div>
             <div class="match-row">
-                <select name="4. Pai Nosso - Louvor" required>
+                <select id="m4_8" name="m4_8" required>
                     <option value="">--</option>
                     <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
                     <option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option>
                 </select>
-                <span>Que o louvemos</span>
+                <span>Que o louvemos eternamente</span>
             </div>
         </div>
 
         <div class="question-group">
-            <label>5) Cite a forma de relacionamento de Davi com Deus nos Salmos:</label>
+            <label>5) Relacione a forma de relacionamento de Davi com Deus nos Salmos:</label>
 
-            <div class="sub-question">
-                <label for="sl53">Salmo 5:3</label>
-                <input type="text" id="sl53" name="5. Relacionamento Sl 5.3" required>
+            <div class="match-row">
+                <select id="m5_1" name="m5_1" required>
+                    <option value="">--</option>
+                    <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+                    <option value="D">D</option><option value="E">E</option><option value="F">F</option>
+                </select>
+                <span><strong>Salmo 5:3</strong> ("De manhã ouves, ó Senhor, a minha voz...")</span>
+            </div>
+            <div class="match-row">
+                <select id="m5_2" name="m5_2" required>
+                    <option value="">--</option>
+                    <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+                    <option value="D">D</option><option value="E">E</option><option value="F">F</option>
+                </select>
+                <span><strong>Salmo 25:5</strong> ("Guia-me na tua verdade e ensina-me...")</span>
+            </div>
+            <div class="match-row">
+                <select id="m5_3" name="m5_3" required>
+                    <option value="">--</option>
+                    <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+                    <option value="D">D</option><option value="E">E</option><option value="F">F</option>
+                </select>
+                <span><strong>Salmo 32:5</strong> ("Confessei-te o meu pecado e a minha iniquidade não encobri...")</span>
+            </div>
+            <div class="match-row">
+                <select id="m5_4" name="m5_4" required>
+                    <option value="">--</option>
+                    <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+                    <option value="D">D</option><option value="E">E</option><option value="F">F</option>
+                </select>
+                <span><strong>Salmo 34:5</strong> ("Contemplai-o e sereis iluminados...")</span>
+            </div>
+            <div class="match-row">
+                <select id="m5_5" name="m5_5" required>
+                    <option value="">--</option>
+                    <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+                    <option value="D">D</option><option value="E">E</option><option value="F">F</option>
+                </select>
+                <span><strong>Salmo 51:10</strong> ("Cria em mim, ó Deus, um coração puro...")</span>
+            </div>
+            <div class="match-row">
+                <select id="m5_6" name="m5_6" required>
+                    <option value="">--</option>
+                    <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+                    <option value="D">D</option><option value="E">E</option><option value="F">F</option>
+                </select>
+                <span><strong>Salmo 63:1</strong> ("A ti me acolho; a minha alma tem sede de ti...")</span>
             </div>
 
-            <div class="sub-question">
-                <label for="sl255">Salmo 25:5</label>
-                <input type="text" id="sl255" name="5. Relacionamento Sl 25.5" required>
-            </div>
-
-            <div class="sub-question">
-                <label for="sl325">Salmo 32:5</label>
-                <input type="text" id="sl325" name="5. Relacionamento Sl 32.5" required>
-            </div>
-
-            <div class="sub-question">
-                <label for="sl345">Salmo 34:5</label>
-                <input type="text" id="sl345" name="5. Relacionamento Sl 34.5" required>
-            </div>
-
-            <div class="sub-question">
-                <label for="sl5110">Salmo 51:10</label>
-                <input type="text" id="sl5110" name="5. Relacionamento Sl 51.10" required>
-            </div>
-
-            <div class="sub-question">
-                <label for="sl631">Salmo 63:1</label>
-                <input type="text" id="sl631" name="5. Relacionamento Sl 63.1" required>
+            <div class="verse-box" style="margin-top:12px;">
+                <strong>Legenda:</strong><br>
+                (A) Buscar a Deus logo cedo / Orar pela manhã<br>
+                (B) Buscar a direção e o ensino de Deus<br>
+                (C) Confissão sincera de pecados<br>
+                (D) Olhar para o Senhor e ser iluminado/radiante<br>
+                (E) Pedir renovação e um coração puro<br>
+                (F) Ter sede de Deus e buscá-lo com fervor
             </div>
         </div>
 
@@ -367,7 +479,6 @@
             Então, tenha comunhão com Deus devocionalmente!
         </div>
 
-        <!-- DADOS FINAIS -->
         <div class="footer-info">
             <div class="field">
                 <label for="nomePessoa">Nome do Aluno:</label>
@@ -379,22 +490,222 @@
             </div>
         </div>
 
-        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 08</button>
+        <button type="button" id="btnCorrigir" class="btn-corrigir" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS</button>
+        <div id="resultado" class="resultado"></div>
+        <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
 
     </form>
+
+    <div class="alerta-liberacao">
+        🔒 Vídeo e documentos só liberam depois de responder <strong>todas as alternativas</strong> e clicar em <strong>Corrigir Respostas</strong>.
+    </div>
 </div>
 
 <script>
-    function enviarFormulario(event) {
-        var btn = document.getElementById("btnEnviar");
-        btn.classList.add("sent");
-        btn.innerText = "ENVIANDO PELO EMAIL...";
-        
-        setTimeout(function(){
-            // O formulário continuará seu curso natural de envio
-        }, 500);
-    }
-</script>
+    var CACHE = 'licao08_cache';
+    var CAMPOS = [
+        'q1','q2','m3_sincera','m3_objetiva',
+        'm4_1','m4_2','m4_3','m4_4','m4_5','m4_6','m4_7','m4_8',
+        'm5_1','m5_2','m5_3','m5_4','m5_5','m5_6',
+        'nomePessoa','dataPreenchimento'
+    ];
 
+    function val(id) {
+        var el = document.getElementById(id);
+        return el ? el.value : '';
+    }
+
+    function gravarCache() {
+        var dados = {};
+        CAMPOS.forEach(function(id) { 
+            var el = document.getElementById(id);
+            if (el) {
+                if (el.type === 'radio') {
+                    var checked = document.querySelector('input[name="' + id + '"]:checked');
+                    dados[id] = checked ? checked.value : '';
+                } else {
+                    dados[id] = el.value;
+                }
+            }
+        });
+        localStorage.setItem(CACHE, JSON.stringify(dados));
+    }
+
+    function lerCache() {
+        try {
+            var dados = JSON.parse(localStorage.getItem(CACHE) || 'null');
+            if (!dados) return;
+            CAMPOS.forEach(function(id) {
+                if (dados[id] != null) {
+                    var el = document.getElementById(id);
+                    if (el) {
+                        el.value = dados[id];
+                    } else {
+                        var radio = document.querySelector('input[name="' + id + '"][value="' + dados[id] + '"]');
+                        if (radio) radio.checked = true;
+                    }
+                }
+            });
+        } catch (e) {}
+    }
+
+    var GABARITO = {
+        q1: 'B',
+        q2: 'B',
+        m3_sincera: 'A',
+        m3_objetiva: 'B',
+        m4_1: 'A',
+        m4_2: 'B',
+        m4_3: 'C',
+        m4_4: 'D',
+        m4_5: 'E',
+        m4_6: 'F',
+        m4_7: 'G',
+        m4_8: 'H',
+        m5_1: 'A',
+        m5_2: 'B',
+        m5_3: 'C',
+        m5_4: 'D',
+        m5_5: 'E',
+        m5_6: 'F'
+    };
+
+    function corrigirRespostas() {
+        var form = document.getElementById('discipuladoForm');
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        var acertos = 0;
+        var total = Object.keys(GABARITO).length;
+
+        // Validar Q1 e Q2 (radios)
+        ['q1', 'q2'].forEach(function(nome) {
+            var opcoes = document.querySelectorAll('input[name="' + nome + '"]');
+            var resposta = document.querySelector('input[name="' + nome + '"]:checked');
+
+            opcoes.forEach(function(input) {
+                input.parentElement.classList.remove('certa', 'errada');
+                if (input.value === GABARITO[nome]) {
+                    input.parentElement.classList.add('certa');
+                } else if (resposta && input.value === resposta.value) {
+                    input.parentElement.classList.add('errada');
+                }
+            });
+
+            if (resposta && resposta.value === GABARITO[nome]) {
+                acertos++;
+            }
+        });
+
+        // Validar Selects (m3, m4, m5)
+        Object.keys(GABARITO).forEach(function(id) {
+            if (id.startsWith('m')) {
+                var select = document.getElementById(id);
+                if (select) {
+                    select.classList.remove('certa', 'errada');
+                    if (select.value === GABARITO[id]) {
+                        select.classList.add('certa');
+                        acertos++;
+                    } else if (select.value !== '') {
+                        select.classList.add('errada');
+                    }
+                }
+            }
+        });
+
+        var percentual = Math.round((acertos / total) * 100);
+        var resultado = document.getElementById('resultado');
+        resultado.style.display = 'block';
+        resultado.innerHTML = 'RESULTADO: ' + acertos + ' de ' + total +
+            ' itens corretos (' + percentual + '%).';
+
+        gravarCache();
+    }
+
+    function baixarPdf() {
+        gravarCache();
+        var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
+        if (typeof html2pdf === 'undefined') {
+            alert('Não foi possível carregar o gerador de PDF. Verifique sua conexão.');
+            return;
+        }
+        var elemento = document.getElementById('licaoImpressao');
+
+        var btnPdf = document.getElementById('btnPdf');
+        var btnCorrigir = document.getElementById('btnCorrigir');
+        var resultado = document.getElementById('resultado');
+
+        var displayPdf = btnPdf.style.display;
+        var displayCorrigir = btnCorrigir.style.display;
+        var displayResultado = resultado.style.display;
+
+        btnPdf.style.display = 'none';
+        btnCorrigir.style.display = 'none';
+        resultado.style.display = 'none';
+
+        html2pdf().set({
+            margin: [10, 10, 10, 10],
+            filename: 'Licao08-' + nome + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                scrollX: 0,
+                scrollY: 0,
+                windowWidth: 794,
+                onclone: function(clonedDoc) {
+                    var el = clonedDoc.getElementById('licaoImpressao');
+                    if (el) {
+                        el.style.boxSizing = 'border-box';
+                        el.style.maxWidth = '100%';
+                        el.style.width = '100%';
+                        el.style.margin = '0';
+                        el.style.boxShadow = 'none';
+                        el.style.padding = '16px';
+                        el.style.overflow = 'visible';
+                    }
+                    var img = clonedDoc.querySelector('.header-container img');
+                    if (img) {
+                        img.style.position = 'relative';
+                        img.style.left = 'auto';
+                    }
+                }
+            },
+            pagebreak: {
+                mode: ['css', 'legacy'],
+                avoid: ['.question-group', '.section-title', '.final-note', '.alerta-liberacao']
+            },
+            jsPDF: {
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait'
+            }
+        }).from(elemento).save().then(function() {
+            btnPdf.style.display = displayPdf;
+            btnCorrigir.style.display = displayCorrigir;
+            resultado.style.display = displayResultado;
+        }).catch(function(erro) {
+            btnPdf.style.display = displayPdf;
+            btnCorrigir.style.display = displayCorrigir;
+            resultado.style.display = displayResultado;
+            console.error(erro);
+            alert('Não foi possível gerar o PDF. Tente novamente.');
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        lerCache();
+        CAMPOS.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('input', gravarCache);
+                el.addEventListener('change', gravarCache);
+            }
+        });
+    });
+</script>
 </body>
 </html>
