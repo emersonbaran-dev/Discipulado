@@ -3,233 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discipulado - Lição 11: Deus Filho</title>
+    <title>Discipulado Lição 11 - Deus Filho</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         @media print {
             body { background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
             .container { box-shadow: none !important; margin: 0 !important; max-width: none !important; width: 100% !important; }
-            .no-print { display: none !important; }
+            #btnPdf, #btnCorrigir, #resultado { display: none !important; }
         }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            font-size: 12pt;
-        }
-
-        .container {
-            max-width: 750px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #345968;
-        }
-
-        .header-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            min-height: 60px;
-        }
-
-        .header-container img {
-            position: absolute;
-            left: 0;
-            height: 60px;
-            width: auto;
-        }
-
-        .main-category {
-            text-align: center;
-            font-size: 16pt;
-            font-weight: bold;
-            color: #345968;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-
-        h1 {
-            color: #345968;
-            margin: 0;
-            font-size: 32px;
-            text-transform: uppercase;
-            text-align: center;
-        }
-
-        .subtitle {
-            text-align: center;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 20px;
-            font-size: 14pt;
-        }
-
-        .intro {
-            background-color: #f0f4f6;
-            border-left: 4px solid #345968;
-            padding: 12px 15px;
-            margin-bottom: 25px;
-            font-size: 11pt;
-        }
-
-        .section-title {
-            background-color: #345968;
-            color: white;
-            padding: 6px 12px;
-            font-size: 13pt;
-            font-weight: bold;
-            border-radius: 4px;
-            margin-top: 25px;
-            margin-bottom: 15px;
-        }
-
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; margin: 0; padding: 20px; font-size: 12pt; }
+        .container { max-width: 750px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-top: 6px solid #B71C1C; }
+        .header-container { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; min-height: 60px; }
+        .header-container img { position: absolute; left: 0; height: 60px; width: auto; }
+        .main-category { text-align: center; font-size: 16pt; font-weight: bold; color: #B71C1C; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        h1 { color: #B71C1C; margin: 0; font-size: 32px; text-transform: uppercase; text-align: center; }
+        .subtitle { text-align: center; font-weight: bold; color: #555; margin-bottom: 20px; font-size: 14pt; }
+        .intro { background-color: #fdf2f2; border-left: 4px solid #B71C1C; padding: 12px 15px; margin-bottom: 25px; font-size: 11pt; }
+        .section-title { background-color: #B71C1C; color: white; padding: 6px 12px; font-size: 13pt; font-weight: bold; border-radius: 4px; margin-top: 25px; margin-bottom: 15px; }
         .question-group { margin-bottom: 20px; }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 6px;
-            color: #222;
-        }
-
-        input[type="text"], input[type="date"], textarea, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 11pt;
-            margin-top: 4px;
-            font-family: inherit;
-        }
-
-        input:focus, textarea:focus, select:focus {
-            border-color: #345968;
-            outline: none;
-        }
-
-        .match-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-
-        .match-row select {
-            width: 80px;
-            margin-top: 0;
-        }
-
-        .radio-group {
-            display: flex;
-            gap: 20px;
-            margin-top: 6px;
-        }
-
-        .radio-group label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: normal;
-            cursor: pointer;
-        }
-
-        .alternativas label {
-            display: block;
-            padding: 8px 10px;
-            margin: 5px 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-weight: normal;
-            cursor: pointer;
-        }
-
-        .alternativas label input { margin-right: 8px; }
-
-        .alternativas label.certa, .radio-group label.certa {
-            background-color: #d9f2df !important;
-            border-color: #28a745 !important;
-            color: #176b2c !important;
-            border-radius: 4px;
-            padding: 4px 8px;
-        }
-
-        .alternativas label.errada, .radio-group label.errada {
-            background-color: #f8d7da !important;
-            border-color: #dc3545 !important;
-            color: #842029 !important;
-            border-radius: 4px;
-            padding: 4px 8px;
-        }
-
-        .match-row select.certa {
-            border-color: #28a745 !important;
-            background-color: #d9f2df !important;
-        }
-
-        .match-row select.errada {
-            border-color: #dc3545 !important;
-            background-color: #f8d7da !important;
-        }
-
-        .footer-info {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-        }
-
+        label { display: block; font-weight: bold; margin-bottom: 6px; color: #222; }
+        input[type="text"], input[type="date"], textarea, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 11pt; margin-top: 4px; font-family: inherit; }
+        .match-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .match-row select { width: 80px; margin-top: 0; }
+        .footer-info { display: flex; gap: 15px; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
         .footer-info .field { flex: 1; }
-
-        .btn-action {
-            width: 100%;
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 4px;
-            font-size: 12pt;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-submit { background-color: #345968; }
-        .btn-submit:hover { background-color: #25404b; }
-
-        .btn-corrigir { background-color: #2e7d32; }
-        .btn-corrigir:hover { background-color: #256628; }
-
-        .btn-pdf { background-color: #555; }
-        .btn-pdf:hover { background-color: #333; }
-
-        .resultado {
-            display: none;
-            margin-top: 15px;
-            padding: 15px;
-            text-align: center;
-            font-size: 14pt;
-            font-weight: bold;
-            border-radius: 6px;
-            border: 1px solid #ddd;
-            background: #f7f7f7;
-        }
+        .btn-pdf { width: 100%; background-color: #8c1414; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .alternativas { margin-top: 8px; }
+        .alternativas label { display: block; padding: 8px 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; font-weight: normal; cursor: pointer; }
+        .alternativas label input { margin-right: 8px; }
+        .alternativas label.certa { background-color: #d9f2df !important; border-color: #28a745 !important; color: #176b2c !important; }
+        .alternativas label.errada { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #842029 !important; }
+        .match-row select.certa { border-color: #28a745 !important; background-color: #d9f2df !important; }
+        .match-row select.errada { border-color: #dc3545 !important; background-color: #f8d7da !important; }
+        .btn-corrigir { width: 100%; background-color: #2e7d32; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 25px; }
+        .resultado { display: none; margin-top: 15px; padding: 15px; text-align: center; font-size: 14pt; font-weight: bold; border-radius: 6px; border: 1px solid #ddd; background: #f7f7f7; }
+        .final-note { text-align: center; font-weight: bold; color: #B71C1C; background-color: #fdf2f2; padding: 15px; border-radius: 6px; border: 1px solid #e0e0e0; margin-top: 25px; font-size: 12pt; }
     </style>
 </head>
 <body>
 
-<div class="container" id="licao11Container">
+<div class="container" id="licaoImpressao">
     <div class="main-category">NOSSO SALVADOR!</div>
     
     <div class="header-container">
@@ -239,22 +52,21 @@
     <div class="subtitle">DEUS FILHO</div>
     
     <div class="intro">
-        Hoje veremos a pessoa e obra de nosso Senhor e Salvador Jesus Cristo, bem como a necessidade de confiarmos só Nele.
+        Hoje veremos a pessoa e obra de nosso Senhor e Salvador Jesus Cristo, bem como a necessidade de confiarmos só Nele[cite: 18].
     </div>
 
-    <form id="formLicao11" onsubmit="enviarFormulario(event)">
-        
+    <form id="discipuladoForm">
         <!-- SEÇÃO I -->
         <div class="section-title">I - A PESSOA DE JESUS CRISTO</div>
 
         <div class="question-group">
             <label for="q1">1) Na Bíblia, nosso Salvador tem 5 nomes. Qual o último?</label>
             <div style="font-style: italic; margin-bottom: 8px; color: #444; font-size: 10.5pt;">
-                • “Ela dará à luz um filho e lhe porás o nome de Jesus, porque ele salvará o seu povo dos pecados deles.” Mt 1:21<br>
-                • “Pois o próprio Filho do Homem não veio para ser servido, mas para servir e dar a sua vida em resgate por muitos.” Mc 10:45<br>
-                • “Respondeu-lhe o anjo: Descerá sobre ti o Espírito Santo, e o poder do Altíssimo te envolverá com a sua sombra; por isso, também o ente santo que há de nascer será chamado Filho de Deus.” Lc 1:35<br>
-                • “Ele achou primeiro o seu próprio irmão, Simão, a quem disse: Achamos o Messias (que quer dizer Cristo),” Jo 1:41<br>
-                • “Então, os que estavam reunidos lhe perguntaram: _______________, será este o tempo em que restaures o reino a Israel?” At 1:6
+                • “Ela dará à luz um filho e lhe porás o nome de Jesus, porque ele salvará o seu povo dos pecados deles.” Mt 1:21[cite: 18]<br>
+                • “Pois o próprio Filho do Homem não veio para ser servido, mas para servir e dar a sua vida em resgate por muitos.” Mc 10:45[cite: 18]<br>
+                • “Respondeu-lhe o anjo: Descerá sobre ti o Espírito Santo, e o poder do Altíssimo te envolverá com a sua sombra; por isso, também o ente santo que há de nascer será chamado Filho de Deus.” Lc 1:35[cite: 18]<br>
+                • “Ele achou primeiro o seu próprio irmão, Simão, a quem disse: Achamos o Messias (que quer dizer Cristo),” Jo 1:41[cite: 18]<br>
+                • “Então, os que estavam reunidos lhe perguntaram: _______________, será este o tempo em que restaures o reino a Israel?” At 1:6[cite: 18]
             </div>
             <input type="text" id="q1" name="q1" required>
         </div>
@@ -264,7 +76,7 @@
             
             <div style="margin-top: 10px;">
                 <label>Em João 1.1-3, marque a natureza descrita de Jesus Cristo?</label>
-                <div class="radio-group">
+                <div class="alternativas">
                     <label><input type="radio" name="nat1" value="Divina" required> Divina</label>
                     <label><input type="radio" name="nat1" value="Humana"> Humana</label>
                 </div>
@@ -272,9 +84,9 @@
 
             <div style="margin-top: 15px;">
                 <label>Como João Batista se referiu à natureza de Jesus em Jo 1.30?</label>
-                <div class="radio-group">
-                    <label><input type="radio" name="nat2" value="Divina"> Divina</label>
-                    <label><input type="radio" name="nat2" value="Humana" required> Humana</label>
+                <div class="alternativas">
+                    <label><input type="radio" name="nat2" value="Divina" required> Divina</label>
+                    <label><input type="radio" name="nat2" value="Humana"> Humana</label>
                 </div>
             </div>
         </div>
@@ -300,7 +112,7 @@
             <label>2) De acordo com os versos abaixo, indique as fases da vida de Jesus Cristo:</label>
             <div style="margin-bottom: 10px; font-size: 10.5pt; color: #555;">
                 (A) Lc 2.6,7 | (B) Jo 20.30,31 | (C) Jo 19.17,18 | (D) Jo 19.30<br>
-                (E) Jo 19.41,42 | (F) Jo 20.1 | (G) At 1.9 | (H) At 2.32,33
+                (E) Jo 19.41,42 | (F) Jo 20.1 | (G) At 1.9 | (H) At 2.32,33[cite: 18]
             </div>
 
             <div class="match-row">
@@ -402,27 +214,72 @@
             </div>
         </div>
 
+        <div class="final-note">
+            Jesus Cristo é o nosso único e suficiente Salvador, que entregou sua vida por nós e intercede ao Pai por cada um dos seus discípulos!
+        </div>
+
         <!-- DADOS FINAIS -->
         <div class="footer-info">
             <div class="field">
                 <label for="nomePessoa">Nome do Aluno:</label>
-                <input type="text" id="nomePessoa" name="nomePessoa" required>
+                <input type="text" id="nomePessoa" name="Nome do Aluno" required>
             </div>
             <div class="field">
                 <label for="dataPreenchimento">Data:</label>
-                <input type="date" id="dataPreenchimento" name="dataPreenchimento" required>
+                <input type="date" id="dataPreenchimento" name="Data" required>
             </div>
         </div>
 
-        <button type="button" class="btn-action btn-corrigir no-print" onclick="corrigirRespostas()">CORRIGIR MÚLTIPLAS ESCOLHAS E RELAÇÕES</button>
+        <button type="button" id="btnCorrigir" class="btn-corrigir" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS OBJETIVAS</button>
         <div id="resultado" class="resultado"></div>
-        <button type="submit" id="btnEnviar" class="btn-action btn-submit no-print">ENVIAR POR E-MAIL</button>
-        <button type="button" class="btn-action btn-pdf no-print" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
+        <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
     </form>
 </div>
 
 <script>
-    var EMAIL = 'emersonbaran@gmail.com';
+    var CACHE = 'licao11_cache';
+    var CAMPOS = [
+        'q1', 'nat1', 'nat2', 'q_humilhacao', 'q_exaltacao',
+        'fase_exaltacao', 'fase_nascimento', 'fase_ministerio', 'fase_crucificacao',
+        'fase_morte', 'fase_sepultamento', 'fase_ressurreicao', 'fase_ascensao',
+        'obra1', 'obra2', 'obra3', 'oficio_a', 'oficio_b', 'oficio_c',
+        'nomePessoa', 'dataPreenchimento'
+    ];
+
+    function val(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+    
+    function gravarCache() {
+        var dados = {};
+        CAMPOS.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) {
+                dados[id] = el.value;
+            } else {
+                var radio = document.querySelector('input[name="' + id + '"]:checked');
+                if (radio) dados[id] = radio.value;
+            }
+        });
+        localStorage.setItem(CACHE, JSON.stringify(dados));
+    }
+
+    function lerCache() {
+        try {
+            var dados = JSON.parse(localStorage.getItem(CACHE) || 'null');
+            if (!dados) return;
+            CAMPOS.forEach(function(id) {
+                if (dados[id] != null) {
+                    var el = document.getElementById(id);
+                    if (el) {
+                        el.value = dados[id];
+                    } else {
+                        var radio = document.querySelector('input[name="' + id + '"][value="' + dados[id] + '"]');
+                        if (radio) radio.checked = true;
+                    }
+                }
+            });
+        } catch (e) {}
+    }
+
     var GABARITO_RADIO = { nat1: 'Divina', nat2: 'Humana' };
     var GABARITO_MATCH = {
         fase_exaltacao: 'H',
@@ -435,22 +292,9 @@
         fase_ascensao: 'G'
     };
 
-    function val(id) {
-        var el = document.getElementById(id);
-        return el ? el.value : '';
-    }
-
-    function valRadio(nome) {
-        var el = document.querySelector('input[name="' + nome + '"]:checked');
-        return el ? el.value : '';
-    }
-
     function corrigirRespostas() {
-        var form = document.getElementById('formLicao11');
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
+        var form = document.getElementById('discipuladoForm');
+        if (!form.checkValidity()) { form.reportValidity(); return; }
 
         var acertos = 0;
         var total = Object.keys(GABARITO_RADIO).length + Object.keys(GABARITO_MATCH).length;
@@ -490,83 +334,51 @@
         var resultado = document.getElementById('resultado');
         resultado.style.display = 'block';
         resultado.innerHTML = 'RESULTADO: ' + acertos + ' de ' + total + ' itens objetivos corretos (' + percentual + '%).';
-    }
-
-    function montarTexto() {
-        var nome = val('nomePessoa');
-        var d = val('dataPreenchimento');
-        var dataBr = d ? d.split('-').reverse().join('/') : '';
-        
-        var texto = 'DISCIPULADO - LIÇÃO 11\n';
-        texto += 'Nome do Aluno: ' + nome + '\n';
-        texto += 'Data: ' + dataBr + '\n\n';
-
-        texto += '1) Último nome (At 1.6): ' + val('q1') + '\n';
-        texto += '   - Natureza em Jo 1.1-3: ' + valRadio('nat1') + '\n';
-        texto += '   - Natureza em Jo 1.30: ' + valRadio('nat2') + '\n';
-        texto += '   - Estado em Fp 2.6-8: ' + val('q_humilhacao') + '\n';
-        texto += '   - Estado em At 1.9-11: ' + val('q_exaltacao') + '\n\n';
-        texto += '2) Fases da Vida de Cristo:\n';
-        texto += '   - Exaltação: ' + val('fase_exaltacao') + '\n';
-        texto += '   - Nascimento: ' + val('fase_nascimento') + '\n';
-        texto += '   - Ministério: ' + val('fase_ministerio') + '\n';
-        texto += '   - Crucificação: ' + val('fase_crucificacao') + '\n';
-        texto += '   - Morte: ' + val('fase_morte') + '\n';
-        texto += '   - Sepultamento: ' + val('fase_sepultamento') + '\n';
-        texto += '   - Ressurreição: ' + val('fase_ressurreicao') + '\n';
-        texto += '   - Ascenção: ' + val('fase_ascensao') + '\n\n';
-        texto += '3) 3 Obras de Jesus (1Tm 2.3-5):\n';
-        texto += '   1. ' + val('obra1') + '\n';
-        texto += '   2. ' + val('obra2') + '\n';
-        texto += '   3. ' + val('obra3') + '\n\n';
-        texto += '4) Ofícios de Jesus:\n';
-        texto += '   - a) At 7.37: ' + val('oficio_a') + '\n';
-        texto += '   - b) Cl 2.19: ' + val('oficio_b') + '\n';
-        texto += '   - c) Hb 4.15: ' + val('oficio_c') + '\n';
-
-        return texto;
-    }
-
-    function enviarFormulario(event) {
-        event.preventDefault();
-        var form = document.getElementById('formLicao11');
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
-
-        var nome = val('nomePessoa');
-        var a = document.createElement('a');
-        a.href = 'mailto:' + EMAIL
-            + '?subject=' + encodeURIComponent('Relatório Lição 11 - ' + nome)
-            + '&body=' + encodeURIComponent(montarTexto());
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-
-        var btn = document.getElementById('btnEnviar');
-        btn.innerText = 'RELATÓRIO GERADO NO EMAIL';
+        gravarCache();
     }
 
     function baixarPdf() {
+        gravarCache();
         var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
-        if (typeof html2pdf === 'undefined') {
-            alert('Gerador de PDF carregando. Tente novamente em alguns instantes.');
-            return;
-        }
-
-        var elemento = document.getElementById('licao11Container');
+        if (typeof html2pdf === 'undefined') { alert('Não foi possível carregar o gerador de PDF.'); return; }
+        var elemento = document.getElementById('licaoImpressao');
+        var btnPdf = document.getElementById('btnPdf');
+        var btnCorrigir = document.getElementById('btnCorrigir');
+        var resultado = document.getElementById('resultado');
+        
+        btnPdf.style.display = 'none';
+        btnCorrigir.style.display = 'none';
+        resultado.style.display = 'none';
 
         html2pdf().set({
             margin: [8, 8, 8, 8],
             filename: 'Licao11-' + nome + '.pdf',
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
-            pagebreak: { mode: ['css', 'legacy'], avoid: ['.question-group', '.section-title'] },
+            pagebreak: { mode: ['css', 'legacy'], avoid: ['.question-group', '.section-title', '.final-note'] },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        }).from(elemento).save();
+        }).from(elemento).save().then(function() {
+            btnPdf.style.display = 'block';
+            btnCorrigir.style.display = 'block';
+            resultado.style.display = 'block';
+        });
     }
-</script>
 
+    document.addEventListener('DOMContentLoaded', function() {
+        lerCache();
+        CAMPOS.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) { 
+                el.addEventListener('input', gravarCache); 
+                el.addEventListener('change', gravarCache); 
+            } else {
+                var radios = document.querySelectorAll('input[name="' + id + '"]');
+                radios.forEach(function(r) {
+                    r.addEventListener('change', gravarCache);
+                });
+            }
+        });
+    });
+</script>
 </body>
 </html>
