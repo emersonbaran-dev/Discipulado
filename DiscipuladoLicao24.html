@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discipulado Lição 24 - A Igreja e o Compromisso</title>
+    <title>Discipulado Lição 24 - Novos Céus e Nova Terra</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,7 +21,7 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #537A71;
+            border-top: 6px solid #4a6fa5;
         }
         .header-container {
             position: relative;
@@ -41,13 +41,13 @@
             text-align: center;
             font-size: 16pt;
             font-weight: bold;
-            color: #537A71;
+            color: #4a6fa5;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 5px;
         }
         h1 {
-            color: #537A71;
+            color: #4a6fa5;
             margin: 0;
             font-size: 32px;
             text-transform: uppercase;
@@ -62,13 +62,13 @@
         }
         .intro {
             background-color: #f0f4f6;
-            border-left: 4px solid #537A71;
+            border-left: 4px solid #4a6fa5;
             padding: 12px 15px;
             margin-bottom: 25px;
             font-size: 11pt;
         }
         .section-title {
-            background-color: #537A71;
+            background-color: #4a6fa5;
             color: white;
             padding: 6px 12px;
             font-size: 13pt;
@@ -96,8 +96,25 @@
             margin-top: 4px;
         }
         input[type="text"]:focus, textarea:focus, select:focus {
-            border-color: #537A71;
+            border-color: #4a6fa5;
             outline: none;
+        }
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 8px;
+        }
+        .radio-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .radio-group input[type="radio"] {
+            margin: 0;
+            width: 16px;
+            height: 16px;
         }
         .footer-info {
             display: flex;
@@ -111,7 +128,7 @@
         }
         .btn-submit {
             width: 100%;
-            background-color: #537A71;
+            background-color: #4a6fa5;
             color: white;
             padding: 14px;
             border: none;
@@ -123,7 +140,7 @@
             transition: background-color 0.3s ease;
         }
         .btn-submit:hover {
-            background-color: #3f5d56;
+            background-color: #385580;
         }
         .btn-submit.sent {
             background-color: #202224 !important;
@@ -134,122 +151,57 @@
 <body>
 
 <div class="container">
-    <div class="main-category">A IGREJA E COMPROMISSO</div>
+    <div class="main-category">ESCATOLOGIA E ESPERANÇA</div>
     
     <div class="header-container">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
         <h1>Lição 24</h1>
     </div>
-    <div class="subtitle">A IGREJA E COMPROMISSO</div>
+    <div class="subtitle">NOVOS CÉUS E NOVA TERRA</div>
     
     <div class="intro">
-        Em Cristo, os salvos pertencem ao povo de Deus, que é a igreja do Senhor. Temos, portanto, várias orientações bíblicas que reportam aos compromissos daquele que é membro da igreja do Senhor, assim como os demais irmãos, tendo Cristo como cabeça. Vejamos quais são:
+        O estado eterno dos salvos será de plena comunhão com Deus na criação totalmente restaurada. Nos Novos Céus e na Nova Terra, não haverá mais pecado, dor ou morte, e a glória do Senhor iluminará tudo para sempre.
     </div>
 
     <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
         
         <!-- SEÇÃO A -->
-        <div class="section-title">A – TORNAR MEMBRO</div>
+        <div class="section-title">A – A RESTAURAÇÃO DE TODAS AS COISAS</div>
 
         <div class="question-group">
-            <label>Para se tornar membro de uma igreja é necessário, basicamente, 2 atitudes:</label>
-            <div style="margin-top: 8px;">
-                <label for="q1_a" style="font-weight: normal; margin-bottom: 2px;">• Mt 28.19:</label>
-                <input type="text" id="q1_a" name="1a. Mt 28.19" required>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="q1_b" style="font-weight: normal; margin-bottom: 2px;">• Mt 10.32:</label>
-                <input type="text" id="q1_b" name="1b. Mt 10.32" required>
-            </div>
+            <label for="q1">1) O que a Bíblia ensina sobre a renovação da criação e a morada eterna dos remidos? (2Pe 3.13; Ap 21.1)</label>
+            <textarea id="q1" name="1. Renovação da criação (2Pe 3.13; Ap 21.1)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label for="q2">2) Quais realidades dolorosas do mundo atual serão completamente eliminadas no estado eterno? (Ap 21.4; Ap 22.3)</label>
+            <textarea id="q2" name="2. Realidades eliminadas (Ap 21.4; Ap 22.3)" rows="2" required></textarea>
         </div>
 
         <!-- SEÇÃO B -->
-        <div class="section-title">B – VIVER DE ACORDO COMO O EVANGELHO</div>
+        <div class="section-title">B – A VIDA NA PRESENÇA DE DEUS</div>
 
         <div class="question-group">
-            <label for="q2">Qual o objetivo do homem em todas as coisas? (1Co 10.31)</label>
-            <input type="text" id="q2" name="2. Objetivo do homem em todas as coisas (1Co 10.31)" required>
+            <label for="q3">3) Qual é a maior benção reservada para os salvos nos Novos Céus e Nova Terra? (Ap 21.3; Ap 22.4)</label>
+            <textarea id="q3" name="3. Maior benção reservada (Ap 21.3; Ap 22.4)" rows="2" required></textarea>
         </div>
 
         <div class="question-group">
-            <label for="q3">O que Jesus disse que é inevitável, mas ai daquele que faz? (Mt 18.7)</label>
-            <textarea id="q3" name="3. O que Jesus disse que e inevitavel (Mt 18.7)" rows="2" required></textarea>
+            <label for="q4">4) Quem são os que terão direito de habitar na Nova Jerusalém e os que ficarão de fora? (Ap 21.7,8,27; Ap 22.14,15)</label>
+            <textarea id="q4" name="4. Habitantes da Nova Jerusalém (Ap 21.7,8,27; Ap 22.14,15)" rows="2" required></textarea>
         </div>
 
         <div class="question-group">
-            <label for="q4">O que o cristão deve ser? (Mt 5.13,14)</label>
-            <input type="text" id="q4" name="4. O que o cristao deve ser (Mt 5.13,14)" required>
-        </div>
-
-        <!-- SEÇÃO C -->
-        <div class="section-title">C – ORAR PELA IGREJA</div>
-
-        <div class="intro" style="margin-bottom: 15px;">
-            Oração é submeter nossas necessidades ao Senhor, por meio de Cristo e, em especial, entregar a igreja perante a Deus.
-        </div>
-
-        <div class="question-group">
-            <label>Quem intercede pela igreja nos textos abaixo:</label>
-            <div style="margin-top: 8px;">
-                <label for="q5_a" style="font-weight: normal; margin-bottom: 2px;">• Jo 17.20:</label>
-                <input type="text" id="q5_a" name="5a. Jo 17.20" required>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="q5_b" style="font-weight: normal; margin-bottom: 2px;">• At 12.5:</label>
-                <input type="text" id="q5_b" name="5b. At 12.5" required>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="q5_c" style="font-weight: normal; margin-bottom: 2px;">• Ef 6.17,18:</label>
-                <input type="text" id="q5_c" name="5c. Ef 6.17,18" required>
+            <label>5) A esperança do céu e da eternidade com Deus tem fortalecido sua fé diante das aflições do presente?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="5. Esperança do céu fortalece a fé" value="SIM" required> SIM</label>
+                <label><input type="radio" name="5. Esperança do céu fortalece a fé" value="NÃO" required> NÃO</label>
             </div>
         </div>
 
-        <!-- SEÇÃO D -->
-        <div class="section-title">D – SERVIR AOS IRMÃOS</div>
-
         <div class="question-group">
-            <label for="q6">Como devemos servir ao irmão, de acordo com Gl 5.13?</label>
-            <textarea id="q6" name="6. Como devemos servir ao irmao (Gl 5.13)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q7">Como devemos servir aos irmãos, conforme 1Pe 4.10?</label>
-            <textarea id="q7" name="7. Como devemos servir aos irmaos (1Pe 4.10)" rows="2" required></textarea>
-        </div>
-
-        <!-- SEÇÃO E -->
-        <div class="section-title">E – DIZIMAR REGULARMENTE</div>
-
-        <div class="question-group">
-            <label for="q8">Como a nossa renda deve ser entregue ao Senhor? (Pv 3.9)</label>
-            <input type="text" id="q8" name="8. Como a renda deve ser entregue (Pv 3.9)" required>
-        </div>
-
-        <div class="question-group">
-            <label for="q9">Em Mt 23.23, qual a ordem de Jesus?</label>
-            <textarea id="q9" name="9. Ordem de Jesus (Mt 23.23)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q10">Abraão deu dízimo a quem; e com quem é comparado? (Hb 7.2)</label>
-            <textarea id="q10" name="10. Abraao deu dizimo a quem e comparacao (Hb 7.2)" rows="2" required></textarea>
-        </div>
-
-        <!-- SEÇÃO F -->
-        <div class="section-title">F – SUBMETER ÀS AUTORIDADES</div>
-
-        <div class="question-group">
-            <label for="q11">A quem devemos obedecer e por quê? (Hb 13.17)</label>
-            <textarea id="q11" name="11. A quem obedecer e por que (Hb 13.17)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q12">A quem devemos acatar e de que maneira? (1Ts 5.12,13)</label>
-            <textarea id="q12" name="12. A quem acatar e de que maneira (1Ts 5.12,13)" rows="2" required></textarea>
-        </div>
-
-        <div class="intro" style="margin-top: 25px; margin-bottom: 25px; border-left-color: #537A71;">
-            Assim, nosso dever é assumir um compromisso com a igreja local, pois fazemos parte dela e é onde desenvolvemos nossa comunhão.
+            <label for="q6">6) Ao concluir esta série de estudos do discipulado, qual o principal aprendizado ou transformação que Deus gerou em sua vida?</label>
+            <textarea id="q6" name="6. Principal aprendizado do discipulado" rows="3" required></textarea>
         </div>
 
         <!-- DADOS FINAIS -->
@@ -276,7 +228,7 @@
         btn.innerText = "ENVIANDO PELO EMAIL...";
         
         setTimeout(function(){
-            // O formulário continuará seu curso natural de envio
+            // O formulário seguirá com o envio via mailto
         }, 500);
     }
 </script>
