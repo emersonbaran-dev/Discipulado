@@ -12,14 +12,14 @@
             #btnPdf, #btnCorrigir, #resultado { display: none !important; }
         }
         body { font-family: Arial, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; margin: 0; padding: 20px; font-size: 12pt; }
-        .container { max-width: 750px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-top: 6px solid #B71C1C; }
+        .container { max-width: 750px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-top: 6px solid #FF9800; }
         .header-container { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; min-height: 60px; }
         .header-container img { position: absolute; left: 0; height: 60px; width: auto; }
-        .main-category { text-align: center; font-size: 16pt; font-weight: bold; color: #B71C1C; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-        h1 { color: #B71C1C; margin: 0; font-size: 32px; text-transform: uppercase; text-align: center; }
+        .main-category { text-align: center; font-size: 16pt; font-weight: bold; color: #FF9800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        h1 { color: #FF9800; margin: 0; font-size: 32px; text-transform: uppercase; text-align: center; }
         .subtitle { text-align: center; font-weight: bold; color: #555; margin-bottom: 20px; font-size: 14pt; }
-        .intro { background-color: #fdf2f2; border-left: 4px solid #B71C1C; padding: 12px 15px; margin-bottom: 25px; font-size: 11pt; }
-        .section-title { background-color: #B71C1C; color: white; padding: 6px 12px; font-size: 13pt; font-weight: bold; border-radius: 4px; margin-top: 25px; margin-bottom: 15px; }
+        .intro { background-color: #fff8e1; border-left: 4px solid #FF9800; padding: 12px 15px; margin-bottom: 25px; font-size: 11pt; }
+        .section-title { background-color: #FF9800; color: white; padding: 6px 12px; font-size: 13pt; font-weight: bold; border-radius: 4px; margin-top: 25px; margin-bottom: 15px; }
         .question-group { margin-bottom: 20px; }
         label { display: block; font-weight: bold; margin-bottom: 6px; color: #222; }
         input[type="text"], input[type="date"], textarea, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 11pt; margin-top: 4px; font-family: inherit; }
@@ -27,7 +27,7 @@
         .match-row select { width: 80px; margin-top: 0; }
         .footer-info { display: flex; gap: 15px; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
         .footer-info .field { flex: 1; }
-        .btn-pdf { width: 100%; background-color: #8c1414; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-pdf { width: 100%; background-color: #e68a00; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 10px; }
         .alternativas { margin-top: 8px; }
         .alternativas label { display: block; padding: 8px 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; font-weight: normal; cursor: pointer; }
         .alternativas label input { margin-right: 8px; }
@@ -37,7 +37,7 @@
         .match-row select.errada { border-color: #dc3545 !important; background-color: #f8d7da !important; }
         .btn-corrigir { width: 100%; background-color: #2e7d32; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 25px; }
         .resultado { display: none; margin-top: 15px; padding: 15px; text-align: center; font-size: 14pt; font-weight: bold; border-radius: 6px; border: 1px solid #ddd; background: #f7f7f7; }
-        .final-note { text-align: center; font-weight: bold; color: #B71C1C; background-color: #fdf2f2; padding: 15px; border-radius: 6px; border: 1px solid #e0e0e0; margin-top: 25px; font-size: 12pt; }
+        .final-note { text-align: center; font-weight: bold; color: #FF9800; background-color: #fff8e1; padding: 15px; border-radius: 6px; border: 1px solid #e0e0e0; margin-top: 25px; font-size: 12pt; }
     </style>
 </head>
 <body>
@@ -52,7 +52,7 @@
     <div class="subtitle">DEUS FILHO</div>
     
     <div class="intro">
-        Hoje veremos a pessoa e obra de nosso Senhor e Salvador Jesus Cristo, bem como a necessidade de confiarmos só Nele[cite: 18].
+        Hoje veremos a pessoa e obra de nosso Senhor e Salvador Jesus Cristo, bem como a necessidade de confiarmos só Nele[cite: 18, 34].
     </div>
 
     <form id="discipuladoForm">
@@ -62,11 +62,11 @@
         <div class="question-group">
             <label for="q1">1) Na Bíblia, nosso Salvador tem 5 nomes. Qual o último?</label>
             <div style="font-style: italic; margin-bottom: 8px; color: #444; font-size: 10.5pt;">
-                • “Ela dará à luz um filho e lhe porás o nome de Jesus, porque ele salvará o seu povo dos pecados deles.” Mt 1:21[cite: 18]<br>
-                • “Pois o próprio Filho do Homem não veio para ser servido, mas para servir e dar a sua vida em resgate por muitos.” Mc 10:45[cite: 18]<br>
-                • “Respondeu-lhe o anjo: Descerá sobre ti o Espírito Santo, e o poder do Altíssimo te envolverá com a sua sombra; por isso, também o ente santo que há de nascer será chamado Filho de Deus.” Lc 1:35[cite: 18]<br>
-                • “Ele achou primeiro o seu próprio irmão, Simão, a quem disse: Achamos o Messias (que quer dizer Cristo),” Jo 1:41[cite: 18]<br>
-                • “Então, os que estavam reunidos lhe perguntaram: _______________, será este o tempo em que restaures o reino a Israel?” At 1:6[cite: 18]
+                • “Ela dará à luz um filho e lhe porás o nome de Jesus, porque ele salvará o seu povo dos pecados deles.” Mt 1:21[cite: 18, 34]<br>
+                • “Pois o próprio Filho do Homem não veio para ser servido, mas para servir e dar a sua vida em resgate por muitos.” Mc 10:45[cite: 18, 34]<br>
+                • “Respondeu-lhe o anjo: Descerá sobre ti o Espírito Santo, e o poder do Altíssimo te envolverá com a sua sombra; por isso, também o ente santo que há de nascer será chamado Filho de Deus.” Lc 1:35[cite: 18, 34]<br>
+                • “Ele achou primeiro o seu próprio irmão, Simão, a quem disse: Achamos o Messias (que quer dizer Cristo),” Jo 1:41[cite: 18, 34]<br>
+                • “Então, os que estavam reunidos lhe perguntaram: _______________, será este o tempo em que restaures o reino a Israel?” At 1:6[cite: 18, 34]
             </div>
             <input type="text" id="q1" name="q1" required>
         </div>
@@ -112,7 +112,7 @@
             <label>2) De acordo com os versos abaixo, indique as fases da vida de Jesus Cristo:</label>
             <div style="margin-bottom: 10px; font-size: 10.5pt; color: #555;">
                 (A) Lc 2.6,7 | (B) Jo 20.30,31 | (C) Jo 19.17,18 | (D) Jo 19.30<br>
-                (E) Jo 19.41,42 | (F) Jo 20.1 | (G) At 1.9 | (H) At 2.32,33[cite: 18]
+                (E) Jo 19.41,42 | (F) Jo 20.1 | (G) At 1.9 | (H) At 2.32,33[cite: 18, 34]
             </div>
 
             <div class="match-row">
