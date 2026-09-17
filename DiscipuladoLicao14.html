@@ -4,165 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discipulado Lição 14 - A Luta Contra o Pecado</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            font-size: 12pt;
+        @media print {
+            body { background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
+            .container { box-shadow: none !important; margin: 0 !important; max-width: none !important; width: 100% !important; }
+            #btnPdf, #btnCorrigir, #resultado { display: none !important; }
         }
-        .container {
-            max-width: 750px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #52585D;
-        }
-        .header-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            min-height: 60px;
-        }
-        .header-container img {
-            position: absolute;
-            left: 0;
-            height: 60px;
-            width: auto;
-        }
-        .main-category {
-            text-align: center;
-            font-size: 16pt;
-            font-weight: bold;
-            color: #52585D;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-        h1 {
-            color: #52585D;
-            margin: 0;
-            font-size: 32px;
-            text-transform: uppercase;
-            text-align: center;
-        }
-        .subtitle {
-            text-align: center;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 20px;
-            font-size: 14pt;
-        }
-        .intro {
-            background-color: #f0f4f6;
-            border-left: 4px solid #52585D;
-            padding: 12px 15px;
-            margin-bottom: 25px;
-            font-size: 11pt;
-        }
-        .section-title {
-            background-color: #52585D;
-            color: white;
-            padding: 6px 12px;
-            font-size: 13pt;
-            font-weight: bold;
-            border-radius: 4px;
-            margin-top: 25px;
-            margin-bottom: 15px;
-        }
-        .question-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 6px;
-            color: #222;
-        }
-        input[type="text"], input[type="date"], textarea, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 11pt;
-            margin-top: 4px;
-        }
-        input[type="text"]:focus, textarea:focus, select:focus {
-            border-color: #52585D;
-            outline: none;
-        }
-        .radio-group {
-            display: flex;
-            gap: 20px;
-            margin-top: 8px;
-        }
-        .radio-group label {
-            font-weight: normal;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-        }
-        .radio-group input[type="radio"] {
-            margin: 0;
-            width: 16px;
-            height: 16px;
-        }
-        .footer-info {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-        }
-        .footer-info .field {
-            flex: 1;
-        }
-        .btn-submit {
-            width: 100%;
-            background-color: #52585D;
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 4px;
-            font-size: 12pt;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 25px;
-            transition: background-color 0.3s ease;
-        }
-        .btn-submit:hover {
-            background-color: #3b3f43;
-        }
-        .btn-submit.sent {
-            background-color: #202224 !important;
-            cursor: default;
-        }
-        .final-note {
-            text-align: center;
-            font-weight: bold;
-            color: #52585D;
-            background-color: #f0f4f6;
-            padding: 15px;
-            border-radius: 6px;
-            border: 1px solid #e0e0e0;
-            margin-top: 25px;
-            font-size: 11pt;
-            line-height: 1.5;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; margin: 0; padding: 20px; font-size: 12pt; }
+        .container { max-width: 750px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-top: 6px solid #E65100; }
+        .header-container { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; min-height: 60px; }
+        .header-container img { position: absolute; left: 0; height: 60px; width: auto; }
+        .main-category { text-align: center; font-size: 16pt; font-weight: bold; color: #E65100; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        h1 { color: #E65100; margin: 0; font-size: 32px; text-transform: uppercase; text-align: center; }
+        .subtitle { text-align: center; font-weight: bold; color: #555; margin-bottom: 20px; font-size: 14pt; }
+        .intro { background-color: #fff3e0; border-left: 4px solid #E65100; padding: 12px 15px; margin-bottom: 25px; font-size: 11pt; }
+        .section-title { background-color: #E65100; color: white; padding: 6px 12px; font-size: 13pt; font-weight: bold; border-radius: 4px; margin-top: 25px; margin-bottom: 15px; }
+        .question-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 6px; color: #222; }
+        input[type="text"], input[type="date"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 11pt; margin-top: 4px; }
+        .footer-info { display: flex; gap: 15px; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
+        .footer-info .field { flex: 1; }
+        .btn-pdf { width: 100%; background-color: #ef6c00; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .alternativas { margin-top: 8px; }
+        .alternativas label { display: block; padding: 8px 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; font-weight: normal; cursor: pointer; }
+        .alternativas label input { margin-right: 8px; }
+        .alternativas label.certa { background-color: #d9f2df !important; border-color: #28a745 !important; color: #176b2c !important; }
+        .alternativas label.errada { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #842029 !important; }
+        .btn-corrigir { width: 100%; background-color: #2e7d32; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 25px; }
+        .resultado { display: none; margin-top: 15px; padding: 15px; text-align: center; font-size: 14pt; font-weight: bold; border-radius: 6px; border: 1px solid #ddd; background: #f7f7f7; }
+        .final-note { text-align: center; font-weight: bold; color: #E65100; background-color: #fff3e0; padding: 15px; border-radius: 6px; border: 1px solid #ffe0b2; margin-top: 25px; font-size: 12pt; }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="licaoImpressao">
     <div class="main-category">AMADURECIMENTO</div>
     
     <div class="header-container">
@@ -172,44 +48,40 @@
     <div class="subtitle">A LUTA CONTRA O PECADO</div>
     
     <div class="intro">
-        Neste processo de crescimento no Senhor, é necessário ter as informações bíblicas para combater o pecado que sempre está rondando nossa vida. Vejamos, então:
+        Neste processo de crescimento no Senhor, é necessário ter as informações bíblicas para combater o pecado que sempre está rondando nossa vida.
     </div>
 
-    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
-        
+    <form id="discipuladoForm">
         <!-- SEÇÃO A -->
         <div class="section-title">A – TENTAÇÃO</div>
 
-        <div class="intro" style="border-left-color: #555; background-color: #f9f9f9; margin-bottom: 15px;">
-            É importante definir que tentação é toda a forma para induzir a pessoa a pecar, ou seja, tentação não é pecado, mas são sugestões que, sendo aceitas, gera ato pecaminoso.
-        </div>
-
         <div class="question-group">
-            <label for="q1">1) Quem foi tentado no deserto? (Mt 4.1)</label>
-            <textarea id="q1" name="1. Quem foi tentado no deserto (Mt 4.1)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label>2) Deus pode tentar, de acordo com Tg 1.13?</label>
-            <div class="radio-group">
-                <label><input type="radio" name="2. Deus pode tentar (Tg 1.13)" value="SIM" required> SIM</label>
-                <label><input type="radio" name="2. Deus pode tentar (Tg 1.13)" value="NÃO" required> NÃO</label>
+            <label for="q1">1) Quem foi conduzido pelo Espírito ao deserto para ser tentado pelo diabo? (Mt 4.1)</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q1" value="A" required> A) Pedro.</label>
+                <label><input type="radio" name="q1" value="B"> B) Jesus.</label>
+                <label><input type="radio" name="q1" value="C"> C) João Batista.</label>
+                <label><input type="radio" name="q1" value="D"> D) Paulo.</label>
             </div>
         </div>
 
         <div class="question-group">
-            <label>3) Quais fontes de tentação, de acordo com os versos abaixo?</label>
-            <div style="margin-top: 8px;">
-                <label for="q3_tg" style="font-weight: normal; margin-bottom: 2px;">- Tg 4.7:</label>
-                <input type="text" id="q3_tg" name="3. Fonte de tentacao - Tg 4.7" required>
+            <label for="q2">2) De acordo com Tiago 1.13, Deus pode tentar alguém?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q2" value="A" required> A) Não, Deus a ninguém tenta.</label>
+                <label><input type="radio" name="q2" value="B"> B) Sim, Deus tenta os mais fracos.</label>
+                <label><input type="radio" name="q2" value="C"> C) Apenas quando a pessoa erra.</label>
+                <label><input type="radio" name="q2" value="D"> D) Sim, para testar a santidade.</label>
             </div>
-            <div style="margin-top: 10px;">
-                <label for="q3_gl" style="font-weight: normal; margin-bottom: 2px;">- Gl 5.16:</label>
-                <input type="text" id="q3_gl" name="3. Fonte de tentacao - Gl 5.16" required>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="q3_1jo" style="font-weight: normal; margin-bottom: 2px;">- 1Jo 2.15:</label>
-                <input type="text" id="q3_1jo" name="3. Fonte de tentacao - 1Jo 2.15" required>
+        </div>
+
+        <div class="question-group">
+            <label for="q3">3) Quais são as três origens/fontes da tentação indicadas em Tg 4.7, Gl 5.16 e 1Jo 2.15?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q3" value="A" required> A) O diabo, a carne e o mundo.</label>
+                <label><input type="radio" name="q3" value="B"> B) O medo, a dor e a fraqueza.</label>
+                <label><input type="radio" name="q3" value="C"> C) A lei, o tempo e o esquecimento.</label>
+                <label><input type="radio" name="q3" value="D"> D) O dinheiro, a fama e o poder.</label>
             </div>
         </div>
 
@@ -217,15 +89,22 @@
         <div class="section-title">B – O PECADO</div>
 
         <div class="question-group">
-            <label for="q4">4) O que é pecado? (1Jo 3.4)</label>
-            <textarea id="q4" name="4. O que e pecado (1Jo 3.4)" rows="2" required></textarea>
+            <label for="q4">4) O que é o pecado segundo a definição bíblica em 1 João 3.4?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q4" value="A" required> A) A transgressão da lei.</label>
+                <label><input type="radio" name="q4" value="B"> B) Uma fraqueza aceitável.</label>
+                <label><input type="radio" name="q4" value="C"> C) Um erro involuntário da mente.</label>
+                <label><input type="radio" name="q4" value="D"> D) Apenas uma falta de religiosidade.</label>
+            </div>
         </div>
 
         <div class="question-group">
-            <label>5) Sendo salvos pela graça, devemos pecar? (Rm 6.1,2)</label>
-            <div class="radio-group">
-                <label><input type="radio" name="5. Sendo salvos pela graca devemos pecar (Rm 6.1,2)" value="SIM" required> SIM</label>
-                <label><input type="radio" name="5. Sendo salvos pela graca devemos pecar (Rm 6.1,2)" value="NÃO" required> NÃO</label>
+            <label for="q5">5) Sendo salvos pela graça, devemos permanecer no pecado? (Rm 6.1,2)</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q5" value="A" required> A) Sim, a graça cobre tudo.</label>
+                <label><input type="radio" name="q5" value="B"> B) De modo nenhum; morremos para o pecado.</label>
+                <label><input type="radio" name="q5" value="C"> C) Depende da gravidade do erro.</label>
+                <label><input type="radio" name="q5" value="D"> D) Sim, até atingirmos a perfeição.</label>
             </div>
         </div>
 
@@ -233,41 +112,62 @@
         <div class="section-title">C – ARREPENDIMENTO</div>
 
         <div class="question-group">
-            <label for="q6">6) E se pecarmos, o que temos? (1Jo 2.1)</label>
-            <textarea id="q6" name="6. E se pecarmos o que temos (1Jo 2.1)" rows="2" required></textarea>
+            <label for="q6">6) Se alguém pecar, o que temos junto ao Pai, segundo 1 João 2.1?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q6" value="A" required> A) Um Advogado, Jesus Cristo, o Justo.</label>
+                <label><input type="radio" name="q6" value="B"> B) Uma condenação sem perdão.</label>
+                <label><input type="radio" name="q6" value="C"> C) A necessidade de novos sacrifícios.</label>
+                <label><input type="radio" name="q6" value="D"> D) Uma pena temporal a cumprir.</label>
+            </div>
         </div>
 
         <div class="question-group">
-            <label for="q7">7) E o que mais deve-se fazer? (At 3.19)</label>
-            <textarea id="q7" name="7. E o que mais deve-se fazer (At 3.19)" rows="2" required></textarea>
+            <label for="q7">7) Além de confessar, o que mais se deve fazer conforme Atos 3.19 para apagamento dos pecados?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q7" value="A" required> A) Arrepender-se e converter-se.</label>
+                <label><input type="radio" name="q7" value="B"> B) Cumprir promessas e jejuns.</label>
+                <label><input type="radio" name="q7" value="C"> C) Pagar penitências financeiras.</label>
+                <label><input type="radio" name="q7" value="D"> D) Isolar-se da sociedade.</label>
+            </div>
         </div>
 
         <!-- SEÇÃO D -->
         <div class="section-title">D – LIVRES DO PODER DO PECADO</div>
 
         <div class="question-group">
-            <label for="q8">8) O que a fé em Cristo nos dá, de acordo com Rm 8.1?</label>
-            <textarea id="q8" name="8. O que a fe em Cristo nos da (Rm 8.1)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label>9) Existe tentação superior às nossas forças? (1Co 10.13)</label>
-            <div class="radio-group">
-                <label><input type="radio" name="9. Existe tentacao superior as nossas forcas (1Co 10.13)" value="SIM" required> SIM</label>
-                <label><input type="radio" name="9. Existe tentacao superior as nossas forcas (1Co 10.13)" value="NÃO" required> NÃO</label>
+            <label for="q8">8) O que a união com Cristo traz ao crente segundo Romanos 8.1?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q8" value="A" required> A) Nenhuma condenação há para os que estão em Cristo.</label>
+                <label><input type="radio" name="q8" value="B"> B) Isenção total de aflições terrenas.</label>
+                <label><input type="radio" name="q8" value="C"> C) Garantia de riqueza material imediata.</label>
+                <label><input type="radio" name="q8" value="D"> D) Superioridade moral sobre o próximo.</label>
             </div>
         </div>
 
         <div class="question-group">
-            <label for="q10">10) Que ações devemos ter para não cair em tentação? (Lc 22.46)</label>
-            <textarea id="q10" name="10. Acoes para nao cair em tentacao (Lc 22.46)" rows="2" required></textarea>
+            <label for="q9">9) Existe tentação humana que seja superior às nossas forças para suportar? (1Co 10.13)</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q9" value="A" required> A) Não, Deus proverá o livramento para suportar.</label>
+                <label><input type="radio" name="q9" value="B"> B) Sim, muitas são impossíveis de vencer.</label>
+                <label><input type="radio" name="q9" value="C"> C) Apenas na velhice conseguimos resistir.</label>
+                <label><input type="radio" name="q9" value="D"> D) Sim, quando o diabo nos ataca.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q10">10) Que ações Jesus orientou em Lucas 22.46 para não entrarmos em tentação?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q10" value="A" required> A) Levantar e orar.</label>
+                <label><input type="radio" name="q10" value="B"> B) Fugir e esconder-se.</label>
+                <label><input type="radio" name="q10" value="C"> C) Jejuar por 40 dias.</label>
+                <label><input type="radio" name="q10" value="D"> D) Discutir com os tentadores.</label>
+            </div>
         </div>
 
         <div class="final-note">
             Como vimos, é fundamental lutarmos contra as tentações que tem como origem o mundo, a carne e o diabo. Não somos mais escravos do pecado, mas livres para agradar a Deus com a bendita força do Senhor. Confie Nele e resista às tentações.
         </div>
 
-        <!-- DADOS FINAIS -->
         <div class="footer-info">
             <div class="field">
                 <label for="nomePessoa">Nome do Aluno:</label>
@@ -279,22 +179,127 @@
             </div>
         </div>
 
-        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 14</button>
-
+        <button type="button" id="btnCorrigir" class="btn-corrigir" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS</button>
+        <div id="resultado" class="resultado"></div>
+        <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
     </form>
 </div>
 
 <script>
-    function enviarFormulario(event) {
-        var btn = document.getElementById("btnEnviar");
-        btn.classList.add("sent");
-        btn.innerText = "ENVIANDO PELO EMAIL...";
-        
-        setTimeout(function(){
-            // O formulário continuará seu curso natural de envio
-        }, 500);
-    }
-</script>
+    var CACHE = 'licao14_cache';
+    var CAMPOS = ['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','nomePessoa','dataPreenchimento'];
 
+    function val(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+    function gravarCache() {
+        var dados = {};
+        CAMPOS.forEach(function(id) {
+            if (id.startsWith('q')) {
+                var sel = document.querySelector('input[name="' + id + '"]:checked');
+                dados[id] = sel ? sel.value : '';
+            } else {
+                dados[id] = val(id);
+            }
+        });
+        localStorage.setItem(CACHE, JSON.stringify(dados));
+    }
+    function lerCache() {
+        try {
+            var dados = JSON.parse(localStorage.getItem(CACHE) || 'null');
+            if (!dados) return;
+            CAMPOS.forEach(function(id) {
+                if (dados[id] != null) {
+                    if (id.startsWith('q')) {
+                        var el = document.querySelector('input[name="' + id + '"][value="' + dados[id] + '"]');
+                        if (el) el.checked = true;
+                    } else if (document.getElementById(id)) {
+                        document.getElementById(id).value = dados[id];
+                    }
+                }
+            });
+        } catch (e) {}
+    }
+
+    var GABARITO = { 
+        q1: 'B', 
+        q2: 'A', 
+        q3: 'A', 
+        q4: 'A', 
+        q5: 'B', 
+        q6: 'A', 
+        q7: 'A', 
+        q8: 'A', 
+        q9: 'A', 
+        q10: 'A' 
+    };
+
+    function corrigirRespostas() {
+        var form = document.getElementById('discipuladoForm');
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+
+        var acertos = 0;
+        var total = Object.keys(GABARITO).length;
+
+        Object.keys(GABARITO).forEach(function(nome) {
+            var opcoes = document.querySelectorAll('input[name="' + nome + '"]');
+            var resposta = document.querySelector('input[name="' + nome + '"]:checked');
+
+            opcoes.forEach(function(input) {
+                input.parentElement.classList.remove('certa', 'errada');
+                if (input.value === GABARITO[nome]) {
+                    input.parentElement.classList.add('certa');
+                } else if (resposta && input.value === resposta.value) {
+                    input.parentElement.classList.add('errada');
+                }
+            });
+            if (resposta && resposta.value === GABARITO[nome]) { acertos++; }
+        });
+
+        var percentual = Math.round((acertos / total) * 100);
+        var resultado = document.getElementById('resultado');
+        resultado.style.display = 'block';
+        resultado.innerHTML = 'RESULTADO: ' + acertos + ' de ' + total + ' questões corretas (' + percentual + '%).';
+        gravarCache();
+    }
+
+    function baixarPdf() {
+        gravarCache();
+        var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
+        if (typeof html2pdf === 'undefined') { alert('Não foi possível carregar o gerador de PDF.'); return; }
+        var elemento = document.getElementById('licaoImpressao');
+        var btnPdf = document.getElementById('btnPdf');
+        var btnCorrigir = document.getElementById('btnCorrigir');
+        var resultado = document.getElementById('resultado');
+        
+        btnPdf.style.display = 'none';
+        btnCorrigir.style.display = 'none';
+        resultado.style.display = 'none';
+
+        html2pdf().set({
+            margin: [8, 8, 8, 8],
+            filename: 'Licao14-' + nome + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+            pagebreak: { mode: ['css', 'legacy'], avoid: ['.question-group', '.section-title', '.final-note'] },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).from(elemento).save().then(function() {
+            btnPdf.style.display = 'block';
+            btnCorrigir.style.display = 'block';
+            resultado.style.display = 'block';
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        lerCache();
+        CAMPOS.forEach(function(id) {
+            if (id.startsWith('q')) {
+                var els = document.querySelectorAll('input[name="' + id + '"]');
+                els.forEach(function(el) { el.addEventListener('change', gravarCache); });
+            } else {
+                var el = document.getElementById(id);
+                if (el) { el.addEventListener('input', gravarCache); el.addEventListener('change', gravarCache); }
+            }
+        });
+    });
+</script>
 </body>
 </html>
