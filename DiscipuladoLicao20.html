@@ -3,208 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discipulado Lição 20 - Testemunho: Evangelização</title>
+    <title>Discipulado Lição 20 - Testemunho - Evangelização</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            font-size: 12pt;
+        @media print {
+            body { background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
+            .container { box-shadow: none !important; margin: 0 !important; max-width: none !important; width: 100% !important; }
+            #btnPdf, #btnCorrigir, #resultado { display: none !important; }
         }
-        .container {
-            max-width: 750px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #946f52;
-        }
-        .header-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            min-height: 60px;
-        }
-        .header-container img {
-            position: absolute;
-            left: 0;
-            height: 60px;
-            width: auto;
-        }
-        .main-category {
-            text-align: center;
-            font-size: 16pt;
-            font-weight: bold;
-            color: #946f52;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-        h1 {
-            color: #946f52;
-            margin: 0;
-            font-size: 32px;
-            text-transform: uppercase;
-            text-align: center;
-        }
-        .subtitle {
-            text-align: center;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 20px;
-            font-size: 14pt;
-        }
-        .intro {
-            background-color: #f0f4f6;
-            border-left: 4px solid #946f52;
-            padding: 12px 15px;
-            margin-bottom: 25px;
-            font-size: 11pt;
-        }
-        .section-title {
-            background-color: #946f52;
-            color: white;
-            padding: 6px 12px;
-            font-size: 13pt;
-            font-weight: bold;
-            border-radius: 4px;
-            margin-top: 25px;
-            margin-bottom: 15px;
-        }
-        .question-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 6px;
-            color: #222;
-        }
-        input[type="text"], input[type="date"], textarea, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 11pt;
-            margin-top: 4px;
-        }
-        input[type="text"]:focus, textarea:focus, select:focus {
-            border-color: #946f52;
-            outline: none;
-        }
-        .radio-group {
-            display: flex;
-            gap: 20px;
-            margin-top: 8px;
-        }
-        .radio-group label {
-            font-weight: normal;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-        }
-        .radio-group input[type="radio"] {
-            margin: 0;
-            width: 16px;
-            height: 16px;
-        }
-        .footer-info {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-        }
-        .footer-info .field {
-            flex: 1;
-        }
-        .btn-submit {
-            width: 100%;
-            background-color: #946f52;
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 4px;
-            font-size: 12pt;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 25px;
-            transition: background-color 0.3s ease;
-        }
-        .btn-submit:hover {
-            background-color: #75553d;
-        }
-        .btn-submit.sent {
-            background-color: #202224 !important;
-            cursor: default;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; margin: 0; padding: 20px; font-size: 12pt; }
+        .container { max-width: 750px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-top: 6px solid #9C27B0; }
+        .header-container { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; min-height: 60px; }
+        .header-container img { position: absolute; left: 0; height: 60px; width: auto; }
+        .main-category { text-align: center; font-size: 16pt; font-weight: bold; color: #9C27B0; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        h1 { color: #9C27B0; margin: 0; font-size: 32px; text-transform: uppercase; text-align: center; }
+        .subtitle { text-align: center; font-weight: bold; color: #555; margin-bottom: 20px; font-size: 14pt; }
+        .intro { background-color: #f3e5f5; border-left: 4px solid #9C27B0; padding: 12px 15px; margin-bottom: 25px; font-size: 11pt; }
+        .section-title { background-color: #9C27B0; color: white; padding: 6px 12px; font-size: 13pt; font-weight: bold; border-radius: 4px; margin-top: 25px; margin-bottom: 15px; }
+        .question-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 6px; color: #222; }
+        input[type="text"], input[type="date"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 11pt; margin-top: 4px; }
+        .footer-info { display: flex; gap: 15px; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
+        .footer-info .field { flex: 1; }
+        .btn-pdf { width: 100%; background-color: #7b1fa2; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .alternativas { margin-top: 8px; }
+        .alternativas label { display: block; padding: 8px 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; font-weight: normal; cursor: pointer; }
+        .alternativas label input { margin-right: 8px; }
+        .alternativas label.certa { background-color: #d9f2df !important; border-color: #28a745 !important; color: #176b2c !important; }
+        .alternativas label.errada { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #842029 !important; }
+        .btn-corrigir { width: 100%; background-color: #2e7d32; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 25px; }
+        .resultado { display: none; margin-top: 15px; padding: 15px; text-align: center; font-size: 14pt; font-weight: bold; border-radius: 6px; border: 1px solid #ddd; background: #f7f7f7; }
+        .final-note { text-align: center; font-weight: bold; color: #9C27B0; background-color: #f3e5f5; padding: 15px; border-radius: 6px; border: 1px solid #e1bee7; margin-top: 25px; font-size: 12pt; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="main-category">VIDA CRISTÃ E TESTEMUNHO</div>
+<div class="container" id="licaoImpressao">
+    <div class="main-category">EVANGELIZAÇÃO</div>
     
     <div class="header-container">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
         <h1>Lição 20</h1>
     </div>
-    <div class="subtitle">TESTEMUNHO: EVANGELIZAÇÃO</div>
+    <div class="subtitle">TESTEMUNHO - EVANGELIZAÇÃO</div>
     
     <div class="intro">
-        A evangelização é a proclamação da mensagem de salvação em Cristo. Além de viver como sal e luz, todo discípulo é ordenado a proclamar verbalmente as boas-novas aos perdidos.
+        Cabe a cada crente no Senhor Jesus Cristo, que foi transformado pelo poder do Evangelho, anunciar este mesmo Evangelho às pessoas que carecem da salvação, assim como aconteceu com você onde te anunciou o Evangelho.
     </div>
 
-    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
-        
+    <form id="discipuladoForm">
         <!-- SEÇÃO A -->
-        <div class="section-title">A – A ORDEM DE EVANGELIZAR</div>
+        <div class="section-title">A – ORDEM</div>
 
         <div class="question-group">
-            <label for="q1">1) Qual é a grande comissão dada por Jesus a todos os Seus discípulos? (Mt 28.18-20; Mc 16.15)</label>
-            <textarea id="q1" name="1. A Grande Comissão (Mt 28.18-20; Mc 16.15)" rows="2" required></textarea>
+            <label for="q1">1) Qual é a ordem dada por Jesus aos Seus discípulos em Marcos 16.15?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q1" value="A" required> A) Ir por todo o mundo e pregar o evangelho a toda criatura.</label>
+                <label><input type="radio" name="q1" value="B"> B) Permanecer em Jerusalém sem falar com os gentios.</label>
+                <label><input type="radio" name="q1" value="C"> C) Escrever livros filosóficos para os sábios de Roma.</label>
+                <label><input type="radio" name="q1" value="D"> D) Construir grandes edifícios para reuniões secretas.</label>
+            </div>
         </div>
 
         <div class="question-group">
-            <label for="q2">2) Por que a pregação da Palavra é indispensável para a salvação das pessoas? (Rm 10.13-15)</label>
-            <textarea id="q2" name="2. Por que a pregacao e indispensavel (Rm 10.13-15)" rows="2" required></textarea>
+            <label for="q2">2) Segundo Romanos 1.14-16, a quem Paulo se sentia devedor e qual era sua atitude sobre o Evangelho?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q2" value="A" required> A) Apenas aos judeus, tendo vergonha de pregar aos gregos.</label>
+                <label><input type="radio" name="q2" value="B" required> B) A gregos e bárbaros, pronto a anunciar o Evangelho sem se envergonhar.</label>
+                <label><input type="radio" name="q2" value="C"> C) Aos governantes de Roma, evitando falar de salvação pública.</label>
+                <label><input type="radio" name="q2" value="D"> D) A ninguém, pois considerava sua missão concluída.</label>
+            </div>
         </div>
 
         <div class="question-group">
-            <label>3) A responsabilidade de comunicar o Evangelho pertence apenas aos pastores e líderes?</label>
-            <div class="radio-group">
-                <label><input type="radio" name="3. Evangelizacao e so para lideres" value="SIM" required> SIM</label>
-                <label><input type="radio" name="3. Evangelizacao e so para lideres" value="NÃO" required> NÃO</label>
+            <label for="q3">3) Conforme Romanos 1.16, o que é o Evangelho e qual é a sua finalidade?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q3" value="A" required> A) Uma filosofia moral que serve para organizar a sociedade.</label>
+                <label><input type="radio" name="q3" value="B"> B) Um conjunto de leis humanas para julgar os pecadores.</label>
+                <label><input type="radio" name="q3" value="C" required> C) O poder de Deus para a salvação de todo aquele que crê.</label>
+                <label><input type="radio" name="q3" value="D"> D) Um segredo reservado apenas para os sábios e eruditos.</label>
             </div>
         </div>
 
         <!-- SEÇÃO B -->
-        <div class="section-title">B – O CONTEÚDO E A POSTURA</div>
+        <div class="section-title">B – CONTEÚDO</div>
 
         <div class="question-group">
-            <label for="q4">4) Qual é a mensagem central do Evangelho que devemos anunciar? (1Co 15.1-4; 2Co 5.18-21)</label>
-            <textarea id="q4" name="4. Mensagem central do Evangelho (1Co 15.1-4; 2Co 5.18-21)" rows="2" required></textarea>
+            <label for="q4">4) Quem é declarado em Atos 4.11-12 como o único meio de salvação dados aos homens?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q4" value="A" required> A) Apenas Jesus Cristo.</label>
+                <label><input type="radio" name="q4" value="B"> B) Os líderes da lei.</label>
+                <label><input type="radio" name="q4" value="C"> C) As boas obras.</label>
+                <label><input type="radio" name="q4" value="D"> D) Os anjos celestiais.</label>
+            </div>
         </div>
 
         <div class="question-group">
-            <label for="q5">5) Com que atitude devemos responder àqueles que nos pedem a razão da nossa esperança? (1Pe 3.15)</label>
-            <input type="text" id="q5" name="5. Atitude ao responder sobre a esperanca (1Pe 3.15)" required>
+            <label for="q5">5) De acordo com Atos 18.5, qual era o centro da mensagem anunciada por Paulo e Silas?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q5" value="A" required> A) Regras políticas da Judeia.</label>
+                <label><input type="radio" name="q5" value="B"> B) Que Jesus é o Cristo.</label>
+                <label><input type="radio" name="q5" value="C"> C) Tradições dos anciãos.</label>
+                <label><input type="radio" name="q5" value="D"> D) Sabedoria grega clássica.</label>
+            </div>
+        </div>
+
+        <!-- SEÇÃO C -->
+        <div class="section-title">C – MÉTODO</div>
+
+        <div class="question-group">
+            <label for="q6">6) Segundo Atos 2.37-38, o que os ouvintes sentiram ao ouvir a pregação e o que Pedro lhes ordenou fazer?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q6" value="A" required> A) Ficaram indiferentes e foram orientados a manter suas tradições.</label>
+                <label><input type="radio" name="q6" value="B"> B) Sentiram raiva e foram instruídos a abandonar a cidade de Jerusalém.</label>
+                <label><input type="radio" name="q6" value="C"> C) Compungiram-se no coração e foram chamados ao arrependimento e batismo.</label>
+                <label><input type="radio" name="q6" value="D"> D) Alegraram-se com orgulho e receberam prêmios dos apóstolos.</label>
+            </div>
         </div>
 
         <div class="question-group">
-            <label for="q6">6) Cite o nome de pelo menos uma pessoa não convertida por quem você vai orar e evangelizar nesta semana:</label>
-            <input type="text" id="q6" name="6. Pessoa para orar e evangelizar" required>
+            <label for="q7">7) Conforme Atos 2.39, a quem se destina a promessa do Evangelho anunciada pelos apóstolos?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q7" value="A" required> A) Exclusivamente aos sacerdotes que serviam no templo.</label>
+                <label><input type="radio" name="q7" value="B"> B) Apenas aos que estivessem fisicamente presentes naquele dia.</label>
+                <label><input type="radio" name="q7" value="C"> C) Somente aos governantes da região da Judeia e Roma.</label>
+                <label><input type="radio" name="q7" value="D" required> D) Aos ouvintes, seus filhos e a todos os que o Senhor chamar.</label>
+            </div>
         </div>
 
-        <!-- DADOS FINAIS -->
+        <div class="final-note">
+            Jesus Cristo deu a ordem para que cada discípulo Dele fale do Evangelho às pessoas que carecem de salvação, transmitindo somente que Jesus é o salvador, de uma maneira em que fale da história e o porquê Ele veio ao mundo, chamando outras pessoas a se arrependerem e crerem Nele para receber as mais preciosas promessas decorrentes da obra de Cristo Jesus.
+        </div>
+
         <div class="footer-info">
             <div class="field">
                 <label for="nomePessoa">Nome do Aluno:</label>
@@ -216,22 +146,116 @@
             </div>
         </div>
 
-        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 20</button>
-
+        <button type="button" id="btnCorrigir" class="btn-corrigir" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS</button>
+        <div id="resultado" class="resultado"></div>
+        <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
     </form>
 </div>
 
 <script>
-    function enviarFormulario(event) {
-        var btn = document.getElementById("btnEnviar");
-        btn.classList.add("sent");
-        btn.innerText = "ENVIANDO PELO EMAIL...";
-        
-        setTimeout(function(){
-            // O formulário seguirá com o envio via mailto
-        }, 500);
-    }
-</script>
+    var CACHE = 'licao20_cache';
+    var CAMPOS = ['q1','q2','q3','q4','q5','q6','q7','nomePessoa','dataPreenchimento'];
 
+    function val(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+    function gravarCache() {
+        var dados = {};
+        CAMPOS.forEach(function(id) {
+            if (id.startsWith('q')) {
+                var sel = document.querySelector('input[name="' + id + '"]:checked');
+                dados[id] = sel ? sel.value : '';
+            } else {
+                dados[id] = val(id);
+            }
+        });
+        localStorage.setItem(CACHE, JSON.stringify(dados));
+    }
+    function lerCache() {
+        try {
+            var dados = JSON.parse(localStorage.getItem(CACHE) || 'null');
+            if (!dados) return;
+            CAMPOS.forEach(function(id) {
+                if (dados[id] != null) {
+                    if (id.startsWith('q')) {
+                        var el = document.querySelector('input[name="' + id + '"][value="' + dados[id] + '"]');
+                        if (el) el.checked = true;
+                    } else if (document.getElementById(id)) {
+                        document.getElementById(id).value = dados[id];
+                    }
+                }
+            });
+        } catch (e) {}
+    }
+
+    var GABARITO = { q1: 'A', q2: 'B', q3: 'C', q4: 'A', q5: 'B', q6: 'C', q7: 'D' };
+
+    function corrigirRespostas() {
+        var form = document.getElementById('discipuladoForm');
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+
+        var acertos = 0;
+        var total = Object.keys(GABARITO).length;
+
+        Object.keys(GABARITO).forEach(function(nome) {
+            var opcoes = document.querySelectorAll('input[name="' + nome + '"]');
+            var resposta = document.querySelector('input[name="' + nome + '"]:checked');
+
+            opcoes.forEach(function(input) {
+                input.parentElement.classList.remove('certa', 'errada');
+                if (input.value === GABARITO[nome]) {
+                    input.parentElement.classList.add('certa');
+                } else if (resposta && input.value === resposta.value) {
+                    input.parentElement.classList.add('errada');
+                }
+            });
+            if (resposta && resposta.value === GABARITO[nome]) { acertos++; }
+        });
+
+        var percentual = Math.round((acertos / total) * 100);
+        var resultado = document.getElementById('resultado');
+        resultado.style.display = 'block';
+        resultado.innerHTML = 'RESULTADO: ' + acertos + ' de ' + total + ' questões corretas (' + percentual + '%).';
+        gravarCache();
+    }
+
+    function baixarPdf() {
+        gravarCache();
+        var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
+        if (typeof html2pdf === 'undefined') { alert('Não foi possível carregar o gerador de PDF.'); return; }
+        var elemento = document.getElementById('licaoImpressao');
+        var btnPdf = document.getElementById('btnPdf');
+        var btnCorrigir = document.getElementById('btnCorrigir');
+        var resultado = document.getElementById('resultado');
+        
+        btnPdf.style.display = 'none';
+        btnCorrigir.style.display = 'none';
+        resultado.style.display = 'none';
+
+        html2pdf().set({
+            margin: [8, 8, 8, 8],
+            filename: 'Licao20-' + nome + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+            pagebreak: { mode: ['css', 'legacy'], avoid: ['.question-group', '.section-title', '.final-note'] },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).from(elemento).save().then(function() {
+            btnPdf.style.display = 'block';
+            btnCorrigir.style.display = 'block';
+            resultado.style.display = 'block';
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        lerCache();
+        CAMPOS.forEach(function(id) {
+            if (id.startsWith('q')) {
+                var els = document.querySelectorAll('input[name="' + id + '"]');
+                els.forEach(function(el) { el.addEventListener('change', gravarCache); });
+            } else {
+                var el = document.getElementById(id);
+                if (el) { el.addEventListener('input', gravarCache); el.addEventListener('change', gravarCache); }
+            }
+        });
+    });
+</script>
 </body>
 </html>
