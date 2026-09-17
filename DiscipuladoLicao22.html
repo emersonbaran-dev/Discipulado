@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discipulado Lição 22 - A Igreja do Senhor</title>
+    <title>Discipulado Lição 22 - Dízimos e Ofertas</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,7 +21,7 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #3F6259;
+            border-top: 6px solid #b08968;
         }
         .header-container {
             position: relative;
@@ -41,13 +41,13 @@
             text-align: center;
             font-size: 16pt;
             font-weight: bold;
-            color: #3F6259;
+            color: #b08968;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 5px;
         }
         h1 {
-            color: #3F6259;
+            color: #b08968;
             margin: 0;
             font-size: 32px;
             text-transform: uppercase;
@@ -62,13 +62,13 @@
         }
         .intro {
             background-color: #f0f4f6;
-            border-left: 4px solid #3F6259;
+            border-left: 4px solid #b08968;
             padding: 12px 15px;
             margin-bottom: 25px;
             font-size: 11pt;
         }
         .section-title {
-            background-color: #3F6259;
+            background-color: #b08968;
             color: white;
             padding: 6px 12px;
             font-size: 13pt;
@@ -96,23 +96,25 @@
             margin-top: 4px;
         }
         input[type="text"]:focus, textarea:focus, select:focus {
-            border-color: #3F6259;
+            border-color: #b08968;
             outline: none;
         }
-        .matching-group {
+        .radio-group {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
+            gap: 20px;
             margin-top: 8px;
         }
-        .matching-item {
+        .radio-group label {
+            font-weight: normal;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
+            cursor: pointer;
         }
-        .matching-item select {
-            width: 180px;
-            margin-top: 0;
+        .radio-group input[type="radio"] {
+            margin: 0;
+            width: 16px;
+            height: 16px;
         }
         .footer-info {
             display: flex;
@@ -126,7 +128,7 @@
         }
         .btn-submit {
             width: 100%;
-            background-color: #3F6259;
+            background-color: #b08968;
             color: white;
             padding: 14px;
             border: none;
@@ -138,7 +140,7 @@
             transition: background-color 0.3s ease;
         }
         .btn-submit:hover {
-            background-color: #2e4942;
+            background-color: #8c6a4e;
         }
         .btn-submit.sent {
             background-color: #202224 !important;
@@ -149,140 +151,57 @@
 <body>
 
 <div class="container">
-    <div class="main-category">A IGREJA DO SENHOR</div>
+    <div class="main-category">VIDA CRISTÃ E MORDOMIA</div>
     
     <div class="header-container">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
         <h1>Lição 22</h1>
     </div>
-    <div class="subtitle">A IGREJA EM GERAL E A IGREJA LOCAL</div>
+    <div class="subtitle">DÍZIMOS E OFERTAS</div>
     
-    <!-- SEÇÃO A -->
-    <div class="section-title">A – A IGREJA EM GERAL</div>
-
     <div class="intro">
-        “A Igreja é o número completo dos eleitos, que têm sido e que hão de ser reunidos em um corpo sob Cristo, a cabeça.” (Catecismo Maior). É um organismo vivo onde o cabeça é Cristo e os membros são os crentes.
+        A contribuição financeira é um ato de adoração, gratidão e mordomia cristã. Ao dízimar e ofertar, reconhecemos que tudo o que temos pertence a Deus e cooperamos com o sustento da igreja e avanço do Seu Reino.
     </div>
 
     <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
         
+        <!-- SEÇÃO A -->
+        <div class="section-title">A – MORDOMIA E RECONHECIMENTO</div>
+
         <div class="question-group">
-            <label for="q1">1) Qual fato acerca de Cristo é mencionado em Cl 1.18?</label>
-            <input type="text" id="q1" name="1. Fato acerca de Cristo (Cl 1.18)" required>
+            <label for="q1">1) A quem pertencem a terra e tudo o que nela existe? (Salmo 24.1; Ag 2.8)</label>
+            <input type="text" id="q1" name="1. A quem pertence a terra (Sl 24.1; Ag 2.8)" required>
         </div>
 
         <div class="question-group">
-            <label for="q2">2) Em Ef 1.7, o que Cristo conseguiu à igreja pela sua morte?</label>
-            <input type="text" id="q2" name="2. O que Cristo conseguiu pela morte (Ef 1.7)" required>
-        </div>
-
-        <div class="question-group">
-            <label for="q3">3) O que aprendemos sobre todos os crentes, em Rm 12.4,5?</label>
-            <textarea id="q3" name="3. O que aprendemos sobre crentes (Rm 12.4,5)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label>4) O que é o povo de Deus de acordo com 1Pe 2.9?</label>
-            <input type="text" name="4. Povo de Deus - 1 (1Pe 2.9)" placeholder="1)" style="margin-bottom: 6px;" required>
-            <input type="text" name="4. Povo de Deus - 2 (1Pe 2.9)" placeholder="2)" style="margin-bottom: 6px;" required>
-            <input type="text" name="4. Povo de Deus - 3 (1Pe 2.9)" placeholder="3)" style="margin-bottom: 6px;" required>
-            <input type="text" name="4. Povo de Deus - 4 (1Pe 2.9)" placeholder="4)" required>
-        </div>
-
-        <div class="intro" style="margin-top: 25px; margin-bottom: 25px; border-left-color: #3F6259;">
-            Como vimos, Cristo Jesus é o cabeça da igreja, pois a resgatou com sua preciosa obra realizada uma única vez em favor de seus eleitos, fazendo um povo santo, de propriedade exclusiva de Deus, pronto para servir ao Senhor, bem como aos irmãos, através dos dons dados pelo Espírito de Deus.
+            <label for="q2">2) Qual é a finalidade dos dízimos e ofertas trazidos à casa do Senhor? (Ml 3.10; Ne 10.37-39)</label>
+            <textarea id="q2" name="2. Finalidade dos dizimos e ofertas (Ml 3.10; Ne 10.37-39)" rows="2" required></textarea>
         </div>
 
         <!-- SEÇÃO B -->
-        <div class="section-title">B – A IGREJA LOCAL</div>
+        <div class="section-title">B – A ATITUDE DO CORAÇÃO AO CONTRIBUIR</div>
 
         <div class="question-group">
-            <label>5) Onde a igreja se reunia, de acordo com os versos abaixo? Associe os locais aos textos correspondentes:</label>
-            <div class="matching-group">
-                <div class="matching-item">
-                    <span style="flex: 1;">a) At 2.46, 3.1, 5.12</span>
-                    <select name="5a. Local de reuniao (At 2.46, 3.1, 5.12)" required>
-                        <option value="">Selecione...</option>
-                        <option value="Casa">Casa</option>
-                        <option value="Templo">Templo</option>
-                        <option value="Sinagoga">Sinagoga</option>
-                        <option value="Escola">Escola</option>
-                    </select>
-                </div>
-                <div class="matching-item">
-                    <span style="flex: 1;">b) At 13.14,43</span>
-                    <select name="5b. Local de reuniao (At 13.14,43)" required>
-                        <option value="">Selecione...</option>
-                        <option value="Casa">Casa</option>
-                        <option value="Templo">Templo</option>
-                        <option value="Sinagoga">Sinagoga</option>
-                        <option value="Escola">Escola</option>
-                    </select>
-                </div>
-                <div class="matching-item">
-                    <span style="flex: 1;">c) At 19.9</span>
-                    <select name="5c. Local de reuniao (At 19.9)" required>
-                        <option value="">Selecione...</option>
-                        <option value="Casa">Casa</option>
-                        <option value="Templo">Templo</option>
-                        <option value="Sinagoga">Sinagoga</option>
-                        <option value="Escola">Escola</option>
-                    </select>
-                </div>
-                <div class="matching-item">
-                    <span style="flex: 1;">d) Rm 16.5; 1Co 16.19</span>
-                    <select name="5d. Local de reuniao (Rm 16.5; 1Co 16.19)" required>
-                        <option value="">Selecione...</option>
-                        <option value="Casa">Casa</option>
-                        <option value="Templo">Templo</option>
-                        <option value="Sinagoga">Sinagoga</option>
-                        <option value="Escola">Escola</option>
-                    </select>
-                </div>
+            <label for="q3">3) Com que atitude de coração o cristão deve ofertar e dizimar? (2Co 9.6,7)</label>
+            <textarea id="q3" name="3. Atitude de coracao ao contribuir (2Co 9.6,7)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label for="q4">4) Qual o ensino das Escrituras sobre a regularidade e proporcionalidade na contribuição? (1Co 16.2)</label>
+            <textarea id="q4" name="4. Regularidade e proporcionalidade (1Co 16.2)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label>5) Você entende a contribuição por meio de dízimos e ofertas como um ato de adoração e fidelidade?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="5. Entende dízimo como adoração" value="SIM" required> SIM</label>
+                <label><input type="radio" name="5. Entende dízimo como adoração" value="NÃO" required> NÃO</label>
             </div>
         </div>
 
         <div class="question-group">
-            <label>6) Em At 2.42-47, cite 5 ações da igreja primitiva:</label>
-            <input type="text" name="6. Acao da igreja primitiva - 1 (At 2.42-47)" placeholder="1)" style="margin-bottom: 6px;" required>
-            <input type="text" name="6. Acao da igreja primitiva - 2 (At 2.42-47)" placeholder="2)" style="margin-bottom: 6px;" required>
-            <input type="text" name="6. Acao da igreja primitiva - 3 (At 2.42-47)" placeholder="3)" style="margin-bottom: 6px;" required>
-            <input type="text" name="6. Acao da igreja primitiva - 4 (At 2.42-47)" placeholder="4)" style="margin-bottom: 6px;" required>
-            <input type="text" name="6. Acao da igreja primitiva - 5 (At 2.42-47)" placeholder="5)" required>
-        </div>
-
-        <div class="question-group">
-            <label>7) Quais os 2 ofícios da igreja, de acordo com os versos abaixo?</label>
-            <div style="margin-top: 8px;">
-                <label for="q7_a" style="font-weight: normal; margin-bottom: 2px;">At 15.6; 20.17,28; Tt 1.5:</label>
-                <input type="text" id="q7_a" name="7a. Oficio 1 (At 15.6; 20.17,28; Tt 1.5)" required>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="q7_b" style="font-weight: normal; margin-bottom: 2px;">At 6.3; 1Tm 3.8:</label>
-                <input type="text" id="q7_b" name="7b. Oficio 2 (At 6.3; 1Tm 3.8)" required>
-            </div>
-        </div>
-
-        <div class="question-group">
-            <label>8) Quais os dois tipos de presbíteros, conforme 1Tm 5.17?</label>
-            <input type="text" name="8. Tipo de presbitero - 1 (1Tm 5.17)" placeholder="1)" style="margin-bottom: 6px;" required>
-            <input type="text" name="8. Tipo de presbitero - 2 (1Tm 5.17)" placeholder="2)" required>
-        </div>
-
-        <div class="question-group">
-            <label>9) Os sacramentos da igreja que devem ser ministrados são:</label>
-            <div style="margin-top: 8px;">
-                <label for="q9_a" style="font-weight: normal; margin-bottom: 2px;">Mt 26.26; At 2.42:</label>
-                <input type="text" id="q9_a" name="9a. Sacramento 1 (Mt 26.26; At 2.42)" required>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="q9_b" style="font-weight: normal; margin-bottom: 2px;">Mt 28.19; At 2.38:</label>
-                <input type="text" id="q9_b" name="9b. Sacramento 2 (Mt 28.19; At 2.38)" required>
-            </div>
-        </div>
-
-        <div class="intro" style="margin-top: 25px; margin-bottom: 25px; border-left-color: #3F6259;">
-            A igreja do Senhor só pode exercer seus dons e adoração localmente e constantemente, perseverando na doutrina, na comunhão, na Ceia e na oração, sob a liderança de oficiais como diáconos e presbíteros, para o bom andamento da obra da igreja, até a volta do noivo que irá se encontrar com sua noiva!
+            <label for="q6">6) Como você pretende exercer a fidelidade financeira em relação à obra de Deus a partir deste estudo?</label>
+            <textarea id="q6" name="6. Compromisso com a fidelidade financeira" rows="3" required></textarea>
         </div>
 
         <!-- DADOS FINAIS -->
@@ -309,7 +228,7 @@
         btn.innerText = "ENVIANDO PELO EMAIL...";
         
         setTimeout(function(){
-            // O formulário continuará seu curso natural de envio
+            // O formulário seguirá com o envio via mailto
         }, 500);
     }
 </script>
