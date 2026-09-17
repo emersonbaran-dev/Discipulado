@@ -4,153 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discipulado Lição 18 - 5 Princípios da Fé Reformada</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            font-size: 12pt;
+        @media print {
+            body { background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
+            .container { box-shadow: none !important; margin: 0 !important; max-width: none !important; width: 100% !important; }
+            #btnPdf, #btnCorrigir, #resultado { display: none !important; }
         }
-        .container {
-            max-width: 750px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #7e5a7b;
-        }
-        .header-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            min-height: 60px;
-        }
-        .header-container img {
-            position: absolute;
-            left: 0;
-            height: 60px;
-            width: auto;
-        }
-        .main-category {
-            text-align: center;
-            font-size: 16pt;
-            font-weight: bold;
-            color: #7e5a7b;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-        h1 {
-            color: #7e5a7b;
-            margin: 0;
-            font-size: 32px;
-            text-transform: uppercase;
-            text-align: center;
-        }
-        .subtitle {
-            text-align: center;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 20px;
-            font-size: 14pt;
-        }
-        .intro {
-            background-color: #f0f4f6;
-            border-left: 4px solid #7e5a7b;
-            padding: 12px 15px;
-            margin-bottom: 25px;
-            font-size: 11pt;
-        }
-        .section-title {
-            background-color: #7e5a7b;
-            color: white;
-            padding: 6px 12px;
-            font-size: 13pt;
-            font-weight: bold;
-            border-radius: 4px;
-            margin-top: 25px;
-            margin-bottom: 15px;
-        }
-        .question-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 6px;
-            color: #222;
-        }
-        input[type="text"], input[type="date"], textarea, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 11pt;
-            margin-top: 4px;
-        }
-        input[type="text"]:focus, textarea:focus, select:focus {
-            border-color: #7e5a7b;
-            outline: none;
-        }
-        .radio-group {
-            display: flex;
-            gap: 20px;
-            margin-top: 8px;
-        }
-        .radio-group label {
-            font-weight: normal;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-        }
-        .radio-group input[type="radio"] {
-            margin: 0;
-            width: 16px;
-            height: 16px;
-        }
-        .footer-info {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-        }
-        .footer-info .field {
-            flex: 1;
-        }
-        .btn-submit {
-            width: 100%;
-            background-color: #7e5a7b;
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 4px;
-            font-size: 12pt;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 25px;
-            transition: background-color 0.3s ease;
-        }
-        .btn-submit:hover {
-            background-color: #5e415b;
-        }
-        .btn-submit.sent {
-            background-color: #202224 !important;
-            cursor: default;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; margin: 0; padding: 20px; font-size: 12pt; }
+        .container { max-width: 750px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-top: 6px solid #E91E63; }
+        .header-container { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; min-height: 60px; }
+        .header-container img { position: absolute; left: 0; height: 60px; width: auto; }
+        .main-category { text-align: center; font-size: 16pt; font-weight: bold; color: #E91E63; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        h1 { color: #E91E63; margin: 0; font-size: 32px; text-transform: uppercase; text-align: center; }
+        .subtitle { text-align: center; font-weight: bold; color: #555; margin-bottom: 20px; font-size: 14pt; }
+        .intro { background-color: #fce4ec; border-left: 4px solid #E91E63; padding: 12px 15px; margin-bottom: 25px; font-size: 11pt; }
+        .section-title { background-color: #E91E63; color: white; padding: 6px 12px; font-size: 13pt; font-weight: bold; border-radius: 4px; margin-top: 25px; margin-bottom: 15px; }
+        .question-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 6px; color: #222; }
+        input[type="text"], input[type="date"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 11pt; margin-top: 4px; }
+        .footer-info { display: flex; gap: 15px; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
+        .footer-info .field { flex: 1; }
+        .btn-pdf { width: 100%; background-color: #c2185b; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .alternativas { margin-top: 8px; }
+        .alternativas label { display: block; padding: 8px 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; font-weight: normal; cursor: pointer; }
+        .alternativas label input { margin-right: 8px; }
+        .alternativas label.certa { background-color: #d9f2df !important; border-color: #28a745 !important; color: #176b2c !important; }
+        .alternativas label.errada { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #842029 !important; }
+        .btn-corrigir { width: 100%; background-color: #2e7d32; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 25px; }
+        .resultado { display: none; margin-top: 15px; padding: 15px; text-align: center; font-size: 14pt; font-weight: bold; border-radius: 6px; border: 1px solid #ddd; background: #f7f7f7; }
+        .final-note { text-align: center; font-weight: bold; color: #E91E63; background-color: #fce4ec; padding: 15px; border-radius: 6px; border: 1px solid #f8bbd0; margin-top: 25px; font-size: 11pt; line-height: 1.5; }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="licaoImpressao">
     <div class="main-category">DOUTRINA BÍBLICA</div>
     
     <div class="header-container">
@@ -160,56 +48,129 @@
     <div class="subtitle">5 PRINCÍPIOS DA FÉ REFORMADA</div>
     
     <div class="intro">
-        A Reforma Protestante do século XVI resgatou pilares fundamentais do Evangelho, conhecidos como os "Cinco Solas" (Somente). Estes princípios sintetizam a fé teocêntrica e bíblica que professamos.
+        Em 31 de outubro de 1517, a Reforma Protestante resgatou cinco pilares fundamentais da fé bíblica conhecidos como os Cinco Solas. Vejamos o que a Bíblia ensina sobre eles:
     </div>
 
-    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
-        
+    <form id="discipuladoForm">
         <!-- SEÇÃO A -->
-        <div class="section-title">A – OS CINCO SOLAS</div>
+        <div class="section-title">A – SOMENTE A ESCRITURA (SOLA SCRIPTURA)</div>
 
         <div class="question-group">
-            <label for="q1">1) SOLA SCRIPTURA (Somente a Escritura): Por que a Bíblia é a nossa única regra de fé e prática? (2Tm 3.16,17; Salmo 119.105)</label>
-            <textarea id="q1" name="1. Sola Scriptura (2Tm 3.16,17; Sl 119.105)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q2">2) SOLUS CHRISTUS (Somente Cristo): Qual é o único mediador entre Deus e os homens? (1Tm 2.5; Jo 14.6)</label>
-            <input type="text" id="q2" name="2. Solus Christus (1Tm 2.5; Jo 14.6)" required>
-        </div>
-
-        <div class="question-group">
-            <label for="q3">3) SOLA GRATIA (Somente a Graça): O que significa dizer que fomos salvos exclusivamente pela graça de Deus? (Ef 2.8,9)</label>
-            <textarea id="q3" name="3. Sola Gratia (Ef 2.8,9)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q4">4) SOLA FIDE (Somente a Fé): Como o ser humano é justificado diante de Deus? (Rm 3.28; Rm 5.1)</label>
-            <textarea id="q4" name="4. Sola Fide (Rm 3.28; Rm 5.1)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q5">5) SOLI DEO GLORIA (Glória Somente a Deus): Qual é o fim principal do homem e o propósito de tudo o que fazemos? (1Co 10.31; Rm 11.36)</label>
-            <textarea id="q5" name="5. Soli Deo Gloria (1Co 10.31; Rm 11.36)" rows="2" required></textarea>
-        </div>
-
-        <!-- SEÇÃO B -->
-        <div class="section-title">B – APLICAÇÃO PRÁTICA</div>
-
-        <div class="question-group">
-            <label>6) Você reconhece que a salvação depende unicamente da obra de Cristo e não dos seus méritos pessoais?</label>
-            <div class="radio-group">
-                <label><input type="radio" name="6. Reconhece salvacao somente em Cristo" value="SIM" required> SIM</label>
-                <label><input type="radio" name="6. Reconhece salvacao somente em Cristo" value="NÃO" required> NÃO</label>
+            <label for="q1">1) Segundo João 5.39, por que devemos examinar as Escrituras e sobre quem elas testificam?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q1" value="A" required> A) Para conhecer a história dos reis de Israel e da religião antiga.</label>
+                <label><input type="radio" name="q1" value="B"> B) Porque nelas pensamos ter a vida eterna e elas testificam de Jesus Cristo.</label>
+                <label><input type="radio" name="q1" value="C"> C) Para aprender regras de conduta criadas pelas tradições humanas.</label>
+                <label><input type="radio" name="q1" value="D"> D) Apenas para memorizar mandamentos teológicos complicados.</label>
             </div>
         </div>
 
         <div class="question-group">
-            <label for="q7">7) Como a centralidade da glória de Deus deve mudar as suas decisões diárias?</label>
-            <textarea id="q7" name="7. Aplicacao da gloria de Deus nas decisoes" rows="3" required></textarea>
+            <label for="q2">2) Conforme 2 Timóteo 3.16-17, qual a origem de toda a Escritura e qual o seu objetivo no servo de Deus?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q2" value="A" required> A) Foi escrita por sábios e serve apenas como conselho moral.</label>
+                <label><input type="radio" name="q2" value="B"> B) É inspirada por Deus para ensinar, redarguir, corrigir e instruir, tornando o homem de Deus perfeito e habilitado para toda boa obra.</label>
+                <label><input type="radio" name="q2" value="C"> C) Contém partes inspiradas apenas quando fala sobre o futuro.</label>
+                <label><input type="radio" name="q2" value="D"> D) Serve unicamente para ser lida pelos sacerdotes nos cultos.</label>
+            </div>
         </div>
 
-        <!-- DADOS FINAIS -->
+        <!-- SEÇÃO B -->
+        <div class="section-title">B – SOMENTE CRISTO (SOLUS CHRISTUS)</div>
+
+        <div class="question-group">
+            <label for="q3">3) De acordo com 1 Timóteo 2.5, quantos mediadores existem entre Deus e os homens?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q3" value="A" required> A) Vários mediadores, incluindo anjos e santos falecidos.</label>
+                <label><input type="radio" name="q3" value="B"> B) Os sacerdotes da igreja e os profetas do Antigo Testamento.</label>
+                <label><input type="radio" name="q3" value="C"> C) Apenas um: o homem Cristo Jesus.</label>
+                <label><input type="radio" name="q3" value="D"> D) Qualquer pessoa boa que interceda por nós.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q4">4) Segundo Atos 4.12, existe salvação em algum outro nome além de Jesus?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q4" value="A" required> A) Sim, em qualquer líder religioso sincero.</label>
+                <label><input type="radio" name="q4" value="B"> B) Não, em nenhum outro há salvação, pois nenhum outro nome foi dado entre os homens.</label>
+                <label><input type="radio" name="q4" value="C"> C) Sim, através da caridade e boas obras humanas.</label>
+                <label><input type="radio" name="q4" value="D"> D) Apenas para quem cumpre toda a Lei de Moisés.</label>
+            </div>
+        </div>
+
+        <!-- SEÇÃO C -->
+        <div class="section-title">C – SOMENTE A GRAÇA (SOLA GRATIA)</div>
+
+        <div class="question-group">
+            <label for="q5">5) Lendo Efésios 2.8-9, como somos salvos e de onde vem a fé?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q5" value="A" required> A) Pela graça, mediante a fé; isso não vem de nós, é dom de Deus e não de obras.</label>
+                <label><input type="radio" name="q5" value="B"> B) Pelas nossas próprias obras e esforço pessoal contínuo.</label>
+                <label><input type="radio" name="q5" value="C"> C) Por méritos que acumulamos ao longo de nossa vida terrena.</label>
+                <label><input type="radio" name="q5" value="D"> D) Pelo nosso próprio conhecimento e sabedoria adquirida.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q6">6) Qual é o resultado da obra graciosa de Deus no crente, segundo Romanos 3.24?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q6" value="A" required> A) Somos recompensados financeiramente por nossa fidelidade.</label>
+                <label><input type="radio" name="q6" value="B"> B) Somos justificadamente salvos pelos nossos próprios méritos.</label>
+                <label><input type="radio" name="q6" value="C"> C) Somos justificados gratuitamente por Sua graça, mediante a redenção em Cristo Jesus.</label>
+                <label><input type="radio" name="q6" value="D"> D) Ficamos isentos de sofrer qualquer provação neste mundo.</label>
+            </div>
+        </div>
+
+        <!-- SEÇÃO D -->
+        <div class="section-title">D – SOMENTE A FÉ (SOLA FIDE)</div>
+
+        <div class="question-group">
+            <label for="q7">7) O que se revela no Evangelho e como viverá o justo? (Romanos 1.17)</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q7" value="A" required> A) Revela a lei de Moisés, e o justo viverá pelas ofertas oferecidas.</label>
+                <label><input type="radio" name="q7" value="B"> B) Revela a sabedoria humana, e o justo viverá pela ciência e razão.</label>
+                <label><input type="radio" name="q7" value="C"> C) Revela a justiça de Deus de fé em fé, e o justo viverá pela fé.</label>
+                <label><input type="radio" name="q7" value="D"> D) Revela os mistérios ocultos, e o justo viverá pelas suas caridades.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q8">8) Em Marcos 1.14-15, o que Jesus ordena que façamos diante da chegada do Reino de Deus?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q8" value="A" required> A) Arrependei-vos e crede no Evangelho.</label>
+                <label><input type="radio" name="q8" value="B"> B) Guardai os rituais antigos e isolai-vos no deserto.</label>
+                <label><input type="radio" name="q8" value="C"> C) Oferecei sacrifícios de animais no templo sagrado.</label>
+                <label><input type="radio" name="q8" value="D"> D) Segui as tradições dos ancãos da sociedade.</label>
+            </div>
+        </div>
+
+        <!-- SEÇÃO E -->
+        <div class="section-title">E – SOMENTE A DEUS A GLÓRIA (SOLI DEO GLORIA)</div>
+
+        <div class="question-group">
+            <label for="q9">9) De acordo com Romanos 11.36, por que toda a glória pertence somente a Deus?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q9" value="A" required> A) Porque Ele divide Sua glória com os homens santos e anjos.</label>
+                <label><input type="radio" name="q9" value="B"> B) Porque Dele, por Ele e para Ele são todas as coisas; a Ele seja a glória eternamente.</label>
+                <label><input type="radio" name="q9" value="C"> C) Porque os homens decidiram honrá-Lo acima dos outros seres.</label>
+                <label><input type="radio" name="q9" value="D"> D) Apenas porque Ele criou a Terra e os seres vivos.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q10">10) Conforme 1 Coríntios 10.31, qual deve ser o nosso objetivo ao comer, beber ou fazer qualquer outra coisa?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q10" value="A" required> A) Fazer tudo para a glória de Deus.</label>
+                <label><input type="radio" name="q10" value="B"> B) Fazer tudo para obter o reconhecimento das pessoas.</label>
+                <label><input type="radio" name="q10" value="C"> C) Satisfazer unicamente as nossas próprias vontades.</label>
+                <label><input type="radio" name="q10" value="D"> D) Buscar apenas a nossa própria felicidade e saúde.</label>
+            </div>
+        </div>
+
+        <div class="final-note">
+            Os 5 Princípios da Fé Reformada (Somente a Escritura, Somente Cristo, Somente a Graça, Somente a Fé e Somente a Deus a Glória) fundamentam nossa fé bíblica, lembrando-nos de que toda a salvação e a criação existem para glorificar ao único Deus verdadeiro!
+        </div>
+
         <div class="footer-info">
             <div class="field">
                 <label for="nomePessoa">Nome do Aluno:</label>
@@ -221,22 +182,127 @@
             </div>
         </div>
 
-        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 18</button>
-
+        <button type="button" id="btnCorrigir" class="btn-corrigir" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS</button>
+        <div id="resultado" class="resultado"></div>
+        <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
     </form>
 </div>
 
 <script>
-    function enviarFormulario(event) {
-        var btn = document.getElementById("btnEnviar");
-        btn.classList.add("sent");
-        btn.innerText = "ENVIANDO PELO EMAIL...";
-        
-        setTimeout(function(){
-            // O formulário seguirá com o envio via mailto
-        }, 500);
-    }
-</script>
+    var CACHE = 'licao18_cache';
+    var CAMPOS = ['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','nomePessoa','dataPreenchimento'];
 
+    function val(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+    function gravarCache() {
+        var dados = {};
+        CAMPOS.forEach(function(id) {
+            if (id.startsWith('q')) {
+                var sel = document.querySelector('input[name="' + id + '"]:checked');
+                dados[id] = sel ? sel.value : '';
+            } else {
+                dados[id] = val(id);
+            }
+        });
+        localStorage.setItem(CACHE, JSON.stringify(dados));
+    }
+    function lerCache() {
+        try {
+            var dados = JSON.parse(localStorage.getItem(CACHE) || 'null');
+            if (!dados) return;
+            CAMPOS.forEach(function(id) {
+                if (dados[id] != null) {
+                    if (id.startsWith('q')) {
+                        var el = document.querySelector('input[name="' + id + '"][value="' + dados[id] + '"]');
+                        if (el) el.checked = true;
+                    } else if (document.getElementById(id)) {
+                        document.getElementById(id).value = dados[id];
+                    }
+                }
+            });
+        } catch (e) {}
+    }
+
+    var GABARITO = { 
+        q1: 'B', 
+        q2: 'B', 
+        q3: 'C', 
+        q4: 'B', 
+        q5: 'A', 
+        q6: 'C', 
+        q7: 'C', 
+        q8: 'A',
+        q9: 'B',
+        q10: 'A'
+    };
+
+    function corrigirRespostas() {
+        var form = document.getElementById('discipuladoForm');
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+
+        var acertos = 0;
+        var total = Object.keys(GABARITO).length;
+
+        Object.keys(GABARITO).forEach(function(nome) {
+            var opcoes = document.querySelectorAll('input[name="' + nome + '"]');
+            var resposta = document.querySelector('input[name="' + nome + '"]:checked');
+
+            opcoes.forEach(function(input) {
+                input.parentElement.classList.remove('certa', 'errada');
+                if (input.value === GABARITO[nome]) {
+                    input.parentElement.classList.add('certa');
+                } else if (resposta && input.value === resposta.value) {
+                    input.parentElement.classList.add('errada');
+                }
+            });
+            if (resposta && resposta.value === GABARITO[nome]) { acertos++; }
+        });
+
+        var percentual = Math.round((acertos / total) * 100);
+        var resultado = document.getElementById('resultado');
+        resultado.style.display = 'block';
+        resultado.innerHTML = 'RESULTADO: ' + acertos + ' de ' + total + ' questões corretas (' + percentual + '%).';
+        gravarCache();
+    }
+
+    function baixarPdf() {
+        gravarCache();
+        var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
+        if (typeof html2pdf === 'undefined') { alert('Não foi possível carregar o gerador de PDF.'); return; }
+        var elemento = document.getElementById('licaoImpressao');
+        var btnPdf = document.getElementById('btnPdf');
+        var btnCorrigir = document.getElementById('btnCorrigir');
+        var resultado = document.getElementById('resultado');
+        
+        btnPdf.style.display = 'none';
+        btnCorrigir.style.display = 'none';
+        resultado.style.display = 'none';
+
+        html2pdf().set({
+            margin: [8, 8, 8, 8],
+            filename: 'Licao18-' + nome + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+            pagebreak: { mode: ['css', 'legacy'], avoid: ['.question-group', '.section-title', '.final-note'] },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).from(elemento).save().then(function() {
+            btnPdf.style.display = 'block';
+            btnCorrigir.style.display = 'block';
+            resultado.style.display = 'block';
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        lerCache();
+        CAMPOS.forEach(function(id) {
+            if (id.startsWith('q')) {
+                var els = document.querySelectorAll('input[name="' + id + '"]');
+                els.forEach(function(el) { el.addEventListener('change', gravarCache); });
+            } else {
+                var el = document.getElementById(id);
+                if (el) { el.addEventListener('input', gravarCache); el.addEventListener('change', gravarCache); }
+            }
+        });
+    });
+</script>
 </body>
 </html>
