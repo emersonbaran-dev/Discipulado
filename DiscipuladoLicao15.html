@@ -4,154 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discipulado Lição 15 - O Fruto do Espírito</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            font-size: 12pt;
+        @media print {
+            body { background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
+            .container { box-shadow: none !important; margin: 0 !important; max-width: none !important; width: 100% !important; }
+            #btnPdf, #btnCorrigir, #resultado { display: none !important; }
         }
-        .container {
-            max-width: 750px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #5C6368;
-        }
-        .header-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            min-height: 60px;
-        }
-        .header-container img {
-            position: absolute;
-            left: 0;
-            height: 60px;
-            width: auto;
-        }
-        .main-category {
-            text-align: center;
-            font-size: 16pt;
-            font-weight: bold;
-            color: #5C6368;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-        h1 {
-            color: #5C6368;
-            margin: 0;
-            font-size: 32px;
-            text-transform: uppercase;
-            text-align: center;
-        }
-        .subtitle {
-            text-align: center;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 20px;
-            font-size: 14pt;
-        }
-        .intro {
-            background-color: #f0f4f6;
-            border-left: 4px solid #5C6368;
-            padding: 12px 15px;
-            margin-bottom: 25px;
-            font-size: 11pt;
-        }
-        .section-title {
-            background-color: #5C6368;
-            color: white;
-            padding: 6px 12px;
-            font-size: 13pt;
-            font-weight: bold;
-            border-radius: 4px;
-            margin-top: 25px;
-            margin-bottom: 15px;
-        }
-        .question-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 6px;
-            color: #222;
-        }
-        input[type="text"], input[type="date"], textarea, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 11pt;
-            margin-top: 4px;
-        }
-        input[type="text"]:focus, textarea:focus, select:focus {
-            border-color: #5C6368;
-            outline: none;
-        }
-        .grid-2col {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px 15px;
-            margin-top: 8px;
-        }
-        .footer-info {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-        }
-        .footer-info .field {
-            flex: 1;
-        }
-        .btn-submit {
-            width: 100%;
-            background-color: #5C6368;
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 4px;
-            font-size: 12pt;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 25px;
-            transition: background-color 0.3s ease;
-        }
-        .btn-submit:hover {
-            background-color: #464b4f;
-        }
-        .btn-submit.sent {
-            background-color: #202224 !important;
-            cursor: default;
-        }
-        .final-note {
-            text-align: center;
-            font-weight: bold;
-            color: #5C6368;
-            background-color: #f0f4f6;
-            padding: 15px;
-            border-radius: 6px;
-            border: 1px solid #e0e0e0;
-            margin-top: 25px;
-            font-size: 11pt;
-            line-height: 1.5;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; margin: 0; padding: 20px; font-size: 12pt; }
+        .container { max-width: 750px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-top: 6px solid #E65100; }
+        .header-container { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; min-height: 60px; }
+        .header-container img { position: absolute; left: 0; height: 60px; width: auto; }
+        .main-category { text-align: center; font-size: 16pt; font-weight: bold; color: #E65100; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        h1 { color: #E65100; margin: 0; font-size: 32px; text-transform: uppercase; text-align: center; }
+        .subtitle { text-align: center; font-weight: bold; color: #555; margin-bottom: 20px; font-size: 14pt; }
+        .intro { background-color: #fff3e0; border-left: 4px solid #E65100; padding: 12px 15px; margin-bottom: 25px; font-size: 11pt; }
+        .section-title { background-color: #E65100; color: white; padding: 6px 12px; font-size: 13pt; font-weight: bold; border-radius: 4px; margin-top: 25px; margin-bottom: 15px; }
+        .question-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 6px; color: #222; }
+        input[type="text"], input[type="date"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 11pt; margin-top: 4px; }
+        .footer-info { display: flex; gap: 15px; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
+        .footer-info .field { flex: 1; }
+        .btn-pdf { width: 100%; background-color: #ef6c00; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .alternativas { margin-top: 8px; }
+        .alternativas label { display: block; padding: 8px 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; font-weight: normal; cursor: pointer; }
+        .alternativas label input { margin-right: 8px; }
+        .alternativas label.certa { background-color: #d9f2df !important; border-color: #28a745 !important; color: #176b2c !important; }
+        .alternativas label.errada { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #842029 !important; }
+        .btn-corrigir { width: 100%; background-color: #2e7d32; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 25px; }
+        .resultado { display: none; margin-top: 15px; padding: 15px; text-align: center; font-size: 14pt; font-weight: bold; border-radius: 6px; border: 1px solid #ddd; background: #f7f7f7; }
+        .final-note { text-align: center; font-weight: bold; color: #E65100; background-color: #fff3e0; padding: 15px; border-radius: 6px; border: 1px solid #ffe0b2; margin-top: 25px; font-size: 11pt; line-height: 1.5; }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="licaoImpressao">
     <div class="main-category">AMADURECIMENTO</div>
     
     <div class="header-container">
@@ -164,54 +51,50 @@
         O Fruto do Espírito (Gl 5.16-26) são condições que o Senhor concede ao crente em Cristo de viver dentro da vontade divina, principalmente, nos relacionamentos com o próximo. Vejamos:
     </div>
 
-    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
-        
+    <form id="discipuladoForm">
         <!-- SEÇÃO A -->
         <div class="section-title">A – UMA LUTA FORTE</div>
 
         <div class="question-group">
-            <label for="q1a">O que devemos fazer (v. 16a):</label>
-            <input type="text" id="q1a" name="1a. O que devemos fazer (v. 16a)" required>
+            <label for="q1">1) O que devemos fazer e o que jamais devemos satisfazer segundo Gálatas 5.16?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q1" value="A" required> A) Andar no Espírito e não satisfazer a concupiscência da carne.</label>
+                <label><input type="radio" name="q1" value="B"> B) Seguir as tradições e não falhar nos jejuns.</label>
+                <label><input type="radio" name="q1" value="C"> C) Buscar riquezas terrenas e não aceitar limitações.</label>
+                <label><input type="radio" name="q1" value="D"> D) Confiar nos homens e não olhar os próprios erros.</label>
+            </div>
         </div>
 
         <div class="question-group">
-            <label for="q1b">O que jamais fazer (v. 16b):</label>
-            <input type="text" id="q1b" name="1b. O que jamais fazer (v. 16b)" required>
+            <label for="q2">2) Quem milita contra quem em Gálatas 5.17 e por quê?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q2" value="A" required> A) A razão contra a emoção, para gerar equilíbrio interior.</label>
+                <label><input type="radio" name="q2" value="B"> B) A carne contra o Espírito e o Espírito contra a carne, para que não façamos o que queremos.</label>
+                <label><input type="radio" name="q2" value="C"> C) O mundo contra a igreja, para impedir o avanço da fé.</label>
+                <label><input type="radio" name="q2" value="D"> D) A mente contra o corpo, para dominar as fraquezas físicas.</label>
+            </div>
         </div>
 
         <div class="question-group">
-            <label for="q2">Quem milita contra quem e por quê? (v. 17)</label>
-            <textarea id="q2" name="2. Quem milita contra quem e por que (v. 17)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q3">Quem não está sob o jugo da lei? (v. 18)</label>
-            <textarea id="q3" name="3. Quem nao esta sob o jugo da lei (v. 18)" rows="2" required></textarea>
+            <label for="q3">3) Quem não está debaixo da lei de acordo com Gálatas 5.18?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q3" value="A" required> A) Aqueles que guardam todos os rituais antigos.</label>
+                <label><input type="radio" name="q3" value="B"> B) Aqueles que não cometem falhas visíveis.</label>
+                <label><input type="radio" name="q3" value="C"> C) Aqueles que são guiados pelo Espírito.</label>
+                <label><input type="radio" name="q3" value="D"> D) Aqueles que vivem isolados do mundo.</label>
+            </div>
         </div>
 
         <!-- SEÇÃO B -->
         <div class="section-title">B – AS OBRAS DA CARNE</div>
 
         <div class="question-group">
-            <label>Quais são as obras da carne? (v. 19-21)</label>
-            <div class="grid-2col">
-                <div><input type="text" name="Obra da carne 1" placeholder="1)" required></div>
-                <div><input type="text" name="Obra da carne 2" placeholder="2)" required></div>
-                <div><input type="text" name="Obra da carne 3" placeholder="3)" required></div>
-                <div><input type="text" name="Obra da carne 4" placeholder="4)" required></div>
-                <div><input type="text" name="Obra da carne 5" placeholder="5)" required></div>
-                <div><input type="text" name="Obra da carne 6" placeholder="6)" required></div>
-                <div><input type="text" name="Obra da carne 7" placeholder="7)" required></div>
-                <div><input type="text" name="Obra da carne 8" placeholder="8)" required></div>
-                <div><input type="text" name="Obra da carne 9" placeholder="9)" required></div>
-                <div><input type="text" name="Obra da carne 10" placeholder="10)" required></div>
-                <div><input type="text" name="Obra da carne 11" placeholder="11)" required></div>
-                <div><input type="text" name="Obra da carne 12" placeholder="12)" required></div>
-                <div><input type="text" name="Obra da carne 13" placeholder="13)" required></div>
-                <div><input type="text" name="Obra da carne 14" placeholder="14)" required></div>
-            </div>
-            <div style="margin-top: 10px;">
-                <input type="text" name="Obra da carne 15" placeholder="15)" required>
+            <label for="q4">4) Quais destas atitudes representam corretamente obras da carne citadas em Gálatas 5.19-21?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q4" value="A" required> A) Amor, alegria, paz e longanimidade.</label>
+                <label><input type="radio" name="q4" value="B"> B) Oração, jejum, generosidade e domínio próprio.</label>
+                <label><input type="radio" name="q4" value="C"> C) Sabedoria, discernimento, fé e perseverança.</label>
+                <label><input type="radio" name="q4" value="D"> D) Prostituição, impureza, feitiçaria, inimizades e invejas.</label>
             </div>
         </div>
 
@@ -219,42 +102,49 @@
         <div class="section-title">C – O FRUTO DO ESPÍRITO</div>
 
         <div class="question-group">
-            <label>Quais são as características do Fruto do Espírito? (v. 22,23)</label>
-            <div class="grid-2col">
-                <div><input type="text" name="Fruto do Espirito 1" placeholder="1)" required></div>
-                <div><input type="text" name="Fruto do Espirito 2" placeholder="2)" required></div>
-                <div><input type="text" name="Fruto do Espirito 3" placeholder="3)" required></div>
-                <div><input type="text" name="Fruto do Espirito 4" placeholder="4)" required></div>
-                <div><input type="text" name="Fruto do Espirito 5" placeholder="5)" required></div>
-                <div><input type="text" name="Fruto do Espirito 6" placeholder="6)" required></div>
-                <div><input type="text" name="Fruto do Espirito 7" placeholder="7)" required></div>
-                <div><input type="text" name="Fruto do Espirito 8" placeholder="8)" required></div>
-            </div>
-            <div style="margin-top: 10px;">
-                <input type="text" name="Fruto do Espirito 9" placeholder="9)" required>
+            <label for="q5">5) Quais são as 9 virtudes que compõem o Fruto do Espírito em Gálatas 5.22,23?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q5" value="A" required> A) Amor, alegria, paz, longanimidade, benignidade, bondade, fidelidade, mansidão e domínio próprio.</label>
+                <label><input type="radio" name="q5" value="B"> B) Fama, riqueza, poder, sucesso, honra, autoridade, beleza, conhecimento e força.</label>
+                <label><input type="radio" name="q5" value="C"> C) Orgulho, coragem, ambição, justiça, conhecimento, zelo, disciplina, rigor e altivez.</label>
+                <label><input type="radio" name="q5" value="D"> D) Jejum, esmola, oração, sacrifício, virtude, tradição, dízimo, vigília e penitência.</label>
             </div>
         </div>
 
         <div class="question-group">
-            <label for="q6">Quem está com Cristo, o que crucificou? (v. 24)</label>
-            <textarea id="q6" name="6. Quem esta com Cristo o que crucificou (v. 24)" rows="2" required></textarea>
+            <label for="q6">6) O que fizeram com a carne aqueles que pertencem a Cristo Jesus? (Gl 5.24)</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q6" value="A" required> A) Esconderam suas paixões para aparentar santidade.</label>
+                <label><input type="radio" name="q6" value="B"> B) Crucificaram a carne com as suas paixões e concupiscências.</label>
+                <label><input type="radio" name="q6" value="C"> C) Ignoraram os desejos terrenos até que desaparecessem.</label>
+                <label><input type="radio" name="q6" value="D"> D) Tentaram purificar a carne por meio de rituais humanos.</label>
+            </div>
         </div>
 
         <div class="question-group">
-            <label for="q7">O que vive no Espírito o que deve fazer? (v. 25)</label>
-            <textarea id="q7" name="7. O que vive no Espirito o que deve fazer (v. 25)" rows="2" required></textarea>
+            <label for="q7">7) Se vivemos no Espírito, qual deve ser a nossa conduta diária? (Gl 5.25)</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q7" value="A" required> A) Devemos julgar as falhas dos irmãos fracos.</label>
+                <label><input type="radio" name="q7" value="B"> B) Devemos buscar o reconhecimento dos líderes da igreja.</label>
+                <label><input type="radio" name="q7" value="C"> C) Devemos andar também no Espírito.</label>
+                <label><input type="radio" name="q7" value="D"> D) Devemos isolar-nos das pessoas não convertidas.</label>
+            </div>
         </div>
 
         <div class="question-group">
-            <label for="q8">8) Cite as três atitudes de andar no Espírito (v. 26):</label>
-            <textarea id="q8" name="8. Tres atitudes de andar no Espirito (v. 26)" rows="3" required></textarea>
+            <label for="q8">8) Quais são as três atitudes que devemos evitar ao andar no Espírito segundo Gálatas 5.26?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q8" value="A" required> A) Não nos tornarmos vangloriosos, não provocando uns aos outros e não tendo inveja uns dos outros.</label>
+                <label><input type="radio" name="q8" value="B"> B) Não duvidar, não temer o futuro e não abandonar os cultos da igreja.</label>
+                <label><input type="radio" name="q8" value="C"> C) Não desobedecer aos líderes, não deixar de dizimar e não questionar ritos.</label>
+                <label><input type="radio" name="q8" value="D"> D) Não perder a paciência, não se calar diante do erro e não hesitar.</label>
+            </div>
         </div>
 
         <div class="final-note">
             Como vimos, o que o Senhor requer de seus filhos é que vivam de acordo com o que Ele concedeu, habilitados com a graça e força divina para cumprir a vontade de Deus.
         </div>
 
-        <!-- DADOS FINAIS -->
         <div class="footer-info">
             <div class="field">
                 <label for="nomePessoa">Nome do Aluno:</label>
@@ -266,22 +156,125 @@
             </div>
         </div>
 
-        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 15</button>
-
+        <button type="button" id="btnCorrigir" class="btn-corrigir" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS</button>
+        <div id="resultado" class="resultado"></div>
+        <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
     </form>
 </div>
 
 <script>
-    function enviarFormulario(event) {
-        var btn = document.getElementById("btnEnviar");
-        btn.classList.add("sent");
-        btn.innerText = "ENVIANDO PELO EMAIL...";
-        
-        setTimeout(function(){
-            // O formulário continuará seu curso natural de envio
-        }, 500);
-    }
-</script>
+    var CACHE = 'licao15_cache';
+    var CAMPOS = ['q1','q2','q3','q4','q5','q6','q7','q8','nomePessoa','dataPreenchimento'];
 
+    function val(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+    function gravarCache() {
+        var dados = {};
+        CAMPOS.forEach(function(id) {
+            if (id.startsWith('q')) {
+                var sel = document.querySelector('input[name="' + id + '"]:checked');
+                dados[id] = sel ? sel.value : '';
+            } else {
+                dados[id] = val(id);
+            }
+        });
+        localStorage.setItem(CACHE, JSON.stringify(dados));
+    }
+    function lerCache() {
+        try {
+            var dados = JSON.parse(localStorage.getItem(CACHE) || 'null');
+            if (!dados) return;
+            CAMPOS.forEach(function(id) {
+                if (dados[id] != null) {
+                    if (id.startsWith('q')) {
+                        var el = document.querySelector('input[name="' + id + '"][value="' + dados[id] + '"]');
+                        if (el) el.checked = true;
+                    } else if (document.getElementById(id)) {
+                        document.getElementById(id).value = dados[id];
+                    }
+                }
+            });
+        } catch (e) {}
+    }
+
+    var GABARITO = { 
+        q1: 'A', 
+        q2: 'B', 
+        q3: 'C', 
+        q4: 'D', 
+        q5: 'A', 
+        q6: 'B', 
+        q7: 'C', 
+        q8: 'A' 
+    };
+
+    function corrigirRespostas() {
+        var form = document.getElementById('discipuladoForm');
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+
+        var acertos = 0;
+        var total = Object.keys(GABARITO).length;
+
+        Object.keys(GABARITO).forEach(function(nome) {
+            var opcoes = document.querySelectorAll('input[name="' + nome + '"]');
+            var resposta = document.querySelector('input[name="' + nome + '"]:checked');
+
+            opcoes.forEach(function(input) {
+                input.parentElement.classList.remove('certa', 'errada');
+                if (input.value === GABARITO[nome]) {
+                    input.parentElement.classList.add('certa');
+                } else if (resposta && input.value === resposta.value) {
+                    input.parentElement.classList.add('errada');
+                }
+            });
+            if (resposta && resposta.value === GABARITO[nome]) { acertos++; }
+        });
+
+        var percentual = Math.round((acertos / total) * 100);
+        var resultado = document.getElementById('resultado');
+        resultado.style.display = 'block';
+        resultado.innerHTML = 'RESULTADO: ' + acertos + ' de ' + total + ' questões corretas (' + percentual + '%).';
+        gravarCache();
+    }
+
+    function baixarPdf() {
+        gravarCache();
+        var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
+        if (typeof html2pdf === 'undefined') { alert('Não foi possível carregar o gerador de PDF.'); return; }
+        var elemento = document.getElementById('licaoImpressao');
+        var btnPdf = document.getElementById('btnPdf');
+        var btnCorrigir = document.getElementById('btnCorrigir');
+        var resultado = document.getElementById('resultado');
+        
+        btnPdf.style.display = 'none';
+        btnCorrigir.style.display = 'none';
+        resultado.style.display = 'none';
+
+        html2pdf().set({
+            margin: [8, 8, 8, 8],
+            filename: 'Licao15-' + nome + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+            pagebreak: { mode: ['css', 'legacy'], avoid: ['.question-group', '.section-title', '.final-note'] },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).from(elemento).save().then(function() {
+            btnPdf.style.display = 'block';
+            btnCorrigir.style.display = 'block';
+            resultado.style.display = 'block';
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        lerCache();
+        CAMPOS.forEach(function(id) {
+            if (id.startsWith('q')) {
+                var els = document.querySelectorAll('input[name="' + id + '"]');
+                els.forEach(function(el) { el.addEventListener('change', gravarCache); });
+            } else {
+                var el = document.getElementById(id);
+                if (el) { el.addEventListener('input', gravarCache); el.addEventListener('change', gravarCache); }
+            }
+        });
+    });
+</script>
 </body>
 </html>
