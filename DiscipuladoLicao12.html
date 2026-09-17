@@ -4,159 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discipulado Lição 12 - Deus Espírito Santo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            font-size: 12pt;
+        @media print {
+            body { background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
+            .container { box-shadow: none !important; margin: 0 !important; max-width: none !important; width: 100% !important; }
+            #btnPdf, #btnCorrigir, #resultado { display: none !important; }
         }
-        .container {
-            max-width: 750px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #3B6373;
-        }
-        .header-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            min-height: 60px;
-        }
-        .header-container img {
-            position: absolute;
-            left: 0;
-            height: 60px;
-            width: auto;
-        }
-        .main-category {
-            text-align: center;
-            font-size: 16pt;
-            font-weight: bold;
-            color: #3B6373;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-        h1 {
-            color: #3B6373;
-            margin: 0;
-            font-size: 32px;
-            text-transform: uppercase;
-            text-align: center;
-        }
-        .subtitle {
-            text-align: center;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 20px;
-            font-size: 14pt;
-        }
-        .intro {
-            background-color: #f0f4f6;
-            border-left: 4px solid #3B6373;
-            padding: 12px 15px;
-            margin-bottom: 25px;
-            font-size: 11pt;
-        }
-        .section-title {
-            background-color: #3B6373;
-            color: white;
-            padding: 6px 12px;
-            font-size: 13pt;
-            font-weight: bold;
-            border-radius: 4px;
-            margin-top: 25px;
-            margin-bottom: 15px;
-        }
-        .question-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 6px;
-            color: #222;
-        }
-        input[type="text"], input[type="date"], textarea, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 11pt;
-            margin-top: 4px;
-        }
-        input[type="text"]:focus, textarea:focus, select:focus {
-            border-color: #3B6373;
-            outline: none;
-        }
-        .match-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-        .match-row select {
-            width: 80px;
-            margin-top: 0;
-        }
-        .footer-info {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-        }
-        .footer-info .field {
-            flex: 1;
-        }
-        .btn-submit {
-            width: 100%;
-            background-color: #3B6373;
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 4px;
-            font-size: 12pt;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 25px;
-            transition: background-color 0.3s ease;
-        }
-        .btn-submit:hover {
-            background-color: #294753;
-        }
-        .btn-submit.sent {
-            background-color: #1a2d35 !important;
-            cursor: default;
-        }
-        .final-note {
-            text-align: center;
-            font-weight: bold;
-            color: #3B6373;
-            background-color: #f0f4f6;
-            padding: 15px;
-            border-radius: 6px;
-            border: 1px solid #e0e0e0;
-            margin-top: 25px;
-            font-size: 11pt;
-            line-height: 1.5;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; margin: 0; padding: 20px; font-size: 12pt; }
+        .container { max-width: 750px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-top: 6px solid #B71C1C; }
+        .header-container { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; min-height: 60px; }
+        .header-container img { position: absolute; left: 0; height: 60px; width: auto; }
+        .main-category { text-align: center; font-size: 16pt; font-weight: bold; color: #B71C1C; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        h1 { color: #B71C1C; margin: 0; font-size: 32px; text-transform: uppercase; text-align: center; }
+        .subtitle { text-align: center; font-weight: bold; color: #555; margin-bottom: 20px; font-size: 14pt; }
+        .intro { background-color: #fdf2f2; border-left: 4px solid #B71C1C; padding: 12px 15px; margin-bottom: 25px; font-size: 11pt; }
+        .section-title { background-color: #B71C1C; color: white; padding: 6px 12px; font-size: 13pt; font-weight: bold; border-radius: 4px; margin-top: 25px; margin-bottom: 15px; }
+        .question-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 6px; color: #222; }
+        input[type="text"], input[type="date"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 11pt; margin-top: 4px; }
+        .footer-info { display: flex; gap: 15px; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
+        .footer-info .field { flex: 1; }
+        .btn-pdf { width: 100%; background-color: #7f0000; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .alternativas { margin-top: 8px; }
+        .alternativas label { display: block; padding: 8px 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; font-weight: normal; cursor: pointer; }
+        .alternativas label input { margin-right: 8px; }
+        .alternativas label.certa { background-color: #d9f2df !important; border-color: #28a745 !important; color: #176b2c !important; }
+        .alternativas label.errada { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #842029 !important; }
+        .btn-corrigir { width: 100%; background-color: #2e7d32; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 25px; }
+        .resultado { display: none; margin-top: 15px; padding: 15px; text-align: center; font-size: 14pt; font-weight: bold; border-radius: 6px; border: 1px solid #ddd; background: #f7f7f7; }
+        .final-note { text-align: center; font-weight: bold; color: #B71C1C; background-color: #fdf2f2; padding: 15px; border-radius: 6px; border: 1px solid #e0e0e0; margin-top: 25px; font-size: 12pt; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="main-category">ELE É DEUS!</div>
+<div class="container" id="licaoImpressao">
+    <div class="main-category">NOSSO CAPACITADOR!</div>
     
     <div class="header-container">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
@@ -165,133 +48,88 @@
     <div class="subtitle">DEUS ESPÍRITO SANTO</div>
     
     <div class="intro">
-        O Espírito Santo é a terceira pessoa da Trindade. Ele é uma pessoa divina que, dentro da trindade, executa na vida dos eleitos remidos por Cristo a preciosa salvação.
+        O Espírito Santo é a terceira pessoa da Trindade que habita no crente, consolando, guiando e capacitando para o serviço.
     </div>
 
-    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
-        
-        <!-- SEÇÃO I -->
-        <div class="section-title">I – A VIDA DO ESPÍRITO SANTO</div>
-
-        <div class="intro" style="border-left-color: #555; background-color: #f9f9f9; margin-bottom: 15px;">
-            Muitos pensam que o Espírito Santo é uma fonte de energia que serve para carregar as forças do crente. Porém, o Espírito Santo é Deus e faz parte da trindade divina. Vejamos como Deus:
-        </div>
+    <form id="discipuladoForm">
+        <div class="section-title">I - A PESSOA DO ESPÍRITO SANTO</div>
 
         <div class="question-group">
-            <label>1) Relacione as características de Deus nos versos abaixo:</label>
-            <div style="margin-bottom: 10px; font-size: 11pt; color: #555;">
-                (A) Lc 1.35 | (B) 1Co 2.10
-            </div>
-
-            <div class="match-row">
-                <select name="1. Caracteristica - Perscruta" required>
-                    <option value="">--</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                </select>
-                <span>Perscruta</span>
-            </div>
-
-            <div class="match-row">
-                <select name="1. Caracteristica - Da vida" required>
-                    <option value="">--</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                </select>
-                <span>Dá vida</span>
-            </div>
-        </div>
-
-        <div class="intro" style="border-left-color: #555; background-color: #f9f9f9; margin-bottom: 15px;">
-            Sendo Deus, o Espírito Santo é também uma pessoa com características próprias de uma pessoa, ou seja, Ele se relaciona e tem vontade. Assim, veremos os versos abaixo:
-        </div>
-
-        <div class="question-group">
-            <label>2) Relacione as características de pessoa nos versos:</label>
-            <div style="margin-bottom: 10px; font-size: 11pt; color: #555;">
-                (A) At 13.2 | (B) At 20.28
-            </div>
-
-            <div class="match-row">
-                <select name="2. Caracteristica - Chama" required>
-                    <option value="">--</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                </select>
-                <span>Chama</span>
-            </div>
-
-            <div class="match-row">
-                <select name="2. Caracteristica - Constitui bispos" required>
-                    <option value="">--</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                </select>
-                <span>Constitui bispos</span>
-            </div>
-        </div>
-
-        <!-- SEÇÃO II -->
-        <div class="section-title">II - A OBRA DO ESPÍRITO SANTO</div>
-
-        <div class="question-group">
-            <label for="q3">3) O que o Espírito Santo faz na vida da pessoa? (Jo 3.3,6)</label>
-            <textarea id="q3" name="3. O que o Espirito Santo faz na vida da pessoa (Jo 3.3,6)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q4">4) Qual outra promessa de Jesus? (Jo 14.16)</label>
-            <textarea id="q4" name="4. Qual outra promessa de Jesus (Jo 14.16)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q5">5) De acordo com Rm 8.16, o que o Espírito Santo faz em nós?</label>
-            <textarea id="q5" name="5. O que o Espirito Santo faz em nos (Rm 8.16)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q6">6) E o que o Espírito Santo faz no Corpo de Cristo? (1Co 12.4-7)</label>
-            <textarea id="q6" name="6. O que o Espirito Santo faz no Corpo de Cristo (1Co 12.4-7)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label>7) Relacione as colunas com o que o Espírito Santo faz em nós:</label>
-            <div style="margin-bottom: 10px; font-size: 11pt; color: #555;">
-                (A) Ef 1.14 | (B) Ef 4.30
-            </div>
-
-            <div class="match-row">
-                <select name="7. Acao - Sela" required>
-                    <option value="">--</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                </select>
-                <span>Sela</span>
-            </div>
-
-            <div class="match-row">
-                <select name="7. Acao - Penhor" required>
-                    <option value="">--</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                </select>
-                <span>Penhor</span>
+            <label for="q1">1) De acordo com Atos 5.3-4, qual é a natureza divina do Espírito Santo demonstrada no caso de Ananias?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q1" value="A" required> A) Ele é apenas uma força impessoal.</label>
+                <label><input type="radio" name="q1" value="B"> B) Ele é Deus, pois mentir a Ele é mentir a Deus.</label>
+                <label><input type="radio" name="q1" value="C"> C) Ele é um anjo de elevada hierarquia.</label>
+                <label><input type="radio" name="q1" value="D"> D) Ele é um símbolo da sabedoria humana.</label>
             </div>
         </div>
 
         <div class="question-group">
-            <label for="q8">8) De acordo com Tt 3.4-6, quem foi derramado sobre nós para regeneração?</label>
-            <div style="font-style: italic; margin-bottom: 8px; color: #444; font-size: 10.5pt;">
-                “⁴ Quando, porém, se manifestou a benignidade de Deus, nosso Salvador, e o seu amor para com todos, ⁵ não por obras de justiça praticadas por nós, mas segundo sua misericórdia, ele nos salvou mediante o lavar regenerador e renovador do Espírito Santo, ⁶ que ele derramou sobre nós ricamente, por meio de Jesus Cristo, nosso Salvador,” Tt 3:4-6
+            <label for="q2">2) Em João 14.16-17, como Jesus se refere ao Espírito Santo e qual a Sua relação com os discípulos?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q2" value="A" required> A) Um líder humano para a igreja visível.</label>
+                <label><input type="radio" name="q2" value="B"> B) Um mandamento ritualístico temporário.</label>
+                <label><input type="radio" name="q2" value="C"> C) O Consolador que habita e permanece para sempre nos crentes.</label>
+                <label><input type="radio" name="q2" value="D"> D) Uma visão profética reservada ao fim dos tempos.</label>
             </div>
-            <input type="text" id="q8" name="8. Quem foi derramado sobre nos (Tt 3.4-6)" required>
+        </div>
+
+        <div class="question-group">
+            <label for="q3">3) Conforme 1 Coríntios 2.10-11, qual atributo pessoal revela que o Espírito Santo não é uma força energia imaterial, mas uma Pessoa divina?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q3" value="A" required> A) Ele possui onisciência, sondando até as profundezas de Deus.</label>
+                <label><input type="radio" name="q3" value="B"> B) Ele é limitado aos pensamentos dos apóstolos.</label>
+                <label><input type="radio" name="q3" value="C"> C) Ele precisa da mente humana para compreender a criação.</label>
+                <label><input type="radio" name="q3" value="D"> D) Ele atua apenas através das forças da natureza.</label>
+            </div>
+        </div>
+
+        <div class="section-title">II - A OBRA E O FRUTO DO ESPÍRITO SANTO</div>
+
+        <div class="question-group">
+            <label for="q4">4) Segundo João 16.8, qual é a tríplice obra de convicção do Espírito Santo no mundo?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q4" value="A" required> A) Promover prosperidade, saúde e sucesso material.</label>
+                <label><input type="radio" name="q4" value="B"> B) Trazer medo, desespero e condenação sem esperança.</label>
+                <label><input type="radio" name="q4" value="C"> C) Exigir sacrifícios, rituais e obras da lei.</label>
+                <label><input type="radio" name="q4" value="D"> D) Convencer do pecado, da justiça e do juízo.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q5">5) Qual é o papel do Espírito Santo no novo nascimento, segundo João 3.5-6 e Tito 3.5?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q5" value="A" required> A) Regenerar e renovar o ser humano espiritualmente.</label>
+                <label><input type="radio" name="q5" value="B"> B) Purificar apenas a conduta exterior do indivíduo.</label>
+                <label><input type="radio" name="q5" value="C"> C) Conceder bênçãos terrenas por mérito humano.</label>
+                <label><input type="radio" name="q5" value="D"> D) Garantir conhecimento intelectual sobre a Bíblia.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q6">6) De acordo com Gálatas 5.22-23, o que é produzido na vida do crente guiado pelo Espírito Santo?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q6" value="A" required> A) Apenas o dom de realizar milagres visíveis.</label>
+                <label><input type="radio" name="q6" value="B"> B) Status e autoridade de liderança na igreja.</label>
+                <label><input type="radio" name="q6" value="C"> C) O fruto do Espírito, como amor, alegria, paz e domínio próprio.</label>
+                <label><input type="radio" name="q6" value="D"> D) Isenção total de tentações e sofrimentos diários.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q7">7) Qual é o propósito primordial da concessão dos dons espirituais pelo Espírito Santo, de acordo com 1 Coríntios 12.7 e 1 Pedro 4.10?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q7" value="A" required> A) Engrandecer e projetar o cristão pessoalmente.</label>
+                <label><input type="radio" name="q7" value="B"> B) Edificar a igreja e servir ao próximo para a glória de Deus.</label>
+                <label><input type="radio" name="q7" value="C"> C) Substituir a necessidade da leitura da Palavra.</label>
+                <label><input type="radio" name="q7" value="D"> D) Garantir autoridade política e civil aos membros.</label>
+            </div>
         </div>
 
         <div class="final-note">
-            O Espírito Santo é a terceira pessoa dentro da Trindade Santa, sendo, claro, verdadeiro Deus. Ele é que esteve na criação, opera a regeneração na vida dos seus eleitos e remidos de Cristo, garante a salvação e atua na vida de cada crente dentro da família de Deus para realizar o serviço de dedicação a Ele e uns para com os outros. Portanto, deve ser adorado e servido com intensidade de coração.
+            O Espírito Santo é o próprio Deus habitando em nós. Ele nos regenera, nos capacita com dons e produz em nós um caráter semelhante ao de Cristo para servirmos à igreja e ao mundo!
         </div>
 
-        <!-- DADOS FINAIS -->
         <div class="footer-info">
             <div class="field">
                 <label for="nomePessoa">Nome do Aluno:</label>
@@ -303,22 +141,97 @@
             </div>
         </div>
 
-        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 12</button>
-
+        <button type="button" id="btnCorrigir" class="btn-corrigir" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS</button>
+        <div id="resultado" class="resultado"></div>
+        <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
     </form>
 </div>
 
 <script>
-    function enviarFormulario(event) {
-        var btn = document.getElementById("btnEnviar");
-        btn.classList.add("sent");
-        btn.innerText = "ENVIANDO PELO EMAIL...";
-        
-        setTimeout(function(){
-            // O formulário continuará seu curso natural de envio
-        }, 500);
-    }
-</script>
+    var CACHE = 'licao12_cache';
+    var CAMPOS = ['q1','q2','q3','q4','q5','q6','q7','nomePessoa','dataPreenchimento'];
 
+    function val(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+    function gravarCache() {
+        var dados = {};
+        CAMPOS.forEach(function(id) { dados[id] = val(id); });
+        localStorage.setItem(CACHE, JSON.stringify(dados));
+    }
+    function lerCache() {
+        try {
+            var dados = JSON.parse(localStorage.getItem(CACHE) || 'null');
+            if (!dados) return;
+            CAMPOS.forEach(function(id) {
+                if (dados[id] != null && document.getElementById(id)) { document.getElementById(id).value = dados[id]; }
+            });
+        } catch (e) {}
+    }
+
+    var GABARITO = { q1: 'B', q2: 'C', q3: 'A', q4: 'D', q5: 'A', q6: 'C', q7: 'B' };
+
+    function corrigirRespostas() {
+        var form = document.getElementById('discipuladoForm');
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+
+        var acertos = 0;
+        var total = Object.keys(GABARITO).length;
+
+        Object.keys(GABARITO).forEach(function(nome) {
+            var opcoes = document.querySelectorAll('input[name="' + nome + '"]');
+            var resposta = document.querySelector('input[name="' + nome + '"]:checked');
+
+            opcoes.forEach(function(input) {
+                input.parentElement.classList.remove('certa', 'errada');
+                if (input.value === GABARITO[nome]) {
+                    input.parentElement.classList.add('certa');
+                } else if (resposta && input.value === resposta.value) {
+                    input.parentElement.classList.add('errada');
+                }
+            });
+            if (resposta && resposta.value === GABARITO[nome]) { acertos++; }
+        });
+
+        var percentual = Math.round((acertos / total) * 100);
+        var resultado = document.getElementById('resultado');
+        resultado.style.display = 'block';
+        resultado.innerHTML = 'RESULTADO: ' + acertos + ' de ' + total + ' questões corretas (' + percentual + '%).';
+        gravarCache();
+    }
+
+    function baixarPdf() {
+        gravarCache();
+        var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
+        if (typeof html2pdf === 'undefined') { alert('Não foi possível carregar o gerador de PDF.'); return; }
+        var elemento = document.getElementById('licaoImpressao');
+        var btnPdf = document.getElementById('btnPdf');
+        var btnCorrigir = document.getElementById('btnCorrigir');
+        var resultado = document.getElementById('resultado');
+        
+        btnPdf.style.display = 'none';
+        btnCorrigir.style.display = 'none';
+        resultado.style.display = 'none';
+
+        html2pdf().set({
+            margin: [8, 8, 8, 8],
+            filename: 'Licao12-' + nome + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+            pagebreak: { mode: ['css', 'legacy'], avoid: ['.question-group', '.section-title', '.final-note'] },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).from(elemento).save().then(function() {
+            btnPdf.style.display = 'block';
+            btnCorrigir.style.display = 'block';
+            resultado.style.display = 'block';
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        lerCache();
+        CAMPOS.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) { el.addEventListener('input', gravarCache); el.addEventListener('change', gravarCache); }
+        });
+    });
+</script>
 </body>
 </html>
