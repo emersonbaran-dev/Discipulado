@@ -3,208 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discipulado Lição 24 - Novos Céus e Nova Terra</title>
+    <title>Discipulado Lição 24 - A Igreja e o Compromisso</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            font-size: 12pt;
+        @media print {
+            body { background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
+            .container { box-shadow: none !important; margin: 0 !important; max-width: none !important; width: 100% !important; }
+            #btnPdf, #btnCorrigir, #resultado { display: none !important; }
         }
-        .container {
-            max-width: 750px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #4a6fa5;
-        }
-        .header-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            min-height: 60px;
-        }
-        .header-container img {
-            position: absolute;
-            left: 0;
-            height: 60px;
-            width: auto;
-        }
-        .main-category {
-            text-align: center;
-            font-size: 16pt;
-            font-weight: bold;
-            color: #4a6fa5;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-        h1 {
-            color: #4a6fa5;
-            margin: 0;
-            font-size: 32px;
-            text-transform: uppercase;
-            text-align: center;
-        }
-        .subtitle {
-            text-align: center;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 20px;
-            font-size: 14pt;
-        }
-        .intro {
-            background-color: #f0f4f6;
-            border-left: 4px solid #4a6fa5;
-            padding: 12px 15px;
-            margin-bottom: 25px;
-            font-size: 11pt;
-        }
-        .section-title {
-            background-color: #4a6fa5;
-            color: white;
-            padding: 6px 12px;
-            font-size: 13pt;
-            font-weight: bold;
-            border-radius: 4px;
-            margin-top: 25px;
-            margin-bottom: 15px;
-        }
-        .question-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 6px;
-            color: #222;
-        }
-        input[type="text"], input[type="date"], textarea, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 11pt;
-            margin-top: 4px;
-        }
-        input[type="text"]:focus, textarea:focus, select:focus {
-            border-color: #4a6fa5;
-            outline: none;
-        }
-        .radio-group {
-            display: flex;
-            gap: 20px;
-            margin-top: 8px;
-        }
-        .radio-group label {
-            font-weight: normal;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-        }
-        .radio-group input[type="radio"] {
-            margin: 0;
-            width: 16px;
-            height: 16px;
-        }
-        .footer-info {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-        }
-        .footer-info .field {
-            flex: 1;
-        }
-        .btn-submit {
-            width: 100%;
-            background-color: #4a6fa5;
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 4px;
-            font-size: 12pt;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 25px;
-            transition: background-color 0.3s ease;
-        }
-        .btn-submit:hover {
-            background-color: #385580;
-        }
-        .btn-submit.sent {
-            background-color: #202224 !important;
-            cursor: default;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; margin: 0; padding: 20px; font-size: 12pt; }
+        .container { max-width: 750px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-top: 6px solid #A1887F; }
+        .header-container { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; min-height: 60px; }
+        .header-container img { position: absolute; left: 0; height: 60px; width: auto; }
+        .main-category { text-align: center; font-size: 16pt; font-weight: bold; color: #A1887F; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        h1 { color: #A1887F; margin: 0; font-size: 32px; text-transform: uppercase; text-align: center; }
+        .subtitle { text-align: center; font-weight: bold; color: #555; margin-bottom: 20px; font-size: 14pt; }
+        .intro { background-color: #f6f3f2; border-left: 4px solid #A1887F; padding: 12px 15px; margin-bottom: 25px; font-size: 11pt; }
+        .section-title { background-color: #A1887F; color: white; padding: 6px 12px; font-size: 13pt; font-weight: bold; border-radius: 4px; margin-top: 25px; margin-bottom: 15px; }
+        .question-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 6px; color: #222; }
+        input[type="text"], input[type="date"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 11pt; margin-top: 4px; }
+        .footer-info { display: flex; gap: 15px; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
+        .footer-info .field { flex: 1; }
+        .btn-pdf { width: 100%; background-color: #8D6E63; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .alternativas { margin-top: 8px; }
+        .alternativas label { display: block; padding: 8px 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; font-weight: normal; cursor: pointer; }
+        .alternativas label input { margin-right: 8px; }
+        .alternativas label.certa { background-color: #d9f2df !important; border-color: #28a745 !important; color: #176b2c !important; }
+        .alternativas label.errada { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #842029 !important; }
+        .btn-corrigir { width: 100%; background-color: #2e7d32; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 25px; }
+        .resultado { display: none; margin-top: 15px; padding: 15px; text-align: center; font-size: 14pt; font-weight: bold; border-radius: 6px; border: 1px solid #ddd; background: #f7f7f7; }
+        .final-note { text-align: center; font-weight: bold; color: #A1887F; background-color: #f6f3f2; padding: 15px; border-radius: 6px; border: 1px solid #e0e0e0; margin-top: 25px; font-size: 12pt; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="main-category">ESCATOLOGIA E ESPERANÇA</div>
+<div class="container" id="licaoImpressao">
+    <div class="main-category">DISCIPULADO</div>
     
     <div class="header-container">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
         <h1>Lição 24</h1>
     </div>
-    <div class="subtitle">NOVOS CÉUS E NOVA TERRA</div>
+    <div class="subtitle">A IGREJA E O COMPROMISSO</div>
     
     <div class="intro">
-        O estado eterno dos salvos será de plena comunhão com Deus na criação totalmente restaurada. Nos Novos Céus e na Nova Terra, não haverá mais pecado, dor ou morte, e a glória do Senhor iluminará tudo para sempre.
+        Em Cristo, os salvos pertencem ao povo de Deus, que é a igreja do Senhor. Temos, portanto, várias orientações bíblicas que reportam aos compromissos daquele que é membro da igreja do Senhor, assim como os demais irmãos, tendo Cristo como cabeça.
     </div>
 
-    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
-        
+    <form id="discipuladoForm">
         <!-- SEÇÃO A -->
-        <div class="section-title">A – A RESTAURAÇÃO DE TODAS AS COISAS</div>
+        <div class="section-title">A – TORNAR-SE MEMBRO</div>
 
         <div class="question-group">
-            <label for="q1">1) O que a Bíblia ensina sobre a renovação da criação e a morada eterna dos remidos? (2Pe 3.13; Ap 21.1)</label>
-            <textarea id="q1" name="1. Renovação da criação (2Pe 3.13; Ap 21.1)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q2">2) Quais realidades dolorosas do mundo atual serão completamente eliminadas no estado eterno? (Ap 21.4; Ap 22.3)</label>
-            <textarea id="q2" name="2. Realidades eliminadas (Ap 21.4; Ap 22.3)" rows="2" required></textarea>
+            <label for="q1">1) Quais são as duas atitudes fundamentais para se tornar membro da igreja conforme Mateus 28.19 e Mateus 10.32?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q1" value="A" required> A) Ser batizado e confessar a Cristo diante dos homens.</label>
+                <label><input type="radio" name="q1" value="B"> B) Pagar mensalidades e assinar o livro de membros.</label>
+                <label><input type="radio" name="q1" value="C"> C) Fazer cursos de teologia e pregar publicamente.</label>
+                <label><input type="radio" name="q1" value="D"> D) Guardar rituais antigos e afastar-se do convívio social.</label>
+            </div>
         </div>
 
         <!-- SEÇÃO B -->
-        <div class="section-title">B – A VIDA NA PRESENÇA DE DEUS</div>
+        <div class="section-title">B – VIVER DE ACORDO COM O EVANGELHO</div>
 
         <div class="question-group">
-            <label for="q3">3) Qual é a maior benção reservada para os salvos nos Novos Céus e Nova Terra? (Ap 21.3; Ap 22.4)</label>
-            <textarea id="q3" name="3. Maior benção reservada (Ap 21.3; Ap 22.4)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q4">4) Quem são os que terão direito de habitar na Nova Jerusalém e os que ficarão de fora? (Ap 21.7,8,27; Ap 22.14,15)</label>
-            <textarea id="q4" name="4. Habitantes da Nova Jerusalém (Ap 21.7,8,27; Ap 22.14,15)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label>5) A esperança do céu e da eternidade com Deus tem fortalecido sua fé diante das aflições do presente?</label>
-            <div class="radio-group">
-                <label><input type="radio" name="5. Esperança do céu fortalece a fé" value="SIM" required> SIM</label>
-                <label><input type="radio" name="5. Esperança do céu fortalece a fé" value="NÃO" required> NÃO</label>
+            <label for="q2">2) Segundo 1 Coríntios 10.31, qual deve ser o objetivo do cristão em tudo o que faz?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q2" value="A" required> A) Alcançar sucesso pessoal e prestígio profissional.</label>
+                <label><input type="radio" name="q2" value="B"> B) Fazer tudo para a glória de Deus.</label>
+                <label><input type="radio" name="q2" value="C"> C) Buscar apenas o próprio bem-estar e prazer.</label>
+                <label><input type="radio" name="q2" value="D"> D) Obter a aprovação e elogios de todas as pessoas.</label>
             </div>
         </div>
 
         <div class="question-group">
-            <label for="q6">6) Ao concluir esta série de estudos do discipulado, qual o principal aprendizado ou transformação que Deus gerou em sua vida?</label>
-            <textarea id="q6" name="6. Principal aprendizado do discipulado" rows="3" required></textarea>
+            <label for="q3">3) Em Mateus 18.7, o que Jesus ensina sobre os escândalos no mundo?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q3" value="A" required> A) Os escândalos podem ser completamente evitados pelos homens.</label>
+                <label><input type="radio" name="q3" value="B"> B) Deus não se importa com quem causa escândalos.</label>
+                <label><input type="radio" name="q3" value="C"> C) É inevitável que venham escândalos, mas ai daquele por quem vem o escândalo.</label>
+                <label><input type="radio" name="q3" value="D"> D) Os escândalos só afetam os que não frequentam a igreja.</label>
+            </div>
         </div>
 
-        <!-- DADOS FINAIS -->
+        <div class="question-group">
+            <label for="q4">4) Conforme Mateus 5.13-14, qual é o papel do cristão na sociedade?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q4" value="A" required> A) Ser juiz das falhas e erros dos incrédulos.</label>
+                <label><input type="radio" name="q4" value="B"> B) Ser o sal da terra e a luz do mundo.</label>
+                <label><input type="radio" name="q4" value="C"> C) Isolar-se completamente de quem não crê.</label>
+                <label><input type="radio" name="q4" value="D"> D) Buscar posições de poder político sobre a sociedade.</label>
+            </div>
+        </div>
+
+        <!-- SEÇÃO C -->
+        <div class="section-title">C – ORAR PELA IGREJA</div>
+
+        <div class="question-group">
+            <label for="q5">5) Segundo os textos de João 17.20, Atos 12.5 e Efésios 6.17-18, quem deve interceder pela igreja?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q5" value="A" required> A) Apenas os anjos e os santos que já morreram.</label>
+                <label><input type="radio" name="q5" value="B"> B) Somente os pastores e líderes ordenados.</label>
+                <label><input type="radio" name="q5" value="C"> C) Jesus, a própria igreja reunida e todos os crentes uns pelos outros.</label>
+                <label><input type="radio" name="q5" value="D"> D) Apenas os membros mais idosos da comunidade.</label>
+            </div>
+        </div>
+
+        <!-- SEÇÃO D -->
+        <div class="section-title">D – SERVIR AOS IRMÃOS</div>
+
+        <div class="question-group">
+            <label for="q6">6) De acordo com Gálatas 5.13, de que maneira devemos usar nossa liberdade em relação aos irmãos?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q6" value="A" required> A) Servindo uns aos outros com amor.</label>
+                <label><input type="radio" name="q6" value="B"> B) Satisfazendo todos os desejos da carne.</label>
+                <label><input type="radio" name="q6" value="C"> C) Impondo nossas vontades sobre os mais fracos.</label>
+                <label><input type="radio" name="q6" value="D"> D) Vivendo sem nenhum compromisso com a comunidade.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q7">7) Como devemos servir aos irmãos segundo a orientação de 1 Pedro 4.10?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q7" value="A" required> A) Cobrando pagamento pelos serviços prestados à igreja.</label>
+                <label><input type="radio" name="q7" value="B"> B) Servindo com o dom recebido, como bons despenseiros da graça de Deus.</label>
+                <label><input type="radio" name="q7" value="C"> C) Escondendo nossos dons para não gerar vaidade.</label>
+                <label><input type="radio" name="q7" value="D"> D) Servindo apenas quando houver reconhecimento público.</label>
+            </div>
+        </div>
+
+        <!-- SEÇÃO E -->
+        <div class="section-title">E – DIZIMAR REGULARMENTE</div>
+
+        <div class="question-group">
+            <label for="q8">8) Conforme Provérbios 3.9, como devemos honrar ao Senhor com os nossos bens?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q8" value="A" required> A) Dando as sobras do que restar no fim do mês.</label>
+                <label><input type="radio" name="q8" value="B"> B) Entregando as primeiras dízimas de toda a nossa renda.</label>
+                <label><input type="radio" name="q8" value="C"> C) Ofertando apenas quando sobrarem recursos financeiros.</label>
+                <label><input type="radio" name="q8" value="D"> D) Guardando tudo para garantir a própria riqueza.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q9">9) Em Mateus 23.23, o que Jesus ensina sobre praticar o dízimo e a justiça?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q9" value="A" required> A) O dízimo deve ser dado sem negligenciar a justiça, a misericórdia e a fé.</label>
+                <label><input type="radio" name="q9" value="B"> B) O dízimo foi completamente anulado no Novo Testamento.</label>
+                <label><input type="radio" name="q9" value="C"> C) Importa apenas a justiça, sendo o dízimo irrelevante.</label>
+                <label><input type="radio" name="q9" value="D"> D) O dízimo substitui a necessidade de ter misericórdia.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q10">10) Analisando Hebreus 7.2, a quem Abraão deu o dízimo e quem essa figura representa?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q10" value="A" required> A) Deu a Moisés, representando a Lei Antiga.</label>
+                <label><input type="radio" name="q10" value="B"> B) Deu a Melquisedeque, rei de Salém, figura que aponta para Cristo.</label>
+                <label><input type="radio" name="q10" value="C"> C) Deu ao rei de Sodoma, representando as alianças humanas.</label>
+                <label><input type="radio" name="q10" value="D"> D) Deu aos levitas, representando o sacerdócio terreno.</label>
+            </div>
+        </div>
+
+        <!-- SEÇÃO F -->
+        <div class="section-title">F – SUBMETER-SE ÀS AUTORIDADES</div>
+
+        <div class="question-group">
+            <label for="q11">11) De acordo com Hebreus 13.17, qual é a postura dos crentes em relação aos seus guias espirituais?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q11" value="A" required> A) Obedecer e submeter-se, pois eles velam pela alma dos crentes.</label>
+                <label><input type="radio" name="q11" value="B"> B) Questionar constantemente suas decisões e doutrinas.</label>
+                <label><input type="radio" name="q11" value="C"> C) Submeter-se apenas quando concordarem com tudo.</label>
+                <label><input type="radio" name="q11" value="D"> D) Obedecer apenas se eles não exigirem compromisso.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q12">12) Conforme 1 Tessalonicenses 5.12-13, como a igreja deve tratar aqueles que presidem no Senhor?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q12" value="A" required> A) Acatar com muito apreço e amor, por causa do combate e trabalho deles.</label>
+                <label><input type="radio" name="q12" value="B"> B) Tratar com indiferença e manter total distanciamento.</label>
+                <label><input type="radio" name="q12" value="C"> C) Exigir deles trabalho sem oferecer respeito ou apoio.</label>
+                <label><input type="radio" name="q12" value="D"> D) Avaliar seu trabalho apenas pelo sucesso financeiro.</label>
+            </div>
+        </div>
+
+        <div class="final-note">
+            Assim, nosso dever é assumir um compromisso com a igreja local, pois fazemos parte dela e é onde desenvolvemos nossa comunhão.
+        </div>
+
         <div class="footer-info">
             <div class="field">
                 <label for="nomePessoa">Nome do Aluno:</label>
@@ -216,22 +205,97 @@
             </div>
         </div>
 
-        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 24</button>
-
+        <button type="button" id="btnCorrigir" class="btn-corrigir" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS</button>
+        <div id="resultado" class="resultado"></div>
+        <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
     </form>
 </div>
 
 <script>
-    function enviarFormulario(event) {
-        var btn = document.getElementById("btnEnviar");
-        btn.classList.add("sent");
-        btn.innerText = "ENVIANDO PELO EMAIL...";
-        
-        setTimeout(function(){
-            // O formulário seguirá com o envio via mailto
-        }, 500);
-    }
-</script>
+    var CACHE = 'licao24_cache';
+    var CAMPOS = ['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11','q12','nomePessoa','dataPreenchimento'];
 
+    function val(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+    function gravarCache() {
+        var dados = {};
+        CAMPOS.forEach(function(id) { dados[id] = val(id); });
+        localStorage.setItem(CACHE, JSON.stringify(dados));
+    }
+    function lerCache() {
+        try {
+            var dados = JSON.parse(localStorage.getItem(CACHE) || 'null');
+            if (!dados) return;
+            CAMPOS.forEach(function(id) {
+                if (dados[id] != null && document.getElementById(id)) { document.getElementById(id).value = dados[id]; }
+            });
+        } catch (e) {}
+    }
+
+    var GABARITO = { q1: 'A', q2: 'B', q3: 'C', q4: 'B', q5: 'C', q6: 'A', q7: 'B', q8: 'B', q9: 'A', q10: 'B', q11: 'A', q12: 'A' };
+
+    function corrigirRespostas() {
+        var form = document.getElementById('discipuladoForm');
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+
+        var acertos = 0;
+        var total = Object.keys(GABARITO).length;
+
+        Object.keys(GABARITO).forEach(function(nome) {
+            var opcoes = document.querySelectorAll('input[name="' + nome + '"]');
+            var resposta = document.querySelector('input[name="' + nome + '"]:checked');
+
+            opcoes.forEach(function(input) {
+                input.parentElement.classList.remove('certa', 'errada');
+                if (input.value === GABARITO[nome]) {
+                    input.parentElement.classList.add('certa');
+                } else if (resposta && input.value === resposta.value) {
+                    input.parentElement.classList.add('errada');
+                }
+            });
+            if (resposta && resposta.value === GABARITO[nome]) { acertos++; }
+        });
+
+        var percentual = Math.round((acertos / total) * 100);
+        var resultado = document.getElementById('resultado');
+        resultado.style.display = 'block';
+        resultado.innerHTML = 'RESULTADO: ' + acertos + ' de ' + total + ' questões corretas (' + percentual + '%).';
+        gravarCache();
+    }
+
+    function baixarPdf() {
+        gravarCache();
+        var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
+        if (typeof html2pdf === 'undefined') { alert('Não foi possível carregar o gerador de PDF.'); return; }
+        var elemento = document.getElementById('licaoImpressao');
+        var btnPdf = document.getElementById('btnPdf');
+        var btnCorrigir = document.getElementById('btnCorrigir');
+        var resultado = document.getElementById('resultado');
+        
+        btnPdf.style.display = 'none';
+        btnCorrigir.style.display = 'none';
+        resultado.style.display = 'none';
+
+        html2pdf().set({
+            margin: [8, 8, 8, 8],
+            filename: 'Licao24-' + nome + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+            pagebreak: { mode: ['css', 'legacy'], avoid: ['.question-group', '.section-title', '.final-note'] },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).from(elemento).save().then(function() {
+            btnPdf.style.display = 'block';
+            btnCorrigir.style.display = 'block';
+            resultado.style.display = 'block';
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        lerCache();
+        CAMPOS.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) { el.addEventListener('input', gravarCache); el.addEventListener('change', gravarCache); }
+        });
+    });
+</script>
 </body>
 </html>
