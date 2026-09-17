@@ -4,158 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discipulado Lição 13 - Virtudes</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            font-size: 12pt;
+        @media print {
+            body { background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
+            .container { box-shadow: none !important; margin: 0 !important; max-width: none !important; width: 100% !important; }
+            #btnPdf, #btnCorrigir, #resultado { display: none !important; }
         }
-        .container {
-            max-width: 750px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #484E52;
-        }
-        .header-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            min-height: 60px;
-        }
-        .header-container img {
-            position: absolute;
-            left: 0;
-            height: 60px;
-            width: auto;
-        }
-        .main-category {
-            text-align: center;
-            font-size: 16pt;
-            font-weight: bold;
-            color: #484E52;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-        h1 {
-            color: #484E52;
-            margin: 0;
-            font-size: 32px;
-            text-transform: uppercase;
-            text-align: center;
-        }
-        .subtitle {
-            text-align: center;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 20px;
-            font-size: 14pt;
-        }
-        .intro {
-            background-color: #f0f4f6;
-            border-left: 4px solid #484E52;
-            padding: 12px 15px;
-            margin-bottom: 25px;
-            font-size: 11pt;
-        }
-        .section-title {
-            background-color: #484E52;
-            color: white;
-            padding: 6px 12px;
-            font-size: 13pt;
-            font-weight: bold;
-            border-radius: 4px;
-            margin-top: 25px;
-            margin-bottom: 15px;
-        }
-        .question-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 6px;
-            color: #222;
-        }
-        input[type="text"], input[type="date"], textarea, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 11pt;
-            margin-top: 4px;
-        }
-        input[type="text"]:focus, textarea:focus, select:focus {
-            border-color: #484E52;
-            outline: none;
-        }
-        .match-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-        .match-row select {
-            width: 80px;
-            margin-top: 0;
-        }
-        .footer-info {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-        }
-        .footer-info .field {
-            flex: 1;
-        }
-        .btn-submit {
-            width: 100%;
-            background-color: #484E52;
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 4px;
-            font-size: 12pt;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 25px;
-            transition: background-color 0.3s ease;
-        }
-        .btn-submit:hover {
-            background-color: #34383b;
-        }
-        .btn-submit.sent {
-            background-color: #202224 !important;
-            cursor: default;
-        }
-        .final-note {
-            text-align: center;
-            font-weight: bold;
-            color: #484E52;
-            background-color: #f0f4f6;
-            padding: 15px;
-            border-radius: 6px;
-            border: 1px solid #e0e0e0;
-            margin-top: 25px;
-            font-size: 11pt;
-            line-height: 1.5;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; margin: 0; padding: 20px; font-size: 12pt; }
+        .container { max-width: 750px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-top: 6px solid #E65100; }
+        .header-container { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; min-height: 60px; }
+        .header-container img { position: absolute; left: 0; height: 60px; width: auto; }
+        .main-category { text-align: center; font-size: 16pt; font-weight: bold; color: #E65100; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        h1 { color: #E65100; margin: 0; font-size: 32px; text-transform: uppercase; text-align: center; }
+        .subtitle { text-align: center; font-weight: bold; color: #555; margin-bottom: 20px; font-size: 14pt; }
+        .intro { background-color: #fff3e0; border-left: 4px solid #E65100; padding: 12px 15px; margin-bottom: 25px; font-size: 11pt; }
+        .section-title { background-color: #E65100; color: white; padding: 6px 12px; font-size: 13pt; font-weight: bold; border-radius: 4px; margin-top: 25px; margin-bottom: 15px; }
+        .question-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 6px; color: #222; }
+        input[type="text"], input[type="date"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 11pt; margin-top: 4px; }
+        .footer-info { display: flex; gap: 15px; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
+        .footer-info .field { flex: 1; }
+        .btn-pdf { width: 100%; background-color: #ef6c00; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .alternativas { margin-top: 8px; }
+        .alternativas label { display: block; padding: 8px 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; font-weight: normal; cursor: pointer; }
+        .alternativas label input { margin-right: 8px; }
+        .alternativas label.certa { background-color: #d9f2df !important; border-color: #28a745 !important; color: #176b2c !important; }
+        .alternativas label.errada { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #842029 !important; }
+        .btn-corrigir { width: 100%; background-color: #2e7d32; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 25px; }
+        .resultado { display: none; margin-top: 15px; padding: 15px; text-align: center; font-size: 14pt; font-weight: bold; border-radius: 6px; border: 1px solid #ddd; background: #f7f7f7; }
+        .final-note { text-align: center; font-weight: bold; color: #E65100; background-color: #fff3e0; padding: 15px; border-radius: 6px; border: 1px solid #ffe0b2; margin-top: 25px; font-size: 12pt; }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="licaoImpressao">
     <div class="main-category">AMADURECIMENTO</div>
     
     <div class="header-container">
@@ -165,153 +48,90 @@
     <div class="subtitle">VIRTUDES</div>
     
     <div class="intro">
-        Virtude é a qualidade do que se conforma com o considerado correto e desejável; também, conformidade com o bem, com a excelência moral ou de conduta que devem ser evidências de nosso interior, sendo sinceros e íntegros. Vejamos o estudo:
+        Virtude é a conformidade com o bem e com a excelência moral que devem evidenciar nosso interior de forma sincera e íntegra.
     </div>
 
-    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
-        
-        <!-- SEÇÃO A -->
-        <div class="section-title">A – A LÍNGUA</div>
-
-        <div class="intro" style="border-left-color: #555; background-color: #f9f9f9; margin-bottom: 15px;">
-            Língua, na Bíblia, significa a nossa comunicação, aquilo que expressamos através de palavras de nossa boca.
-        </div>
+    <form id="discipuladoForm">
+        <div class="section-title">I - A LÍNGUA</div>
 
         <div class="question-group">
-            <label>1) Como nossa língua é descrita, conforme Tg 3.8-10?</label>
-            <div style="margin-top: 8px;">
-                <label for="q1_v8" style="font-weight: normal; margin-bottom: 2px;">v. 8:</label>
-                <textarea id="q1_v8" name="1. Lingua em Tg 3.8" rows="2" required></textarea>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="q1_v9_10" style="font-weight: normal; margin-bottom: 2px;">v. 9,10:</label>
-                <textarea id="q1_v9_10" name="1. Lingua em Tg 3.9,10" rows="2" required></textarea>
+            <label for="q1">1) Conforme Tiago 3.8, como a língua é descrita na Palavra de Deus?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q1" value="A" required> A) É um mal indomável, cheia de veneno mortífero.</label>
+                <label><input type="radio" name="q1" value="B"> B) É um instrumento neutro sem poder sobre a vida humana.</label>
+                <label><input type="radio" name="q1" value="C"> C) É uma ferramenta facilmente controlada pela vontade do homem.</label>
+                <label><input type="radio" name="q1" value="D"> D) É um membro incapaz de influenciar nossas atitudes espirituais.</label>
             </div>
         </div>
 
         <div class="question-group">
-            <label>2) O que se deve fazer com a língua?</label>
-            <div style="margin-bottom: 10px; font-size: 11pt; color: #555;">
-                (A) Sl 35.28 | (B) Sl 145.10-12 | (C) Pv 21.23 | (D) Ef 4.25 | (E) Ef 4.29
-            </div>
-
-            <div class="match-row">
-                <select name="2. O que fazer com a lingua - Nao palavra torpe e sim de edificacao" required>
-                    <option value="">--</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                    <option value="E">E</option>
-                </select>
-                <span>Não palavra torpe e sim de edificação</span>
-            </div>
-
-            <div class="match-row">
-                <select name="2. O que fazer com a lingua - Celebrar a justica e o louvor" required>
-                    <option value="">--</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                    <option value="E">E</option>
-                </select>
-                <span>Celebrar a justiça e o louvor</span>
-            </div>
-
-            <div class="match-row">
-                <select name="2. O que fazer com a lingua - Falar do reino e confessar o poder" required>
-                    <option value="">--</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                    <option value="E">E</option>
-                </select>
-                <span>Falar do reino e confessar o poder</span>
-            </div>
-
-            <div class="match-row">
-                <select name="2. O que fazer com a lingua - Guardar" required>
-                    <option value="">--</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                    <option value="E">E</option>
-                </select>
-                <span>Guardar</span>
-            </div>
-
-            <div class="match-row">
-                <select name="2. O que fazer com a lingua - Deixar a mentira e falar a verdade" required>
-                    <option value="">--</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                    <option value="E">E</option>
-                </select>
-                <span>Deixar a mentira e falar a verdade</span>
+            <label for="q2">2) De acordo com Efésios 4.29, como deve ser a comunicação do discípulo de Cristo?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q2" value="A" required> A) Deve focar em críticas construtivas ao comportamento dos outros.</label>
+                <label><input type="radio" name="q2" value="B" required> B) Não deve sair palavra torpe da boca, mas somente a boa para edificação.</label>
+                <label><input type="radio" name="q2" value="C"> C) Pode usar qualquer linguagem desde que o coração seja sincero.</label>
+                <label><input type="radio" name="q2" value="D"> D) Deve evitar conversas cotidianas com pessoas não convertidas.</label>
             </div>
         </div>
 
-        <!-- SEÇÃO B -->
-        <div class="section-title">B – O BEM</div>
+        <div class="section-title">II - O BEM E A HONESTIDADE</div>
 
-        <div class="intro" style="border-left-color: #555; background-color: #f9f9f9; margin-bottom: 15px;">
-            Fazer o bem é realizar atitudes boas ao próximo.
+        <div class="question-group">
+            <label for="q3">3) Qual é a instrução de Gálatas 6.9 para a nossa conduta cristã?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q3" value="A" required> A) Devemos descansar em tempos de oposição e perseguição.</label>
+                <label><input type="radio" name="q3" value="B"> B) Devemos buscar o reconhecimento público de nossas boas ações.</label>
+                <label><input type="radio" name="q3" value="C" required> C) Não nos cansemos de fazer o bem, pois a seu tempo ceifaremos.</label>
+                <label><input type="radio" name="q3" value="D"> D) Devemos fazer o bem apenas àqueles que nos retribuem com amor.</label>
+            </div>
         </div>
 
         <div class="question-group">
-            <label for="q3">3) O que não devemos cansar de fazer? (Gl 6.9)</label>
-            <textarea id="q3" name="3. O que nao devemos cansar de fazer (Gl 6.9)" rows="2" required></textarea>
+            <label for="q4">4) Segundo Tiago 4.17, o que comete aquele que sabe fazer o bem e não o faz?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q4" value="A" required> A) Comete imprudência.</label>
+                <label><input type="radio" name="q4" value="B"> B) Comete uma falha menor.</label>
+                <label><input type="radio" name="q4" value="C"> C) Comete negligência moral.</label>
+                <label><input type="radio" name="q4" value="D" required> D) Comete pecado.</label>
+            </div>
         </div>
 
         <div class="question-group">
-            <label for="q4">4) Quem não faz o bem o que comete? (Tg 4.17)</label>
-            <textarea id="q4" name="4. Quem nao faz o bem o que comete (Tg 4.17)" rows="2" required></textarea>
+            <label for="q5">5) Conforme 2 Coríntios 8.21, como devemos proceder no que diz respeito à honestidade?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q5" value="A" required> A) Cuidando do que é honesto só perante Deus, pois o mundo não julga com justiça.</label>
+                <label><input type="radio" name="q5" value="B" required> B) Zelando pelo que é honesto, não só diante do Senhor, mas também diante dos homens.</label>
+                <label><input type="radio" name="q5" value="C"> C) Priorizando a aprovação dos líderes da igreja em todas as negociações.</label>
+                <label><input type="radio" name="q5" value="D"> D) Garantindo o lucro justo antes de ponderar sobre a moralidade da ação.</label>
+            </div>
         </div>
 
-        <!-- SEÇÃO C -->
-        <div class="section-title">C – A HONESTIDADE</div>
+        <div class="section-title">III - A SINCERIDADE</div>
 
-        <div class="intro" style="border-left-color: #555; background-color: #f9f9f9; margin-bottom: 15px;">
-            Ser honesto é ser correto, verdadeiro, autêntico, justo.
+        <div class="question-group">
+            <label for="q6">6) Onde deve nascer a obediência aos mandamentos segundo Mateus 5.27,28?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q6" value="A" required> A) No intelecto e no estudo da Lei.</label>
+                <label><input type="radio" name="q6" value="B"> B) Nas tradições e rituais da comunidade.</label>
+                <label><input type="radio" name="q6" value="C" required> C) No coração e nas intenções interiores.</label>
+                <label><input type="radio" name="q6" value="D"> D) Na vigilância rigorosa de costumes externos.</label>
+            </div>
         </div>
 
         <div class="question-group">
-            <label for="q5">5) Como devem ser nosso comportamento conforme 1Pe 3.2?</label>
-            <textarea id="q5" name="5. Como devem ser nosso comportamento (1Pe 3.2)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q6">6) Como devemos proceder perante Deus e homens? (2Co 8.21)</label>
-            <textarea id="q6" name="6. Como devemos proceder perante Deus e homens (2Co 8.21)" rows="2" required></textarea>
-        </div>
-
-        <!-- SEÇÃO D -->
-        <div class="section-title">D – A SINCERIDADE</div>
-
-        <div class="intro" style="border-left-color: #555; background-color: #f9f9f9; margin-bottom: 15px;">
-            Ser sincero é ter atos que exprimem o interior e não sendo dúbio.
-        </div>
-
-        <div class="question-group">
-            <label for="q7">7) Onde deve nascer o cumprimento da lei? (Mt 5.21,22; 27,28)</label>
-            <textarea id="q7" name="7. Onde deve nascer o cumprimento da lei (Mt 5.21,22; 27,28)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q8">8) O que deve preceder a obediência a Deus? (Jo 14.15; Ap 2.4)</label>
-            <textarea id="q8" name="8. O que deve preceder a obediencia a Deus (Jo 14.15; Ap 2.4)" rows="2" required></textarea>
+            <label for="q7">7) O que deve anteceder o cumprimento dos mandamentos segundo João 14.15?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q7" value="A" required> A) O amor genuíno a Jesus Cristo.</label>
+                <label><input type="radio" name="q7" value="B"> B) O batismo formal em água.</label>
+                <label><input type="radio" name="q7" value="C"> C) O temor ao castigo eterno.</label>
+                <label><input type="radio" name="q7" value="D"> D) O alcance da perfeição moral.</label>
+            </div>
         </div>
 
         <div class="final-note">
             Todo aquele que é remido pelo Senhor deve ter atitudes que glorifiquem a Deus com a fala e atos, sendo luz perante os homens, promovendo a glória do Senhor!
         </div>
 
-        <!-- DADOS FINAIS -->
         <div class="footer-info">
             <div class="field">
                 <label for="nomePessoa">Nome do Aluno:</label>
@@ -323,22 +143,116 @@
             </div>
         </div>
 
-        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 13</button>
-
+        <button type="button" id="btnCorrigir" class="btn-corrigir" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS</button>
+        <div id="resultado" class="resultado"></div>
+        <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
     </form>
 </div>
 
 <script>
-    function enviarFormulario(event) {
-        var btn = document.getElementById("btnEnviar");
-        btn.classList.add("sent");
-        btn.innerText = "ENVIANDO PELO EMAIL...";
-        
-        setTimeout(function(){
-            // O formulário continuará seu curso natural de envio
-        }, 500);
-    }
-</script>
+    var CACHE = 'licao13_cache';
+    var CAMPOS = ['q1','q2','q3','q4','q5','q6','q7','nomePessoa','dataPreenchimento'];
 
+    function val(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+    function gravarCache() {
+        var dados = {};
+        CAMPOS.forEach(function(id) {
+            if (id.startsWith('q')) {
+                var sel = document.querySelector('input[name="' + id + '"]:checked');
+                dados[id] = sel ? sel.value : '';
+            } else {
+                dados[id] = val(id);
+            }
+        });
+        localStorage.setItem(CACHE, JSON.stringify(dados));
+    }
+    function lerCache() {
+        try {
+            var dados = JSON.parse(localStorage.getItem(CACHE) || 'null');
+            if (!dados) return;
+            CAMPOS.forEach(function(id) {
+                if (dados[id] != null) {
+                    if (id.startsWith('q')) {
+                        var el = document.querySelector('input[name="' + id + '"][value="' + dados[id] + '"]');
+                        if (el) el.checked = true;
+                    } else if (document.getElementById(id)) {
+                        document.getElementById(id).value = dados[id];
+                    }
+                }
+            });
+        } catch (e) {}
+    }
+
+    var GABARITO = { q1: 'A', q2: 'B', q3: 'C', q4: 'D', q5: 'B', q6: 'C', q7: 'A' };
+
+    function corrigirRespostas() {
+        var form = document.getElementById('discipuladoForm');
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+
+        var acertos = 0;
+        var total = Object.keys(GABARITO).length;
+
+        Object.keys(GABARITO).forEach(function(nome) {
+            var opcoes = document.querySelectorAll('input[name="' + nome + '"]');
+            var resposta = document.querySelector('input[name="' + nome + '"]:checked');
+
+            opcoes.forEach(function(input) {
+                input.parentElement.classList.remove('certa', 'errada');
+                if (input.value === GABARITO[nome]) {
+                    input.parentElement.classList.add('certa');
+                } else if (resposta && input.value === resposta.value) {
+                    input.parentElement.classList.add('errada');
+                }
+            });
+            if (resposta && resposta.value === GABARITO[nome]) { acertos++; }
+        });
+
+        var percentual = Math.round((acertos / total) * 100);
+        var resultado = document.getElementById('resultado');
+        resultado.style.display = 'block';
+        resultado.innerHTML = 'RESULTADO: ' + acertos + ' de ' + total + ' questões corretas (' + percentual + '%).';
+        gravarCache();
+    }
+
+    function baixarPdf() {
+        gravarCache();
+        var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
+        if (typeof html2pdf === 'undefined') { alert('Não foi possível carregar o gerador de PDF.'); return; }
+        var elemento = document.getElementById('licaoImpressao');
+        var btnPdf = document.getElementById('btnPdf');
+        var btnCorrigir = document.getElementById('btnCorrigir');
+        var resultado = document.getElementById('resultado');
+        
+        btnPdf.style.display = 'none';
+        btnCorrigir.style.display = 'none';
+        resultado.style.display = 'none';
+
+        html2pdf().set({
+            margin: [8, 8, 8, 8],
+            filename: 'Licao13-' + nome + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+            pagebreak: { mode: ['css', 'legacy'], avoid: ['.question-group', '.section-title', '.final-note'] },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).from(elemento).save().then(function() {
+            btnPdf.style.display = 'block';
+            btnCorrigir.style.display = 'block';
+            resultado.style.display = 'block';
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        lerCache();
+        CAMPOS.forEach(function(id) {
+            if (id.startsWith('q')) {
+                var els = document.querySelectorAll('input[name="' + id + '"]');
+                els.forEach(function(el) { el.addEventListener('change', gravarCache); });
+            } else {
+                var el = document.getElementById(id);
+                if (el) { el.addEventListener('input', gravarCache); el.addEventListener('change', gravarCache); }
+            }
+        });
+    });
+</script>
 </body>
 </html>
