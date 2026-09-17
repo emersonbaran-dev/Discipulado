@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discipulado Lição 21 - Testemunho - Missões</title>
+    <title>Discipulado Lição 21 - Testemunho: Missões</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,7 +21,7 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #A27B5C;
+            border-top: 6px solid #a27b5c;
         }
         .header-container {
             position: relative;
@@ -41,13 +41,13 @@
             text-align: center;
             font-size: 16pt;
             font-weight: bold;
-            color: #A27B5C;
+            color: #a27b5c;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 5px;
         }
         h1 {
-            color: #A27B5C;
+            color: #a27b5c;
             margin: 0;
             font-size: 32px;
             text-transform: uppercase;
@@ -62,13 +62,13 @@
         }
         .intro {
             background-color: #f0f4f6;
-            border-left: 4px solid #A27B5C;
+            border-left: 4px solid #a27b5c;
             padding: 12px 15px;
             margin-bottom: 25px;
             font-size: 11pt;
         }
         .section-title {
-            background-color: #A27B5C;
+            background-color: #a27b5c;
             color: white;
             padding: 6px 12px;
             font-size: 13pt;
@@ -96,26 +96,25 @@
             margin-top: 4px;
         }
         input[type="text"]:focus, textarea:focus, select:focus {
-            border-color: #A27B5C;
+            border-color: #a27b5c;
             outline: none;
         }
-        .checkbox-group {
+        .radio-group {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
+            gap: 20px;
             margin-top: 8px;
         }
-        .checkbox-group label {
+        .radio-group label {
             font-weight: normal;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
             cursor: pointer;
         }
-        .checkbox-group input[type="checkbox"] {
+        .radio-group input[type="radio"] {
             margin: 0;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
         }
         .footer-info {
             display: flex;
@@ -129,7 +128,7 @@
         }
         .btn-submit {
             width: 100%;
-            background-color: #A27B5C;
+            background-color: #a27b5c;
             color: white;
             padding: 14px;
             border: none;
@@ -141,7 +140,7 @@
             transition: background-color 0.3s ease;
         }
         .btn-submit:hover {
-            background-color: #836247;
+            background-color: #836146;
         }
         .btn-submit.sent {
             background-color: #202224 !important;
@@ -152,81 +151,57 @@
 <body>
 
 <div class="container">
-    <div class="main-category">MISSÕES</div>
+    <div class="main-category">VIDA CRISTÃ E TESTEMUNHO</div>
     
     <div class="header-container">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
         <h1>Lição 21</h1>
     </div>
-    <div class="subtitle">TESTEMUNHO - MISSÕES</div>
+    <div class="subtitle">TESTEMUNHO: MISSÕES</div>
     
     <div class="intro">
-        Desde a descida do Espírito Santo de Deus no Pentecoste, cabe à igreja do Senhor (todos os membros) realizar missões, conforme a própria ordem do Senhor Jesus Cristo em Atos 1.8. Antes o povo de Deus deveria pregar para os de fora dentro de seus arraiais. Agora, todo o crente já tem esta responsabilidade de sair para viver e anunciar o evangelho em todos os lugares ao mesmo tempo.
+        A tarefa missionária abrange a expansão do Evangelho local, regional e transcultural. Todo crente e a igreja local têm o privilégio e a responsabilidade de participar ativamente da obra de Deus no mundo.
     </div>
 
     <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
         
         <!-- SEÇÃO A -->
-        <div class="section-title">A – O PRINCÍPIO DAS MISSÕES</div>
+        <div class="section-title">A – O ALCANCE DA OBRA MISSIONÁRIA</div>
 
         <div class="question-group">
-            <label>1) Leia em At 1.8 e responda:</label>
-            <div style="margin-top: 8px;">
-                <label for="q1_a" style="font-weight: normal; margin-bottom: 2px;">a) O que receberiam?</label>
-                <input type="text" id="q1_a" name="1a. O que receberiam (At 1.8)" required>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="q1_b" style="font-weight: normal; margin-bottom: 2px;">b) Quem daria este poder?</label>
-                <input type="text" id="q1_b" name="1b. Quem daria este poder (At 1.8)" required>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="q1_c" style="font-weight: normal; margin-bottom: 2px;">c) O que seriam?</label>
-                <input type="text" id="q1_c" name="1c. O que seriam (At 1.8)" required>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="q1_d" style="font-weight: normal; margin-bottom: 2px;">d) Onde realizariam?</label>
-                <textarea id="q1_d" name="1d. Onde realizariam (At 1.8)" rows="2" required></textarea>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="q1_e" style="font-weight: normal; margin-bottom: 2px;">e) Quanto ao tempo nos lugares, como seria?</label>
-                <input type="text" id="q1_e" name="1e. Quanto ao tempo nos lugares como seria (At 1.8)" required>
-            </div>
+            <label for="q1">1) De acordo com Atos 1.8, quais são os campos de atuação da testemunha de Cristo?</label>
+            <input type="text" id="q1" name="1. Campos de atuacao (At 1.8)" required>
+        </div>
+
+        <div class="question-group">
+            <label for="q2">2) Qual é a disposição de Deus com relação à salvação de todas as nações e povos? (Ap 7.9; Sl 67.1,2)</label>
+            <textarea id="q2" name="2. Disposicao de Deus para as nacoes (Ap 7.9; Sl 67.1,2)" rows="2" required></textarea>
         </div>
 
         <!-- SEÇÃO B -->
-        <div class="section-title">B – AS 3 FASES DAS MISSÕES</div>
+        <div class="section-title">B – COOPERAÇÃO E ENVOLVIMENTO</div>
 
         <div class="question-group">
-            <label>2) Quais as fases de uma tarefa missionária?</label>
-            <div style="margin-top: 8px;">
-                <label for="q2_fase1" style="font-weight: normal; margin-bottom: 2px;">FASE 1: Mc 16.15</label>
-                <input type="text" id="q2_fase1" name="2. Fase 1 (Mc 16.15)" required>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="q2_fase2" style="font-weight: normal; margin-bottom: 2px;">FASE 2: Mt 28.19</label>
-                <input type="text" id="q2_fase2" name="2. Fase 2 (Mt 28.19)" required>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="q2_fase3" style="font-weight: normal; margin-bottom: 2px;">FASE 3: Tt 1.5</label>
-                <input type="text" id="q2_fase3" name="2. Fase 3 (Tt 1.5)" required>
+            <label for="q3">3) De que maneiras práticas a igreja e o crente podem se envolver com a obra missionária? (Rm 10.14,15; 2Co 9.7)</label>
+            <textarea id="q3" name="3. Formas praticas de envolvimento em missoes (Rm 10.14,15; 2Co 9.7)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label for="q4">4) Qual é a importância da oração pelos missionários e pelo avanço do Evangelho? (Ef 6.18-20; Cl 4.3)</label>
+            <textarea id="q4" name="4. Importancia da oracao por missoes (Ef 6.18-20; Cl 4.3)" rows="2" required></textarea>
+        </div>
+
+        <div class="question-group">
+            <label>5) Você tem o hábito de orar ou contribuir financeiramente para projetos missionários?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="5. Habito de orar ou contribuir por missoes" value="SIM" required> SIM</label>
+                <label><input type="radio" name="5. Habito de orar ou contribuir por missoes" value="NÃO" required> NÃO</label>
             </div>
         </div>
 
-        <!-- SEÇÃO C -->
-        <div class="section-title">C – IGREJA FAZENDO MISSÕES</div>
-
         <div class="question-group">
-            <label>3) Quando a igreja realiza missões, como age? (Selecione as opções correspondentes):</label>
-            <div class="checkbox-group">
-                <label><input type="checkbox" name="3. Como age a igreja em missoes" value="At 13.2,3 - Envia missionarios"> At 13.2,3 - Envia missionários</label>
-                <label><input type="checkbox" name="3. Como age a igreja em missoes" value="Ef 6.18-19 - Ora pelos missionarios"> Ef 6.18-19 - Ora pelos missionários</label>
-                <label><input type="checkbox" name="3. Como age a igreja em missoes" value="Fp 4.18 - Oferta aos missionarios"> Fp 4.18 - Oferta aos missionários</label>
-                <label><input type="checkbox" name="3. Como age a igreja em missoes" value="Fp 4.14 - Associa em tudo com eles"> Fp 4.14 - Associa em tudo com eles</label>
-            </div>
-        </div>
-
-        <div class="intro" style="margin-top: 25px; margin-bottom: 25px; border-left-color: #A27B5C;">
-            Como vimos, cabe a toda a igreja, inclusive a você, anunciar o evangelho em todos os lugares ao mesmo tempo: onde você mora e onde você não está através dos missionários, para que estes estabeleçam igrejas e continuem o ciclo para honra e glória do Senhor!
+            <label for="q6">6) De que maneira você se dispõe a apoiar mais a obra missionária a partir de hoje?</label>
+            <textarea id="q6" name="6. Compromisso pessoal com a obra missionaria" rows="3" required></textarea>
         </div>
 
         <!-- DADOS FINAIS -->
@@ -253,7 +228,7 @@
         btn.innerText = "ENVIANDO PELO EMAIL...";
         
         setTimeout(function(){
-            // O formulário continuará seu curso natural de envio
+            // O formulário seguirá com o envio via mailto
         }, 500);
     }
 </script>
