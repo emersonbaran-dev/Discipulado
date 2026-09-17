@@ -3,208 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discipulado Lição 21 - Testemunho: Missões</title>
+    <title>Discipulado Lição 21 - Testemunho - Missões</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            font-size: 12pt;
+        @media print {
+            body { background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
+            .container { box-shadow: none !important; margin: 0 !important; max-width: none !important; width: 100% !important; }
+            #btnPdf, #btnCorrigir, #resultado { display: none !important; }
         }
-        .container {
-            max-width: 750px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #a27b5c;
-        }
-        .header-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            min-height: 60px;
-        }
-        .header-container img {
-            position: absolute;
-            left: 0;
-            height: 60px;
-            width: auto;
-        }
-        .main-category {
-            text-align: center;
-            font-size: 16pt;
-            font-weight: bold;
-            color: #a27b5c;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-        h1 {
-            color: #a27b5c;
-            margin: 0;
-            font-size: 32px;
-            text-transform: uppercase;
-            text-align: center;
-        }
-        .subtitle {
-            text-align: center;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 20px;
-            font-size: 14pt;
-        }
-        .intro {
-            background-color: #f0f4f6;
-            border-left: 4px solid #a27b5c;
-            padding: 12px 15px;
-            margin-bottom: 25px;
-            font-size: 11pt;
-        }
-        .section-title {
-            background-color: #a27b5c;
-            color: white;
-            padding: 6px 12px;
-            font-size: 13pt;
-            font-weight: bold;
-            border-radius: 4px;
-            margin-top: 25px;
-            margin-bottom: 15px;
-        }
-        .question-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 6px;
-            color: #222;
-        }
-        input[type="text"], input[type="date"], textarea, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 11pt;
-            margin-top: 4px;
-        }
-        input[type="text"]:focus, textarea:focus, select:focus {
-            border-color: #a27b5c;
-            outline: none;
-        }
-        .radio-group {
-            display: flex;
-            gap: 20px;
-            margin-top: 8px;
-        }
-        .radio-group label {
-            font-weight: normal;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-        }
-        .radio-group input[type="radio"] {
-            margin: 0;
-            width: 16px;
-            height: 16px;
-        }
-        .footer-info {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-        }
-        .footer-info .field {
-            flex: 1;
-        }
-        .btn-submit {
-            width: 100%;
-            background-color: #a27b5c;
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 4px;
-            font-size: 12pt;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 25px;
-            transition: background-color 0.3s ease;
-        }
-        .btn-submit:hover {
-            background-color: #836146;
-        }
-        .btn-submit.sent {
-            background-color: #202224 !important;
-            cursor: default;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; margin: 0; padding: 20px; font-size: 12pt; }
+        .container { max-width: 750px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-top: 6px solid #9C27B0; }
+        .header-container { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; min-height: 60px; }
+        .header-container img { position: absolute; left: 0; height: 60px; width: auto; }
+        .main-category { text-align: center; font-size: 16pt; font-weight: bold; color: #9C27B0; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        h1 { color: #9C27B0; margin: 0; font-size: 32px; text-transform: uppercase; text-align: center; }
+        .subtitle { text-align: center; font-weight: bold; color: #555; margin-bottom: 20px; font-size: 14pt; }
+        .intro { background-color: #f3e5f5; border-left: 4px solid #9C27B0; padding: 12px 15px; margin-bottom: 25px; font-size: 11pt; }
+        .section-title { background-color: #9C27B0; color: white; padding: 6px 12px; font-size: 13pt; font-weight: bold; border-radius: 4px; margin-top: 25px; margin-bottom: 15px; }
+        .question-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 6px; color: #222; }
+        input[type="text"], input[type="date"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 11pt; margin-top: 4px; }
+        .footer-info { display: flex; gap: 15px; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
+        .footer-info .field { flex: 1; }
+        .btn-pdf { width: 100%; background-color: #7b1fa2; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .alternativas { margin-top: 8px; }
+        .alternativas label { display: block; padding: 8px 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; font-weight: normal; cursor: pointer; }
+        .alternativas label input { margin-right: 8px; }
+        .alternativas label.certa { background-color: #d9f2df !important; border-color: #28a745 !important; color: #176b2c !important; }
+        .alternativas label.errada { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #842029 !important; }
+        .btn-corrigir { width: 100%; background-color: #2e7d32; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 25px; }
+        .resultado { display: none; margin-top: 15px; padding: 15px; text-align: center; font-size: 14pt; font-weight: bold; border-radius: 6px; border: 1px solid #ddd; background: #f7f7f7; }
+        .final-note { text-align: center; font-weight: bold; color: #9C27B0; background-color: #f3e5f5; padding: 15px; border-radius: 6px; border: 1px solid #e1bee7; margin-top: 25px; font-size: 12pt; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="main-category">VIDA CRISTÃ E TESTEMUNHO</div>
+<div class="container" id="licaoImpressao">
+    <div class="main-category">MISSÕES</div>
     
     <div class="header-container">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
         <h1>Lição 21</h1>
     </div>
-    <div class="subtitle">TESTEMUNHO: MISSÕES</div>
+    <div class="subtitle">TESTEMUNHO - MISSÕES</div>
     
     <div class="intro">
-        A tarefa missionária abrange a expansão do Evangelho local, regional e transcultural. Todo crente e a igreja local têm o privilégio e a responsabilidade de participar ativamente da obra de Deus no mundo.
+        Desde a descida do Espírito Santo no Pentecostes, cabe à igreja do Senhor realizar missões, conforme a ordem de Jesus em Atos 1.8. Cabe a cada crente viver e anunciar o evangelho em todos os lugares simultaneamente.
     </div>
 
-    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
-        
+    <form id="discipuladoForm">
         <!-- SEÇÃO A -->
-        <div class="section-title">A – O ALCANCE DA OBRA MISSIONÁRIA</div>
+        <div class="section-title">A – O PRINCÍPIO DAS MISSÕES</div>
 
         <div class="question-group">
-            <label for="q1">1) De acordo com Atos 1.8, quais são os campos de atuação da testemunha de Cristo?</label>
-            <input type="text" id="q1" name="1. Campos de atuacao (At 1.8)" required>
-        </div>
-
-        <div class="question-group">
-            <label for="q2">2) Qual é a disposição de Deus com relação à salvação de todas as nações e povos? (Ap 7.9; Sl 67.1,2)</label>
-            <textarea id="q2" name="2. Disposicao de Deus para as nacoes (Ap 7.9; Sl 67.1,2)" rows="2" required></textarea>
-        </div>
-
-        <!-- SEÇÃO B -->
-        <div class="section-title">B – COOPERAÇÃO E ENVOLVIMENTO</div>
-
-        <div class="question-group">
-            <label for="q3">3) De que maneiras práticas a igreja e o crente podem se envolver com a obra missionária? (Rm 10.14,15; 2Co 9.7)</label>
-            <textarea id="q3" name="3. Formas praticas de envolvimento em missoes (Rm 10.14,15; 2Co 9.7)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q4">4) Qual é a importância da oração pelos missionários e pelo avanço do Evangelho? (Ef 6.18-20; Cl 4.3)</label>
-            <textarea id="q4" name="4. Importancia da oracao por missoes (Ef 6.18-20; Cl 4.3)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label>5) Você tem o hábito de orar ou contribuir financeiramente para projetos missionários?</label>
-            <div class="radio-group">
-                <label><input type="radio" name="5. Habito de orar ou contribuir por missoes" value="SIM" required> SIM</label>
-                <label><input type="radio" name="5. Habito de orar ou contribuir por missoes" value="NÃO" required> NÃO</label>
+            <label for="q1">1) O que os discípulos receberiam ao descer sobre eles o Espírito Santo, segundo Atos 1.8?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q1" value="A" required> A) Poder para serem Suas testemunhas.</label>
+                <label><input type="radio" name="q1" value="B"> B) Riquezas materiais instantâneas.</label>
+                <label><input type="radio" name="q1" value="C"> C) Isenção total de provações terrestres.</label>
+                <label><input type="radio" name="q1" value="D"> D) Autoridade política sobre as nações.</label>
             </div>
         </div>
 
         <div class="question-group">
-            <label for="q6">6) De que maneira você se dispõe a apoiar mais a obra missionária a partir de hoje?</label>
-            <textarea id="q6" name="6. Compromisso pessoal com a obra missionaria" rows="3" required></textarea>
+            <label for="q2">2) Quem concederia o poder capacitador mencionado em Atos 1.8?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q2" value="A" required> A) Os reis da terra.</label>
+                <label><input type="radio" name="q2" value="B" required> B) O Espírito Santo.</label>
+                <label><input type="radio" name="q2" value="C"> C) Os líderes da lei.</label>
+                <label><input type="radio" name="q2" value="D"> D) A sabedoria humana.</label>
+            </div>
         </div>
 
-        <!-- DADOS FINAIS -->
+        <div class="question-group">
+            <label for="q3">3) O que os discípulos se tornariam a partir do recebimento desse poder (Atos 1.8)?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q3" value="A" required> A) Governantes civis em Jerusalém.</label>
+                <label><input type="radio" name="q3" value="B"> B) Juízes da lei mosaica.</label>
+                <label><input type="radio" name="q3" value="C" required> C) Testemunhas de Cristo Jesus.</label>
+                <label><input type="radio" name="q3" value="D"> D) Filósofos da nova era.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q4">4) Onde o testemunho dos discípulos deveria ser realizado, de acordo com Atos 1.8?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q4" value="A" required> A) Apenas dentro do templo de Jerusalém.</label>
+                <label><input type="radio" name="q4" value="B"> B) Exclusivamente no deserto da Samaria.</label>
+                <label><input type="radio" name="q4" value="C"> C) Somente nas cidades da Galileia.</label>
+                <label><input type="radio" name="q4" value="D" required> D) Em Jerusalém, Judeia, Samaria e até os confins da terra.</label>
+            </div>
+        </div>
+
+        <!-- SEÇÃO B -->
+        <div class="section-title">B – AS 3 FASES DAS MISSÕES</div>
+
+        <div class="question-group">
+            <label for="q5">5) Qual é a primeira fase da tarefa missionária expressa em Marcos 16.15?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q5" value="A" required> A) Pregar o evangelho a toda criatura.</label>
+                <label><input type="radio" name="q5" value="B"> B) Construir edifícios para os cultos.</label>
+                <label><input type="radio" name="q5" value="C"> C) Escrever tratados de teologia profunda.</label>
+                <label><input type="radio" name="q5" value="D"> D) Organizar debates políticos locais.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q6">6) Qual é a segunda fase da tarefa missionária vista em Mateus 28.19?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q6" value="A" required> A) Isolamento do mundo em mosteiros.</label>
+                <label><input type="radio" name="q6" value="B" required> B) Fazer discípulos e batizá-los.</label>
+                <label><input type="radio" name="q6" value="C"> C) Buscar aceitação da cultura vigente.</label>
+                <label><input type="radio" name="q6" value="D"> D) Arrecadar recursos materiais para o templo.</label>
+            </div>
+        </div>
+
+        <!-- SEÇÃO C -->
+        <div class="section-title">C – IGREJA FAZENDO MISSÕES</div>
+
+        <div class="question-group">
+            <label for="q7">7) Como a igreja atua na prática ao realizar a obra missionária (At 13.2-3; Ef 6.18-19; Fp 4.14,18)?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q7" value="A" required> A) Apenas assistindo passivamente aos eventos.</label>
+                <label><input type="radio" name="q7" value="B"> B) Ocultando a mensagem para evitar oposição.</label>
+                <label><input type="radio" name="q7" value="C" required> C) Enviando, orando, ofertando e se associando aos missionários.</label>
+                <label><input type="radio" name="q7" value="D"> D) Centralizando todas as ações em uma única cidade.</label>
+            </div>
+        </div>
+
+        <div class="final-note">
+            Como vimos, cabe a toda a igreja, inclusive a você, anunciar o evangelho em todos os lugares ao mesmo tempo: onde você mora e onde você não está através dos missionários, para que estes estabeleçam igrejas e continuem o ciclo para honra e glória do Senhor!
+        </div>
+
         <div class="footer-info">
             <div class="field">
                 <label for="nomePessoa">Nome do Aluno:</label>
@@ -216,22 +146,116 @@
             </div>
         </div>
 
-        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 21</button>
-
+        <button type="button" id="btnCorrigir" class="btn-corrigir" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS</button>
+        <div id="resultado" class="resultado"></div>
+        <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
     </form>
 </div>
 
 <script>
-    function enviarFormulario(event) {
-        var btn = document.getElementById("btnEnviar");
-        btn.classList.add("sent");
-        btn.innerText = "ENVIANDO PELO EMAIL...";
-        
-        setTimeout(function(){
-            // O formulário seguirá com o envio via mailto
-        }, 500);
-    }
-</script>
+    var CACHE = 'licao21_cache';
+    var CAMPOS = ['q1','q2','q3','q4','q5','q6','q7','nomePessoa','dataPreenchimento'];
 
+    function val(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+    function gravarCache() {
+        var dados = {};
+        CAMPOS.forEach(function(id) {
+            if (id.startsWith('q')) {
+                var sel = document.querySelector('input[name="' + id + '"]:checked');
+                dados[id] = sel ? sel.value : '';
+            } else {
+                dados[id] = val(id);
+            }
+        });
+        localStorage.setItem(CACHE, JSON.stringify(dados));
+    }
+    function lerCache() {
+        try {
+            var dados = JSON.parse(localStorage.getItem(CACHE) || 'null');
+            if (!dados) return;
+            CAMPOS.forEach(function(id) {
+                if (dados[id] != null) {
+                    if (id.startsWith('q')) {
+                        var el = document.querySelector('input[name="' + id + '"][value="' + dados[id] + '"]');
+                        if (el) el.checked = true;
+                    } else if (document.getElementById(id)) {
+                        document.getElementById(id).value = dados[id];
+                    }
+                }
+            });
+        } catch (e) {}
+    }
+
+    var GABARITO = { q1: 'A', q2: 'B', q3: 'C', q4: 'D', q5: 'A', q6: 'B', q7: 'C' };
+
+    function corrigirRespostas() {
+        var form = document.getElementById('discipuladoForm');
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+
+        var acertos = 0;
+        var total = Object.keys(GABARITO).length;
+
+        Object.keys(GABARITO).forEach(function(nome) {
+            var opcoes = document.querySelectorAll('input[name="' + nome + '"]');
+            var resposta = document.querySelector('input[name="' + nome + '"]:checked');
+
+            opcoes.forEach(function(input) {
+                input.parentElement.classList.remove('certa', 'errada');
+                if (input.value === GABARITO[nome]) {
+                    input.parentElement.classList.add('certa');
+                } else if (resposta && input.value === resposta.value) {
+                    input.parentElement.classList.add('errada');
+                }
+            });
+            if (resposta && resposta.value === GABARITO[nome]) { acertos++; }
+        });
+
+        var percentual = Math.round((acertos / total) * 100);
+        var resultado = document.getElementById('resultado');
+        resultado.style.display = 'block';
+        resultado.innerHTML = 'RESULTADO: ' + acertos + ' de ' + total + ' questões corretas (' + percentual + '%).';
+        gravarCache();
+    }
+
+    function baixarPdf() {
+        gravarCache();
+        var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
+        if (typeof html2pdf === 'undefined') { alert('Não foi possível carregar o gerador de PDF.'); return; }
+        var elemento = document.getElementById('licaoImpressao');
+        var btnPdf = document.getElementById('btnPdf');
+        var btnCorrigir = document.getElementById('btnCorrigir');
+        var resultado = document.getElementById('resultado');
+        
+        btnPdf.style.display = 'none';
+        btnCorrigir.style.display = 'none';
+        resultado.style.display = 'none';
+
+        html2pdf().set({
+            margin: [8, 8, 8, 8],
+            filename: 'Licao21-' + nome + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+            pagebreak: { mode: ['css', 'legacy'], avoid: ['.question-group', '.section-title', '.final-note'] },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).from(elemento).save().then(function() {
+            btnPdf.style.display = 'block';
+            btnCorrigir.style.display = 'block';
+            resultado.style.display = 'block';
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        lerCache();
+        CAMPOS.forEach(function(id) {
+            if (id.startsWith('q')) {
+                var els = document.querySelectorAll('input[name="' + id + '"]');
+                els.forEach(function(el) { el.addEventListener('change', gravarCache); });
+            } else {
+                var el = document.getElementById(id);
+                if (el) { el.addEventListener('input', gravarCache); el.addEventListener('change', gravarCache); }
+            }
+        });
+    });
+</script>
 </body>
 </html>
