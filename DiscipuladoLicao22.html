@@ -3,208 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discipulado Lição 22 - Dízimos e Ofertas</title>
+    <title>Discipulado Lição 22 - A Igreja do Senhor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            font-size: 12pt;
+        @media print {
+            body { background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
+            .container { box-shadow: none !important; margin: 0 !important; max-width: none !important; width: 100% !important; }
+            #btnPdf, #btnCorrigir, #resultado { display: none !important; }
         }
-        .container {
-            max-width: 750px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #b08968;
-        }
-        .header-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            min-height: 60px;
-        }
-        .header-container img {
-            position: absolute;
-            left: 0;
-            height: 60px;
-            width: auto;
-        }
-        .main-category {
-            text-align: center;
-            font-size: 16pt;
-            font-weight: bold;
-            color: #b08968;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-        h1 {
-            color: #b08968;
-            margin: 0;
-            font-size: 32px;
-            text-transform: uppercase;
-            text-align: center;
-        }
-        .subtitle {
-            text-align: center;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 20px;
-            font-size: 14pt;
-        }
-        .intro {
-            background-color: #f0f4f6;
-            border-left: 4px solid #b08968;
-            padding: 12px 15px;
-            margin-bottom: 25px;
-            font-size: 11pt;
-        }
-        .section-title {
-            background-color: #b08968;
-            color: white;
-            padding: 6px 12px;
-            font-size: 13pt;
-            font-weight: bold;
-            border-radius: 4px;
-            margin-top: 25px;
-            margin-bottom: 15px;
-        }
-        .question-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 6px;
-            color: #222;
-        }
-        input[type="text"], input[type="date"], textarea, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 11pt;
-            margin-top: 4px;
-        }
-        input[type="text"]:focus, textarea:focus, select:focus {
-            border-color: #b08968;
-            outline: none;
-        }
-        .radio-group {
-            display: flex;
-            gap: 20px;
-            margin-top: 8px;
-        }
-        .radio-group label {
-            font-weight: normal;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-        }
-        .radio-group input[type="radio"] {
-            margin: 0;
-            width: 16px;
-            height: 16px;
-        }
-        .footer-info {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-        }
-        .footer-info .field {
-            flex: 1;
-        }
-        .btn-submit {
-            width: 100%;
-            background-color: #b08968;
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 4px;
-            font-size: 12pt;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 25px;
-            transition: background-color 0.3s ease;
-        }
-        .btn-submit:hover {
-            background-color: #8c6a4e;
-        }
-        .btn-submit.sent {
-            background-color: #202224 !important;
-            cursor: default;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; margin: 0; padding: 20px; font-size: 12pt; }
+        .container { max-width: 750px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-top: 6px solid #A1887F; }
+        .header-container { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; min-height: 60px; }
+        .header-container img { position: absolute; left: 0; height: 60px; width: auto; }
+        .main-category { text-align: center; font-size: 16pt; font-weight: bold; color: #A1887F; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        h1 { color: #A1887F; margin: 0; font-size: 32px; text-transform: uppercase; text-align: center; }
+        .subtitle { text-align: center; font-weight: bold; color: #555; margin-bottom: 20px; font-size: 14pt; }
+        .intro { background-color: #f6f3f2; border-left: 4px solid #A1887F; padding: 12px 15px; margin-bottom: 25px; font-size: 11pt; }
+        .section-title { background-color: #A1887F; color: white; padding: 6px 12px; font-size: 13pt; font-weight: bold; border-radius: 4px; margin-top: 25px; margin-bottom: 15px; }
+        .question-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 6px; color: #222; }
+        input[type="text"], input[type="date"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 11pt; margin-top: 4px; }
+        .footer-info { display: flex; gap: 15px; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
+        .footer-info .field { flex: 1; }
+        .btn-pdf { width: 100%; background-color: #8D6E63; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .alternativas { margin-top: 8px; }
+        .alternativas label { display: block; padding: 8px 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; font-weight: normal; cursor: pointer; }
+        .alternativas label input { margin-right: 8px; }
+        .alternativas label.certa { background-color: #d9f2df !important; border-color: #28a745 !important; color: #176b2c !important; }
+        .alternativas label.errada { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #842029 !important; }
+        .btn-corrigir { width: 100%; background-color: #2e7d32; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 25px; }
+        .resultado { display: none; margin-top: 15px; padding: 15px; text-align: center; font-size: 14pt; font-weight: bold; border-radius: 6px; border: 1px solid #ddd; background: #f7f7f7; }
+        .final-note { text-align: center; font-weight: bold; color: #A1887F; background-color: #f6f3f2; padding: 15px; border-radius: 6px; border: 1px solid #e0e0e0; margin-top: 25px; font-size: 12pt; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="main-category">VIDA CRISTÃ E MORDOMIA</div>
+<div class="container" id="licaoImpressao">
+    <div class="main-category">A IGREJA DO SENHOR</div>
     
     <div class="header-container">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Ipb_logo.png" alt="Logo IPB">
         <h1>Lição 22</h1>
     </div>
-    <div class="subtitle">DÍZIMOS E OFERTAS</div>
+    <div class="subtitle">A IGREJA EM GERAL E A IGREJA LOCAL</div>
     
     <div class="intro">
-        A contribuição financeira é um ato de adoração, gratidão e mordomia cristã. Ao dízimar e ofertar, reconhecemos que tudo o que temos pertence a Deus e cooperamos com o sustento da igreja e avanço do Seu Reino.
+        “A Igreja é o número completo dos eleitos, que têm sido e que hão de ser reunidos em um corpo sob Cristo, a cabeça.” (Catecismo Maior). É um organismo vivo onde o cabeça é Cristo e os membros são os crentes.
     </div>
 
-    <form id="discipuladoForm" action="mailto:emersonbaran@gmail.com" method="post" enctype="text/plain" onsubmit="enviarFormulario(event)">
-        
-        <!-- SEÇÃO A -->
-        <div class="section-title">A – MORDOMIA E RECONHECIMENTO</div>
+    <form id="discipuladoForm">
+        <div class="section-title">A – A IGREJA EM GERAL</div>
 
         <div class="question-group">
-            <label for="q1">1) A quem pertencem a terra e tudo o que nela existe? (Salmo 24.1; Ag 2.8)</label>
-            <input type="text" id="q1" name="1. A quem pertence a terra (Sl 24.1; Ag 2.8)" required>
-        </div>
-
-        <div class="question-group">
-            <label for="q2">2) Qual é a finalidade dos dízimos e ofertas trazidos à casa do Senhor? (Ml 3.10; Ne 10.37-39)</label>
-            <textarea id="q2" name="2. Finalidade dos dizimos e ofertas (Ml 3.10; Ne 10.37-39)" rows="2" required></textarea>
-        </div>
-
-        <!-- SEÇÃO B -->
-        <div class="section-title">B – A ATITUDE DO CORAÇÃO AO CONTRIBUIR</div>
-
-        <div class="question-group">
-            <label for="q3">3) Com que atitude de coração o cristão deve ofertar e dizimar? (2Co 9.6,7)</label>
-            <textarea id="q3" name="3. Atitude de coracao ao contribuir (2Co 9.6,7)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label for="q4">4) Qual o ensino das Escrituras sobre a regularidade e proporcionalidade na contribuição? (1Co 16.2)</label>
-            <textarea id="q4" name="4. Regularidade e proporcionalidade (1Co 16.2)" rows="2" required></textarea>
-        </div>
-
-        <div class="question-group">
-            <label>5) Você entende a contribuição por meio de dízimos e ofertas como um ato de adoração e fidelidade?</label>
-            <div class="radio-group">
-                <label><input type="radio" name="5. Entende dízimo como adoração" value="SIM" required> SIM</label>
-                <label><input type="radio" name="5. Entende dízimo como adoração" value="NÃO" required> NÃO</label>
+            <label for="q1">1) Qual fato acerca de Cristo é mencionado em Colossenses 1.18?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q1" value="A" required> A) Ele é a cabeça do corpo, que é a igreja.</label>
+                <label><input type="radio" name="q1" value="B"> B) Ele veio apenas para os judeus.</label>
+                <label><input type="radio" name="q1" value="C"> C) Ele fundou um templo terreno em Jerusalém.</label>
+                <label><input type="radio" name="q1" value="D"> D) Ele delegou a liderança suprema aos anjos.</label>
             </div>
         </div>
 
         <div class="question-group">
-            <label for="q6">6) Como você pretende exercer a fidelidade financeira em relação à obra de Deus a partir deste estudo?</label>
-            <textarea id="q6" name="6. Compromisso com a fidelidade financeira" rows="3" required></textarea>
+            <label for="q2">2) Em Efésios 1.7, o que Cristo conseguiu à igreja pela sua morte?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q2" value="A" required> A) Isenção de impostos e privilégios civis.</label>
+                <label><input type="radio" name="q2" value="B"> B) A redenção pelo seu sangue e a remissão dos pecados.</label>
+                <label><input type="radio" name="q2" value="C"> C) Prosperidade financeira para todos os fiéis.</label>
+                <label><input type="radio" name="q2" value="D"> D) O direito de governar nações terrenas.</label>
+            </div>
         </div>
 
-        <!-- DADOS FINAIS -->
+        <div class="question-group">
+            <label for="q3">3) O que aprendemos sobre todos os crentes em Romanos 12.4,5?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q3" value="A" required> A) Cada crente deve agir de forma independente.</label>
+                <label><input type="radio" name="q3" value="B"> B) Todos os membros possuem exatamente a mesma função.</label>
+                <label><input type="radio" name="q3" value="C"> C) Somos um só corpo em Cristo e membros uns dos outros.</label>
+                <label><input type="radio" name="q3" value="D"> D) Apenas os líderes fazem parte do corpo de Cristo.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q4">4) Qual destas opções descreve o povo de Deus segundo 1 Pedro 2.9?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q4" value="A" required> A) Nação sem leis e sem liderança.</label>
+                <label><input type="radio" name="q4" value="B"> B) Grupo exclusivo da era do Antigo Testamento.</label>
+                <label><input type="radio" name="q4" value="C"> C) Sociedade secreta de sabedoria oculta.</label>
+                <label><input type="radio" name="q4" value="D"> D) Geração eleita, sacerdócio real, nação santa e povo exclusivo.</label>
+            </div>
+        </div>
+
+        <div class="intro">
+            Como vimos, Cristo Jesus é o cabeça da igreja, pois a resgatou com sua preciosa obra realizada uma única vez em favor de seus eleitos, fazendo um povo santo, de propriedade exclusiva de Deus, pronto para servir ao Senhor, bem como aos irmãos, através dos dons dados pelo Espírito de Deus.
+        </div>
+
+        <div class="section-title">B – A IGREJA LOCAL</div>
+
+        <div class="question-group">
+            <label for="q5">5) Onde a igreja primitiva costumava se reunir (At 2.46; 13.14; 19.9; Rm 16.5)?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q5" value="A" required> A) Casas, templo, sinagogas e escolas.</label>
+                <label><input type="radio" name="q5" value="B"> B) Apenas em grandes basílicas e catedrais.</label>
+                <label><input type="radio" name="q5" value="C"> C) Exclusivamente no deserto e em cavernas.</label>
+                <label><input type="radio" name="q5" value="D"> D) Somente nos tribunais romanos.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q6">6) Qual das opções apresenta marcas práticas da igreja primitiva em Atos 2.42-47?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q6" value="A" required> A) Cobrança de taxas de adesão e isolamento social.</label>
+                <label><input type="radio" name="q6" value="B"> B) Doutrina dos apóstolos, comunhão, partir do pão e oração.</label>
+                <label><input type="radio" name="q6" value="C"> C) Ritual de sacrifícios de animais e jejuns obrigatórios.</label>
+                <label><input type="radio" name="q6" value="D"> D) Debates políticos e campanhas militares.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q7">7) Quais são os dois ofícios ordinais da igreja (At 15.6; 6.3; 1Tm 3)?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q7" value="A" required> A) Sacerdotes e Levitas.</label>
+                <label><input type="radio" name="q7" value="B"> B) Profetas e Juízes.</label>
+                <label><input type="radio" name="q7" value="C"> C) Presbíteros e Diáconos.</label>
+                <label><input type="radio" name="q7" value="D"> D) Patriarcas e Reis.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q8">8) De acordo com 1 Timóteo 5.17, quais são as duas atuações dos presbíteros?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q8" value="A" required> A) Presbíteros que governam bem e os que se afadigam na palavra e ensino.</label>
+                <label><input type="radio" name="q8" value="B"> B) Presbíteros temporários e presbíteros perpétuos.</label>
+                <label><input type="radio" name="q8" value="C"> C) Presbíteros locais e presbíteros itinerantes.</label>
+                <label><input type="radio" name="q8" value="D"> D) Presbíteros seculares e presbíteros monásticos.</label>
+            </div>
+        </div>
+
+        <div class="question-group">
+            <label for="q9">9) QUAIS SÃO OS DOIS SACRAMENTOS ORDENADOS POR CRISTO (Mt 26.26; 28.19)?</label>
+            <div class="alternativas">
+                <label><input type="radio" name="q9" value="A" required> A) Crisma e Confissão.</label>
+                <label><input type="radio" name="q9" value="B"> B) Matrimônio e Extrema-Unção.</label>
+                <label><input type="radio" name="q9" value="C"> C) Lava-pés e Unguento.</label>
+                <label><input type="radio" name="q9" value="D"> D) Santa Ceia e Batismo.</label>
+            </div>
+        </div>
+
+        <div class="final-note">
+            A igreja do Senhor só pode exercer seus dons e adoração localmente e constantemente, perseverando na doutrina, na comunhão, na Ceia e na oração, sob a liderança de oficiais como diáconos e presbíteros, para o bom andamento da obra da igreja, até a volta do noivo que irá se encontrar com sua noiva!
+        </div>
+
         <div class="footer-info">
             <div class="field">
                 <label for="nomePessoa">Nome do Aluno:</label>
@@ -216,22 +165,97 @@
             </div>
         </div>
 
-        <button type="submit" id="btnEnviar" class="btn-submit">ENVIAR RELATÓRIO DA LIÇÃO 22</button>
-
+        <button type="button" id="btnCorrigir" class="btn-corrigir" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS</button>
+        <div id="resultado" class="resultado"></div>
+        <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
     </form>
 </div>
 
 <script>
-    function enviarFormulario(event) {
-        var btn = document.getElementById("btnEnviar");
-        btn.classList.add("sent");
-        btn.innerText = "ENVIANDO PELO EMAIL...";
-        
-        setTimeout(function(){
-            // O formulário seguirá com o envio via mailto
-        }, 500);
-    }
-</script>
+    var CACHE = 'licao22_cache';
+    var CAMPOS = ['q1','q2','q3','q4','q5','q6','q7','q8','q9','nomePessoa','dataPreenchimento'];
 
+    function val(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+    function gravarCache() {
+        var dados = {};
+        CAMPOS.forEach(function(id) { dados[id] = val(id); });
+        localStorage.setItem(CACHE, JSON.stringify(dados));
+    }
+    function lerCache() {
+        try {
+            var dados = JSON.parse(localStorage.getItem(CACHE) || 'null');
+            if (!dados) return;
+            CAMPOS.forEach(function(id) {
+                if (dados[id] != null && document.getElementById(id)) { document.getElementById(id).value = dados[id]; }
+            });
+        } catch (e) {}
+    }
+
+    var GABARITO = { q1: 'A', q2: 'B', q3: 'C', q4: 'D', q5: 'A', q6: 'B', q7: 'C', q8: 'A', q9: 'D' };
+
+    function corrigirRespostas() {
+        var form = document.getElementById('discipuladoForm');
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+
+        var acertos = 0;
+        var total = Object.keys(GABARITO).length;
+
+        Object.keys(GABARITO).forEach(function(nome) {
+            var opcoes = document.querySelectorAll('input[name="' + nome + '"]');
+            var resposta = document.querySelector('input[name="' + nome + '"]:checked');
+
+            opcoes.forEach(function(input) {
+                input.parentElement.classList.remove('certa', 'errada');
+                if (input.value === GABARITO[nome]) {
+                    input.parentElement.classList.add('certa');
+                } else if (resposta && input.value === resposta.value) {
+                    input.parentElement.classList.add('errada');
+                }
+            });
+            if (resposta && resposta.value === GABARITO[nome]) { acertos++; }
+        });
+
+        var percentual = Math.round((acertos / total) * 100);
+        var resultado = document.getElementById('resultado');
+        resultado.style.display = 'block';
+        resultado.innerHTML = 'RESULTADO: ' + acertos + ' de ' + total + ' questões corretas (' + percentual + '%).';
+        gravarCache();
+    }
+
+    function baixarPdf() {
+        gravarCache();
+        var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
+        if (typeof html2pdf === 'undefined') { alert('Não foi possível carregar o gerador de PDF.'); return; }
+        var elemento = document.getElementById('licaoImpressao');
+        var btnPdf = document.getElementById('btnPdf');
+        var btnCorrigir = document.getElementById('btnCorrigir');
+        var resultado = document.getElementById('resultado');
+        
+        btnPdf.style.display = 'none';
+        btnCorrigir.style.display = 'none';
+        resultado.style.display = 'none';
+
+        html2pdf().set({
+            margin: [8, 8, 8, 8],
+            filename: 'Licao22-' + nome + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+            pagebreak: { mode: ['css', 'legacy'], avoid: ['.question-group', '.section-title', '.final-note'] },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).from(elemento).save().then(function() {
+            btnPdf.style.display = 'block';
+            btnCorrigir.style.display = 'block';
+            resultado.style.display = 'block';
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        lerCache();
+        CAMPOS.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) { el.addEventListener('input', gravarCache); el.addEventListener('change', gravarCache); }
+        });
+    });
+</script>
 </body>
 </html>
