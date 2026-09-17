@@ -3,201 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discipulado - Lição 10: Deus Pai</title>
+    <title>Discipulado Lição 10 - Deus Pai</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         @media print {
             body { background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
             .container { box-shadow: none !important; margin: 0 !important; max-width: none !important; width: 100% !important; }
-            .no-print { display: none !important; }
+            #btnPdf, #btnCorrigir, #resultado { display: none !important; }
         }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            font-size: 12pt;
-        }
-
-        .container {
-            max-width: 750px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 6px solid #2D4F5C;
-        }
-
-        .header-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            min-height: 60px;
-        }
-
-        .header-container img {
-            position: absolute;
-            left: 0;
-            height: 60px;
-            width: auto;
-        }
-
-        .main-category {
-            text-align: center;
-            font-size: 16pt;
-            font-weight: bold;
-            color: #2D4F5C;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-
-        h1 {
-            color: #2D4F5C;
-            margin: 0;
-            font-size: 32px;
-            text-transform: uppercase;
-            text-align: center;
-        }
-
-        .subtitle {
-            text-align: center;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 20px;
-            font-size: 14pt;
-        }
-
-        .intro {
-            background-color: #f0f4f6;
-            border-left: 4px solid #2D4F5C;
-            padding: 12px 15px;
-            margin-bottom: 25px;
-            font-size: 11pt;
-        }
-
-        .section-title {
-            background-color: #2D4F5C;
-            color: white;
-            padding: 6px 12px;
-            font-size: 13pt;
-            font-weight: bold;
-            border-radius: 4px;
-            margin-top: 25px;
-            margin-bottom: 15px;
-        }
-
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; margin: 0; padding: 20px; font-size: 12pt; }
+        .container { max-width: 750px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-top: 6px solid #B71C1C; }
+        .header-container { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; min-height: 60px; }
+        .header-container img { position: absolute; left: 0; height: 60px; width: auto; }
+        .main-category { text-align: center; font-size: 16pt; font-weight: bold; color: #B71C1C; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        h1 { color: #B71C1C; margin: 0; font-size: 32px; text-transform: uppercase; text-align: center; }
+        .subtitle { text-align: center; font-weight: bold; color: #555; margin-bottom: 20px; font-size: 14pt; }
+        .intro { background-color: #fdf2f2; border-left: 4px solid #B71C1C; padding: 12px 15px; margin-bottom: 25px; font-size: 11pt; }
+        .section-title { background-color: #B71C1C; color: white; padding: 6px 12px; font-size: 13pt; font-weight: bold; border-radius: 4px; margin-top: 25px; margin-bottom: 15px; }
         .question-group { margin-bottom: 20px; }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 6px;
-            color: #222;
-        }
-
-        input[type="text"], input[type="date"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 11pt;
-            margin-top: 4px;
-        }
-
-        input:focus { border-color: #2D4F5C; outline: none; }
-
-        .alternativas label {
-            display: block;
-            padding: 8px 10px;
-            margin: 5px 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-weight: normal;
-            cursor: pointer;
-        }
-
-        .alternativas label input { margin-right: 8px; }
-
-        .alternativas label.certa {
-            background-color: #d9f2df !important;
-            border-color: #28a745 !important;
-            color: #176b2c !important;
-        }
-
-        .alternativas label.errada {
-            background-color: #f8d7da !important;
-            border-color: #dc3545 !important;
-            color: #842029 !important;
-        }
-
-        .footer-info {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-        }
-
+        label { display: block; font-weight: bold; margin-bottom: 6px; color: #222; }
+        input[type="text"], input[type="date"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 11pt; margin-top: 4px; }
+        .footer-info { display: flex; gap: 15px; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
         .footer-info .field { flex: 1; }
-
-        .btn-action {
-            width: 100%;
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 4px;
-            font-size: 12pt;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-submit { background-color: #2D4F5C; }
-        .btn-submit:hover { background-color: #1e363f; }
-
-        .btn-corrigir { background-color: #2e7d32; }
-        .btn-corrigir:hover { background-color: #256628; }
-
-        .btn-pdf { background-color: #555; }
-        .btn-pdf:hover { background-color: #333; }
-
-        .resultado {
-            display: none;
-            margin-top: 15px;
-            padding: 15px;
-            text-align: center;
-            font-size: 14pt;
-            font-weight: bold;
-            border-radius: 6px;
-            border: 1px solid #ddd;
-            background: #f7f7f7;
-        }
-
-        .final-note {
-            text-align: center;
-            font-weight: bold;
-            padding: 15px;
-            border-radius: 6px;
-            border: 1px solid #e0e0e0;
-            margin-top: 25px;
-            font-size: 12pt;
-            color: #2D4F5C;
-            background-color: #f0f4f6;
-        }
+        .btn-pdf { width: 100%; background-color: #8c1414; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .alternativas { margin-top: 8px; }
+        .alternativas label { display: block; padding: 8px 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; font-weight: normal; cursor: pointer; }
+        .alternativas label input { margin-right: 8px; }
+        .alternativas label.certa { background-color: #d9f2df !important; border-color: #28a745 !important; color: #176b2c !important; }
+        .alternativas label.errada { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #842029 !important; }
+        .btn-corrigir { width: 100%; background-color: #2e7d32; color: white; padding: 14px; border: none; border-radius: 4px; font-size: 12pt; font-weight: bold; cursor: pointer; margin-top: 25px; }
+        .resultado { display: none; margin-top: 15px; padding: 15px; text-align: center; font-size: 14pt; font-weight: bold; border-radius: 6px; border: 1px solid #ddd; background: #f7f7f7; }
+        .final-note { text-align: center; font-weight: bold; color: #B71C1C; background-color: #fdf2f2; padding: 15px; border-radius: 6px; border: 1px solid #e0e0e0; margin-top: 25px; font-size: 12pt; }
     </style>
 </head>
 <body>
 
-<div class="container" id="licao10Container">
+<div class="container" id="licaoImpressao">
     <div class="main-category">ELE É DEUS!</div>
     
     <div class="header-container">
@@ -207,17 +48,17 @@
     <div class="subtitle">DEUS PAI</div>
     
     <div class="intro">
-        Neste estudo, aprenderemos quem é o nosso Deus de uma maneira simples e resumida que servirá para o seu fortalecimento espiritual e temor diante deste nosso Senhor.
+        Neste estudo, aprenderemos quem é o nosso Deus de uma maneira simples e resumida que servirá para o seu fortalecimento espiritual e temor diante deste nosso Senhor[cite: 23].
     </div>
 
-    <form id="formLicao10" onsubmit="enviarFormulario(event)">
+    <form id="discipuladoForm">
         <div class="section-title">I - A TRINDADE</div>
         <div class="intro" style="border-left-color: #555; background-color: #f9f9f9; margin-bottom: 15px;">
-            A trindade é um ensino das Escrituras Sagradas referindo-se quem é Deus quanto a unicidade e pessoa. O Breve Catecismo de Westminster, pergunta: Quantas pessoas há na Divindade? E responde: Há três pessoas na Divindade: o Pai, o Filho e o Espírito Santo, e estas três são um Deus, da mesma substância, iguais em poder e glória. Vejamos:
+            A trindade é um ensino das Escrituras Sagradas referindo-se quem é Deus quanto a unicidade e pessoa[cite: 23]. O Breve Catecismo de Westminster, pergunta: Quantas pessoas há na Divindade? E responde: Há três pessoas na Divindade: o Pai, o Filho e o Espírito Santo, e estas três são um Deus, da mesma substância, iguais em poder e glória[cite: 23]. Vejamos:
         </div>
 
         <div class="question-group">
-            <label>1) Em Mt 3.16,17, quais as pessoas da divindade que descreve?</label>
+            <label for="q1">1) Em Mt 3.16,17, quais as pessoas da divindade que descreve?</label>
             <div class="alternativas">
                 <label><input type="radio" name="q1" value="A" required> A) Pai, Filho e Espírito Santo.</label>
                 <label><input type="radio" name="q1" value="B"> B) Somente o Pai.</label>
@@ -227,7 +68,7 @@
         </div>
 
         <div class="question-group">
-            <label>2) Na bênção apostólica, é feita em nome de quem? (2Co 13.13)</label>
+            <label for="q2">2) Na bênção apostólica, é feita em nome de quem? (2Co 13.13)</label>
             <div class="alternativas">
                 <label><input type="radio" name="q2" value="A" required> A) Somente em nome de Deus Pai.</label>
                 <label><input type="radio" name="q2" value="B"> B) Em nome do Pai, do Filho e do Espírito Santo.</label>
@@ -239,7 +80,7 @@
         <div class="section-title">II - A EXISTÊNCIA E O CONHECIMENTO DE DEUS</div>
 
         <div class="question-group">
-            <label>3) Leia Hb 11.6. Para se aproximar de Deus, o que é necessário?</label>
+            <label for="q3">3) Leia Hb 11.6. Para se aproximar de Deus, o que é necessário?</label>
             <div class="alternativas">
                 <label><input type="radio" name="q3" value="A" required> A) Ter riquezas e posição social.</label>
                 <label><input type="radio" name="q3" value="B"> B) Ser perfeito e nunca cometer erros.</label>
@@ -249,7 +90,7 @@
         </div>
 
         <div class="question-group">
-            <label>4) O que disse Deus quanto a sua presença conosco? (Jr 23.23)</label>
+            <label for="q4">4) O que disse Deus quanto a sua presença conosco? (Jr 23.23)</label>
             <div class="alternativas">
                 <label><input type="radio" name="q4" value="A" required> A) Deus está presente somente no céu.</label>
                 <label><input type="radio" name="q4" value="B"> B) Deus está presente somente no templo.</label>
@@ -261,7 +102,7 @@
         <div class="section-title">III - ATRIBUTOS INCOMUNICÁVEIS</div>
 
         <div class="question-group">
-            <label>5) De acordo com os versículos abaixo, relacione as colunas indicando o atributo de Deus:</label>
+            <label for="q5">5) De acordo com os versículos abaixo, relacione as colunas indicando o atributo de Deus:</label>
             <div style="margin-bottom: 10px; font-size: 11pt; color: #555;">(A) Sl 139.7-10 | (B) Sl 90.2 | (C) Ml 3.6 | (D) Jo 5.26</div>
             <div class="alternativas">
                 <label><input type="radio" name="q5" value="A" required> A) A = Eterno; B = Onipresente; C = Imutável; D = Autoexistente.</label>
@@ -274,7 +115,7 @@
         <div class="section-title">IV - ATRIBUTOS COMUNICÁVEIS</div>
 
         <div class="question-group">
-            <label>6) Cite o atributo de Deus que falta em 2 Jo 1.3:</label>
+            <label for="q6">6) Cite o atributo de Deus que falta em 2 Jo 1.3:</label>
             <div style="font-style: italic; margin-bottom: 8px; color: #444;">“a ___________, a misericórdia e a paz, da parte de Deus Pai e de Jesus Cristo...”</div>
             <div class="alternativas">
                 <label><input type="radio" name="q6" value="A" required> A) Graça.</label>
@@ -285,7 +126,7 @@
         </div>
 
         <div class="question-group">
-            <label>7) Cite os dois atributos de Deus em At 3.14:</label>
+            <label for="q7">7) Cite os dois atributos de Deus em At 3.14:</label>
             <div style="font-style: italic; margin-bottom: 8px; color: #444;">“Vós, porém, negastes o ____________________ e o _______________...”</div>
             <div class="alternativas">
                 <label><input type="radio" name="q7" value="A" required> A) Santo e Justo.</label>
@@ -296,7 +137,7 @@
         </div>
 
         <div class="question-group">
-            <label>8) Cite os dois atributos de Deus em Rm 2.4:</label>
+            <label for="q8">8) Cite os dois atributos de Deus em Rm 2.4:</label>
             <div style="font-style: italic; margin-bottom: 8px; color: #444;">“...ignorando que a ___________________ de Deus é que te conduz ao arrependimento?”</div>
             <div class="alternativas">
                 <label><input type="radio" name="q8" value="A" required> A) Justiça.</label>
@@ -307,47 +148,51 @@
         </div>
 
         <div class="final-note">
-            Quanto mais conhecemos a Deus em sua Palavra, mais condições teremos de adorá-Lo e dedicar nossa vida inteiramente a Ele!
+            Quanto mais conhecemos a Deus em sua Palavra, mais condições teremos de adorá-Lo e dedicar nossa vida inteiramente a Ele![cite: 23]
         </div>
 
         <div class="footer-info">
             <div class="field">
                 <label for="nomePessoa">Nome do Aluno:</label>
-                <input type="text" id="nomePessoa" required>
+                <input type="text" id="nomePessoa" name="Nome do Aluno" required>
             </div>
             <div class="field">
                 <label for="dataPreenchimento">Data:</label>
-                <input type="date" id="dataPreenchimento" required>
+                <input type="date" id="dataPreenchimento" name="Data" required>
             </div>
         </div>
 
-        <button type="button" class="btn-action btn-corrigir no-print" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS</button>
+        <button type="button" id="btnCorrigir" class="btn-corrigir" onclick="corrigirRespostas()">CORRIGIR RESPOSTAS</button>
         <div id="resultado" class="resultado"></div>
-        <button type="submit" id="btnEnviar" class="btn-action btn-submit no-print">ENVIAR POR E-MAIL</button>
-        <button type="button" class="btn-action btn-pdf no-print" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
+        <button type="button" id="btnPdf" class="btn-pdf" onclick="baixarPdf()">BAIXAR PDF DA LIÇÃO FEITA</button>
     </form>
 </div>
 
 <script>
-    var EMAIL = 'emersonbaran@gmail.com';
+    var CACHE = 'licao10_cache';
+    var CAMPOS = ['q1','q2','q3','q4','q5','q6','q7','q8','nomePessoa','dataPreenchimento'];
+
+    function val(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+    function gravarCache() {
+        var dados = {};
+        CAMPOS.forEach(function(id) { dados[id] = val(id); });
+        localStorage.setItem(CACHE, JSON.stringify(dados));
+    }
+    function lerCache() {
+        try {
+            var dados = JSON.parse(localStorage.getItem(CACHE) || 'null');
+            if (!dados) return;
+            CAMPOS.forEach(function(id) {
+                if (dados[id] != null && document.getElementById(id)) { document.getElementById(id).value = dados[id]; }
+            });
+        } catch (e) {}
+    }
+
     var GABARITO = { q1: 'A', q2: 'B', q3: 'C', q4: 'D', q5: 'C', q6: 'A', q7: 'A', q8: 'B' };
 
-    function val(id) {
-        var el = document.getElementById(id);
-        return el ? el.value : '';
-    }
-
-    function valRadio(nome) {
-        var el = document.querySelector('input[name="' + nome + '"]:checked');
-        return el ? el.value : '';
-    }
-
     function corrigirRespostas() {
-        var form = document.getElementById('formLicao10');
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
+        var form = document.getElementById('discipuladoForm');
+        if (!form.checkValidity()) { form.reportValidity(); return; }
 
         var acertos = 0;
         var total = Object.keys(GABARITO).length;
@@ -364,63 +209,28 @@
                     input.parentElement.classList.add('errada');
                 }
             });
-
-            if (resposta && resposta.value === GABARITO[nome]) {
-                acertos++;
-            }
+            if (resposta && resposta.value === GABARITO[nome]) { acertos++; }
         });
 
         var percentual = Math.round((acertos / total) * 100);
         var resultado = document.getElementById('resultado');
         resultado.style.display = 'block';
         resultado.innerHTML = 'RESULTADO: ' + acertos + ' de ' + total + ' questões corretas (' + percentual + '%).';
-    }
-
-    function montarTexto() {
-        var nome = val('nomePessoa');
-        var d = val('dataPreenchimento');
-        var dataBr = d ? d.split('-').reverse().join('/') : '';
-        
-        var texto = 'DISCIPULADO - LIÇÃO 10\n';
-        texto += 'Nome do Aluno: ' + nome + '\n';
-        texto += 'Data: ' + dataBr + '\n\n';
-
-        Object.keys(GABARITO).forEach(function(nomeCampo, index) {
-            texto += (index + 1) + ') Resposta: ' + valRadio(nomeCampo) + '\n';
-        });
-
-        return texto;
-    }
-
-    function enviarFormulario(event) {
-        event.preventDefault();
-        var form = document.getElementById('formLicao10');
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
-
-        var nome = val('nomePessoa');
-        var a = document.createElement('a');
-        a.href = 'mailto:' + EMAIL
-            + '?subject=' + encodeURIComponent('Relatório Lição 10 - ' + nome)
-            + '&body=' + encodeURIComponent(montarTexto());
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-
-        var btn = document.getElementById('btnEnviar');
-        btn.innerText = 'RELATÓRIO GERADO NO EMAIL';
+        gravarCache();
     }
 
     function baixarPdf() {
+        gravarCache();
         var nome = (val('nomePessoa') || 'Aluno').replace(/\s+/g, '_');
-        if (typeof html2pdf === 'undefined') {
-            alert('Gerador de PDF carregando. Tente novamente em alguns instantes.');
-            return;
-        }
-
-        var elemento = document.getElementById('licao10Container');
+        if (typeof html2pdf === 'undefined') { alert('Não foi possível carregar o gerador de PDF.'); return; }
+        var elemento = document.getElementById('licaoImpressao');
+        var btnPdf = document.getElementById('btnPdf');
+        var btnCorrigir = document.getElementById('btnCorrigir');
+        var resultado = document.getElementById('resultado');
+        
+        btnPdf.style.display = 'none';
+        btnCorrigir.style.display = 'none';
+        resultado.style.display = 'none';
 
         html2pdf().set({
             margin: [8, 8, 8, 8],
@@ -429,9 +239,20 @@
             html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
             pagebreak: { mode: ['css', 'legacy'], avoid: ['.question-group', '.section-title', '.final-note'] },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        }).from(elemento).save();
+        }).from(elemento).save().then(function() {
+            btnPdf.style.display = 'block';
+            btnCorrigir.style.display = 'block';
+            resultado.style.display = 'block';
+        });
     }
-</script>
 
+    document.addEventListener('DOMContentLoaded', function() {
+        lerCache();
+        CAMPOS.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) { el.addEventListener('input', gravarCache); el.addEventListener('change', gravarCache); }
+        });
+    });
+</script>
 </body>
 </html>
